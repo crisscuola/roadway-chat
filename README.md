@@ -1,1 +1,3 @@
-Roadway Chat
+#Roadway Chat
+
+Technopark MailRu Group Project
