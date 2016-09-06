@@ -30,3 +30,8 @@ local.properties
 
 # Mac OS X clutter
 *.DS_Store
+
+# User-specific configurations
+.idea/*/*
+.idea/*
+*.iml
