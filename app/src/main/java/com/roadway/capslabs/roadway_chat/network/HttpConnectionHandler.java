@@ -14,7 +14,6 @@ public class HttpConnectionHandler {
     final String URL = "www.sermalenk.myjino.ru";
     final String PATH_1 = "dialog";
     final String PATH_2 = "key";
-    final String PATH_DELETE = "delete";
     OkHttpClient client;
 
     public HttpConnectionHandler(){
