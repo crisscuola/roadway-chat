@@ -33,7 +33,7 @@ public class ActivityVk extends AppCompatActivity {
             VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
 
     static public int MY_ID = 0;
-    Button logout ;
+    Button logout , feed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

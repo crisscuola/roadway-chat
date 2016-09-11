@@ -5,16 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.vk.sdk.VKSdk;
 
 public class FeedActivity extends AppCompatActivity {
 
+    Button map, privchat,profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_feed);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         VKSdk.initialize(this);
@@ -27,6 +30,9 @@ public class FeedActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+
+
     }
 
     @Override
