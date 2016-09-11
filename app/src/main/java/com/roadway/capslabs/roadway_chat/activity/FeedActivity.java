@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat;
+package com.roadway.capslabs.roadway_chat.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,9 +6,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.roadway.capslabs.roadway_chat.R;
 import com.vk.sdk.VKSdk;
 
-public class MainActivity extends AppCompatActivity {
+public class FeedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

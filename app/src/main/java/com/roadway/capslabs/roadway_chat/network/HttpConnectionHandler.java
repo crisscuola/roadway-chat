@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat;
+package com.roadway.capslabs.roadway_chat.network;
 
 import java.io.IOException;
 

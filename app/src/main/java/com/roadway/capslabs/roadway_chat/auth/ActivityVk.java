@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat;
+package com.roadway.capslabs.roadway_chat.auth;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
