@@ -29,29 +29,21 @@ import java.io.IOException;
  * Created by konstantin on 08.09.16
  */
 public class ActivityVk extends AppCompatActivity {
-    private String [] scope = new String[] {VKScope.MESSAGES,VKScope.FRIENDS,VKScope.WALL,
+    private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS, VKScope.WALL,
             VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
-    
-    static public int MY_ID = 0;
-    Button logout , feed;
+
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
-
     private final HttpConnectionHandler handler = new HttpConnectionHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk);
+        VKSdk.login(this, scope);
 
         initToolbar();
         drawerFactory.getDrawerBuilder(this, toolbar).build();
-
-        VKSdk.login(this, scope);
-//        if (VKAccessToken.currentToken() == null) {
-//            setNameText("No login with Vk");
-//        }
-
 
         Button logout = (Button) findViewById(R.id.button_logout);
         if (logout != null) {
@@ -60,8 +52,8 @@ public class ActivityVk extends AppCompatActivity {
                 public void onClick(View view) {
                     VKSdk.logout();
                     setNameText("No login with Vk");
-                    Intent lol = new Intent(view.getContext(), ActivityVk.class);
-                    startActivity(lol);
+                    Intent intent = new Intent(view.getContext(), ActivityVk.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -84,13 +76,10 @@ public class ActivityVk extends AppCompatActivity {
                 public void onComplete(VKResponse response) {
                     super.onComplete(response);
 
-                    String firstName;
-                    String lastName;
-
                     try {
                         JSONArray array = response.json.getJSONArray("response");
-                        firstName = array.getJSONObject(0).getString("first_name");
-                        lastName = array.getJSONObject(0).getString("last_name");
+                        String firstName = array.getJSONObject(0).getString("first_name");
+                        String lastName = array.getJSONObject(0).getString("last_name");
                         setNameText(firstName + " " + lastName);
                     } catch (JSONException e) {
                         e.printStackTrace();
