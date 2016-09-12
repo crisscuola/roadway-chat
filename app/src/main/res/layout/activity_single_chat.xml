@@ -7,7 +7,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Private chat"
-        android:id="@+id/textView"
+        android:text="Single chat"
+        android:id="@+id/textViewSingleChat"
         android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

@@ -3,24 +3,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map"
-        android:id="@+id/button_map"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Feed"
+        android:id="@+id/textViewFeed"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile"
-        android:id="@+id/button_profile"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Private"
-        android:id="@+id/button_private"
-        android:layout_gravity="center_horizontal" />
 </LinearLayout>

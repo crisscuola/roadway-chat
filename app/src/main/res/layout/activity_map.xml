@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Map"
-        android:id="@+id/textView2"
+        android:id="@+id/textViewMap"
         android:layout_gravity="center_horizontal" />
+
 </LinearLayout>
