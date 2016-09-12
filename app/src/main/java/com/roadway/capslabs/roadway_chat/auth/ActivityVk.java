@@ -29,7 +29,7 @@ import java.io.IOException;
 public class ActivityVk extends AppCompatActivity {
     private String [] scope = new String[] {VKScope.MESSAGES,VKScope.FRIENDS,VKScope.WALL,
             VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
-    
+
     static public int MY_ID = 0;
     Button logout , feed;
 

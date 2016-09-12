@@ -8,11 +8,11 @@ import com.roadway.capslabs.roadway_chat.R;
 /**
  * Created by konstantin on 11.09.16.
  */
-public class MapActivity extends AppCompatActivity {
+public class SingleChatActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_single_chat);
     }
 }
