@@ -11,17 +11,12 @@ import okhttp3.Response;
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
-    final String URL = "www.sermalenk.myjino.ru";
-    final String PATH_1 = "dialog";
-    final String PATH_2 = "key";
-    OkHttpClient client;
-
-    public HttpConnectionHandler(){
-        client = new OkHttpClient();
-    }
+    private final String URL = "www.sermalenk.myjino.ru";
+    private final String PATH_1 = "dialog";
+    private final String PATH_2 = "key";
+    private final OkHttpClient client = new OkHttpClient();
 
     public String doGetRequest(String token) throws IOException {
-
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host(URL)
