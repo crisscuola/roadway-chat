@@ -26,7 +26,7 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
     compile 'com.vk:androidsdk:1.6.5'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile('com.mikepenz:materialdrawer:5.6.0@aar') {
         transitive = true
     }

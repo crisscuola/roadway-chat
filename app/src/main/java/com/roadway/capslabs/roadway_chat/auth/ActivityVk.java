@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -23,8 +25,6 @@ import com.vk.sdk.api.VKResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
-
 /**
  * Created by konstantin on 08.09.16
  */
@@ -32,6 +32,7 @@ public class ActivityVk extends AppCompatActivity {
     private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS, VKScope.WALL,
             VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
 
+    private Drawer drawer;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private final HttpConnectionHandler handler = new HttpConnectionHandler();
@@ -43,7 +44,7 @@ public class ActivityVk extends AppCompatActivity {
         VKSdk.login(this, scope);
 
         initToolbar();
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         Button logout = (Button) findViewById(R.id.button_logout);
         if (logout != null) {
@@ -92,16 +93,13 @@ public class ActivityVk extends AppCompatActivity {
     private class SendToken extends AsyncTask<Object, Void, Object[]> {
         @Override
         protected Object[] doInBackground(Object[] params) {
-            try {
-                HttpConnectionHandler handler = (HttpConnectionHandler) params[0];
-                Object[] objects = new Object[2];
-                objects[0] = handler.doGetRequest(VKAccessToken.currentToken().accessToken);
-                objects[1] = params[1];
-                return objects;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+            HttpConnectionHandler handler = (HttpConnectionHandler) params[0];
+            Object[] objects = new Object[2];
+            String response = handler.doGetRequest(VKAccessToken.currentToken().accessToken);
+            objects[0] = response;
+            objects[1] = params[1];
+
+            return objects;
         }
 
         @Override

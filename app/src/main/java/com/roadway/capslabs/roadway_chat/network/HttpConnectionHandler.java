@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -16,7 +18,7 @@ public class HttpConnectionHandler {
     private final String PATH_2 = "key";
     private final OkHttpClient client = new OkHttpClient();
 
-    public String doGetRequest(String token) throws IOException {
+    public String doGetRequest(String token) {
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("http")
                 .host(URL)
@@ -28,8 +30,15 @@ public class HttpConnectionHandler {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Response response = client.newCall(request).execute();
 
-        return response.body().string();
+        String textResponse;
+        try {
+            Response response = client.newCall(request).execute();
+            textResponse = response.body().string();
+        } catch (IOException e) {
+            textResponse = "Bad connection";
+            throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
+        }
+        return textResponse;
     }
 }
