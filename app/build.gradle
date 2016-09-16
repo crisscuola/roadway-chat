@@ -30,5 +30,6 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.6.0@aar') {
         transitive = true
     }
+    compile 'com.github.orangegangsters:swipy:1.2.3@aar'
 }
 
