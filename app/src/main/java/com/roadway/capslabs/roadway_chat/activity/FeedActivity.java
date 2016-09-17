@@ -69,6 +69,7 @@ public class FeedActivity extends AppCompatActivity {
         send = (Button) findViewById(R.id.sendmsg);
 
         singleDialogAdapter = new SingleDialogAdapter(this);
+        listView.setAdapter(singleDialogAdapter);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override

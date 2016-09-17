@@ -21,12 +21,9 @@ public class SingleDialogAdapter extends BaseAdapter {
     private TextView textView;
     private Context context;
 
-
     public SingleDialogAdapter(Context context) {
         this.context = context;
     }
-
-
 
     public void add(ChatMessage obj){
         chatMessagesList.add(0, obj);
@@ -71,7 +68,8 @@ public class SingleDialogAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        View rowView = inflater.inflate(R.layout.dialog_in, parent, false);
+        textView = (TextView) rowView.findViewById(R.id.msg);
         ChatMessage chatMessageObj = getItem(position);
         View row;
         if (chatMessageObj.getOut()) {
