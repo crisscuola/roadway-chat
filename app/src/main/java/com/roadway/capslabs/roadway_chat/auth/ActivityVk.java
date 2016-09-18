@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,8 +28,7 @@ import org.json.JSONException;
  * Created by konstantin on 08.09.16
  */
 public class ActivityVk extends AppCompatActivity {
-    private String[] scope = new String[]{VKScope.MESSAGES, VKScope.FRIENDS, VKScope.WALL,
-            VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
+    private String[] scope = new String[]{VKScope.EMAIL};
 
     private Drawer drawer;
     private Toolbar toolbar;
@@ -41,9 +39,13 @@ public class ActivityVk extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk);
-        VKSdk.login(this, scope);
+
+        if (VKAccessToken.currentToken() == null){
+            VKSdk.login(this, scope);
+        }
 
         initToolbar();
+
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         Button logout = (Button) findViewById(R.id.button_logout);
