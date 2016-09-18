@@ -3,10 +3,8 @@ package com.roadway.capslabs.roadway_chat.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
@@ -50,11 +48,8 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Sign In !",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                Intent intent = new Intent(view.getContext(), FeedActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -63,15 +58,8 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonVk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Vk !",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
                 Intent intent = new Intent(view.getContext(), ActivityVk.class);
                 startActivity(intent);
-
             }
         });
 
@@ -80,12 +68,6 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Fb !",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
 
             }
         });

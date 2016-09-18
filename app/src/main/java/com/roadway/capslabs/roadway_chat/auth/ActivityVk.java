@@ -5,24 +5,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKApiConst;
-import com.vk.sdk.api.VKParameters;
-import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 /**
  * Created by konstantin on 08.09.16
@@ -42,24 +34,27 @@ public class ActivityVk extends AppCompatActivity {
 
         if (VKAccessToken.currentToken() == null){
             VKSdk.login(this, scope);
+        } else {
+            Intent intent = new Intent(this, FeedActivity.class);
+            startActivity(intent);
         }
 
         initToolbar();
 
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-
-        Button logout = (Button) findViewById(R.id.button_logout);
-        if (logout != null) {
-            logout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    VKSdk.logout();
-                    setNameText("No login with Vk");
-                    Intent intent = new Intent(view.getContext(), ActivityVk.class);
-                    startActivity(intent);
-                }
-            });
-        }
+//
+//        Button logout = (Button) findViewById(R.id.button_logout);
+//        if (logout != null) {
+//            logout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    VKSdk.logout();
+//                    setNameText("No login with Vk");
+//                    Intent intent = new Intent(view.getContext(), ActivityVk.class);
+//                    startActivity(intent);
+//                }
+//            });
+//        }
     }
 
     @Override
@@ -67,29 +62,33 @@ public class ActivityVk extends AppCompatActivity {
         super.onResume();
 
         if (VKAccessToken.currentToken() != null) {
-            int myId = Integer.parseInt(VKAccessToken.currentToken().userId);
-            TextView response = (TextView) findViewById(R.id.response);
-            new SendToken().execute(handler, response);
+//            int myId = Integer.parseInt(VKAccessToken.currentToken().userId);
+//            TextView response = (TextView) findViewById(R.id.response);
+//            new SendToken().execute(handler, response);
+//
+//            VKRequest request = new VKRequest("users.get", VKParameters.from(VKApiConst.USER_IDS, myId,
+//                    VKApiConst.FIELDS, "photo_100", "first_name, last_name"));
+//
+//            request.executeWithListener(new VKRequest.VKRequestListener() {
+//                @Override
+//                public void onComplete(VKResponse response) {
+//                    super.onComplete(response);
+//
+//                    try {
+//                        JSONArray array = response.json.getJSONArray("response");
+//                        String firstName = array.getJSONObject(0).getString("first_name");
+//                        String lastName = array.getJSONObject(0).getString("last_name");
+//                        setNameText(firstName + " " + lastName);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
 
-            VKRequest request = new VKRequest("users.get", VKParameters.from(VKApiConst.USER_IDS, myId,
-                    VKApiConst.FIELDS, "photo_100", "first_name, last_name"));
-
-            request.executeWithListener(new VKRequest.VKRequestListener() {
-                @Override
-                public void onComplete(VKResponse response) {
-                    super.onComplete(response);
-
-                    try {
-                        JSONArray array = response.json.getJSONArray("response");
-                        String firstName = array.getJSONObject(0).getString("first_name");
-                        String lastName = array.getJSONObject(0).getString("last_name");
-                        setNameText(firstName + " " + lastName);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+            Intent intent = new Intent(this, FeedActivity.class);
+            startActivity(intent);
         }
+
     }
 
     private class SendToken extends AsyncTask<Object, Void, Object[]> {
@@ -113,12 +112,12 @@ public class ActivityVk extends AppCompatActivity {
         }
     }
 
-    private void setNameText(String text) {
-        TextView name = (TextView) findViewById(R.id.user_name);
-        if (name != null) {
-            name.setText(text);
-        }
-    }
+//    private void setNameText(String text) {
+//        TextView name = (TextView) findViewById(R.id.user_name);
+//        if (name != null) {
+//            name.setText(text);
+//        }
+//    }
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);

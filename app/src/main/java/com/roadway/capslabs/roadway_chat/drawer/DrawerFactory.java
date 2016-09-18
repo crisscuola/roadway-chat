@@ -72,7 +72,7 @@ public class DrawerFactory {
     private AccountHeader getAccountHeader(Activity activity) {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(activity)
-                .addProfiles(new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com"))
+                .addProfiles(new ProfileDrawerItem().withName("Mike").withEmail("mikepenz@gmail.com").withTextColor(Color.BLACK))
                 .build();
 
         return headerResult;

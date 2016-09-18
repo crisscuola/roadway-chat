@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".LoginActivity"
+    tools:context=".auth.ActivitySignIn"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Roadway Chat"
+            android:text="RoadWay Chat"
             android:textSize="30sp"
             android:textColor="#333333"/>
 
