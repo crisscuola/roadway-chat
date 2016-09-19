@@ -42,8 +42,7 @@ public class DrawerFactory {
                 .withAccountHeader(getAccountHeader(activity))
                 .addDrawerItems(
                         getDrawerItems()
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Class<? extends Activity> toActivity = getActivity(position);
@@ -64,7 +63,10 @@ public class DrawerFactory {
     private AccountHeader getAccountHeader(Activity activity) {
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(activity)
-                .addProfiles(new ProfileDrawerItem().withName("Mike").withEmail("mikepenz@gmail.com").withTextColor(Color.BLACK))
+                .addProfiles(new ProfileDrawerItem().withName("Mike").withEmail("mikepenz@gmail.com"))
+                .withTextColorRes(R.color.colorProfileName)
+                .withHeaderBackground(R.color.colorHeaderBackground)
+                .withSelectionListEnabledForSingleProfile(false)
                 .build();
 
         return headerResult;

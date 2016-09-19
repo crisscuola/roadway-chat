@@ -60,10 +60,8 @@ public class FeedActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String msg = text.getText().toString();
                 ChatMessage chatMessage = new ChatMessage(msg, true, null);
-
                 singleDialogAdapter.add(chatMessage);
                 singleDialogAdapter.notifyDataSetChanged();
             }

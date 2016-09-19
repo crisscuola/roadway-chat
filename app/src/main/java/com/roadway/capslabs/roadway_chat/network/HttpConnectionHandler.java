@@ -1,5 +1,8 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -66,16 +69,24 @@ public class HttpConnectionHandler {
                 .url(url)
                 .build();
 
-        String textResponse;
+        String body;
         try {
             Response response = client.newCall(request).execute();
-            textResponse = response.body().string();
+            body = response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
         }
 
-        return textResponse;
+        return body;
     }
 
-    //TODO: JSON parse
+    private JSONObject parseJSON(String body) {
+        JSONObject loginObject = null;
+        try {
+            loginObject = new JSONObject(body);
+        } catch (JSONException e) {
+            throw new RuntimeException("Exception happened while parsing JSON from response: " + body, e);
+        }
+        return loginObject;
+    }
 }

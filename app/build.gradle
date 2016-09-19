@@ -31,5 +31,6 @@ dependencies {
         transitive = true
     }
     compile 'com.github.orangegangsters:swipy:1.2.3@aar'
+    compile 'com.github.centrifugal:centrifuge-android:0.36'
 }
 
