@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import com.centrifugal.centrifuge.android.Centrifugo;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,15 +18,14 @@ import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
-    private final OkHttpClient client;
-
-    public HttpConnectionHandler(OkHttpClient client) {
-        this.client = client;
-    }
+    private Centrifugo centrifugo;
 
     public String doGetRequest(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter(token, token).build();
+        HttpUrl url = UrlFactory.getUrl(RequestType.GET)
+                .addQueryParameter(token, token)
+                .build();
         String result = execute(url);
+        JSONObject object = parseJSON(result);
 
         return result;
     }
@@ -69,6 +70,7 @@ public class HttpConnectionHandler {
                 .url(url)
                 .build();
 
+        OkHttpClient client = new OkHttpClient();
         String body;
         try {
             Response response = client.newCall(request).execute();
@@ -81,12 +83,13 @@ public class HttpConnectionHandler {
     }
 
     private JSONObject parseJSON(String body) {
-        JSONObject loginObject = null;
+        JSONObject loginObject;
         try {
             loginObject = new JSONObject(body);
         } catch (JSONException e) {
             throw new RuntimeException("Exception happened while parsing JSON from response: " + body, e);
         }
+
         return loginObject;
     }
 }
