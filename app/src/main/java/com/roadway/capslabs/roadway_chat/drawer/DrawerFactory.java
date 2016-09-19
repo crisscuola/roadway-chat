@@ -24,20 +24,15 @@ import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivitySignIn;
 import com.vk.sdk.VKSdk;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by kirill on 12.09.16
  */
 public class DrawerFactory {
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
-        PrimaryDrawerItem feed = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
-                .withBadge("19").withBadgeStyle(new BadgeStyle()
-                        .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700));
-        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(2).withName("Profile");
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(2).withName("Settings");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(2).withName("Logout");
-
-
 
 
         DrawerBuilder drawer = new DrawerBuilder()
@@ -45,11 +40,7 @@ public class DrawerFactory {
                 .withToolbar(toolbar)
                 .withAccountHeader(getAccountHeader(activity))
                 .addDrawerItems(
-                        feed,
-                        map,
-                        profile,
-                        settings,
-                        logout
+                        getDrawerItems()
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -60,7 +51,6 @@ public class DrawerFactory {
                             VKSdk.logout();
                         }
 
-                        Log.d("pos", String.valueOf(position));
                         activity.startActivity(intent);
                         return true;
                     }
@@ -76,6 +66,25 @@ public class DrawerFactory {
                 .build();
 
         return headerResult;
+    }
+
+    private IDrawerItem[] getDrawerItems() {
+        List<IDrawerItem> items = new ArrayList<>();
+        PrimaryDrawerItem feed = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
+                .withBadge("19").withBadgeStyle(new BadgeStyle()
+                        .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700));
+        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
+        SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(2).withName("Profile");
+        SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(2).withName("Settings");
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(2).withName("Logout");
+        items.add(feed);
+        items.add(map);
+        items.add(profile);
+        items.add(settings);
+        items.add(logout);
+        IDrawerItem[] array = new IDrawerItem[items.size()];
+
+        return items.toArray(array);
     }
 
     private Class<? extends Activity> getActivity(int i) {

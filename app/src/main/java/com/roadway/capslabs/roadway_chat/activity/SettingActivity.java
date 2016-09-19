@@ -9,7 +9,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 
 /**
- * Created by konstantin on 18.09.16.
+ * Created by konstantin on 18.09.16
  */
 public class SettingActivity extends AppCompatActivity {
 
@@ -21,14 +21,12 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        initToolbar();
+        initToolbar("Settings");
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-
+    }
+    public void initToolbar(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
+        toolbar.setTitle(title);
     }
 
-    private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-    }
 }

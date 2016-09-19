@@ -11,7 +11,7 @@ import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 /**
- * Created by konstantin on 07.09.16.
+ * Created by konstantin on 07.09.16
  */
 public class ActivitySignIn extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,7 +31,6 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
             Intent intent = new Intent(this, FeedActivity.class);
             startActivity(intent);
         }
-
 
         buttonSignUp = (Button) findViewById(R.id.btn_up);
 
