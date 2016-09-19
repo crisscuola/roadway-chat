@@ -9,9 +9,9 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 
 /**
- * Created by konstantin on 11.09.16
+ * Created by konstantin on 18.09.16
  */
-public class MapActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
 
     private Drawer drawer;
     private Toolbar toolbar;
@@ -20,13 +20,13 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
-        initToolbar("Map");
+        setContentView(R.layout.activity_settings);
+        initToolbar("Settings");
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
     }
-
     public void initToolbar(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_map);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_settings);
         toolbar.setTitle(title);
     }
+
 }

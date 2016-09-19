@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".LoginActivity"
+    tools:context=".auth.ActivitySignIn"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Roadway Chat"
+            android:text="RoadWay Chat"
             android:textSize="30sp"
             android:textColor="#333333"/>
 
@@ -71,6 +71,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="FB"/>
+
+        <!--<com.facebook.login.widget.LoginButton-->
+            <!--android:id="@+id/login_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:layout_marginBottom="30dp" />-->
 
     </LinearLayout>
 

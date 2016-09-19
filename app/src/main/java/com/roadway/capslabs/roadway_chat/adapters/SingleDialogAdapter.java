@@ -11,13 +11,13 @@ import com.roadway.capslabs.roadway_chat.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by konstantin on 15.09.16.
+ * Created by konstantin on 15.09.16
  */
 public class SingleDialogAdapter extends BaseAdapter {
-    private ArrayList<String> inList, outList;
-    private ArrayList<ChatMessage> chatMessagesList = new ArrayList<>();
+    private List<ChatMessage> chatMessagesList = new ArrayList<>();
     private TextView textView;
     private Context context;
 
@@ -29,15 +29,15 @@ public class SingleDialogAdapter extends BaseAdapter {
         chatMessagesList.add(0, obj);
     }
 
-    public void copyArrayList(ArrayList<ChatMessage> list){
+    public void copyArrayList(List<ChatMessage> list){
         chatMessagesList = new ArrayList<>(list);
     }
 
-    public void addArrayList(ArrayList<ChatMessage> list){
+    public void addArrayList(List<ChatMessage> list){
         chatMessagesList.addAll(0,list);
     }
 
-    public ArrayList<ChatMessage> getArrayList(){
+    public List<ChatMessage> getList(){
         return chatMessagesList;
     }
 
@@ -72,12 +72,11 @@ public class SingleDialogAdapter extends BaseAdapter {
         textView = (TextView) rowView.findViewById(R.id.msg);
         ChatMessage chatMessageObj = getItem(position);
         View row;
+        int dialogViewId = R.layout.dialog_in;
         if (chatMessageObj.getOut()) {
-            row = inflater.inflate(R.layout.dialog_out, null);
-        } else {
-            row = inflater.inflate(R.layout.dialog_in, null);
+            dialogViewId = R.layout.dialog_out;
         }
-
+        row = inflater.inflate(dialogViewId, null);
         textView = (TextView) row.findViewById(R.id.msg);
         textView.setText(chatMessageObj.getMsg());
 

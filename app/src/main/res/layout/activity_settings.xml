@@ -3,12 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar_settings"
+        layout="@layout/toolbar"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Map Activity"
-        android:id="@+id/textView"
+        android:text="Settings"
+        android:id="@+id/settings"
         android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

@@ -3,44 +3,40 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
+    <include
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
-    </android.support.v7.widget.Toolbar>
+        layout="@layout/toolbar"/>
 
 
-<TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Username"
-        android:id="@+id/user_name"
-        android:layout_gravity="center_horizontal" />
+<!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="Username"-->
+        <!--android:id="@+id/user_name"-->
+        <!--android:layout_gravity="center_horizontal" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Responce from server"
-        android:id="@+id/response"
-        android:layout_gravity="center_horizontal" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+        <!--android:text="Responce from server"-->
+        <!--android:id="@+id/response"-->
+        <!--android:layout_gravity="center_horizontal" />-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:id="@+id/button_logout"
-        android:layout_gravity="center_horizontal" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Logout"-->
+        <!--android:id="@+id/button_logout"-->
+        <!--android:layout_gravity="center_horizontal" />-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Feed"
-        android:id="@+id/button_feed"
-        android:layout_gravity="center_horizontal" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Feed"-->
+        <!--android:id="@+id/button_feed"-->
+        <!--android:layout_gravity="center_horizontal" />-->
 
 
 </LinearLayout>
