@@ -13,7 +13,7 @@ import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 
 /**
- * Created by konstantin on 07.09.16.
+ * Created by konstantin on 07.09.16
  */
 public class ActivitySignIn extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,8 +34,8 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
         }
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         buttonSignUp = (Button) findViewById(R.id.btn_up);
 

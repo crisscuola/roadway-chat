@@ -8,8 +8,6 @@
     android:background="#6c83db"
     android:id="@+id/relativeDialog">
 
-
-
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,13 +32,9 @@
             android:paddingBottom="10dp"/>
     </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="58dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize">
-    </android.support.v7.widget.Toolbar>
+    <include
+        android:id="@+id/toolbar_feed"
+        layout="@layout/toolbar"/>
 
     <EditText
         android:layout_width="wrap_content"
