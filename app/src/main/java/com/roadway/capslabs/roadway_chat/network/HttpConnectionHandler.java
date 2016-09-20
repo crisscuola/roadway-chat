@@ -1,7 +1,5 @@
 package com.roadway.capslabs.roadway_chat.network;
 
-import com.centrifugal.centrifuge.android.Centrifugo;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,30 +16,41 @@ import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
-    private Centrifugo centrifugo;
-
     public String doGetRequest(String token) {
         HttpUrl url = UrlFactory.getUrl(RequestType.GET)
                 .addQueryParameter(token, token)
                 .build();
         String result = execute(url);
         JSONObject object = parseJSON(result);
-
         return result;
     }
 
-    public String getProfile(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
+    public JSONObject getProfile(String profile) {
+        HttpUrl url = UrlFactory.getUrl(RequestType.GET)
+                .addQueryParameter("profile", profile)
+                .build();
         String result = execute(url);
+        JSONObject object = parseJSON(result);
 
-        return result;
+        return object;
     }
 
-    public String getFeedStatus(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
+    public JSONObject getFeedStatus(String token) {
+        HttpUrl url = UrlFactory.getUrl(RequestType.GET)
+                .addQueryParameter("profile", token)
+                .build();
         String result = execute(url);
+        JSONObject object = parseJSON(result);
+        return object;
+    }
 
-        return result;
+    public JSONObject getWebSocketParams(String token) {
+        HttpUrl url = UrlFactory.getUrl(RequestType.GET)
+                .addQueryParameter("socket", token)
+                .build();
+        String result = execute(url);
+        JSONObject object = parseJSON(result);
+        return object;
     }
 
     public String logout(String token) {
@@ -83,13 +92,13 @@ public class HttpConnectionHandler {
     }
 
     private JSONObject parseJSON(String body) {
-        JSONObject loginObject;
+        JSONObject object;
         try {
-            loginObject = new JSONObject(body);
+            object = new JSONObject(body);
         } catch (JSONException e) {
             throw new RuntimeException("Exception happened while parsing JSON from response: " + body, e);
         }
 
-        return loginObject;
+        return object;
     }
 }

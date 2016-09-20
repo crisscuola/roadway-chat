@@ -23,7 +23,11 @@ import com.roadway.capslabs.roadway_chat.activity.MapActivity;
 import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
 import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivitySignIn;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKSdk;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,9 +37,13 @@ import java.util.List;
  * Created by kirill on 12.09.16
  */
 public class DrawerFactory {
+    private final HttpConnectionHandler handler;
+
+    public DrawerFactory(HttpConnectionHandler handler) {
+        this.handler = handler;
+    }
+
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
-
-
         DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
@@ -61,15 +69,23 @@ public class DrawerFactory {
     }
 
     private AccountHeader getAccountHeader(Activity activity) {
-        AccountHeader headerResult = new AccountHeaderBuilder()
-                .withActivity(activity)
-                .addProfiles(new ProfileDrawerItem().withName("Mike").withEmail("mikepenz@gmail.com"))
-                .withTextColorRes(R.color.colorProfileName)
-                .withHeaderBackground(R.color.colorHeaderBackground)
-                .withSelectionListEnabledForSingleProfile(false)
-                .build();
+        JSONObject profile = getProfile();
+        try {
+            String name = (String) profile.get("name");
+            String email = (String) profile.get("email");
+            AccountHeader headerResult = new AccountHeaderBuilder()
+                    .withActivity(activity)
+                    .addProfiles(new ProfileDrawerItem().withName(name).withEmail(email))
+                    .withTextColorRes(R.color.colorProfileName)
+                    .withHeaderBackground(R.color.colorHeaderBackground)
+                    .withSelectionListEnabledForSingleProfile(false)
+                    .build();
 
-        return headerResult;
+            return headerResult;
+        } catch (JSONException e) {
+            throw new RuntimeException("Exception while parsing json", e);
+        }
+
     }
 
     private IDrawerItem[] getDrawerItems() {
@@ -78,9 +94,9 @@ public class DrawerFactory {
                 .withBadge("19").withBadgeStyle(new BadgeStyle()
                         .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700));
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(2).withName("Profile");
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(2).withName("Settings");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(2).withName("Logout");
+        SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
+        SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout");
         items.add(feed);
         items.add(map);
         items.add(profile);
@@ -106,5 +122,9 @@ public class DrawerFactory {
             default:
                 return FeedActivity.class;
         }
+    }
+
+    private JSONObject getProfile() {
+        return handler.getProfile("Profile");
     }
 }

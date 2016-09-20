@@ -9,10 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.roadway.capslabs.roadway_chat.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKSdk;
 
 import java.util.ArrayList;
@@ -20,24 +23,30 @@ import java.util.Collections;
 import java.util.List;
 
 public class FeedActivity extends AppCompatActivity {
+    private final static DrawerFactory drawerFactory;
+    private final static HttpConnectionHandler handler;
+    private final static List<ChatMessage> chatMessagesList;
 
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory();
-
     private Button send;
     private EditText text;
     private ListView listView;
-
-    private final List<ChatMessage> chatMessagesList = new ArrayList<>();
+    private Drawer drawer;
 
     private SingleDialogAdapter singleDialogAdapter;
+
+    static {
+        handler = new HttpConnectionHandler();
+        drawerFactory = new DrawerFactory(handler);
+        chatMessagesList = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
         initViews();
         VKSdk.initialize(this);
