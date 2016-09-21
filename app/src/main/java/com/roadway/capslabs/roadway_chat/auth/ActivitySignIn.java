@@ -1,16 +1,24 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.facebook.FacebookSdk;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
+import com.vk.sdk.VKSdk;
+
+import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by konstantin on 07.09.16
@@ -18,24 +26,29 @@ import com.vk.sdk.VKScope;
 public class ActivitySignIn extends AppCompatActivity implements View.OnClickListener {
 
     private Button buttonSignUp, buttonSignIn, buttonVk, buttonFb;
+    private String status;
+    private Activity signIn;
+    public String [] scope = new String[] {VKScope.EMAIL};
 
+    @Override
+    public void onClick(View view) {
 
-    public String [] scope = new String[] {VKScope.MESSAGES,VKScope.FRIENDS,VKScope.WALL,
-            VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
-
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        signIn = this;
 
-        if (VKAccessToken.currentToken() != null) {
-            Intent intent = new Intent(this, FeedActivity.class);
-            startActivity(intent);
-        }
+        final HttpConnectionHandler handler = new HttpConnectionHandler();
 
+//        if (VKAccessToken.currentToken() != null) {
+//            Intent intent = new Intent(this, FeedActivity.class);
+//            startActivity(intent);
+//        }
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         buttonSignUp = (Button) findViewById(R.id.btn_up);
 
@@ -62,6 +75,20 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonVk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                try {
+//                    new RegisterRequest().execute(handler).get();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+                //Log.d("status", status);
+                //Log.d("status_token", VKAccessToken.currentToken().accessToken);
+//                if ("ok".equals(status)) {
+//                    Log.d("status_inside", status);
+//                    Intent intent = new Intent(view.getContext(), ActivityVk.class);
+//                    startActivity(intent);
+//                }
                 Intent intent = new Intent(view.getContext(), ActivityVk.class);
                 startActivity(intent);
             }
@@ -76,12 +103,17 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
             }
         });
-
     }
 
+    private final class RegisterRequest extends AsyncTask<HttpConnectionHandler, Void, String> {
+        @Override
+        protected String doInBackground(HttpConnectionHandler... params) {
+            return params[0].registerViaVk(VKAccessToken.currentToken().accessToken);
+        }
 
-    @Override
-    public void onClick(View v) {
-
+        @Override
+        protected void onPostExecute(String result) {
+            status = result;
+        }
     }
 }

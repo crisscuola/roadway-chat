@@ -69,8 +69,8 @@ public class DrawerFactory {
     }
 
     private AccountHeader getAccountHeader(Activity activity) {
-        JSONObject profile = getProfile();
         try {
+            JSONObject profile = getProfile();
             String name = (String) profile.get("name");
             String email = (String) profile.get("email");
             AccountHeader headerResult = new AccountHeaderBuilder()
@@ -125,6 +125,12 @@ public class DrawerFactory {
     }
 
     private JSONObject getProfile() {
-        return handler.getProfile("Profile");
+        //return handler.getProfile("Profile");
+        try {
+            return new JSONObject("{name:name, email:email}");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

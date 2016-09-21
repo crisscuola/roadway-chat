@@ -35,9 +35,14 @@ public class WebSocketHandler {
         centrifugo.disconnect();
     }
 
-    public void login() {}
-    public void logout() {}
-    public void sendMessage() {}
+    public void login() {
+    }
+
+    public void logout() {
+    }
+
+    public void sendMessage() {
+    }
 
     private Centrifugo buildConnection() {
         return new Centrifugo.Builder(centrifugoAddress)

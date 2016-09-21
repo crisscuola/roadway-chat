@@ -9,17 +9,18 @@ import com.facebook.login.LoginManager;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 
 import java.util.Arrays;
 
 /**
- * Created by konstantin on 11.09.16.
+ * Created by konstantin on 11.09.16
  */
 public class ActivityFb extends AppCompatActivity {
 
     private Drawer drawer;
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory();
+    private final DrawerFactory drawerFactory = new DrawerFactory(new HttpConnectionHandler());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,8 +32,6 @@ public class ActivityFb extends AppCompatActivity {
         initToolbar();
 
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-
-
     }
 
     private void initToolbar() {

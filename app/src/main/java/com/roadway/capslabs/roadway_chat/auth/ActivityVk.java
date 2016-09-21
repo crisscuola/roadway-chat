@@ -24,8 +24,8 @@ public class ActivityVk extends AppCompatActivity {
     private String[] scope = new String[]{VKScope.EMAIL};
 
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory();
-    private final HttpConnectionHandler handler = new HttpConnectionHandler(new OkHttpClient());
+    private final HttpConnectionHandler handler = new HttpConnectionHandler();
+    private final DrawerFactory drawerFactory = new DrawerFactory(handler);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
