@@ -75,13 +75,7 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonVk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                try {
-//                    new RegisterRequest().execute(handler).get();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                } catch (ExecutionException e) {
-//                    e.printStackTrace();
-//                }
+
                 //Log.d("status", status);
                 //Log.d("status_token", VKAccessToken.currentToken().accessToken);
 //                if ("ok".equals(status)) {
@@ -103,17 +97,5 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
             }
         });
-    }
-
-    private final class RegisterRequest extends AsyncTask<HttpConnectionHandler, Void, String> {
-        @Override
-        protected String doInBackground(HttpConnectionHandler... params) {
-            return params[0].registerViaVk(VKAccessToken.currentToken().accessToken);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            status = result;
-        }
     }
 }

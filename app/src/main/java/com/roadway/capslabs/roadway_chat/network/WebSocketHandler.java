@@ -3,6 +3,7 @@ package com.roadway.capslabs.roadway_chat.network;
 import com.centrifugal.centrifuge.android.Centrifugo;
 import com.centrifugal.centrifuge.android.credentials.Token;
 import com.centrifugal.centrifuge.android.credentials.User;
+import com.centrifugal.centrifuge.android.subscription.SubscriptionRequest;
 
 import org.json.JSONObject;
 
@@ -11,19 +12,22 @@ import org.json.JSONObject;
  */
 public class WebSocketHandler {
     private Centrifugo centrifugo;
-    private final String userId;
+    private final String user;
     private final String timestamp;
     private final String token;
-    private final String centrifugoAddress;
-    private final HttpConnectionHandler handler;
+    private final String chatChannel;
+    private final String info;
+    private final String sockJS;
+    private final String ws;
 
-    public WebSocketHandler(HttpConnectionHandler handler) {
-        this.handler = handler;
-        JSONObject object = handler.getWebSocketParams("socket");
-        userId = object.optString("userId");
+    public WebSocketHandler(JSONObject object) {
+        chatChannel = object.optString("chat_channel");
+        info = object.optString("info");
+        user = object.optString("user");
+        sockJS = object.optString("sockjs_endpoint");
         timestamp = object.optString("timestamp");
+        ws = object.optString("ws_endpoint");
         token = object.optString("token");
-        centrifugoAddress = object.optString("centrifugoWS");
     }
 
     public void connect() {
@@ -35,18 +39,16 @@ public class WebSocketHandler {
         centrifugo.disconnect();
     }
 
-    public void login() {
-    }
-
-    public void logout() {
+    public void subscribe() {
+        centrifugo.subscribe(new SubscriptionRequest(chatChannel));
     }
 
     public void sendMessage() {
     }
 
     private Centrifugo buildConnection() {
-        return new Centrifugo.Builder(centrifugoAddress)
-                .setUser(new User(userId, null))
+        return new Centrifugo.Builder(ws)
+                .setUser(new User(user, null))
                 .setToken(new Token(token, timestamp))
                 .build();
     }

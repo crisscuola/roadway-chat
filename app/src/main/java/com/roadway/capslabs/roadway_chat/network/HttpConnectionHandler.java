@@ -20,15 +20,8 @@ import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
-    public String doGetRequest(String token) {
-        HttpUrl url = UrlFactory.getRegisterUrl().build();
-        String result = execute(url);
-        JSONObject object = parseJSON(result);
-        return result;
-    }
-
     public JSONObject getProfile(String profile) {
-        HttpUrl url = UrlFactory.getRegisterUrl().build();
+        HttpUrl url = UrlFactory.getVkRegisterUrl().build();
         String result = execute(url);
         JSONObject object = parseJSON(result);
 
@@ -36,37 +29,22 @@ public class HttpConnectionHandler {
     }
 
     public JSONObject getFeedStatus(String token) {
-        HttpUrl url = UrlFactory.getRegisterUrl().build();
+        HttpUrl url = UrlFactory.getVkRegisterUrl().build();
         String result = execute(url);
         JSONObject object = parseJSON(result);
         return object;
     }
 
-    public JSONObject getWebSocketParams(String token) {
-        HttpUrl url = UrlFactory.getRegisterUrl().build();
+    public JSONObject getWebSocketParams() {
+        HttpUrl url = UrlFactory.getChatParametersUrl().build();
         String result = execute(url);
-        JSONObject object = parseJSON(result);
-        return object;
-    }
-
-    public String logout(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    public String loginVk(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
+        return parseJSON(result);
     }
 
     public String registerViaVk(String token) {
         String response = doVkRegisterPostRequest(token);
         JSONObject object = parseJSON(response);
-        String status = null;
+        String status;
         try {
             status = object.getString("status");
         } catch (JSONException e) {
@@ -107,8 +85,8 @@ public class HttpConnectionHandler {
     }
 
     private String doVkRegisterPostRequest(String token) {
-        HttpUrl url = UrlFactory.getRegisterUrl().build();
-
+        HttpUrl url = UrlFactory.getVkRegisterUrl().build();
+        Log.d("url_url", url.url().toString());
         RequestBody formBody = new FormBody.Builder()
                 .add("access_token", token)
                 .build();

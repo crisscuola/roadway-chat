@@ -16,16 +16,21 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.WebSocketHandler;
 import com.vk.sdk.VKSdk;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class FeedActivity extends AppCompatActivity {
     private final static DrawerFactory drawerFactory;
     private final static HttpConnectionHandler handler;
     private final static List<ChatMessage> chatMessagesList;
+    private WebSocketHandler webSocketHandler;
+    private JSONObject object;
 
     private Toolbar toolbar;
     private Button send;
@@ -41,9 +46,19 @@ public class FeedActivity extends AppCompatActivity {
         chatMessagesList = new ArrayList<>();
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try {
+            new ConnectRequest().execute().get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread was interrupted", e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException("Exception while async task execution", e);
+        }
+
+        webSocketHandler = new WebSocketHandler(object);
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
@@ -77,27 +92,11 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
-    private class DownloadingMessages extends AsyncTask<String, Void, String> {
+    private class ConnectRequest extends AsyncTask<Void, Void, Void> {
         @Override
-        protected String doInBackground(String... params) {
-            return "buf";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            send.setText("Отправить");
-            send.setClickable(true);
-            Collections.reverse(chatMessagesList);
-            singleDialogAdapter.copyArrayList(chatMessagesList);
-            singleDialogAdapter.notifyDataSetChanged();
-            chatMessagesList.clear();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            send.setClickable(false);
-            send.setText("Загрузка");
-            listView.setAdapter(singleDialogAdapter);
+        protected Void doInBackground(Void... params) {
+            object = handler.getWebSocketParams();
+            return null;
         }
     }
 }
