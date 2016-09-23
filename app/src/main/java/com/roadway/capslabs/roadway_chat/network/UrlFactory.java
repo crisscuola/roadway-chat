@@ -12,6 +12,7 @@ public class UrlFactory {
     private final static String PATH_CHAT = "chat";
     private final static String PATH_VK = "vk-oauth2";
     private final static String PATH_PARAMETERS = "parameters";
+    private final static String PATH_ADMIN = "admin";
     private final static HttpUrl.Builder getChatParametersBuilder  = new HttpUrl.Builder()
             .scheme("http")
             .host(url)
@@ -24,6 +25,11 @@ public class UrlFactory {
             .addPathSegment(PATH_TOKEN)
             .addPathSegment(PATH_VK)
             .addPathSegment("");
+    private final static HttpUrl.Builder csrf = new HttpUrl.Builder()
+            .scheme("http")
+            .host(url)
+            .addPathSegment(PATH_ADMIN)
+            .addPathSegment("");
 
     public static HttpUrl.Builder getVkRegisterUrl() {
         return postVkRegisterBuilder;
@@ -31,5 +37,9 @@ public class UrlFactory {
 
     public static HttpUrl.Builder getChatParametersUrl() {
         return getChatParametersBuilder;
+    }
+
+    public static HttpUrl.Builder getCsrfUrl() {
+        return csrf;
     }
 }

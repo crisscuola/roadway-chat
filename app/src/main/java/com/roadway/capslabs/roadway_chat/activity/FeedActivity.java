@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.roadway.capslabs.roadway_chat.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
@@ -45,7 +44,6 @@ public class FeedActivity extends AppCompatActivity {
         drawerFactory = new DrawerFactory(handler);
         chatMessagesList = new ArrayList<>();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

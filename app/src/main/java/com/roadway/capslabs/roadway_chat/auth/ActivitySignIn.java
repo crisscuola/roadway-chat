@@ -75,14 +75,6 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonVk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Log.d("status", status);
-                //Log.d("status_token", VKAccessToken.currentToken().accessToken);
-//                if ("ok".equals(status)) {
-//                    Log.d("status_inside", status);
-//                    Intent intent = new Intent(view.getContext(), ActivityVk.class);
-//                    startActivity(intent);
-//                }
                 Intent intent = new Intent(view.getContext(), ActivityVk.class);
                 startActivity(intent);
             }

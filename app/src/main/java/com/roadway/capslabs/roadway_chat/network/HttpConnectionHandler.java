@@ -1,12 +1,18 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import android.app.Activity;
 import android.util.Log;
+
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -20,9 +26,10 @@ import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
+    private OkHttpClient client = new OkHttpClient();
     public JSONObject getProfile(String profile) {
         HttpUrl url = UrlFactory.getVkRegisterUrl().build();
-        String result = execute(url);
+        String result = execute(url, client);
         JSONObject object = parseJSON(result);
 
         return object;
@@ -30,19 +37,20 @@ public class HttpConnectionHandler {
 
     public JSONObject getFeedStatus(String token) {
         HttpUrl url = UrlFactory.getVkRegisterUrl().build();
-        String result = execute(url);
+        String result = execute(url, client);
         JSONObject object = parseJSON(result);
         return object;
     }
 
     public JSONObject getWebSocketParams() {
         HttpUrl url = UrlFactory.getChatParametersUrl().build();
-        String result = execute(url);
+        String result = execute(url, client);
         return parseJSON(result);
     }
 
-    public String registerViaVk(String token) {
-        String response = doVkRegisterPostRequest(token);
+    public String registerViaVk(Activity context, String token) {
+        String response = doVkRegisterPostRequest(context, token);
+        Log.d("response_viaVk", response);
         JSONObject object = parseJSON(response);
         String status;
         try {
@@ -53,12 +61,11 @@ public class HttpConnectionHandler {
         return status;
     }
 
-    private String execute(HttpUrl url) {
+    private String execute(HttpUrl url, OkHttpClient client) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
-        OkHttpClient client = new OkHttpClient();
         String body;
         try {
             Response response = client.newCall(request).execute();
@@ -84,11 +91,19 @@ public class HttpConnectionHandler {
         return object;
     }
 
-    private String doVkRegisterPostRequest(String token) {
+    private String doVkRegisterPostRequest(Activity context, String token) {
+        CookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .build();
+        String csrf = executeCsrf(UrlFactory.getCsrfUrl().build(), client, cookieJar);
+        Log.d("csrf_vk", csrf + " " + token);
+
         HttpUrl url = UrlFactory.getVkRegisterUrl().build();
-        Log.d("url_url", url.url().toString());
         RequestBody formBody = new FormBody.Builder()
                 .add("access_token", token)
+                .add("csrfmiddlewaretoken", csrf)
                 .build();
 
         Request request = new Request.Builder()
@@ -97,12 +112,31 @@ public class HttpConnectionHandler {
                 .build();
 
         try {
-            Response response = new OkHttpClient().newCall(request).execute();
+            Response response = client.newCall(request).execute();
             String result = response.body().string();
             Log.d("status_handler", result);
             return result;
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
         }
+    }
+
+    private String executeCsrf(HttpUrl url, OkHttpClient client, CookieJar jar) {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        String token;
+        try {
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful())
+                throw new RuntimeException("Unexpected code " + response);
+
+            token = jar.loadForRequest(UrlFactory.getCsrfUrl().build()).get(0).value();
+        } catch (IOException e) {
+            throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
+        }
+
+        return token;
     }
 }
