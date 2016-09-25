@@ -10,22 +10,20 @@ import android.widget.Button;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
+import com.vk.sdk.VKSdk;
 
 /**
  * Created by konstantin on 07.09.16
  */
-public class ActivitySignIn extends AppCompatActivity implements View.OnClickListener {
+public class ActivitySignIn extends AppCompatActivity  {
 
     private Button buttonSignUp, buttonSignIn, buttonVk, buttonFb;
     private String status;
     private Activity signIn;
-    public String [] scope = new String[] {VKScope.EMAIL};
-
-    @Override
-    public void onClick(View view) {
-
-    }
+    private Activity context = this;
+    private String[] scope = new String[]{VKScope.EMAIL};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +55,7 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), FeedActivity.class);
+                Intent intent = new Intent(view.getContext(), SignIn.class);
                 startActivity(intent);
             }
         });

@@ -43,7 +43,7 @@ public class ActivityVk extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk);
         if (VKAccessToken.currentToken() == null) {
-            VKSdk.login(this, scope);
+            VKSdk.login(context, scope);
         }
         try {
             new RegisterRequest().execute(handler).get();
@@ -63,17 +63,12 @@ public class ActivityVk extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-        if (VKAccessToken.currentToken() != null) {
-            Intent intent = new Intent(this, FeedActivity.class);
-            startActivity(intent);
-        }
     }
 
     private final class RegisterRequest extends AsyncTask<HttpConnectionHandler, Void, String> {
         @Override
         protected String doInBackground(HttpConnectionHandler... params) {
-            return params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
+            return "string";//params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
 //            String user = "nope";
 //            try {
 //                user = (String) params[0].getWebSocketParams().get("user");

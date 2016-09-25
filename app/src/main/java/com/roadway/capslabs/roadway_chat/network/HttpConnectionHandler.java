@@ -98,7 +98,7 @@ public class HttpConnectionHandler {
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .build();
-        String csrf = executeCsrf(UrlFactory.getCsrfUrl().build(), client, cookieJar);
+        String csrf = executeCsrf(client, cookieJar);
         Log.d("csrf_vk", csrf + " " + token + "\n email " + VKAccessToken.currentToken().email);
 
         HttpUrl url = UrlFactory.getVkRegisterUrl().build();
@@ -122,9 +122,9 @@ public class HttpConnectionHandler {
         }
     }
 
-    private String executeCsrf(HttpUrl url, OkHttpClient client, CookieJar jar) {
+    public String executeCsrf(OkHttpClient client, CookieJar jar) {
         Request request = new Request.Builder()
-                .url(url)
+                .url(UrlFactory.getUrl(ActionType.CSRF))
                 .build();
 
         String token;
@@ -133,11 +133,30 @@ public class HttpConnectionHandler {
             if (!response.isSuccessful())
                 throw new RuntimeException("Unexpected code " + response);
 
-            token = jar.loadForRequest(UrlFactory.getCsrfUrl().build()).get(0).value();
+            token = jar.loadForRequest(ActionType.CSRF.getUrl().build()).get(0).value();
         } catch (IOException e) {
-            throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
+            throw new RuntimeException("Connectivity problem happened during request to " +
+                    ActionType.CSRF.getUrl(), e);
         }
 
         return token;
+    }
+
+    public String getCsrfToken() {
+//        CookieJar cookieJar =
+//                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .cookieJar(cookieJar)
+//                .build();
+//        return executeCsrf(client, cookieJar);
+        HttpUrl url = UrlFactory.getUrl(ActionType.CSRF);
+        String result = execute(url, client);
+        JSONObject object = parseJSON(result);
+        try {
+            return object.getString("token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "no token";
     }
 }
