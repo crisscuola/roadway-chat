@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,13 @@ public class FeedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_feed);
+        initToolbar(getString(R.string.feed_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        initAdapter();
+        initViews();
+        VKSdk.initialize(this);
+
         try {
             new ConnectRequest().execute().get();
         } catch (InterruptedException e) {
@@ -59,14 +67,8 @@ public class FeedActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             throw new RuntimeException("Exception while async task execution", e);
         }
-
         //webSocketHandler = new WebSocketHandler(object);
-        setContentView(R.layout.activity_feed);
-        initToolbar(getString(R.string.feed_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-        initAdapter();
-        initViews();
-        VKSdk.initialize(this);
+
     }
 
     private void initToolbar(String title) {
@@ -94,11 +96,26 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
-    private class ConnectRequest extends AsyncTask<Void, Void, Void> {
+    private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
         @Override
-        protected Void doInBackground(Void... params) {
-            new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
-            return null;
+        protected JSONObject doInBackground(Void... params) {
+            JSONObject chatParams = new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
+            Log.d("feed_body1", chatParams.toString());
+            webSocketHandler = new WebSocketHandler(chatParams);
+            webSocketHandler.connect();
+            webSocketHandler.subscribe();
+            return chatParams;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+//            webSocketHandler = new WebSocketHandler(jsonObject);
+//            webSocketHandler.connect();
+//            webSocketHandler.subscribe();
+//            Log.d("feed_body1", "print1");
+//            Log.d("feed_body2", jsonObject.toString());
+            object = jsonObject;
         }
     }
 }

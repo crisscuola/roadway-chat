@@ -7,18 +7,17 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 import okhttp3.CookieJar;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.roadway.capslabs.roadway_chat.network.ActionType.CHAT;
-import static com.roadway.capslabs.roadway_chat.network.ActionType.LOGIN;
 
 /**
  * Created by kirill on 25.09.16
@@ -30,16 +29,11 @@ public class ChatConnectionHandler {
         this.handler = handler;
     }
 
-    public String getChatParams(Activity context) {
+    public JSONObject getChatParams(Activity context) {
         HttpUrl url = UrlFactory.getUrl(CHAT);
-        //RequestBody formBody = formBody();
         Request request = buildRequest(url);
-        return getResponse(context, request);
-    }
-
-    private RequestBody formBody() {
-        return new FormBody.Builder()
-                .build();
+        String response = getResponse(context, request);
+        return handler.parseJSON(response);
     }
 
     private Request buildRequest(HttpUrl url) {

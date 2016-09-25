@@ -36,12 +36,14 @@
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="lol@mail.ru"
             android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="str123str"
             android:inputType="textPassword"/>
 
         <Button

@@ -81,15 +81,14 @@ public class HttpConnectionHandler {
         return body;
     }
 
-    private JSONObject parseJSON(String body) {
+    public JSONObject parseJSON(String body) {
         JSONObject object;
         try {
             object = new JSONObject(body);
+            return object;
         } catch (JSONException e) {
             throw new RuntimeException("Exception happened while parsing JSON from response: " + body, e);
         }
-
-        return object;
     }
 
     private String doVkRegisterPostRequest(Activity context, String token) {
