@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
@@ -18,13 +17,7 @@ import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
-
-import okhttp3.OkHttpClient;
 
 /**
  * Created by konstantin on 08.09.16
@@ -44,29 +37,40 @@ public class ActivityVk extends AppCompatActivity {
         setContentView(R.layout.activity_vk);
         if (VKAccessToken.currentToken() == null) {
             VKSdk.login(this, scope);
-        }
-        try {
-            new RegisterRequest().execute(handler).get();
-            if ("ok".equals(status)) {
-                Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, FeedActivity.class);
-                startActivity(intent);
+        } else {
+            try {
+                new RegisterRequest().execute(handler).get();
+                if ("ok".equals(status)) {
+                    Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, FeedActivity.class);
+                    startActivity(intent);
+                }
+                //Log.d("status_status", status);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Thread was interrupted", e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException("Exception while async task execution", e);
             }
-            //Log.d("status_status", status);
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Thread was interrupted", e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException("Exception while async task execution", e);
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         if (VKAccessToken.currentToken() != null) {
-            Intent intent = new Intent(this, FeedActivity.class);
-            startActivity(intent);
+            try {
+                new RegisterRequest().execute(handler).get();
+                if ("ok".equals(status)) {
+                    Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, FeedActivity.class);
+                    startActivity(intent);
+                }
+                //Log.d("status_status", status);
+            } catch (InterruptedException e) {
+                throw new RuntimeException("Thread was interrupted", e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException("Exception while async task execution", e);
+            }
         }
     }
 

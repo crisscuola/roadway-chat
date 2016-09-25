@@ -34,5 +34,7 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="feed_activity_title">Feed</string>
+    <string name="single_chat_title">SIngle Chat</string>
+
 
 </resources>
