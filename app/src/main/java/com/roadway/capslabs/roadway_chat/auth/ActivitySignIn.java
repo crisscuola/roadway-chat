@@ -2,23 +2,15 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.facebook.FacebookSdk;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
-import com.vk.sdk.VKSdk;
-
-import java.util.Collections;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by konstantin on 07.09.16

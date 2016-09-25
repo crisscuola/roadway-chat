@@ -73,20 +73,20 @@ public class ActivityVk extends AppCompatActivity {
     private final class RegisterRequest extends AsyncTask<HttpConnectionHandler, Void, String> {
         @Override
         protected String doInBackground(HttpConnectionHandler... params) {
-            //return params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
-            String user = "nope";
-            try {
-                user = (String) params[0].getWebSocketParams().get("user");
-                Log.d("user", user);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return user;
+            return params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
+//            String user = "nope";
+//            try {
+//                user = (String) params[0].getWebSocketParams().get("user");
+//                Log.d("user", user);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//            return user;
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("user_user", result);
+            Log.d("status", result);
             status = result;
         }
     }

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.vk.sdk.VKAccessToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,7 +99,7 @@ public class HttpConnectionHandler {
                 .cookieJar(cookieJar)
                 .build();
         String csrf = executeCsrf(UrlFactory.getCsrfUrl().build(), client, cookieJar);
-        Log.d("csrf_vk", csrf + " " + token);
+        Log.d("csrf_vk", csrf + " " + token + "\n email " + VKAccessToken.currentToken().email);
 
         HttpUrl url = UrlFactory.getVkRegisterUrl().build();
         RequestBody formBody = new FormBody.Builder()
