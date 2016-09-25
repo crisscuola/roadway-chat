@@ -49,6 +49,16 @@ public enum ActionType {
                     .addPathSegment(PATH_GET_TOKEN)
                     .addPathSegment("");
         }
+    },
+    LOGIN {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme("http")
+                    .host(URL)
+                    .addPathSegment(PATH_LOGIN)
+                    .addPathSegment("");
+        }
     };
     public abstract HttpUrl.Builder getUrl();
 

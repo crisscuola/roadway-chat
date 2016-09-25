@@ -14,6 +14,7 @@ public class UrlConst {
     public final static String PATH_PARAMETERS = "parameters";
     public final static String PATH_ADMIN = "admin";
     public final static String PATH_GET_TOKEN = "get_token";
+    public final static String PATH_LOGIN = "login";
 
     //public static final String URL = "www.sermalenk.myjino.ru";
 //    public static final String PATH_1 = "dialog";

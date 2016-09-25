@@ -1,5 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import com.roadway.capslabs.roadway_chat.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.WebSocketHandler;
 import com.vk.sdk.VKSdk;
@@ -37,6 +39,8 @@ public class FeedActivity extends AppCompatActivity {
     private ListView listView;
     private Drawer drawer;
 
+    private final Activity context = this;
+
     private SingleDialogAdapter singleDialogAdapter;
 
     static {
@@ -56,7 +60,7 @@ public class FeedActivity extends AppCompatActivity {
             throw new RuntimeException("Exception while async task execution", e);
         }
 
-        webSocketHandler = new WebSocketHandler(object);
+        //webSocketHandler = new WebSocketHandler(object);
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
@@ -93,7 +97,7 @@ public class FeedActivity extends AppCompatActivity {
     private class ConnectRequest extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            object = handler.getWebSocketParams();
+            new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
             return null;
         }
     }
