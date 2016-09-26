@@ -57,6 +57,7 @@ public class ActivityVk extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
         if (VKAccessToken.currentToken() != null) {
             try {
                 new RegisterRequest().execute(handler).get();
@@ -77,7 +78,7 @@ public class ActivityVk extends AppCompatActivity {
     private final class RegisterRequest extends AsyncTask<HttpConnectionHandler, Void, String> {
         @Override
         protected String doInBackground(HttpConnectionHandler... params) {
-            return params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
+            return "string";//params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
 //            String user = "nope";
 //            try {
 //                user = (String) params[0].getWebSocketParams().get("user");

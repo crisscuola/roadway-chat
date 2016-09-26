@@ -6,6 +6,8 @@ import android.util.Log;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.roadway.capslabs.roadway_chat.url.UrlFactory;
+import com.roadway.capslabs.roadway_chat.url.UrlType;
 import com.vk.sdk.VKAccessToken;
 
 import org.json.JSONException;
@@ -21,15 +23,16 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
+import static com.roadway.capslabs.roadway_chat.url.UrlConst.*;
 
 /**
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
     private OkHttpClient client = new OkHttpClient();
+
     public JSONObject getProfile(String profile) {
-        HttpUrl url = UrlFactory.getVkRegisterUrl().build();
+        HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
         String result = execute(url, client);
         JSONObject object = parseJSON(result);
 
@@ -37,16 +40,10 @@ public class HttpConnectionHandler {
     }
 
     public JSONObject getFeedStatus(String token) {
-        HttpUrl url = UrlFactory.getVkRegisterUrl().build();
+        HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
         String result = execute(url, client);
         JSONObject object = parseJSON(result);
         return object;
-    }
-
-    public JSONObject getWebSocketParams() {
-        HttpUrl url = UrlFactory.getChatParametersUrl().build();
-        String result = execute(url, client);
-        return parseJSON(result);
     }
 
     public String registerViaVk(Activity context, String token) {
@@ -81,15 +78,14 @@ public class HttpConnectionHandler {
         return body;
     }
 
-    private JSONObject parseJSON(String body) {
+    public JSONObject parseJSON(String body) {
         JSONObject object;
         try {
             object = new JSONObject(body);
+            return object;
         } catch (JSONException e) {
             throw new RuntimeException("Exception happened while parsing JSON from response: " + body, e);
         }
-
-        return object;
     }
 
     private String doVkRegisterPostRequest(Activity context, String token) {
@@ -98,10 +94,10 @@ public class HttpConnectionHandler {
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
                 .build();
-        String csrf = executeCsrf(UrlFactory.getCsrfUrl().build(), client, cookieJar);
+        String csrf = executeCsrf(client, cookieJar);
         Log.d("csrf_vk", csrf + " " + token + "\n email " + VKAccessToken.currentToken().email);
 
-        HttpUrl url = UrlFactory.getVkRegisterUrl().build();
+        HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
         RequestBody formBody = new FormBody.Builder()
                 .add("access_token", token)
                 .add("csrfmiddlewaretoken", csrf)
@@ -122,9 +118,9 @@ public class HttpConnectionHandler {
         }
     }
 
-    private String executeCsrf(HttpUrl url, OkHttpClient client, CookieJar jar) {
+    public String executeCsrf(OkHttpClient client, CookieJar jar) {
         Request request = new Request.Builder()
-                .url(url)
+                .url(UrlFactory.getUrl(UrlType.CSRF))
                 .build();
 
         String token;
@@ -133,11 +129,30 @@ public class HttpConnectionHandler {
             if (!response.isSuccessful())
                 throw new RuntimeException("Unexpected code " + response);
 
-            token = jar.loadForRequest(UrlFactory.getCsrfUrl().build()).get(0).value();
+            token = jar.loadForRequest(UrlType.CSRF.getUrl().build()).get(0).value();
         } catch (IOException e) {
-            throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
+            throw new RuntimeException("Connectivity problem happened during request to " +
+                    UrlType.CSRF.getUrl(), e);
         }
 
         return token;
+    }
+
+    public String getCsrfToken() {
+//        CookieJar cookieJar =
+//                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .cookieJar(cookieJar)
+//                .build();
+//        return executeCsrf(client, cookieJar);
+        HttpUrl url = UrlFactory.getUrl(UrlType.CSRF);
+        String result = execute(url, client);
+        JSONObject object = parseJSON(result);
+        try {
+            return object.getString("token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "no token";
     }
 }
