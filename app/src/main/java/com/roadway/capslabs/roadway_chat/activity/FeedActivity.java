@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
-import com.roadway.capslabs.roadway_chat.ChatMessage;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
@@ -60,15 +60,17 @@ public class FeedActivity extends AppCompatActivity {
         initViews();
         VKSdk.initialize(this);
 
-        try {
-            new ConnectRequest().execute().get();
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Thread was interrupted", e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException("Exception while async task execution", e);
-        }
+        new ConnectRequest().execute();
         //webSocketHandler = new WebSocketHandler(object);
 
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("con_listener", "onStop");
+
+        webSocketHandler.disconnect();
+        super.onStop();
     }
 
     private void initToolbar(String title) {
@@ -102,8 +104,8 @@ public class FeedActivity extends AppCompatActivity {
             JSONObject chatParams = new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
             Log.d("feed_body1", chatParams.toString());
             webSocketHandler = new WebSocketHandler(chatParams);
-            webSocketHandler.connect();
-            webSocketHandler.subscribe();
+            webSocketHandler.connect().start();
+
             return chatParams;
         }
 

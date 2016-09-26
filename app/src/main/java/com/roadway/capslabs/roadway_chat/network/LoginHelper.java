@@ -6,7 +6,8 @@ import android.util.Log;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.roadway.capslabs.roadway_chat.models.User;
+import com.roadway.capslabs.roadway_chat.url.UrlFactory;
+import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.roadway.capslabs.roadway_chat.network.ActionType.LOGIN;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGIN;
 
 /**
  * Created by kirill on 25.09.16
@@ -61,11 +62,11 @@ public class LoginHelper {
         try {
             Response response = client.newCall(request).execute();
             String result = response.body().string();
-            cookieJar.saveFromResponse(ActionType.CHAT.getUrl().build(),
-                    cookieJar.loadForRequest(ActionType.LOGIN.getUrl().build()));
+            cookieJar.saveFromResponse(UrlType.CHAT.getUrl().build(),
+                    cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
 
             Log.d("status_login1",  cookieJar.loadForRequest(request.url()).get(0).toString());
-            Log.d("status_login2",  cookieJar.loadForRequest(ActionType.CHAT.getUrl().build()).get(1).toString());
+            Log.d("status_login2",  cookieJar.loadForRequest(UrlType.CHAT.getUrl().build()).get(1).toString());
             return result;
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);

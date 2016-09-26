@@ -6,6 +6,7 @@ import android.util.Log;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import org.json.JSONObject;
 
@@ -17,7 +18,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static com.roadway.capslabs.roadway_chat.network.ActionType.CHAT;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.CHAT;
 
 /**
  * Created by kirill on 25.09.16
@@ -33,6 +34,7 @@ public class ChatConnectionHandler {
         HttpUrl url = UrlFactory.getUrl(CHAT);
         Request request = buildRequest(url);
         String response = getResponse(context, request);
+        Log.d("feed_body", response);
         return handler.parseJSON(response);
     }
 

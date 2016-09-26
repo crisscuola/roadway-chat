@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat;
+package com.roadway.capslabs.roadway_chat.models;
 
 /**
  * Created by konstantin on 16.09.16.

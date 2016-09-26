@@ -1,13 +1,13 @@
-package com.roadway.capslabs.roadway_chat.network;
+package com.roadway.capslabs.roadway_chat.url;
 
 import okhttp3.HttpUrl;
 
-import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
+import static com.roadway.capslabs.roadway_chat.url.UrlConst.*;
 
 /**
  * Created by kirill on 25.09.16
  */
-public enum ActionType {
+public enum UrlType {
     CHAT {
         @Override
         public HttpUrl.Builder getUrl() {
@@ -61,5 +61,4 @@ public enum ActionType {
         }
     };
     public abstract HttpUrl.Builder getUrl();
-
 }

@@ -52,7 +52,6 @@ public class ActivityVk extends AppCompatActivity {
                 Intent intent = new Intent(this, FeedActivity.class);
                 startActivity(intent);
             }
-            //Log.d("status_status", status);
         } catch (InterruptedException e) {
             throw new RuntimeException("Thread was interrupted", e);
         } catch (ExecutionException e) {

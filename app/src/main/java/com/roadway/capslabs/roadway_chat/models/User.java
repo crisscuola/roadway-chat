@@ -53,6 +53,7 @@ public class User {
 
     @Override
     public String toString() {
-        return getEmail()+ " " + getFirstName() + " " + getLastName() + " " + getUserName() + " " + getPassword1() + " " + getPassword2();
+        return getEmail()+ " " + getFirstName() + " " + getLastName() + " "
+                + getUserName() + " " + getPassword1() + " " + getPassword2();
     }
 }

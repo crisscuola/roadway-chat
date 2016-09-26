@@ -9,13 +9,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.User;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-import com.roadway.capslabs.roadway_chat.network.Registrator;
+import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
+import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
 
 import java.util.concurrent.ExecutionException;
 
@@ -34,7 +34,7 @@ public class ActivitySignUp extends AppCompatActivity {
 
     private Activity context = this;
     private String response;
-    private Registrator registrator = new Registrator(new HttpConnectionHandler());
+    private Registrator registrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +60,10 @@ public class ActivitySignUp extends AppCompatActivity {
                         password1.getText().toString(),
                         password2.getText().toString()
                 );
+                registrator = new RegistratorByEmail(new HttpConnectionHandler(), user);
+
                 try {
-                    new RegisterRequest().execute(registrator, user).get();
+                    new RegisterRequest().execute(registrator).get();
                 } catch (InterruptedException e) {
                     throw new RuntimeException("Thread was interrupted", e);
                 } catch (ExecutionException e) {
@@ -79,10 +81,9 @@ public class ActivitySignUp extends AppCompatActivity {
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
-            Registrator registrator = (Registrator) params[0];
-            User user = (User) params[1];
+            Registrator registrator = (RegistratorByEmail) params[0];
 
-            return registrator.register(context, user);
+            return registrator.register(context);
         }
 
         @Override
