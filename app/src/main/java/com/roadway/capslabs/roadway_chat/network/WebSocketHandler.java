@@ -27,6 +27,7 @@ public class WebSocketHandler {
     private final String chatChannel;
     private final String info;
     private final String sockJS;
+    private final String url;
     private  String ws;
 
     public WebSocketHandler(JSONObject object) {
@@ -36,8 +37,10 @@ public class WebSocketHandler {
         sockJS = object.optString("sockjs_endpoint");
         timestamp = object.optString("timestamp");
         ws = object.optString("ws_endpoint");
+        //ws = "wss://centrifugo.herokuapp.com/connection/websocket";
         ws = ws.replace("http", "ws");
         token = object.optString("token");
+        url = object.optString("url");
     }
 
     public Thread connect() {
@@ -64,7 +67,8 @@ public class WebSocketHandler {
         centrifugo.subscribe(new SubscriptionRequest(chatChannel));
     }
 
-    public void sendMessage() {
+    public void sendMessage(String message) {
+        HttpConnectionHandler.sendMessage(user, message);
     }
 
     private Centrifugo buildConnection() {
@@ -88,7 +92,7 @@ public class WebSocketHandler {
 
             @Override
             public void onDisconnected(int code, String reason, boolean remote) {
-                Log.d("con_listener", "disconnected");
+                Log.d("con_listener", "disconnected " + reason + " " + remote);
             }
         });
     }
@@ -116,7 +120,7 @@ public class WebSocketHandler {
         centrifugo.setDataMessageListener(new DataMessageListener() {
             @Override
             public void onNewDataMessage(final DataMessage message) {
-                Log.d("con_listener", "new_data_msg");
+                Log.d("con_listener", "new_data_msg " + message.getData());
             }
         });
     }
