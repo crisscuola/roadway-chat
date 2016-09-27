@@ -25,7 +25,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class FeedActivity extends AppCompatActivity {
     private final static DrawerFactory drawerFactory;
@@ -104,12 +103,18 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
+    public void addIncomingMessage(String message) {
+        ChatMessage chatMessage = new ChatMessage(message, false, null);
+        singleDialogAdapter.add(chatMessage);
+        singleDialogAdapter.notifyDataSetChanged();
+    }
+
     private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
         @Override
         protected JSONObject doInBackground(Void... params) {
             JSONObject chatParams = new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
             Log.d("feed_body1", chatParams.toString());
-            webSocketHandler = new WebSocketHandler(chatParams, singleDialogAdapter);
+            webSocketHandler = new WebSocketHandler(chatParams);
             webSocketHandler.connect().start();
 
             return chatParams;
