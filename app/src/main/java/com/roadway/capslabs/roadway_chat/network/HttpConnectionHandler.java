@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
 import android.app.Activity;
+import android.util.JsonWriter;
 import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -12,6 +13,7 @@ import com.vk.sdk.VKAccessToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.IOException;
 
@@ -138,6 +140,34 @@ public class HttpConnectionHandler {
         return token;
     }
 
+    public static void sendMessage(String uid, String message) {
+        HttpUrl url = UrlFactory.getUrl(UrlType.API);
+        String data = "{\"channel\": \"public:roadway\", \"data\": " + "\"" + message + "\"" + "}";
+        try {
+            JSONObject object = new JSONObject(data);
+            Log.d("feed_object", object.toString() + " " + data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        RequestBody formBody = new FormBody.Builder()
+                .add("uid", uid)
+                .add("method", "publish")
+                .add("params", data)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+
+        try {
+            Response execute = new OkHttpClient().newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException("Connectivity problem happened during request to " +
+                    UrlType.API.getUrl(), e);
+        }
+
+    }
     public String getCsrfToken() {
 //        CookieJar cookieJar =
 //                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));

@@ -59,6 +59,17 @@ public enum UrlType {
                     .addPathSegment(PATH_LOGIN)
                     .addPathSegment("");
         }
+    },
+    API {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme("http")
+                    .host(URL)
+                    .addPathSegment(PATH_API)
+                    .addPathSegment("");
+        }
     };
+
     public abstract HttpUrl.Builder getUrl();
 }
