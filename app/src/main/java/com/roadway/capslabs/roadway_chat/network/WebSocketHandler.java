@@ -13,6 +13,8 @@ import com.centrifugal.centrifuge.android.message.DataMessage;
 import com.centrifugal.centrifuge.android.message.presence.JoinMessage;
 import com.centrifugal.centrifuge.android.message.presence.LeftMessage;
 import com.centrifugal.centrifuge.android.subscription.SubscriptionRequest;
+import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 
 import org.json.JSONObject;
 
@@ -28,9 +30,10 @@ public class WebSocketHandler {
     private final String info;
     private final String sockJS;
     private final String url;
-    private  String ws;
+    private String ws;
+    private final SingleDialogAdapter adapter;
 
-    public WebSocketHandler(JSONObject object) {
+    public WebSocketHandler(JSONObject object, SingleDialogAdapter adapter) {
         chatChannel = object.optString("chat_channel");
         info = object.optString("info");
         user = object.optString("user");
@@ -41,6 +44,7 @@ public class WebSocketHandler {
         ws = ws.replace("http", "ws");
         token = object.optString("token");
         url = object.optString("url");
+        this.adapter = adapter;
     }
 
     public Thread connect() {
@@ -121,6 +125,9 @@ public class WebSocketHandler {
             @Override
             public void onNewDataMessage(final DataMessage message) {
                 Log.d("con_listener", "new_data_msg " + message.getData());
+                ChatMessage chatMessage = new ChatMessage(message.getData(), false, null);
+//                adapter.add(chatMessage);
+//                adapter.notifyDataSetChanged();
             }
         });
     }

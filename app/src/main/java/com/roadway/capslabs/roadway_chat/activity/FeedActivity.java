@@ -109,7 +109,7 @@ public class FeedActivity extends AppCompatActivity {
         protected JSONObject doInBackground(Void... params) {
             JSONObject chatParams = new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
             Log.d("feed_body1", chatParams.toString());
-            webSocketHandler = new WebSocketHandler(chatParams);
+            webSocketHandler = new WebSocketHandler(chatParams, singleDialogAdapter);
             webSocketHandler.connect().start();
 
             return chatParams;

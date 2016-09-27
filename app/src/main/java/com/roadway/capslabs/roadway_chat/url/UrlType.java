@@ -65,7 +65,7 @@ public enum UrlType {
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
                     .scheme("http")
-                    .host(URL)
+                    .host("p30720.lab1.stud.tech-mail.ru")
                     .addPathSegment(PATH_API)
                     .addPathSegment("");
         }

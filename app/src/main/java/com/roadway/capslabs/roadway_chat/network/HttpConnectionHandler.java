@@ -11,6 +11,7 @@ import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 import com.vk.sdk.VKAccessToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -143,25 +145,29 @@ public class HttpConnectionHandler {
     public static void sendMessage(String uid, String message) {
         HttpUrl url = UrlFactory.getUrl(UrlType.API);
         String data = "{\"channel\": \"public:roadway\", \"data\": " + "\"" + message + "\"" + "}";
+
+        JSONObject object = new JSONObject();
         try {
-            JSONObject object = new JSONObject(data);
-            Log.d("feed_object", object.toString() + " " + data);
+            object.put("uid", uid).put("method", "publish");
+            JSONObject item = new JSONObject();
+            item.put("channel", "public:roadway").put("data", message);
+            object.put("params", item);
+            data = object.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody formBody = new FormBody.Builder()
-                .add("uid", uid)
-                .add("method", "publish")
-                .add("params", data)
-                .build();
+
+        RequestBody body = RequestBody.create(MediaType
+                .parse("application/json"), data);
 
         Request request = new Request.Builder()
                 .url(url)
-                .post(formBody)
+                .addHeader("Content-type", "application/json")
+                .post(body)
                 .build();
 
         try {
-            Response execute = new OkHttpClient().newCall(request).execute();
+            new OkHttpClient().newCall(request).execute();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " +
                     UrlType.API.getUrl(), e);
