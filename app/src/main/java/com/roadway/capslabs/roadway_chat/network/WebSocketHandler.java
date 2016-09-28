@@ -14,6 +14,8 @@ import com.centrifugal.centrifuge.android.message.DataMessage;
 import com.centrifugal.centrifuge.android.message.presence.JoinMessage;
 import com.centrifugal.centrifuge.android.message.presence.LeftMessage;
 import com.centrifugal.centrifuge.android.subscription.SubscriptionRequest;
+import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 
 import org.json.JSONObject;
 
@@ -30,8 +32,10 @@ public class WebSocketHandler {
     private final String sockJS;
     private final String url;
     private String ws;
+    private final SingleDialogAdapter adapter;
+    private final Activity context;
 
-    public WebSocketHandler(JSONObject object) {
+    public WebSocketHandler(Activity context, SingleDialogAdapter adapter, JSONObject object) {
         chatChannel = object.optString("chat_channel");
         info = object.optString("info");
         user = object.optString("user");
@@ -41,6 +45,8 @@ public class WebSocketHandler {
         ws = ws.replace("http", "ws");
         token = object.optString("token");
         url = object.optString("url");
+        this.adapter = adapter;
+        this.context = context;
     }
 
     public Thread connect() {
@@ -121,6 +127,19 @@ public class WebSocketHandler {
             @Override
             public void onNewDataMessage(final DataMessage message) {
                 Log.d("con_listener", "new_data_msg " + message.getData());
+                boolean isOut = false;
+                if (message.getUUID().equals(token)) {
+                    isOut = true;
+                }
+                Log.d("feed_isOut", message.getUUID() + " my: " + token);
+                ChatMessage chatMessage = new ChatMessage(message.getData(), isOut, null);
+                adapter.add(chatMessage);
+                context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }

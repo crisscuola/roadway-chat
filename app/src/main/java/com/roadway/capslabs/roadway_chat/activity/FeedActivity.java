@@ -61,13 +61,10 @@ public class FeedActivity extends AppCompatActivity {
 
         new ConnectRequest().execute();
         //webSocketHandler = new WebSocketHandler(object);
-
     }
 
     @Override
     protected void onStop() {
-        Log.d("con_listener", "onStop");
-
         webSocketHandler.disconnect();
         super.onStop();
     }
@@ -90,9 +87,9 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String msg = text.getText().toString();
-                ChatMessage chatMessage = new ChatMessage(msg, true, null);
-                singleDialogAdapter.add(chatMessage);
-                singleDialogAdapter.notifyDataSetChanged();
+//                ChatMessage chatMessage = new ChatMessage(msg, true, null);
+//                singleDialogAdapter.add(chatMessage);
+//                singleDialogAdapter.notifyDataSetChanged();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -114,8 +111,8 @@ public class FeedActivity extends AppCompatActivity {
         protected JSONObject doInBackground(Void... params) {
             JSONObject chatParams = new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
             Log.d("feed_body1", chatParams.toString());
-            webSocketHandler = new WebSocketHandler(chatParams);
-            webSocketHandler.connect().start();
+//            webSocketHandler = new WebSocketHandler(chatParams);
+//            webSocketHandler.connect().start();
 
             return chatParams;
         }
@@ -123,11 +120,11 @@ public class FeedActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
-//            webSocketHandler = new WebSocketHandler(jsonObject);
-//            webSocketHandler.connect();
-//            webSocketHandler.subscribe();
+            webSocketHandler = new WebSocketHandler(context, singleDialogAdapter, jsonObject);
+            webSocketHandler.connect().start();
 //            Log.d("feed_body1", "print1");
 //            Log.d("feed_body2", jsonObject.toString());
+            Log.d("feed_onpost", "onpost");
             object = jsonObject;
         }
     }

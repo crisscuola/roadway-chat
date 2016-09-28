@@ -1,7 +1,6 @@
 package com.roadway.capslabs.roadway_chat.network;
 
 import android.app.Activity;
-import android.util.JsonWriter;
 import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
@@ -11,10 +10,8 @@ import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 import com.vk.sdk.VKAccessToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.IOException;
 
@@ -27,7 +24,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.roadway.capslabs.roadway_chat.url.UrlConst.*;
+import static com.roadway.capslabs.roadway_chat.url.UrlConst.URL;
 
 /**
  * Created by konstantin on 11.09.16
@@ -144,7 +141,7 @@ public class HttpConnectionHandler {
 
     public static void sendMessage(String uid, String message) {
         HttpUrl url = UrlFactory.getUrl(UrlType.API);
-        String data = "{\"channel\": \"public:roadway\", \"data\": " + "\"" + message + "\"" + "}";
+        String data = "";
 
         JSONObject object = new JSONObject();
         try {
@@ -174,6 +171,7 @@ public class HttpConnectionHandler {
         }
 
     }
+
     public String getCsrfToken() {
 //        CookieJar cookieJar =
 //                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
