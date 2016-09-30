@@ -13,6 +13,8 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
+import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorViaVk;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
@@ -36,16 +38,17 @@ public class ActivityVk extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk);
         if (VKAccessToken.currentToken() == null) {
-            VKSdk.login(this, scope);
+            VKSdk.login(context, scope);
         } else {
             try {
-                new RegisterRequest().execute(handler).get();
+                Registrator registrator = new RegistratorViaVk(handler, VKAccessToken.currentToken().accessToken);
+                Log.d("vk_token_email", VKAccessToken.currentToken().accessToken);
+                new RegisterRequest().execute(registrator).get();
                 if ("ok".equals(status)) {
                     Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, FeedActivity.class);
-                    startActivity(intent);
+                Intent intent = new Intent(this, FeedActivity.class);
+                startActivity(intent);
                 }
-                //Log.d("status_status", status);
             } catch (InterruptedException e) {
                 throw new RuntimeException("Thread was interrupted", e);
             } catch (ExecutionException e) {
@@ -57,28 +60,18 @@ public class ActivityVk extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         if (VKAccessToken.currentToken() != null) {
-            try {
-                new RegisterRequest().execute(handler).get();
-                if ("ok".equals(status)) {
-                    Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(this, FeedActivity.class);
-                    startActivity(intent);
-                }
-                //Log.d("status_status", status);
-            } catch (InterruptedException e) {
-                throw new RuntimeException("Thread was interrupted", e);
-            } catch (ExecutionException e) {
-                throw new RuntimeException("Exception while async task execution", e);
-            }
+            Intent intent = new Intent(this, FeedActivity.class);
+            startActivity(intent);
         }
     }
 
-    private final class RegisterRequest extends AsyncTask<HttpConnectionHandler, Void, String> {
+    private final class RegisterRequest extends AsyncTask<Registrator, Void, String> {
         @Override
-        protected String doInBackground(HttpConnectionHandler... params) {
-            return "string";//params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
+        protected String doInBackground(Registrator... params) {
+            String result = params[0].register(context);
+            Log.d("activity_vk_result", result);
+            return result;//params[0].registerViaVk(context, VKAccessToken.currentToken().accessToken);
 //            String user = "nope";
 //            try {
 //                user = (String) params[0].getWebSocketParams().get("user");
@@ -93,6 +86,11 @@ public class ActivityVk extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d("status", result);
             status = result;
+            if ("ok".equals(status)) {
+                Toast.makeText(context, "OK", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, FeedActivity.class);
+                startActivity(intent);
+            }
         }
     }
 }
