@@ -48,7 +48,10 @@ public class RegistratorViaVk implements Registrator {
         String csrfToken = handler.getCsrfToken();
         RequestBody formBody = formBody(csrfToken);
         Request request = buildRequest(url, formBody, csrfToken);
-        return getResponse(request);
+        String response = getResponse(context, request);
+        JSONObject object = handler.parseJSON(response);
+
+        return object.optString("status");
     }
 
     private RequestBody formBody(String csrfToken) {
@@ -80,11 +83,20 @@ public class RegistratorViaVk implements Registrator {
                 .build();
     }
 
-    private String getResponse(Request request) {
-        OkHttpClient client = new OkHttpClient();
+    private String getResponse(Activity context, Request request) {
+        CookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .build();
         try {
             Response response = client.newCall(request).execute();
             String result = response.body().string();
+            cookieJar.saveFromResponse(UrlType.CHAT.getUrl().build(),
+                    cookieJar.loadForRequest(UrlType.VK_REGISTER.getUrl().build()));
+
+            Log.d("status_login1",  cookieJar.loadForRequest(request.url()).get(0).toString());
+            Log.d("status_login2",  cookieJar.loadForRequest(UrlType.CHAT.getUrl().build()).get(1).toString());
             Log.d("status_registration", result);
             return result;
         } catch (IOException e) {
