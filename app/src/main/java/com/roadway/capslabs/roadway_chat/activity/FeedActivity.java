@@ -1,59 +1,111 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
+import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.WebSocketHandler;
 import com.vk.sdk.VKSdk;
 
-public class FeedActivity extends AppCompatActivity {
+import org.json.JSONObject;
 
-    Button map, privchat,profile;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FeedActivity extends AppCompatActivity {
+    private final static DrawerFactory drawerFactory;
+    private final static HttpConnectionHandler handler;
+    private final static List<ChatMessage> chatMessagesList;
+    private WebSocketHandler webSocketHandler;
+
+    private Toolbar toolbar;
+    private EditText text;
+    private Button send;
+    private ListView listView;
+    private Drawer drawer;
+
+    private final Activity context = this;
+
+    private SingleDialogAdapter singleDialogAdapter;
+
+    static {
+        handler = new HttpConnectionHandler();
+        drawerFactory = new DrawerFactory(handler);
+        chatMessagesList = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        initToolbar(getString(R.string.feed_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        initAdapter();
+        initViews();
         VKSdk.initialize(this);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-
-
+        new ConnectRequest().execute();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onStop() {
+        webSocketHandler.disconnect();
+        super.onStop();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    private void initToolbar(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
+        toolbar.setTitle(title);
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void initAdapter() {
+        listView = (ListView) findViewById(R.id.listmsg);
+        singleDialogAdapter = new SingleDialogAdapter(this);
+        listView.setAdapter(singleDialogAdapter);
+    }
+
+    private void initViews() {
+        text = (EditText) findViewById(R.id.textmsg);
+        send = (Button) findViewById(R.id.sendmsg);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String msg = text.getText().toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        webSocketHandler.sendMessage(msg);
+                    }
+                }).start();
+                text.setText("");
+            }
+        });
+    }
+
+    private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            return new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            webSocketHandler = new WebSocketHandler(context, singleDialogAdapter, jsonObject);
+            webSocketHandler.connect().start();
+        }
     }
 }

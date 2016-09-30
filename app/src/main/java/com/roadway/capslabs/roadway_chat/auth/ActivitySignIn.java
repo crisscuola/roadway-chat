@@ -3,30 +3,24 @@ package com.roadway.capslabs.roadway_chat.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
-import com.vk.sdk.VKScope;
+
 /**
- * Created by konstantin on 07.09.16.
+ * Created by konstantin on 07.09.16
  */
-public class ActivitySignIn extends AppCompatActivity implements View.OnClickListener {
+public class ActivitySignIn extends AppCompatActivity  {
 
     private Button buttonSignUp, buttonSignIn, buttonVk, buttonFb;
-
-
-    public String [] scope = new String[] {VKScope.MESSAGES,VKScope.FRIENDS,VKScope.WALL,
-            VKScope.OFFLINE, VKScope.STATUS, VKScope.NOTES};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
+        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         buttonSignUp = (Button) findViewById(R.id.btn_up);
 
@@ -43,11 +37,8 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Sign In !",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                Intent intent = new Intent(view.getContext(), SignIn.class);
+                startActivity(intent);
             }
         });
 
@@ -56,15 +47,8 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonVk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Vk !",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
-                Intent lol = new Intent(view.getContext(), ActivityVk.class);
-                startActivity(lol);
-
+                Intent intent = new Intent(view.getContext(), ActivityVk.class);
+                startActivity(intent);
             }
         });
 
@@ -73,21 +57,9 @@ public class ActivitySignIn extends AppCompatActivity implements View.OnClickLis
         buttonFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Fb !",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
-
+                Intent intent = new Intent(view.getContext(), ActivityFb.class);
+                startActivity(intent);
             }
         });
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-
     }
 }

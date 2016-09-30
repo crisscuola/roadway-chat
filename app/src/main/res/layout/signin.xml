@@ -33,15 +33,17 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="lol@mail.ru"
             android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="str123str"
             android:inputType="textPassword"/>
 
         <Button
@@ -50,35 +52,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign in"/>
-
-        <Button
-            android:id="@+id/btn_up"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign up"/>
-
-        <Button
-            android:id="@+id/btn_vk"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="VK"/>
-
-        <Button
-            android:id="@+id/btn_fb"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FB"/>
-
-        <!--<com.facebook.login.widget.LoginButton-->
-            <!--android:id="@+id/login_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:layout_marginTop="30dp"-->
-            <!--android:layout_marginBottom="30dp" />-->
 
     </LinearLayout>
 
