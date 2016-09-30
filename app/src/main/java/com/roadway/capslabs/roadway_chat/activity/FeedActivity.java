@@ -100,12 +100,6 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
-    public void addIncomingMessage(String message) {
-        ChatMessage chatMessage = new ChatMessage(message, false, null);
-        singleDialogAdapter.add(chatMessage);
-        singleDialogAdapter.notifyDataSetChanged();
-    }
-
     private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
         @Override
         protected JSONObject doInBackground(Void... params) {

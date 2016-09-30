@@ -4,6 +4,9 @@ package com.roadway.capslabs.roadway_chat.url;
  * Created by kirill on 19.09.16
  */
 public class UrlConst {
+    private UrlConst() {
+    }
+
     public final static String URL = "p30710.lab1.stud.tech-mail.ru";
     public final static String PATH_REGISTER = "register";
     public final static String PATH_TOKEN = "token";

@@ -3,6 +3,7 @@ package com.roadway.capslabs.roadway_chat.network.registrator;
 import android.app.Activity;
 import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
@@ -14,11 +15,14 @@ import com.vk.sdk.VKAccessToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -48,8 +52,21 @@ public class RegistratorViaVk implements Registrator {
     }
 
     private RequestBody formBody(String csrfToken) {
+        Log.d("status_token", token);
+        String data = "";
+        JSONObject object = new JSONObject();
+        try {
+            object.put("access_token", token);
+
+            data = object.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return new FormBody.Builder()
                 .add("access_token", token)
+                .add("user_social_id", VKAccessToken.currentToken().userId)
+                .add("email", VKAccessToken.currentToken().email)
                 .add("csrfmiddlewaretoken", csrfToken)
                 .build();
     }
@@ -58,6 +75,7 @@ public class RegistratorViaVk implements Registrator {
         return new Request.Builder()
                 .url(url)
                 .addHeader("X-CSRFToken", csrfToken)
+                //.addHeader("Content-type", "application/json")
                 .post(formBody)
                 .build();
     }
