@@ -8,6 +8,7 @@ public class UrlConst {
     }
 
     public final static String URL = "p30710.lab1.stud.tech-mail.ru";
+    public final static String URL_CENTRIFUGE = "p30720.lab1.stud.tech-mail.ru";
     public final static String PATH_REGISTER = "register";
     public final static String PATH_TOKEN = "token";
     public final static String PATH_CHAT = "chat";
