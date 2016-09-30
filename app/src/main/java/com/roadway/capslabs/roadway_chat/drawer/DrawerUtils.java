@@ -18,7 +18,7 @@ public class DrawerUtils {
     }
 
     private static String getCurrentFeedStatus(HttpConnectionHandler handler) {
-        JSONObject currentFeedStatus = handler.getFeedStatus("badge");
+        JSONObject currentFeedStatus = handler.getFeedStatus();
         try {
             return currentFeedStatus.getString("badge");
         } catch (JSONException e) {

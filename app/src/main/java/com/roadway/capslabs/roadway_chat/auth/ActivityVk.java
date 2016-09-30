@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.Toast;
 
-
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
 import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorViaVk;
@@ -30,9 +27,7 @@ public class ActivityVk extends AppCompatActivity {
     private String status;
     private Activity context = this;
 
-    private Toolbar toolbar;
     private final HttpConnectionHandler handler = new HttpConnectionHandler();
-    private final DrawerFactory drawerFactory = new DrawerFactory(handler);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

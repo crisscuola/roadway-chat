@@ -34,7 +34,7 @@ public class ChatConnectionHandler {
         HttpUrl url = UrlFactory.getUrl(CHAT);
         Request request = buildRequest(url);
         String response = getResponse(context, request);
-        Log.d("feed_body", response);
+
         return handler.parseJSON(response);
     }
 
@@ -52,11 +52,8 @@ public class ChatConnectionHandler {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String result = response.body().string();
 
-            Log.d("status_chat",  cookieJar.loadForRequest(request.url()).get(1).toString());
-            Log.d("status_chat",  result);
-            return result;
+            return response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }

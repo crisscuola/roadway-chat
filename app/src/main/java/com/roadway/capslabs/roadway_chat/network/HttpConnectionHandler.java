@@ -1,14 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
-import android.app.Activity;
-import android.util.Log;
-
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
-import com.vk.sdk.VKAccessToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +9,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 import okhttp3.CookieJar;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -32,11 +24,10 @@ import static com.roadway.capslabs.roadway_chat.url.UrlConst.URL;
 public class HttpConnectionHandler {
     private OkHttpClient client = new OkHttpClient();
 
-    public JSONObject getFeedStatus(String token) {
+    public JSONObject getFeedStatus() {
         HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
         String result = execute(url, client);
-        JSONObject object = parseJSON(result);
-        return object;
+        return parseJSON(result);
     }
 
     private String execute(HttpUrl url, OkHttpClient client) {

@@ -1,6 +1,5 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKScope;
-import com.vk.sdk.VKSdk;
 
 /**
  * Created by konstantin on 07.09.16
@@ -20,23 +14,11 @@ import com.vk.sdk.VKSdk;
 public class ActivitySignIn extends AppCompatActivity  {
 
     private Button buttonSignUp, buttonSignIn, buttonVk, buttonFb;
-    private String status;
-    private Activity signIn;
-    private Activity context = this;
-    private String[] scope = new String[]{VKScope.EMAIL};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
-        signIn = this;
-
-        final HttpConnectionHandler handler = new HttpConnectionHandler();
-
-//        if (VKAccessToken.currentToken() != null) {
-//            Intent intent = new Intent(this, FeedActivity.class);
-//            startActivity(intent);
-//        }
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
 

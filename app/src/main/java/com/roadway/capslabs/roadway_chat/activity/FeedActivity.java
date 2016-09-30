@@ -5,17 +5,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
-import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.WebSocketHandler;

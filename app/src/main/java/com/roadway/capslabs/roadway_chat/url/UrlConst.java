@@ -14,7 +14,6 @@ public class UrlConst {
     public final static String PATH_CHAT = "chat";
     public final static String PATH_VK = "vk-oauth2";
     public final static String PATH_PARAMETERS = "parameters";
-    public final static String PATH_ADMIN = "admin";
     public final static String PATH_GET_TOKEN = "get_token";
     public final static String PATH_LOGIN = "login";
     public final static String PATH_API = "api";
