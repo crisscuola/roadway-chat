@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.roadway.capslabs.roadway_chat.ChatMessage;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 
 import java.util.ArrayList;

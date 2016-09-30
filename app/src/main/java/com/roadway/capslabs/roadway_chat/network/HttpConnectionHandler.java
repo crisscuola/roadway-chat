@@ -1,81 +1,141 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import android.app.Activity;
+import android.util.Log;
+
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.roadway.capslabs.roadway_chat.url.UrlFactory;
+import com.roadway.capslabs.roadway_chat.url.UrlType;
+import com.vk.sdk.VKAccessToken;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
+import okhttp3.CookieJar;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.roadway.capslabs.roadway_chat.network.UrlConst.*;
+import static com.roadway.capslabs.roadway_chat.url.UrlConst.URL;
 
 /**
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
-    private final OkHttpClient client;
+    private OkHttpClient client = new OkHttpClient();
 
-    public HttpConnectionHandler(OkHttpClient client) {
-        this.client = client;
+    public JSONObject getFeedStatus(String token) {
+        HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
+        String result = execute(url, client);
+        JSONObject object = parseJSON(result);
+        return object;
     }
 
-    public String doGetRequest(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter(token, token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    public String getProfile(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    public String getFeedStatus(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    public String logout(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    public String login(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    public String register(String token) {
-        HttpUrl url = URL_BUILDER.addQueryParameter("login", token).build();
-        String result = execute(url);
-
-        return result;
-    }
-
-    private String execute(HttpUrl url) {
+    private String execute(HttpUrl url, OkHttpClient client) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
 
-        String textResponse;
+        String body;
         try {
             Response response = client.newCall(request).execute();
-            textResponse = response.body().string();
+            if (!response.isSuccessful())
+                throw new RuntimeException("Unexpected code " + response);
+
+            body = response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + URL, e);
         }
 
-        return textResponse;
+        return body;
     }
 
-    //TODO: JSON parse
+    public JSONObject parseJSON(String body) {
+        JSONObject object;
+        try {
+            object = new JSONObject(body);
+            return object;
+        } catch (JSONException e) {
+            throw new RuntimeException("Exception happened while parsing JSON from response: " + body, e);
+        }
+    }
+
+    public String executeCsrf(OkHttpClient client, CookieJar jar) {
+        Request request = new Request.Builder()
+                .url(UrlFactory.getUrl(UrlType.CSRF))
+                .build();
+
+        String token;
+        try {
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful())
+                throw new RuntimeException("Unexpected code " + response);
+
+            token = jar.loadForRequest(UrlType.CSRF.getUrl().build()).get(0).value();
+        } catch (IOException e) {
+            throw new RuntimeException("Connectivity problem happened during request to " +
+                    UrlType.CSRF.getUrl(), e);
+        }
+
+        return token;
+    }
+
+    public static void sendMessage(String uid, String message) {
+        HttpUrl url = UrlFactory.getUrl(UrlType.API);
+        String data = "";
+
+        JSONObject object = new JSONObject();
+        try {
+            object.put("uid", uid).put("method", "publish");
+            JSONObject item = new JSONObject();
+            item.put("channel", "public:roadway").put("data", message);
+            object.put("params", item);
+            data = object.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(MediaType
+                .parse("application/json"), data);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Content-type", "application/json")
+                .post(body)
+                .build();
+
+        try {
+            new OkHttpClient().newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException("Connectivity problem happened during request to " +
+                    UrlType.API.getUrl(), e);
+        }
+
+    }
+
+    public String getCsrfToken() {
+//        CookieJar cookieJar =
+//                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .cookieJar(cookieJar)
+//                .build();
+//        return executeCsrf(client, cookieJar);
+        HttpUrl url = UrlFactory.getUrl(UrlType.CSRF);
+        String result = execute(url, client);
+        JSONObject object = parseJSON(result);
+        try {
+            return object.getString("token");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "no token";
+    }
 }

@@ -1,46 +1,70 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.roadway.capslabs.roadway_chat.ChatMessage;
+import com.mikepenz.materialdrawer.Drawer;
+import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.WebSocketHandler;
 import com.vk.sdk.VKSdk;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FeedActivity extends AppCompatActivity {
+    private final static DrawerFactory drawerFactory;
+    private final static HttpConnectionHandler handler;
+    private final static List<ChatMessage> chatMessagesList;
+    private WebSocketHandler webSocketHandler;
 
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory();
-
-    private Button send;
     private EditText text;
+    private Button send;
     private ListView listView;
+    private Drawer drawer;
 
-    private final List<ChatMessage> chatMessagesList = new ArrayList<>();
+    private final Activity context = this;
 
     private SingleDialogAdapter singleDialogAdapter;
+
+    static {
+        handler = new HttpConnectionHandler();
+        drawerFactory = new DrawerFactory(handler);
+        chatMessagesList = new ArrayList<>();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
         initViews();
         VKSdk.initialize(this);
+
+        new ConnectRequest().execute();
+    }
+
+    @Override
+    protected void onStop() {
+        webSocketHandler.disconnect();
+        super.onStop();
     }
 
     private void initToolbar(String title) {
@@ -60,37 +84,29 @@ public class FeedActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String msg = text.getText().toString();
-                ChatMessage chatMessage = new ChatMessage(msg, true, null);
-
-                singleDialogAdapter.add(chatMessage);
-                singleDialogAdapter.notifyDataSetChanged();
+                final String msg = text.getText().toString();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        webSocketHandler.sendMessage(msg);
+                    }
+                }).start();
+                text.setText("");
             }
         });
     }
 
-    private class DownloadingMessages extends AsyncTask<String, Void, String> {
+    private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
         @Override
-        protected String doInBackground(String... params) {
-            return "buf";
+        protected JSONObject doInBackground(Void... params) {
+            return new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            send.setText("Отправить");
-            send.setClickable(true);
-            Collections.reverse(chatMessagesList);
-            singleDialogAdapter.copyArrayList(chatMessagesList);
-            singleDialogAdapter.notifyDataSetChanged();
-            chatMessagesList.clear();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            send.setClickable(false);
-            send.setText("Загрузка");
-            listView.setAdapter(singleDialogAdapter);
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            webSocketHandler = new WebSocketHandler(context, singleDialogAdapter, jsonObject);
+            webSocketHandler.connect().start();
         }
     }
 }
