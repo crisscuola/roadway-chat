@@ -31,11 +31,10 @@ public class FeedActivity extends AppCompatActivity {
     private final static HttpConnectionHandler handler;
     private final static List<ChatMessage> chatMessagesList;
     private WebSocketHandler webSocketHandler;
-    private JSONObject object;
 
     private Toolbar toolbar;
-    private Button send;
     private EditText text;
+    private Button send;
     private ListView listView;
     private Drawer drawer;
 
@@ -60,7 +59,6 @@ public class FeedActivity extends AppCompatActivity {
         VKSdk.initialize(this);
 
         new ConnectRequest().execute();
-        //webSocketHandler = new WebSocketHandler(object);
     }
 
     @Override
@@ -87,15 +85,13 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String msg = text.getText().toString();
-//                ChatMessage chatMessage = new ChatMessage(msg, true, null);
-//                singleDialogAdapter.add(chatMessage);
-//                singleDialogAdapter.notifyDataSetChanged();
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         webSocketHandler.sendMessage(msg);
                     }
                 }).start();
+                text.setText("");
             }
         });
     }
@@ -103,12 +99,7 @@ public class FeedActivity extends AppCompatActivity {
     private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
         @Override
         protected JSONObject doInBackground(Void... params) {
-            JSONObject chatParams = new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
-            Log.d("feed_body1", chatParams.toString());
-//            webSocketHandler = new WebSocketHandler(chatParams);
-//            webSocketHandler.connect().start();
-
-            return chatParams;
+            return new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
         }
 
         @Override
@@ -116,10 +107,6 @@ public class FeedActivity extends AppCompatActivity {
             super.onPostExecute(jsonObject);
             webSocketHandler = new WebSocketHandler(context, singleDialogAdapter, jsonObject);
             webSocketHandler.connect().start();
-//            Log.d("feed_body1", "print1");
-//            Log.d("feed_body2", jsonObject.toString());
-            Log.d("feed_onpost", "onpost");
-            object = jsonObject;
         }
     }
 }

@@ -65,9 +65,6 @@ public class LoginHelper {
             cookieJar.saveFromResponse(UrlType.CHAT.getUrl().build(),
                     cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
 
-            Log.d("status_login1",  cookieJar.loadForRequest(request.url()).get(0).toString());
-            Log.d("status_login2",  cookieJar.loadForRequest(UrlType.CHAT.getUrl().build()).get(1).toString());
-
             return result;
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
