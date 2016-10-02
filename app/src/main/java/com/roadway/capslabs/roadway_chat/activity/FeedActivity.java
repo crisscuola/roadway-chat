@@ -12,7 +12,6 @@ import android.widget.ListView;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
-import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
