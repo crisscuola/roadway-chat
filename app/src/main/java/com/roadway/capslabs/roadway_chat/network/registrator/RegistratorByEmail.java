@@ -3,7 +3,7 @@ package com.roadway.capslabs.roadway_chat.network.registrator;
 import android.app.Activity;
 import android.util.Log;
 
-import com.roadway.capslabs.roadway_chat.models.User;
+import com.roadway.capslabs.roadway_chat.models.RegisterForm;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
@@ -24,11 +24,11 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.REGISTER;
 public class RegistratorByEmail implements Registrator {
 
     private final HttpConnectionHandler handler;
-    private final User user;
+    private final RegisterForm registerForm;
 
-    public RegistratorByEmail(HttpConnectionHandler handler, User user) {
+    public RegistratorByEmail(HttpConnectionHandler handler, RegisterForm registerForm) {
         this.handler = handler;
-        this.user = user;
+        this.registerForm = registerForm;
     }
 
     public String register(Activity context) {
@@ -47,14 +47,11 @@ public class RegistratorByEmail implements Registrator {
     }
 
     private RequestBody formBody(String csrfToken) {
-        Log.d("status_reg_user", user.toString());
+        Log.d("status_reg_user", registerForm.toString());
         return new FormBody.Builder()
-                .add("email", user.getEmail())
-                .add("first_name", user.getFirstName())
-                .add("last_name", user.getLastName())
-                .add("username", user.getUserName())
-                .add("password1", user.getPassword1())
-                .add("password2", user.getPassword2())
+                .add("email", registerForm.getEmail())
+                .add("password1", registerForm.getPassword1())
+                .add("password2", registerForm.getPassword2())
                 .add("csrfmiddlewaretoken", csrfToken)
                 .build();
     }

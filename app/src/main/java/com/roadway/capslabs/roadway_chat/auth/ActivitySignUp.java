@@ -3,6 +3,7 @@ package com.roadway.capslabs.roadway_chat.auth;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -12,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.models.User;
+import com.roadway.capslabs.roadway_chat.models.RegisterForm;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
@@ -28,9 +29,6 @@ public class ActivitySignUp extends AppCompatActivity {
     private EditText email;
     private EditText password1;
     private EditText password2;
-    private EditText username;
-    private EditText firstname;
-    private EditText lastname;
 
     private Activity context = this;
     private String response;
@@ -44,23 +42,13 @@ public class ActivitySignUp extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-        username = (EditText) findViewById(R.id.username);
-        firstname = (EditText) findViewById(R.id.firstname);
-        lastname = (EditText) findViewById(R.id.lastname);
 
         buttonSignUp = (Button) findViewById(R.id.btn_up);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = new User(
-                        email.getText().toString(),
-                        firstname.getText().toString(),
-                        lastname.getText().toString(),
-                        username.getText().toString(),
-                        password1.getText().toString(),
-                        password2.getText().toString()
-                );
-                registrator = new RegistratorByEmail(new HttpConnectionHandler(), user);
+                RegisterForm registerForm = readRegisterForm();
+                registrator = new RegistratorByEmail(new HttpConnectionHandler(), registerForm);
 
                 try {
                     new RegisterRequest().execute(registrator).get();
@@ -76,6 +64,15 @@ public class ActivitySignUp extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
+
+    @NonNull
+    private RegisterForm readRegisterForm() {
+        return new RegisterForm(
+                email.getText().toString(),
+                password1.getText().toString(),
+                password2.getText().toString()
+        );
     }
 
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {

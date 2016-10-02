@@ -1,13 +1,10 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,9 +24,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedActivity extends AppCompatActivity {
+/**
+ * Created by konstantin on 02.10.16.
+ */
+public class MyEventsActivity extends AppCompatActivity {
     private final static DrawerFactory drawerFactory;
     private final static HttpConnectionHandler handler;
+    private final static List<ChatMessage> chatMessagesList;
+    private WebSocketHandler webSocketHandler;
 
     private Toolbar toolbar;
     private EditText text;
@@ -44,6 +46,7 @@ public class FeedActivity extends AppCompatActivity {
     static {
         handler = new HttpConnectionHandler();
         drawerFactory = new DrawerFactory(handler);
+        chatMessagesList = new ArrayList<>();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class FeedActivity extends AppCompatActivity {
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
-        initViews();
+        //initViews();
         VKSdk.initialize(this);
 
         //new ConnectRequest().execute();
@@ -63,7 +66,6 @@ public class FeedActivity extends AppCompatActivity {
     protected void onStop() {
 //        webSocketHandler.disconnect();
         super.onStop();
-
     }
 
     private void initToolbar(String title) {
@@ -75,14 +77,6 @@ public class FeedActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.events_list);
         eventsAdapter = new EventsAdapter(this);
         listView.setAdapter(eventsAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(FeedActivity.this, SingleEventActivity.class);
-                myIntent.putExtra("item", i);
-                startActivity(myIntent);
-            }
-        });
     }
 
     private void initViews() {
@@ -103,4 +97,17 @@ public class FeedActivity extends AppCompatActivity {
 //        });
     }
 
+    private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
+        @Override
+        protected JSONObject doInBackground(Void... params) {
+            return new ChatConnectionHandler(new HttpConnectionHandler()).getChatParams(context);
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject jsonObject) {
+            super.onPostExecute(jsonObject);
+            //webSocketHandler = new WebSocketHandler(context, eventsAdapter, jsonObject);
+            webSocketHandler.connect().start();
+        }
+    }
 }
