@@ -7,10 +7,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -38,8 +40,9 @@ public class CreateEvent  extends AppCompatActivity{
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory(new HttpConnectionHandler());
 
-    Button buttonCreate, buttonChoose;
-    ImageView imageView;
+    private Button buttonCreate, buttonChoose;
+    private ImageView imageView;
+    private EditText title, description, address;
 
     private Bitmap bitmap;
 
@@ -53,12 +56,17 @@ public class CreateEvent  extends AppCompatActivity{
 
         buttonChoose = (Button) findViewById(R.id.btn_choose);
         buttonCreate = (Button) findViewById(R.id.btn_create);
+
         imageView  = (ImageView) findViewById(R.id.imageView);
+
+        title = (EditText) findViewById(R.id.event_title);
+        description = (EditText) findViewById(R.id.event_desciption);
+        address = (EditText) findViewById(R.id.event_address);
+
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("choose", "LOL!");
                 showFileChooser();
             }
         });
@@ -100,12 +108,19 @@ public class CreateEvent  extends AppCompatActivity{
         }
     }
 
+
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
+    }
+
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
         toolbar.setTitle(title);
     }
-
-
 
 }
 
