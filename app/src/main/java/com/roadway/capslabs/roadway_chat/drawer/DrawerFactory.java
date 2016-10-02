@@ -17,6 +17,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.activity.CreateEvent;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapActivity;
 import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
@@ -53,7 +54,7 @@ public class DrawerFactory {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
-                        if (position == 5) {
+                        if (position == 6) {
                             VKSdk.logout();
                             LoginManager.getInstance().logOut();
                         }
@@ -88,17 +89,19 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem feed = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Events")
                 .withBadge("19").withBadgeStyle(new BadgeStyle()
                         .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700));
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
         SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
+        SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(4).withName("CreateEvent");
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout");
-        items.add(feed);
+        items.add(events);
         items.add(map);
         items.add(profile);
         items.add(settings);
+        items.add(create);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
@@ -116,6 +119,8 @@ public class DrawerFactory {
             case 4:
                 return SettingActivity.class;
             case 5:
+                return CreateEvent.class;
+            case 6:
                 return ActivitySignIn.class;
             default:
                 return FeedActivity.class;
