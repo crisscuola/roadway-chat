@@ -14,8 +14,9 @@ import com.centrifugal.centrifuge.android.message.DataMessage;
 import com.centrifugal.centrifuge.android.message.presence.JoinMessage;
 import com.centrifugal.centrifuge.android.message.presence.LeftMessage;
 import com.centrifugal.centrifuge.android.subscription.SubscriptionRequest;
-import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
+import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.models.ChatMessage;
+import com.roadway.capslabs.roadway_chat.models.Event;
 
 import org.json.JSONObject;
 
@@ -32,10 +33,10 @@ public class WebSocketHandler {
     private final String sockJS;
     private final String url;
     private String ws;
-    private final SingleDialogAdapter adapter;
+    private final EventsAdapter adapter;
     private final Activity context;
 
-    public WebSocketHandler(Activity context, SingleDialogAdapter adapter, JSONObject object) {
+    public WebSocketHandler(Activity context, EventsAdapter adapter, JSONObject object) {
         chatChannel = object.optString("chat_channel");
         info = object.optString("info");
         user = object.optString("user");

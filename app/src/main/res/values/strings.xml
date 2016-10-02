@@ -4,7 +4,7 @@
     <integer name="com_vk_sdk_AppId">5620732</integer>
     <string name="facebook_app_id">1752993431632257</string>
 
-
+    <string name="preview">Preview</string>
     <string name="hello_world">Hello world!</string>
     <string name="drawer_open">Slider Menu Opened</string>
     <string name="drawer_close">Slider Menu Closed</string>

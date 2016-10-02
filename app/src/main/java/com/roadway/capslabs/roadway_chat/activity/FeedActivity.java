@@ -5,14 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.adapters.SingleDialogAdapter;
+import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.ChatMessage;
 import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
@@ -39,7 +38,7 @@ public class FeedActivity extends AppCompatActivity {
 
     private final Activity context = this;
 
-    private SingleDialogAdapter singleDialogAdapter;
+    private EventsAdapter eventsAdapter;
 
     static {
         handler = new HttpConnectionHandler();
@@ -54,10 +53,10 @@ public class FeedActivity extends AppCompatActivity {
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
-        initViews();
+        //initViews();
         VKSdk.initialize(this);
 
-        new ConnectRequest().execute();
+        //new ConnectRequest().execute();
     }
 
     @Override
@@ -72,27 +71,27 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        listView = (ListView) findViewById(R.id.listmsg);
-        singleDialogAdapter = new SingleDialogAdapter(this);
-        listView.setAdapter(singleDialogAdapter);
+        listView = (ListView) findViewById(R.id.events_list);
+        eventsAdapter = new EventsAdapter(this);
+        listView.setAdapter(eventsAdapter);
     }
 
     private void initViews() {
-        text = (EditText) findViewById(R.id.textmsg);
-        send = (Button) findViewById(R.id.sendmsg);
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String msg = text.getText().toString();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        webSocketHandler.sendMessage(msg);
-                    }
-                }).start();
-                text.setText("");
-            }
-        });
+//        text = (EditText) findViewById(R.id.textmsg);
+//        send = (Button) findViewById(R.id.sendmsg);
+//        send.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final String msg = text.getText().toString();
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        webSocketHandler.sendMessage(msg);
+//                    }
+//                }).start();
+//                text.setText("");
+//            }
+//        });
     }
 
     private final class ConnectRequest extends AsyncTask<Void, Void, JSONObject> {
@@ -104,7 +103,7 @@ public class FeedActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(JSONObject jsonObject) {
             super.onPostExecute(jsonObject);
-            webSocketHandler = new WebSocketHandler(context, singleDialogAdapter, jsonObject);
+            //webSocketHandler = new WebSocketHandler(context, eventsAdapter, jsonObject);
             webSocketHandler.connect().start();
         }
     }
