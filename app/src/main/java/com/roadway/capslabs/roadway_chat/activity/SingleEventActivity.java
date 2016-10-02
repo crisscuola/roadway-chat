@@ -14,7 +14,7 @@ import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 /**
  * Created by konstantin on 02.10.16.
  */
-public class SingleEvent extends AppCompatActivity {
+public class SingleEventActivity extends AppCompatActivity {
 
     private Drawer drawer;
     private Toolbar toolbar;
@@ -27,7 +27,7 @@ public class SingleEvent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event);
-        initToolbar("SingleEvent");
+        initToolbar("SingleEventActivity");
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
     }
 

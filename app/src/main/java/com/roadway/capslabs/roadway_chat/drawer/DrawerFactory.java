@@ -20,7 +20,7 @@ import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapActivity;
 import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
 import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
-import com.roadway.capslabs.roadway_chat.activity.SingleEvent;
+import com.roadway.capslabs.roadway_chat.activity.SingleEventActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivitySignIn;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKSdk;
@@ -93,7 +93,8 @@ public class DrawerFactory {
         SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
         SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("CreateEvent");
-        SecondaryDrawerItem event = new SecondaryDrawerItem().withIdentifier(6).withName("SingleEvent");
+        SecondaryDrawerItem event = new SecondaryDrawerItem().withIdentifier(6).withName("SingleEventActivity");
+        SecondaryDrawerItem myevents  = new SecondaryDrawerItem().withIdentifier(6).withName("MyEvents");
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(7).withName("Logout");
         items.add(events);
         items.add(map);
@@ -101,6 +102,7 @@ public class DrawerFactory {
         items.add(settings);
         items.add(create);
         items.add(event);
+        items.add(myevents);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
@@ -120,7 +122,8 @@ public class DrawerFactory {
             case 5:
                 return CreateEvent.class;
             case 6:
-                return SingleEvent.class;
+                return SingleEventActivity.class;
+            case 8:
             case 7:
                 return ActivitySignIn.class;
             default:

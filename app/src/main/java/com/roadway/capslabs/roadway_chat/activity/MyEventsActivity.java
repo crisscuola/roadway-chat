@@ -24,7 +24,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedActivity extends AppCompatActivity {
+/**
+ * Created by konstantin on 02.10.16.
+ */
+public class MyEventsActivity extends AppCompatActivity {
     private final static DrawerFactory drawerFactory;
     private final static HttpConnectionHandler handler;
     private final static List<ChatMessage> chatMessagesList;
