@@ -18,6 +18,9 @@ import com.roadway.capslabs.roadway_chat.models.RegisterForm;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
 import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -80,9 +83,19 @@ public class ActivitySignUp extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d("response_registration", result);
             response = result;
-            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
-            intent.putExtra("email", email.getText().toString());
-            startActivity(intent);
+            try {
+                JSONObject object = new JSONObject(result);
+                if (object.has("object")) {
+                    Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
+                    intent.putExtra("email", email.getText().toString());
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "Registration failed", Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException("JSON parsing error", e);
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network.registrator;
 
+import android.util.Log;
+
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class ConfirmationRegistrator implements Registrator {
         return  getResponse(request);
     }
     private RequestBody formBody() {
+        Log.d("response_confirm_params", email + " " + key);
         return new FormBody.Builder()
                 .add("email", email)
                 .add("key", key)
