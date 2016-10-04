@@ -22,15 +22,15 @@ import static com.roadway.capslabs.roadway_chat.url.UrlConst.URL;
  * Created by konstantin on 11.09.16
  */
 public class HttpConnectionHandler {
-    private OkHttpClient client = new OkHttpClient();
+    private static final OkHttpClient client = new OkHttpClient();
 
-    public JSONObject getFeedStatus() {
+    public static JSONObject getFeedStatus() {
         HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
         String result = execute(url, client);
         return parseJSON(result);
     }
 
-    private String execute(HttpUrl url, OkHttpClient client) {
+    private static String execute(HttpUrl url, OkHttpClient client) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -49,7 +49,7 @@ public class HttpConnectionHandler {
         return body;
     }
 
-    public JSONObject parseJSON(String body) {
+    public static JSONObject parseJSON(String body) {
         JSONObject object;
         try {
             object = new JSONObject(body);
@@ -59,7 +59,7 @@ public class HttpConnectionHandler {
         }
     }
 
-    public String executeCsrf(OkHttpClient client, CookieJar jar) {
+    public static String executeCsrf(OkHttpClient client, CookieJar jar) {
         Request request = new Request.Builder()
                 .url(UrlFactory.getUrl(UrlType.CSRF))
                 .build();
@@ -112,7 +112,7 @@ public class HttpConnectionHandler {
 
     }
 
-    public String getCsrfToken() {
+    public static String getCsrfToken() {
 //        CookieJar cookieJar =
 //                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
 //        OkHttpClient client = new OkHttpClient.Builder()

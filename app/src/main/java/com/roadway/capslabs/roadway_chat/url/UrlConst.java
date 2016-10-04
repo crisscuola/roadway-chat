@@ -7,7 +7,8 @@ public class UrlConst {
     private UrlConst() {
     }
 
-    public final static String URL = "p30700.lab1.stud.tech-mail.ru/";
+    public final static String URL = "p30700.lab1.stud.tech-mail.ru";
+    public final static String URL_OLD = "p30710.lab1.stud.tech-mail.ru";
     public final static String URL_CENTRIFUGE = "p30720.lab1.stud.tech-mail.ru";
     public final static String PATH_REGISTER = "register";
     public final static String PATH_CONFIRM = "confirm";
@@ -25,4 +26,5 @@ public class UrlConst {
     public final static String PATH_PROFILE = "profile";
     public final static String PATH_UPDATE = "update";
     public final static String PATH_API = "api";
+    public final static String HTTP = "http";
 }

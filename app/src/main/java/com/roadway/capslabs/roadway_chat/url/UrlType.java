@@ -12,7 +12,7 @@ public enum UrlType {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
-                    .scheme("http")
+                    .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_CHAT)
                     .addPathSegment(PATH_PARAMETERS);
@@ -22,7 +22,7 @@ public enum UrlType {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
-                    .scheme("http")
+                    .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_REGISTER)
                     .addPathSegment(PATH_TOKEN)
@@ -34,17 +34,29 @@ public enum UrlType {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
-                    .scheme("http")
+                    .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_REGISTER)
                     .addPathSegment("");
+        }
+    },
+    CONFIRM{
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_REGISTER)
+                    .addPathSegment(PATH_CONFIRM)
+                    .addEncodedPathSegment("");
+
         }
     },
     CSRF {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
-                    .scheme("http")
+                    .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_GET_TOKEN)
                     .addPathSegment("");
@@ -54,7 +66,7 @@ public enum UrlType {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
-                    .scheme("http")
+                    .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_LOGIN)
                     .addPathSegment("");
@@ -64,7 +76,7 @@ public enum UrlType {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
-                    .scheme("http")
+                    .scheme(HTTP)
                     .host(URL_CENTRIFUGE)
                     .addPathSegment(PATH_API)
                     .addPathSegment("");

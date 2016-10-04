@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,9 +15,8 @@ import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.RegisterForm;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
+import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 
 import java.util.concurrent.ExecutionException;
 
@@ -24,15 +24,14 @@ import java.util.concurrent.ExecutionException;
  * Created by konstantin on 07.09.16
  */
 public class ActivitySignUp extends AppCompatActivity {
-
-    private Button buttonSignUp;
     private EditText email;
     private EditText password1;
     private EditText password2;
+    private EditText firstName;
+    private EditText lastName;
 
     private Activity context = this;
     private String response;
-    private Registrator registrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +41,15 @@ public class ActivitySignUp extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
+        firstName = (EditText) findViewById(R.id.firstname);
+        lastName = (EditText) findViewById(R.id.lastname);
 
-        buttonSignUp = (Button) findViewById(R.id.btn_up);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+        Button register = (Button) findViewById(R.id.submit_register_button);
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegisterForm registerForm = readRegisterForm();
-                registrator = new RegistratorByEmail(new HttpConnectionHandler(), registerForm);
-
-                try {
-                    new RegisterRequest().execute(registrator).get();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException("Thread was interrupted", e);
-                } catch (ExecutionException e) {
-                    throw new RuntimeException("Exception while async task execution", e);
-                }
-
+                Registrator registrator = new RegistratorByEmail(readRegisterForm());
+                new RegisterRequest().execute(registrator);
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Sign Up!", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
@@ -71,22 +63,26 @@ public class ActivitySignUp extends AppCompatActivity {
         return new RegisterForm(
                 email.getText().toString(),
                 password1.getText().toString(),
-                password2.getText().toString()
-        );
+                password2.getText().toString(),
+                firstName.getText().toString(),
+                lastName.getText().toString());
     }
 
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
             Registrator registrator = (RegistratorByEmail) params[0];
-
-            return registrator.register(context);
+            //TODO: save user to sharedPrefs
+            return registrator.register();
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("response_regular", result);
+            Log.d("response_registration", result);
             response = result;
+            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
+            intent.putExtra("email", email.getText().toString());
+            startActivity(intent);
         }
     }
 }

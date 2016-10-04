@@ -37,7 +37,7 @@ public class ActivityVk extends AppCompatActivity {
             VKSdk.login(context, scope);
         } else {
             try {
-                Registrator registrator = new RegistratorViaVk(handler, VKAccessToken.currentToken().accessToken);
+                Registrator registrator = new RegistratorViaVk(context, VKAccessToken.currentToken().accessToken);
                 Log.d("vk_token_email", VKAccessToken.currentToken().accessToken);
                 new RegisterRequest().execute(registrator).get();
                 if ("ok".equals(status)) {
@@ -65,7 +65,7 @@ public class ActivityVk extends AppCompatActivity {
     private final class RegisterRequest extends AsyncTask<Registrator, Void, String> {
         @Override
         protected String doInBackground(Registrator... params) {
-            String result = params[0].register(context);
+            String result = params[0].register();
             Log.d("activity_vk_result", result);
             return result;
         }

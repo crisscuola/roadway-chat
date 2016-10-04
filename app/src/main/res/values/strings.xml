@@ -34,8 +34,17 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="feed_activity_title">Feed</string>
-    <string name="single_chat_title">SIngle Chat</string>
+    <string name="single_chat_title">Single Chat</string>
     <string name="title_activity_maps">Map</string>
+    <string name="app_title">gEvent</string>
+    <string name="field_email">Email:</string>
+    <string name="field_password1">Password :</string>
+    <string name="field_password2">Repeat password:</string>
+    <string name="field_first_name">First name:</string>
+    <string name="field_last_name">Last name:</string>
+    <string name="button_register">Register</string>
+    <string name="description_confirm">Enter verification code here (check your email)</string>
+    <string name="ok">OK</string>
 
 
 </resources>

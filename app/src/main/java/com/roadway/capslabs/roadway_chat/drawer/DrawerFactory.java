@@ -20,7 +20,7 @@ import com.roadway.capslabs.roadway_chat.activity.CreateEvent;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
 import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
-import com.roadway.capslabs.roadway_chat.auth.ActivitySignIn;
+import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKSdk;
 
@@ -119,7 +119,7 @@ public class DrawerFactory {
             case 5:
                 return CreateEvent.class;
             case 7:
-                return ActivitySignIn.class;
+                return ActivityAuth.class;
             default:
                 return FeedActivity.class;
         }
