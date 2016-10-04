@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".auth.ActivitySignIn"
+    tools:context=".auth.ActivitySignUp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="RoadWay Chat"
+            android:text="@string/app_title"
             android:textSize="30sp"
             android:textColor="#333333"/>
 
@@ -32,26 +32,28 @@
         android:layout_weight="0.5"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/confirm_text"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="lol@mail.ru"
-            android:inputType="textEmailAddress"/>
-
+            android:layout_gravity="center"
+            android:text="@string/description_confirm"
+            android:textSize="12sp"
+            android:textColor="#333333" />
         <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
+            android:id="@+id/confirm"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="str123str"
-            android:inputType="textPassword"/>
+            android:inputType="textEmailAddress"
+            android:layout_gravity="center" />
 
         <Button
-            android:id="@+id/btn_in"
+            android:id="@+id/submit_confirm_button"
             android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Sign in"/>
+            android:text="@string/ok"
+            android:layout_gravity="center" />
 
     </LinearLayout>
 

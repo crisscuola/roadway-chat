@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network.registrator;
 
-import com.roadway.capslabs.roadway_chat.models.RegisterForm;
+import android.util.Log;
+
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
@@ -12,48 +13,45 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.roadway.capslabs.roadway_chat.url.UrlType.REGISTER;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.CONFIRM;
 
 /**
- * Created by kirill on 25.09.16
+ * Created by kirill on 04.10.16
  */
-public class RegistratorByEmail implements Registrator {
-    private final RegisterForm registerForm;
+public class ConfirmationRegistrator implements Registrator {
+    private final String email;
+    private final String key;
 
-    public RegistratorByEmail(RegisterForm registerForm) {
-        this.registerForm = registerForm;
+    public ConfirmationRegistrator(String email, String key) {
+        this.email = email;
+        this.key = key;
     }
 
+    @Override
     public String register() {
-        HttpUrl url = UrlFactory.getUrl(REGISTER);
-        //String csrfToken = HttpConnectionHandler.getCsrfToken();
+        HttpUrl url = UrlFactory.getUrl(CONFIRM);
         RequestBody formBody = formBody();
         Request request = buildRequest(url, formBody);
         return  getResponse(request);
     }
-
     private RequestBody formBody() {
+        Log.d("response_confirm_params", email + " " + key);
         return new FormBody.Builder()
-                .add("email", registerForm.getEmail())
-                .add("password1", registerForm.getPassword1())
-                .add("password2", registerForm.getPassword2())
-                .add("first_name", registerForm.getFirstName())
-                .add("last_name", registerForm.getLastName())
+                .add("email", email)
+                .add("key", key)
                 .build();
     }
 
     private Request buildRequest(HttpUrl url, RequestBody formBody) {
         return new Request.Builder()
                 .url(url)
-                //.addHeader("X-CSRFToken", csrfToken)
                 .post(formBody)
                 .build();
     }
 
     private String getResponse(Request request) {
-        OkHttpClient client = new OkHttpClient();
         try {
-            Response response = client.newCall(request).execute();
+            Response response = new OkHttpClient().newCall(request).execute();
 
             return response.body().string();
         } catch (IOException e) {
