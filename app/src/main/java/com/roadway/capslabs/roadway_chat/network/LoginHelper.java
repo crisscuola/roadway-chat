@@ -1,7 +1,6 @@
 package com.roadway.capslabs.roadway_chat.network;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -33,7 +32,6 @@ public class LoginHelper {
 
     public String login(Activity context, String email, String password) {
         HttpUrl url = UrlFactory.getUrl(LOGIN);
-        Log.d("login_url", url.url().toString());
         RequestBody formBody = formBody(email, password);
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
@@ -62,12 +60,22 @@ public class LoginHelper {
         try {
             Response response = client.newCall(request).execute();
             String result = response.body().string();
-            cookieJar.saveFromResponse(UrlType.CHAT.getUrl().build(),
-                    cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+//            cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
+//                    cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+            saveCookie(cookieJar);
 
             return result;
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }
+    }
+
+    private void saveCookie(CookieJar cookieJar) {
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
+                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(),
+                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
+                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
     }
 }

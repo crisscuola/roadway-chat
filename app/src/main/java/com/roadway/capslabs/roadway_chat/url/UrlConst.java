@@ -21,7 +21,7 @@ public class UrlConst {
     public final static String PATH_LOGOUT = "logout";
     public final static String PATH_EVENT = "event";
     public final static String PATH_CREATE = "create";
-    public final static String PATH_GET = "create";
+    public final static String PATH_GET = "get";
     public final static String PATH_ALL = "all";
     public final static String PATH_PROFILE = "profile";
     public final static String PATH_UPDATE = "update";

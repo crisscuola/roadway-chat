@@ -1,6 +1,6 @@
 package com.roadway.capslabs.roadway_chat.models;
 
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by kirill on 02.10.16
@@ -8,16 +8,17 @@ import java.util.List;
 public class Event {
     private final String title;
     private final String description;
-    private final User creator;
-    private final int rating;
-    private final Bonus bonus;
+    private final byte[] image;
+    private final DateRange range;
+    //private final User creator;
+//    private final int rating;
+//    private final Bonus bonus;
 
-    public Event(String title, String description, User creator, int rating, Bonus bonus) {
+    public Event(String title, String description, byte[] image, DateRange range) {
         this.title = title;
         this.description = description;
-        this.creator = creator;
-        this.rating = rating;
-        this.bonus = bonus;
+        this.image = image;
+        this.range = range;
     }
 
     public String getTitle() {
@@ -28,15 +29,15 @@ public class Event {
         return description;
     }
 
-    public User getCreator() {
-        return creator;
+    public byte[] getImage() {
+        return image;
     }
 
-    public int getRating() {
-        return rating;
+    public String getDateStart() {
+        return range.getDateStart();
     }
 
-    public Bonus getBonus() {
-        return bonus;
+    public String getDateEnd() {
+        return range.getDateEnd();
     }
 }

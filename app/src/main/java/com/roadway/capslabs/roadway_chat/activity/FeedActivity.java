@@ -6,25 +6,36 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
+import com.roadway.capslabs.roadway_chat.auth.ConfirmRegistrationActivity;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.ChatMessage;
+import com.roadway.capslabs.roadway_chat.models.DateRange;
+import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.ChatConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.WebSocketHandler;
+import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
+import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 import com.vk.sdk.VKSdk;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FeedActivity extends AppCompatActivity {
@@ -56,6 +67,7 @@ public class FeedActivity extends AppCompatActivity {
         initViews();
         VKSdk.initialize(this);
 
+        new EventsLoader().execute(new EventRequestHandler());
         //new ConnectRequest().execute();
     }
 
@@ -103,4 +115,32 @@ public class FeedActivity extends AppCompatActivity {
 //        });
     }
 
+    private final class EventsLoader extends AsyncTask<Object, Void, String> {
+        @Override
+        protected String doInBackground(Object... params) {
+            EventRequestHandler handler = (EventRequestHandler) params[0];
+            return handler.getAllEvents(context);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("response_crete_event", result);
+            JSONObject object = HttpConnectionHandler.parseJSON(result);
+            try {
+                JSONArray array = object.getJSONArray("object_list");
+                List<Event> events = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject json = (JSONObject)array.get(i);
+                    Event event = new Event("Title_mock", json.getString("about"),
+                            "bytes_mock".getBytes(), new DateRange("18:00 01.10.2016", "18:00 01.10.2017"));
+                    events.add(event);
+                    eventsAdapter.add(event.getDescription());
+                    eventsAdapter.notifyDataSetChanged();
+
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException("JSON parsing error", e);
+            }
+        }
+    }
 }

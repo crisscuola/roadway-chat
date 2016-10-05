@@ -35,7 +35,9 @@ public class EventsAdapter extends BaseAdapter {
         chatMessagesList.remove(position);
     }
 
-    public void add(ChatMessage msg) {}
+    public void add(String msg) {
+        chatMessagesList.add(msg);
+    }
 
     @Override
     public int getCount() {

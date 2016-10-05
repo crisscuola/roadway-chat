@@ -40,7 +40,7 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
-    CONFIRM{
+    CONFIRM {
         @Override
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
@@ -72,6 +72,28 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+    LOGOUT {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_LOGOUT)
+                    .addPathSegment("");
+        }
+    },
+    FEED {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment(PATH_ALL)
+                    .addPathSegment("");
+        }
+    },
     API {
         @Override
         public HttpUrl.Builder getUrl() {
@@ -79,6 +101,16 @@ public enum UrlType {
                     .scheme(HTTP)
                     .host(URL_CENTRIFUGE)
                     .addPathSegment(PATH_API)
+                    .addPathSegment("");
+        }
+    },
+    CREATE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(PATH_EVENT)
+                    .addPathSegment(PATH_CREATE)
                     .addPathSegment("");
         }
     };
