@@ -31,15 +31,19 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 /**
  * Created by konstantin on 02.10.16.
  */
-public class CreateEvent  extends AppCompatActivity{
+public class CreateEvent extends AppCompatActivity {
 
 
     private int PICK_IMAGE_REQUEST = 1;
 
-    private String UPLOAD_URL ="http://simplifiedcoding.16mb.com/VolleyUpload/upload.php";
+    private String UPLOAD_URL = "http://simplifiedcoding.16mb.com/VolleyUpload/upload.php";
 
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
@@ -71,14 +75,11 @@ public class CreateEvent  extends AppCompatActivity{
         buttonChoose = (Button) findViewById(R.id.btn_choose);
         buttonCreate = (Button) findViewById(R.id.btn_create);
 
-        imageView  = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageView);
 
         title = (EditText) findViewById(R.id.event_title);
         description = (EditText) findViewById(R.id.event_desciption);
         address = (EditText) findViewById(R.id.event_address);
-
-        titleString = title.getText().toString();
-        descriptionString = description.getText().toString();
 
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
@@ -91,14 +92,11 @@ public class CreateEvent  extends AppCompatActivity{
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                titleString = title.getText().toString();
+                descriptionString = description.getText().toString();
+                event = new Event(titleString, descriptionString, getBytesImage(bitmap), new DateRange("10/1/2016 18:00:00", "20/1/2018 18:00:00"));
+                Log.d("lolo_title", event.getTitle());
                 new EventCreator().execute(new EventRequestHandler());
-
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Event Created!", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-
             }
         });
 
@@ -123,7 +121,6 @@ public class CreateEvent  extends AppCompatActivity{
                 //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
                 Log.d("lolo", "lolo");
-                event = new Event(titleString,descriptionString,getBytesImage(bitmap),new DateRange("10/1/2016 18:00:00","20/1/2018 18:00:00"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -131,7 +128,7 @@ public class CreateEvent  extends AppCompatActivity{
     }
 
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -139,7 +136,7 @@ public class CreateEvent  extends AppCompatActivity{
         return encodedImage;
     }
 
-    public byte[] getBytesImage(Bitmap bmp){
+    public byte[] getBytesImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -151,22 +148,26 @@ public class CreateEvent  extends AppCompatActivity{
         toolbar.setTitle(title);
     }
 
-    private final class EventCreator  extends AsyncTask<Object, Void, String> {
+    private final class EventCreator extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
+            Log.d("lolo_title", titleString);
             EventRequestHandler handler = (EventRequestHandler) params[0];
-
-            return handler.createEvent(context, event);
+            return handler.createEvent(context, new Event(titleString, descriptionString,
+                    getBytesImage(bitmap), new DateRange("10/1/2016 17:00:00", "10/1/2016 18:00:00")));
         }
 
 
         @Override
         protected void onPostExecute(String result) {
             Log.d("lolo", result);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Event Created!", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             JSONObject object = HttpConnectionHandler.parseJSON(result);
         }
     }
-
 
 
 }

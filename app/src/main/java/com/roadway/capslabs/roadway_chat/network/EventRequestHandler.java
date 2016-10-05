@@ -10,10 +10,13 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -41,19 +44,19 @@ public class EventRequestHandler {
 
     public String createEvent(Activity context, Event event) {
         HttpUrl url = UrlFactory.getUrl(CREATE);
-        Log.d("lolo", url.toString());
         RequestBody formBody = formBody(event);
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
     }
 
     private RequestBody formBody(Event event) {
-        return new FormBody.Builder()
-                .add("title", event.getTitle())
-                .add("about", event.getDescription())
-//                .add("date_start", event.getDateStart())
-//                .add("date_end", event.getDateEnd())
-//                .add("image", Arrays.toString(event.getImage()))
+        Log.d("lolo_end", event.getDateEnd());
+        return new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("title", event.getTitle())
+                .addFormDataPart("about", event.getDescription())
+                .addFormDataPart("date_start", event.getDateStart())
+                .addFormDataPart("date_end", event.getDateEnd())
+                .addFormDataPart("image","profile.png", RequestBody.create(MediaType.parse("image/png"), event.getImage()))
                 .build();
     }
 
