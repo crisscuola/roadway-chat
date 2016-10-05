@@ -10,7 +10,6 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -42,6 +41,7 @@ public class EventRequestHandler {
 
     public String createEvent(Activity context, Event event) {
         HttpUrl url = UrlFactory.getUrl(CREATE);
+        Log.d("lolo", url.toString());
         RequestBody formBody = formBody(event);
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
@@ -51,9 +51,9 @@ public class EventRequestHandler {
         return new FormBody.Builder()
                 .add("title", event.getTitle())
                 .add("about", event.getDescription())
-                .add("date_start", event.getDateStart().toString())
-                .add("date_end", event.getDateEnd().toString())
-                .add("image", Arrays.toString(event.getImage()))
+//                .add("date_start", event.getDateStart())
+//                .add("date_end", event.getDateEnd())
+//                .add("image", Arrays.toString(event.getImage()))
                 .build();
     }
 
@@ -79,6 +79,7 @@ public class EventRequestHandler {
         try {
             Response response = client.newCall(request).execute();
             String resp = response.body().string();
+
             Log.d("response_create_handler", resp);
             return resp;
         } catch (IOException e) {

@@ -109,7 +109,8 @@ public enum UrlType {
         public HttpUrl.Builder getUrl() {
             return new HttpUrl.Builder()
                     .scheme(HTTP)
-                    .host(PATH_EVENT)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
                     .addPathSegment(PATH_CREATE)
                     .addPathSegment("");
         }
