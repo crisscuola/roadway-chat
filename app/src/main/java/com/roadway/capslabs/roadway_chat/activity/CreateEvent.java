@@ -31,10 +31,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-
 /**
  * Created by konstantin on 02.10.16.
  */
@@ -75,7 +71,7 @@ public class CreateEvent extends AppCompatActivity {
         buttonChoose = (Button) findViewById(R.id.btn_choose);
         buttonCreate = (Button) findViewById(R.id.btn_create);
 
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.image);
 
         title = (EditText) findViewById(R.id.event_title);
         description = (EditText) findViewById(R.id.event_desciption);
@@ -94,7 +90,8 @@ public class CreateEvent extends AppCompatActivity {
             public void onClick(View view) {
                 titleString = title.getText().toString();
                 descriptionString = description.getText().toString();
-                event = new Event(titleString, descriptionString, getBytesImage(bitmap), new DateRange("10/1/2016 18:00:00", "20/1/2018 18:00:00"));
+                event = new Event(titleString, descriptionString,
+                        getBytesImage(bitmap), new DateRange("10/1/2016 18:00:00", "20/1/2018 18:00:00"), 0.0f);
                 Log.d("lolo_title", event.getTitle());
                 new EventCreator().execute(new EventRequestHandler());
             }
@@ -153,8 +150,8 @@ public class CreateEvent extends AppCompatActivity {
         protected String doInBackground(Object... params) {
             Log.d("lolo_title", titleString);
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.createEvent(context, new Event(titleString, descriptionString,
-                    getBytesImage(bitmap), new DateRange("10/1/2016 17:00:00", "10/1/2016 18:00:00")));
+            return handler.createEvent(context, new Event(titleString,
+                    descriptionString, getBytesImage(bitmap), new DateRange("10/1/2016 17:00:00", "10/1/2016 18:00:00"), 0.0f));
         }
 
 
@@ -168,8 +165,6 @@ public class CreateEvent extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(result);
         }
     }
-
-
 }
 
 

@@ -85,12 +85,8 @@ public enum UrlType {
     FEED {
         @Override
         public HttpUrl.Builder getUrl() {
-            return new HttpUrl.Builder()
-                    .scheme(HTTP)
-                    .host(URL)
-                    .addPathSegment(PATH_EVENT)
-                    .addPathSegment(PATH_GET)
-                    .addPathSegment(PATH_ALL)
+            return EVENT.getUrl()
+                    .addPathSegment("all")
                     .addPathSegment("");
         }
     },
@@ -112,6 +108,17 @@ public enum UrlType {
                     .host(URL)
                     .addPathSegment(PATH_EVENT)
                     .addPathSegment(PATH_CREATE)
+                    .addPathSegment("");
+        }
+    },
+    EVENT {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_GET)
                     .addPathSegment("");
         }
     };
