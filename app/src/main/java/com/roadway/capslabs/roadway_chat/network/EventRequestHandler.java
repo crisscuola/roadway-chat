@@ -23,6 +23,7 @@ import okhttp3.Response;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
 
 /**
  * Created by kirill on 05.10.16
@@ -36,6 +37,12 @@ public class EventRequestHandler {
 
     public String getOwnEvents(Activity context) {
         HttpUrl url = UrlFactory.getUrl(OWN);
+        Request request = buildRequest(url);
+        return getResponse(context, request);
+    }
+
+    public String getSubsEvents(Activity context) {
+        HttpUrl url = UrlFactory.getUrl(SUBS);
         Request request = buildRequest(url);
         return getResponse(context, request);
     }

@@ -94,7 +94,6 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
-
     OWN {
         @Override
         public HttpUrl.Builder getUrl() {
@@ -107,7 +106,19 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+    SUBS {
+        @Override
+        public  HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment(PATH_SUBS)
+                    .addPathSegment("");
 
+        }
+    },
     API {
         @Override
         public HttpUrl.Builder getUrl() {
