@@ -94,6 +94,20 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+
+    OWN {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment(PATH_OWN)
+                    .addPathSegment("");
+        }
+    },
+
     API {
         @Override
         public HttpUrl.Builder getUrl() {

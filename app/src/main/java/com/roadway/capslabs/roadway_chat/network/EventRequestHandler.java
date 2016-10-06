@@ -10,10 +10,8 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import okhttp3.CookieJar;
-import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -24,6 +22,7 @@ import okhttp3.Response;
 
 import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
 
 /**
  * Created by kirill on 05.10.16
@@ -31,6 +30,12 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
 public class EventRequestHandler {
     public String getAllEvents(Activity context) {
         HttpUrl url = UrlFactory.getUrl(FEED);
+        Request request = buildRequest(url);
+        return getResponse(context, request);
+    }
+
+    public String getOwnEvents(Activity context) {
+        HttpUrl url = UrlFactory.getUrl(OWN);
         Request request = buildRequest(url);
         return getResponse(context, request);
     }

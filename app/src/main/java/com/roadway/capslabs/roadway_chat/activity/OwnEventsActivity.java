@@ -90,7 +90,7 @@ public class OwnEventsActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getAllEvents(context);
+            return handler.getOwnEvents(context);
         }
 
         @Override
