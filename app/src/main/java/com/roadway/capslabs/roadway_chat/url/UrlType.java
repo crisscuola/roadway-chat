@@ -85,12 +85,8 @@ public enum UrlType {
     FEED {
         @Override
         public HttpUrl.Builder getUrl() {
-            return new HttpUrl.Builder()
-                    .scheme(HTTP)
-                    .host(URL)
-                    .addPathSegment(PATH_EVENT)
-                    .addPathSegment(PATH_GET)
-                    .addPathSegment(PATH_ALL)
+            return EVENT.getUrl()
+                    .addPathSegment("all")
                     .addPathSegment("");
         }
     },
@@ -119,6 +115,28 @@ public enum UrlType {
 
         }
     },
+    SUBSCRIBE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_SUBSCRIBE)
+                    .addPathSegment("");
+        }
+    },
+    UNSUBSCRIBE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_UNSUBSCRIBE)
+                    .addPathSegment("");
+        }
+    },
     API {
         @Override
         public HttpUrl.Builder getUrl() {
@@ -139,7 +157,19 @@ public enum UrlType {
                     .addPathSegment(PATH_CREATE)
                     .addPathSegment("");
         }
+    },
+    EVENT {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment("");
+        }
     };
+
 
     public abstract HttpUrl.Builder getUrl();
 }

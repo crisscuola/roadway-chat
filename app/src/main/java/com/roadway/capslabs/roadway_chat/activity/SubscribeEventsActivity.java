@@ -15,7 +15,6 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
-import com.roadway.capslabs.roadway_chat.models.DateRange;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -81,7 +80,8 @@ public class SubscribeEventsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent myIntent = new Intent(SubscribeEventsActivity.this, SingleEventActivity.class);
-                myIntent.putExtra("item", i);
+                Event event = eventsAdapter.getItem(i);
+                myIntent.putExtra("id", event.getId());
                 startActivity(myIntent);
             }
         });
@@ -103,13 +103,16 @@ public class SubscribeEventsActivity extends AppCompatActivity {
                 List<Event> events = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject json = (JSONObject)array.get(i);
-                    Event event = new Event("Title_mock", json.getString("about"),
-                            "bytes_mock".getBytes(), new DateRange("18:00 01.10.2016", "18:00 01.10.2017"));
+                    Event event = new Event(json);
+//                    Event event = new Event("Title_mock", json.getString("about"),
+//                            "bytes_mock".getBytes(), new DateRange("18:00 01.10.2016", "18:00 01.10.2017"), 0.0f);
                     events.add(event);
-                    eventsAdapter.add(event.getDescription());
-                    eventsAdapter.notifyDataSetChanged();
+//                    eventsAdapter.add(event.getDescription());
+//                    eventsAdapter.notifyDataSetChanged();
 
                 }
+                eventsAdapter.addEvents(events);
+                eventsAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }

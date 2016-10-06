@@ -36,7 +36,7 @@
     <string name="feed_activity_title">Feed Events</string>
     <string name="single_chat_title">Single Chat</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_own">Own Events</string>
+    <string name="title_activity_own">My Events</string>
     <string name="title_activity_sub">Subs Events</string>
     <string name="app_title">gEvent</string>
     <string name="field_email">Email:</string>

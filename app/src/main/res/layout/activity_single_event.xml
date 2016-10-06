@@ -9,9 +9,9 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/imageView" />
+        android:layout_height="200dp"
+        android:id="@+id/image"
+        android:contentDescription="event_visual" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,6 +56,20 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Bonus"
         android:id="@+id/bonus"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Subscribe"
+        android:id="@+id/btn_subs"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UnSubscribe"
+        android:id="@+id/btn_unsubs"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

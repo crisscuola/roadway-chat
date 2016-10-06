@@ -94,7 +94,7 @@ public class DrawerFactory {
         SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
         SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("Create Event");
-        SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("Own Events");
+        SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
         SecondaryDrawerItem subevents  = new SecondaryDrawerItem().withIdentifier(7).withName("Subscribed Events");
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(8).withName("Logout");
         items.add(events);
