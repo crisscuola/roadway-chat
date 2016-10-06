@@ -1,10 +1,8 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -29,16 +27,6 @@ public class ProfileActivity extends AppCompatActivity{
         initToolbar("Profile");
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-
-        buttonWrite = (Button) findViewById(R.id.btn_write);
-
-        buttonWrite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), SingleChatActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     public void initToolbar(String title) {

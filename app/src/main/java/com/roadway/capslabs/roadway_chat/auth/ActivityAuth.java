@@ -52,14 +52,14 @@ public class ActivityAuth extends AppCompatActivity  {
             }
         });
 
-        buttonFb = (Button) findViewById(R.id.btn_fb);
-
-        buttonFb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ActivityFb.class);
-                startActivity(intent);
-            }
-        });
+//        buttonFb = (Button) findViewById(R.id.btn_fb);
+//
+//        buttonFb.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(view.getContext(), ActivityFb.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

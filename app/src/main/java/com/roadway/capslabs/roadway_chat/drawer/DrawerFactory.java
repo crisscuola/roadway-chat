@@ -18,8 +18,10 @@ import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.CreateEvent;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
+import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
 import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
 import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
+import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.vk.sdk.VKSdk;
@@ -87,19 +89,21 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Events");
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed Events");
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
         SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
-        SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("CreateEvent");
-        SecondaryDrawerItem myevents  = new SecondaryDrawerItem().withIdentifier(6).withName("MyEvents");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(7).withName("Logout");
+        SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("Create Event");
+        SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("Own Events");
+        SecondaryDrawerItem subevents  = new SecondaryDrawerItem().withIdentifier(7).withName("Subscribed Events");
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(8).withName("Logout");
         items.add(events);
         items.add(map);
         items.add(profile);
         items.add(settings);
         items.add(create);
-        items.add(myevents);
+        items.add(ownevents);
+        items.add(subevents);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
@@ -118,7 +122,11 @@ public class DrawerFactory {
                 return SettingActivity.class;
             case 5:
                 return CreateEvent.class;
-            case 7:
+            case  6:
+                return OwnEventsActivity.class;
+            case  7:
+                return SubscribeEventsActivity.class;
+            case 8:
                 return ActivityAuth.class;
             default:
                 return FeedActivity.class;
