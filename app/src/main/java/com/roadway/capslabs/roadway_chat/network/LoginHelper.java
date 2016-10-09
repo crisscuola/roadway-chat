@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -9,7 +10,10 @@ import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
@@ -41,7 +45,12 @@ public class LoginHelper {
     private String getLogoutResponse(Activity context, Request request) {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
-        
+        removeCookie(cookieJar);
+        try {
+            new OkHttpClient().newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException("Connectivity problem happened during logout request", e);
+        }
         return null;
     }
 
@@ -83,5 +92,12 @@ public class LoginHelper {
                 cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
         cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
                 cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+    }
+
+    private void removeCookie(CookieJar cookieJar) {
+        List<Cookie> emptyList = new ArrayList<>();
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), emptyList);
+        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(), emptyList);
+        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(), emptyList);
     }
 }

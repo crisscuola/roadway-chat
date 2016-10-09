@@ -2,7 +2,9 @@ package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.login.LoginManager;
@@ -23,7 +25,9 @@ import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
 import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
 import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
+import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 import com.vk.sdk.VKSdk;
 
 import org.json.JSONException;
@@ -54,9 +58,9 @@ public class DrawerFactory {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
-                        if (position == 7) {
-                            VKSdk.logout();
-                            LoginManager.getInstance().logOut();
+                        if (position == 8) {
+                            //VKSdk.logout();
+                            new Logouter().execute(activity);
                         }
 
                         activity.startActivity(intent);
@@ -141,5 +145,21 @@ public class DrawerFactory {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private final class Logouter extends AsyncTask<Activity, Void, Activity> {
+        @Override
+        protected Activity doInBackground(Activity... params) {
+            Activity context = params[0];
+            new LoginHelper().logout(context);
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(Activity context) {
+            super.onPostExecute(context);
+            Intent intent = new Intent(context, ActivityAuth.class);
+            context.startActivity(intent);
+        }
     }
 }
