@@ -12,60 +12,91 @@
         android:layout_height="match_parent">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/image"
+            android:scaleType="fitXY"
+            android:paddingBottom="10dp"
             android:contentDescription="event_visual" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_height="match_parent"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textSize="15sp"
             android:text="Title"
+            android:textStyle="bold"
             android:id="@+id/title"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="start"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textSize="15sp"
             android:text="Description"
             android:id="@+id/description"
-            android:layout_gravity="center_horizontal" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="start" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textSize="15sp"
             android:text="Address"
             android:id="@+id/address"
-            android:layout_gravity="center_horizontal" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="start" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textSize="15sp"
             android:text="Creator"
             android:id="@+id/creator"
-            android:layout_gravity="center_horizontal" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="start" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textSize="15sp"
             android:text="Rating"
             android:id="@+id/rating"
-            android:layout_gravity="center_horizontal" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="start" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearance"
+            android:textSize="15sp"
             android:text="Bonus"
             android:id="@+id/bonus"
-            android:layout_gravity="center_horizontal" />
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_gravity="start" />
 
         <Button
             android:layout_width="wrap_content"

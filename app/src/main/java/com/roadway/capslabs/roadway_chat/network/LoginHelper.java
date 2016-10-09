@@ -47,11 +47,11 @@ public class LoginHelper {
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         removeCookie(cookieJar);
         try {
-            new OkHttpClient().newCall(request).execute();
+            Response response = new OkHttpClient().newCall(request).execute();
+            return response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during logout request", e);
         }
-        return null;
     }
 
     private RequestBody formBody(String email, String password) {
@@ -95,9 +95,11 @@ public class LoginHelper {
     }
 
     private void removeCookie(CookieJar cookieJar) {
-        List<Cookie> emptyList = new ArrayList<>();
-        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), emptyList);
-        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(), emptyList);
-        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(), emptyList);
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
+                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
+        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(),
+                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
+        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
+                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
     }
 }

@@ -75,6 +75,7 @@ public class EventsAdapter extends BaseAdapter {
         rating.setText(String.valueOf(event.getRating()));
 
         Picasso.with(context).load(getImageUrl(event.getUrl()))
+                .fit()
                 .placeholder(R.drawable.event_placeholder)
                 .into(image);
 
