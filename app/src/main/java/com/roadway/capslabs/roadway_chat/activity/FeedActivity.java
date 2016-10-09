@@ -78,10 +78,10 @@ public class FeedActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(FeedActivity.this, SingleEventActivity.class);
+                Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
                 Event event = eventsAdapter.getItem(i);
-                myIntent.putExtra("id", event.getId());
-                startActivity(myIntent);
+                intent.putExtra("id", event.getId());
+                startActivity(intent);
             }
         });
     }
