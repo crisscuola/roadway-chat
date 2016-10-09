@@ -39,6 +39,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private TextView description;
     private TextView rating;
     private Button subscribe, unsubscribe, showOnMap;
+    private Event event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class SingleEventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
                 intent.putExtra("selected_event", id);
+                intent.putExtra("title", event.getDescription());
                 startActivity(intent);
             }
         });
@@ -103,7 +105,7 @@ public class SingleEventActivity extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
-                Event event = new Event(eventObj);
+                event = new Event(eventObj);
                 title.setText("Mock title");
                 description.setText(event.getDescription());
                 rating.setText(String.valueOf(event.getRating()));
