@@ -43,7 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
@@ -64,18 +64,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lng = lng/100 + 37.5f;
 
             LatLng latlng = new LatLng(lat, lng);
-            setMarker(latlng, mMap, String.valueOf(i));
+
+            setMarker(latlng , mMap,String.valueOf(i+1));
+
         }
 
-        int id = 0;
 
         if (getIntent().hasExtra("selected_event")) {
             id  = (int) getIntent().getExtras().get("selected_event");
             Log.d("intent", String.valueOf(id));
 
+            String title = (String) getIntent().getExtras().get("title");
+
             LatLng latlng = new LatLng(55.745609, 37.614619);
 
-            setMarker(latlng , mMap, String.valueOf(id));
+            setMarker(latlng , mMap, "id = " + String.valueOf(id) + " " + title);
 
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
@@ -88,13 +91,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
+        final int finalId = id;
+
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
         {
             @Override
             public void onInfoWindowClick(Marker marker) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
                     if (getIntent().hasExtra("selected_event")) {
-                        intent.putExtra("id", Integer.parseInt(marker.getTitle()));
+                        intent.putExtra("id", finalId);
                         startActivity(intent);
                     } else {
                         intent.putExtra("id", Integer.parseInt(marker.getTitle()));
