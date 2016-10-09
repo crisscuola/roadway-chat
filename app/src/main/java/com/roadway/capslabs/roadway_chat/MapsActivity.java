@@ -22,12 +22,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roadway.capslabs.roadway_chat.activity.SingleEventActivity;
 
-import java.util.Random;
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     private GoogleMap mMap;
-    Marker melbourne;
+    Marker lenin, mel;
     Context context = this;
 
     @Override
@@ -45,7 +43,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -67,34 +64,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(location.getLatitude(), location.getLongitude()))
                     .zoom(15)
-                    .bearing(90)
+                    .bearing(0)
                     .tilt(0)
                     .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
-        final LatLng MELBOURNE = new LatLng(-37.81319, 144.96298);
-        melbourne = mMap.addMarker(new MarkerOptions()
-                .position(MELBOURNE)
-                .title("Melbourne"));
-        melbourne.showInfoWindow();
+        final LatLng LENIN = new LatLng(55.745609, 37.614619);
+        lenin = mMap.addMarker(new MarkerOptions()
+                .position(LENIN)
+                .title("Lenin"));
+        lenin.showInfoWindow();
 
-        for (int i = 0; i < 3; i++){
-            Random rnd = new Random(System.currentTimeMillis());
-            int lat = 50 + rnd.nextInt(100 - 50 + 1);
-            int lng = 50 + rnd.nextInt(100 - 50 + 1);
-            LatLng latLng = new LatLng(lat, lng);
+        final LatLng MEL = new LatLng(-37.81319D, 144.96298D);
+        mel = mMap.addMarker(new MarkerOptions()
+                .position(MEL)
+                .title("Mel"));
+        mel.showInfoWindow();
 
-            String title = "title" + " ( " +lat+","+lng+ " ) ";
-            setMarker(latLng, mMap, title);
-        }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
         {
-
             @Override
             public void onInfoWindowClick(Marker marker) {
-                if (marker.equals(melbourne)) {
+                if (marker.equals(lenin)) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
 
                     intent.putExtra("id", 3);
@@ -102,20 +95,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.d("marker", "CLICK!!");
                 }
             }
-
         });
 
     }
-
-
-
 
     private void setMarker(LatLng latLng, GoogleMap googleMap, String title){
         mMap = googleMap;
 
         mMap.addMarker(new MarkerOptions().position(latLng).title(title));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
     }
 
     @Override
