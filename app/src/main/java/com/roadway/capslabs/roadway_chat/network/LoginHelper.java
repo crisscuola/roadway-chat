@@ -19,6 +19,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGIN;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGOUT;
 
 /**
  * Created by kirill on 25.09.16
@@ -29,6 +30,19 @@ public class LoginHelper {
         RequestBody formBody = formBody(email, password);
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
+    }
+
+    public String logout(Activity context) {
+        HttpUrl url = UrlFactory.getUrl(LOGOUT);
+        Request request = buildRequest(url, new FormBody.Builder().build());
+        return getLogoutResponse(context, request);
+    }
+
+    private String getLogoutResponse(Activity context, Request request) {
+        CookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
+        
+        return null;
     }
 
     private RequestBody formBody(String email, String password) {

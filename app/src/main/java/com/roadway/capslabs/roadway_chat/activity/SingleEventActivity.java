@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
+import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
@@ -67,7 +68,7 @@ public class SingleEventActivity extends AppCompatActivity {
         showOnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SingleEventActivity.this, MapActivity.class);
+                Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
                 intent.putExtra("selected_event", id);
                 startActivity(intent);
             }
