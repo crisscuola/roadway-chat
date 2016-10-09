@@ -134,7 +134,7 @@ public class WebSocketHandler {
                 }
                 Log.d("feed_isOut", message.getUUID() + " my: " + token);
                 ChatMessage chatMessage = new ChatMessage(message.getData(), isOut, null);
-                adapter.add(chatMessage.getMsg());
+                //adapter.add(chatMessage.getMsg());
                 context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

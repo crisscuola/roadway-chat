@@ -9,8 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -29,41 +27,44 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedActivity extends AppCompatActivity {
+/**
+ * Created by konstantin on 06.10.16.
+ */
+public class SubscribeEventsActivity extends AppCompatActivity {
+
+
     private final static DrawerFactory drawerFactory;
     private final static HttpConnectionHandler handler;
 
-    private Toolbar toolbar;
-    private EditText text;
-    private Button send;
     private ListView listView;
     private Drawer drawer;
-
-    private final Activity context = this;
+    private Toolbar toolbar;
 
     private EventsAdapter eventsAdapter;
+    private final Activity context = this;
 
     static {
         handler = new HttpConnectionHandler();
         drawerFactory = new DrawerFactory(handler);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
-        initToolbar(getString(R.string.feed_activity_title));
+        initToolbar(getString(R.string.title_activity_sub));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
         VKSdk.initialize(this);
 
         new EventsLoader().execute(new EventRequestHandler());
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     private void initToolbar(String title) {
@@ -78,7 +79,7 @@ public class FeedActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(FeedActivity.this, SingleEventActivity.class);
+                Intent myIntent = new Intent(SubscribeEventsActivity.this, SingleEventActivity.class);
                 Event event = eventsAdapter.getItem(i);
                 myIntent.putExtra("id", event.getId());
                 startActivity(myIntent);
@@ -90,7 +91,7 @@ public class FeedActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getAllEvents(context);
+            return handler.getSubsEvents(context);
         }
 
         @Override
@@ -117,4 +118,6 @@ public class FeedActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

@@ -10,7 +10,6 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -23,7 +22,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.EVENT;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBSCRIBE;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
 
 /**
  * Created by kirill on 05.10.16
@@ -35,9 +39,21 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
-    public String getEvent(Activity context, int id) {
-        HttpUrl url = UrlFactory.getUrl(FEED).newBuilder()
-                .addQueryParameter("id", String.valueOf(id)).build();
+    public String getOwnEvents(Activity context) {
+        HttpUrl url = UrlFactory.getUrl(OWN);
+        Request request = buildRequest(url);
+        return getResponse(context, request);
+    }
+
+    public String getSubsEvents(Activity context) {
+        HttpUrl url = UrlFactory.getUrl(SUBS);
+        Request request = buildRequest(url);
+        return getResponse(context, request);
+    }
+
+    public String getEvent(Activity context, String id) {
+        HttpUrl url = UrlFactory.getUrl(EVENT).newBuilder()
+                .addQueryParameter("id", id).build();
         Request request = buildRequest(url);
         return getResponse(context, request);
     }
@@ -45,6 +61,20 @@ public class EventRequestHandler {
     public String createEvent(Activity context, Event event) {
         HttpUrl url = UrlFactory.getUrl(CREATE);
         RequestBody formBody = formBody(event);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+    public String subscribeEvent(Activity context, String id){
+        HttpUrl url = UrlFactory.getUrl(SUBSCRIBE);
+        RequestBody formBody = formSubscribeBody(id);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+    public String unsubscribeEvent(Activity context, String id){
+        HttpUrl url = UrlFactory.getUrl(UNSUBSCRIBE);
+        RequestBody formBody = formSubscribeBody(id);
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
     }
@@ -57,6 +87,12 @@ public class EventRequestHandler {
                 .addFormDataPart("date_start", event.getDateStart())
                 .addFormDataPart("date_end", event.getDateEnd())
                 .addFormDataPart("image","profile.png", RequestBody.create(MediaType.parse("image/png"), event.getImage()))
+                .build();
+    }
+
+    private RequestBody formSubscribeBody(String id) {
+        return new FormBody.Builder()
+                .add("event", id)
                 .build();
     }
 
