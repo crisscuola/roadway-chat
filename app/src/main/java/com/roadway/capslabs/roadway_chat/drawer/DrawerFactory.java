@@ -138,13 +138,11 @@ public class DrawerFactory {
     }
 
     private JSONObject getProfile() {
-        //return handler.getProfile("Profile");
         try {
             return new JSONObject("{name:name, email:email}");
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Exception while parsing json",e);
         }
-        return null;
     }
 
     private final class Logouter extends AsyncTask<Activity, Void, Activity> {
