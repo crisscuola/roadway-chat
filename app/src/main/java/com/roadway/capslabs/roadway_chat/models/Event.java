@@ -13,11 +13,11 @@ public class Event {
     private final DateRange range;
     private final float rating;
     private int id;
+    private String url;
     //private final User creator;
 //    private final Bonus bonus;
 
     public Event(String title, String description, byte[] image, DateRange range, float rating) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
@@ -32,6 +32,7 @@ public class Event {
             range = new DateRange(eventObj.getString("date_start"), eventObj.getString("date_end"));
             rating = (float) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
+            url = eventObj.getString("avatar");
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -63,5 +64,9 @@ public class Event {
 
     public int getId() {
         return id;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }
