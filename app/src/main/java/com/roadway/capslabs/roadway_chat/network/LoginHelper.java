@@ -24,12 +24,6 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGIN;
  * Created by kirill on 25.09.16
  */
 public class LoginHelper {
-    private final HttpConnectionHandler handler;
-
-    public LoginHelper(HttpConnectionHandler handler) {
-        this.handler = handler;
-    }
-
     public String login(Activity context, String email, String password) {
         HttpUrl url = UrlFactory.getUrl(LOGIN);
         RequestBody formBody = formBody(email, password);
@@ -60,8 +54,6 @@ public class LoginHelper {
         try {
             Response response = client.newCall(request).execute();
             String result = response.body().string();
-//            cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
-//                    cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
             saveCookie(cookieJar);
 
             return result;

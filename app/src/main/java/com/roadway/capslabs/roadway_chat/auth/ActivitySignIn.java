@@ -13,7 +13,6 @@ import android.widget.EditText;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
 import java.util.concurrent.ExecutionException;
@@ -39,7 +38,7 @@ public class ActivitySignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    new LoginRequest().execute(new LoginHelper(new HttpConnectionHandler()),
+                    new LoginRequest().execute(new LoginHelper(),
                             email.getText().toString(), password.getText().toString()).get();
                 } catch (InterruptedException e) {
                     throw new RuntimeException("Thread was interrupted", e);
