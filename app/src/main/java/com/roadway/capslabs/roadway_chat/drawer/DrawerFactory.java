@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.facebook.login.LoginManager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -56,7 +55,7 @@ public class DrawerFactory {
                         Intent intent = new Intent(activity, toActivity);
                         if (position == 7) {
                             VKSdk.logout();
-                            LoginManager.getInstance().logOut();
+                            //LoginManager.getInstance().logOut();
                         }
 
                         activity.startActivity(intent);
