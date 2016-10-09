@@ -4,9 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationManager;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -22,10 +21,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roadway.capslabs.roadway_chat.activity.SingleEventActivity;
 
+import java.util.Random;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener{
 
     private GoogleMap mMap;
-    Marker lenin, mel;
     Context context = this;
 
     @Override
@@ -53,16 +53,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
 
-        Location location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
-        if (location != null)
-        {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+        for (int i = 0; i < 5; i++) {
+
+            Random rnd = new Random(System.currentTimeMillis());
+            float lat = 1 + rnd.nextInt(50 - 1 + 1);
+            float lng = 1 + rnd.nextInt(50 - 1 + 1);
+
+            lat = lat/100 + 55.5f;
+            lng = lng/100 + 37.5f;
+
+            LatLng latlng = new LatLng(lat, lng);
+            setMarker(latlng, mMap, String.valueOf(i));
+        }
+
+        int id = 0;
+
+        if (getIntent().hasExtra("selected_event")) {
+            id  = (int) getIntent().getExtras().get("selected_event");
+            Log.d("intent", String.valueOf(id));
+
+            LatLng latlng = new LatLng(55.745609, 37.614619);
+
+            setMarker(latlng , mMap, String.valueOf(id));
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(location.getLatitude(), location.getLongitude()))
+                    .target(latlng)
                     .zoom(15)
                     .bearing(0)
                     .tilt(0)
@@ -70,44 +88,57 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
-        final LatLng LENIN = new LatLng(55.745609, 37.614619);
-        lenin = mMap.addMarker(new MarkerOptions()
-                .position(LENIN)
-                .title("Lenin"));
-        lenin.showInfoWindow();
-
-        final LatLng MEL = new LatLng(-37.81319D, 144.96298D);
-        mel = mMap.addMarker(new MarkerOptions()
-                .position(MEL)
-                .title("Mel"));
-        mel.showInfoWindow();
-
-
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
         {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                if (marker.equals(lenin)) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
+                    if (getIntent().hasExtra("selected_event")) {
+                        intent.putExtra("id", Integer.parseInt(marker.getTitle()));
+                        startActivity(intent);
+                    } else {
+                        intent.putExtra("id", Integer.parseInt(marker.getTitle()));
+                        startActivity(intent);
+                    }
 
-                    intent.putExtra("id", 3);
-                    startActivity(intent);
                     Log.d("marker", "CLICK!!");
-                }
+
             }
         });
 
     }
 
-    private void setMarker(LatLng latLng, GoogleMap googleMap, String title){
+    public void setMarker(LatLng latLng, GoogleMap googleMap, String title){
+        Marker marker;
         mMap = googleMap;
-
-        mMap.addMarker(new MarkerOptions().position(latLng).title(title));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        marker.showInfoWindow();
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(final Location location) {
+            //your code here
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+    };
 }
