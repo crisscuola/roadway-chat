@@ -11,8 +11,9 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="center"
-            android:background="@color/md_orange_200" />
+            android:scaleType="fitXY"
+            android:background="@color/md_orange_200"
+            android:contentDescription="content_image" />
 
         <TextView
             android:id="@+id/event_short_description"

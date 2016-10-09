@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,45 +73,16 @@ public class EventsAdapter extends BaseAdapter {
         Event event = getItem(position);
         textView.setText(event.getDescription());
         rating.setText(String.valueOf(event.getRating()));
-        try {
-            new DownloadingImage().execute(event.getUrl()).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+
+        Picasso.with(context).load(getImageUrl(event.getUrl()))
+                .fit()
+                .placeholder(R.drawable.event_placeholder)
+                .into(image);
+
         return rowView;
     }
 
     private String getImageUrl(String url) {
         return "http://" + UrlConst.URL + url;
-    }
-
-    private class DownloadingImage extends AsyncTask<String, Void, Bitmap> {
-        protected Bitmap doInBackground(String... urls) {
-            String url = urls[0];
-            url = getImageUrl(url);
-            Bitmap image = null;
-            InputStream in = null;
-            try {
-                in = new java.net.URL(url).openStream();
-                image = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                } catch (IOException e) {
-                    Log.i("exception", "closing");
-                }
-            }
-            return image;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            image.setImageBitmap(result);
-        }
     }
 }

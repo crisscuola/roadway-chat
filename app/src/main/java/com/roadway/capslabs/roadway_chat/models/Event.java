@@ -12,18 +12,22 @@ public class Event {
     private byte[] image;
     private final DateRange range;
     private final float rating;
-    private int id;
-    private String url;
+    private final int id;
+    private final String url;
+    private final double let;
+    private final double lng;
     //private final User creator;
 //    private final Bonus bonus;
 
-    public Event(String title, String description, byte[] image, DateRange range, float rating) {
-        this.title = title;
-        this.description = description;
-        this.image = image;
-        this.range = range;
-        this.rating = rating;
-    }
+//    public Event(String title, String description, byte[] image, DateRange range, float rating) {
+//        this.title = title;
+//        this.description = description;
+//        this.image = image;
+//        this.range = range;
+//        this.rating = rating;
+//        this.id = 1;
+//        this.url = "";
+//    }
 
     public Event(JSONObject eventObj) {
         try {
@@ -33,6 +37,8 @@ public class Event {
             rating = (float) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
             url = eventObj.getString("avatar");
+            let = -37.81319D;
+            lng = 144.96298D;
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -68,5 +74,13 @@ public class Event {
 
     public String getUrl() {
         return url;
+    }
+
+    public double getLet() {
+        return let;
+    }
+
+    public double getLng() {
+        return lng;
     }
 }
