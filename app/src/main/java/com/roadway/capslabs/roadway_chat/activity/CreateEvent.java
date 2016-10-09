@@ -29,27 +29,19 @@ import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Created by konstantin on 02.10.16.
+ * Created by konstantin on 02.10.16
  */
 public class CreateEvent extends AppCompatActivity {
-
-
     private int PICK_IMAGE_REQUEST = 1;
 
-    private String UPLOAD_URL = "http://simplifiedcoding.16mb.com/VolleyUpload/upload.php";
-
-    private String KEY_IMAGE = "image";
-    private String KEY_NAME = "name";
-
-    private Drawer drawer;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory(new HttpConnectionHandler());
 
     private final Activity context = this;
-
 
     private Button buttonCreate, buttonChoose;
     private ImageView imageView;
@@ -58,15 +50,13 @@ public class CreateEvent extends AppCompatActivity {
     private String titleString, descriptionString;
     private Bitmap bitmap;
 
-    private Event event;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
         initToolbar("CreateEvent");
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        Drawer drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         buttonChoose = (Button) findViewById(R.id.btn_choose);
         buttonCreate = (Button) findViewById(R.id.btn_create);
@@ -76,7 +66,6 @@ public class CreateEvent extends AppCompatActivity {
         title = (EditText) findViewById(R.id.event_title);
         description = (EditText) findViewById(R.id.event_desciption);
         address = (EditText) findViewById(R.id.event_address);
-
 
         buttonChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,15 +77,13 @@ public class CreateEvent extends AppCompatActivity {
         buttonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                titleString = title.getText().toString();
-                descriptionString = description.getText().toString();
-                event = new Event(titleString, descriptionString,
-                        getBytesImage(bitmap), new DateRange("10/1/2016 18:00:00", "20/1/2018 18:00:00"), 0.0f);
-                Log.d("lolo_title", event.getTitle());
-                new EventCreator().execute(new EventRequestHandler());
+//                titleString = title.getText().toString();
+//                descriptionString = description.getText().toString();
+//                Event event = new Event(titleString, descriptionString,
+//                        getBytesImage(bitmap), new DateRange("10/1/2016 18:00:00", "20/1/2018 18:00:00"), 0.0f);
+//                new EventCreator().execute(event);
             }
         });
-
     }
 
     private void showFileChooser() {
@@ -113,31 +100,27 @@ public class CreateEvent extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
-                //Getting the Bitmap from Gallery
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                //Setting the Bitmap to ImageView
                 imageView.setImageBitmap(bitmap);
-                Log.d("lolo", "lolo");
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException("File was not found", e);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Exception while getting picture", e);
             }
         }
     }
-
 
     public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+        return Base64.encodeToString(imageBytes, Base64.DEFAULT);
     }
 
     public byte[] getBytesImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        return imageBytes;
+        return baos.toByteArray();
     }
 
     public void initToolbar(String title) {
@@ -148,21 +131,16 @@ public class CreateEvent extends AppCompatActivity {
     private final class EventCreator extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
-            Log.d("lolo_title", titleString);
-            EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.createEvent(context, new Event(titleString,
-                    descriptionString, getBytesImage(bitmap), new DateRange("10/1/2016 17:00:00", "10/1/2016 18:00:00"), 0.0f));
+            Event event = (Event) params[0];
+            return new EventRequestHandler().createEvent(context, event);
         }
-
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("lolo", result);
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Event Created!", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-            JSONObject object = HttpConnectionHandler.parseJSON(result);
         }
     }
 }
