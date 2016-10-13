@@ -1,10 +1,6 @@
 package com.roadway.capslabs.roadway_chat.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +13,8 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kirill on 02.10.16
@@ -74,7 +67,7 @@ public class EventsAdapter extends BaseAdapter {
         textView.setText(event.getDescription());
         rating.setText(String.valueOf(event.getRating()));
 
-        Picasso.with(context).load(getImageUrl(event.getUrl()))
+        Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .fit()
                 .placeholder(R.drawable.event_placeholder)
                 .into(image);

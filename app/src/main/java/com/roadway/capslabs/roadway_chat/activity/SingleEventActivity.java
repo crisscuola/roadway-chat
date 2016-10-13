@@ -92,6 +92,38 @@ public class SingleEventActivity extends AppCompatActivity {
         showOnMap = (Button) findViewById(R.id.btn_show_on_map);
     }
 
+    private boolean isSubscribed(JSONObject event) {
+        try {
+            return event.getBoolean("subscribed");
+        } catch (JSONException e) {
+            throw new RuntimeException("Key \'subscribed\' not found", e);
+        }
+    }
+
+    private void showSubscribeButton(boolean isSubscribed) {
+        if (!isSubscribed) {
+            subscribe.setVisibility(View.VISIBLE);
+            unsubscribe.setVisibility(View.GONE);
+            return;
+        }
+        subscribe.setVisibility(View.GONE);
+        unsubscribe.setVisibility(View.VISIBLE);
+    }
+
+    private void displayEventContent(JSONObject eventObj) {
+        event = new Event(eventObj);
+        title.setText(event.getTitle());
+        description.setText(event.getDescription());
+        rating.setText(String.valueOf(event.getRating()));
+        Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
+                .placeholder(R.drawable.event_placeholder)
+                .into(imageView);
+    }
+
+    private String getImageUrl(String url) {
+        return "http://" + UrlConst.URL + url;
+    }
+
     private final class EventLoader extends AsyncTask<Integer, Void, String> {
         @Override
         protected String doInBackground(Integer... params) {
@@ -105,22 +137,12 @@ public class SingleEventActivity extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
-                event = new Event(eventObj);
-                title.setText("Mock title");
-                description.setText(event.getDescription());
-                rating.setText(String.valueOf(event.getRating()));
-                Picasso.with(context).load(getImageUrl(eventObj.getString("avatar")))
-                        .placeholder(R.drawable.event_placeholder)
-                        .into(imageView);
-                //new DownloadingImage().execute(eventObj.getString("avatar"));
+                showSubscribeButton(isSubscribed(eventObj));
+                displayEventContent(eventObj);
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
             }
         }
-    }
-
-    private String getImageUrl(String url) {
-        return "http://" + UrlConst.URL + url;
     }
 
     private final class Subscriber extends AsyncTask<Integer, Void, String> {
@@ -133,6 +155,7 @@ public class SingleEventActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            showSubscribeButton(true);
             Log.d("response_subscribe", s);
         }
     }
@@ -147,6 +170,7 @@ public class SingleEventActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            showSubscribeButton(false);
             Log.d("response_subscribe", s);
         }
     }
