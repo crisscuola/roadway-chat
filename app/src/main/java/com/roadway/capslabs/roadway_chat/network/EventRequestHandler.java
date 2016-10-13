@@ -33,11 +33,11 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
  * Created by kirill on 05.10.16
  */
 public class EventRequestHandler {
-    public String getAllEvents(Activity context) {
+     public <T extends Activity> String getAllEvents(T context) {
         HttpUrl url = UrlFactory.getUrl(FEED);
         Request request = buildRequest(url);
         return getResponse(context, request);
-    }
+     }
 
     public String getOwnEvents(Activity context) {
         HttpUrl url = UrlFactory.getUrl(OWN);

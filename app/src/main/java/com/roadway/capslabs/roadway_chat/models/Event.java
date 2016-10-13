@@ -28,8 +28,10 @@ public class Event {
             rating = (float) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
             pictureUrl = eventObj.getString("avatar");
-            let = -37.81319D;
-            lng = 144.96298D;
+//            let = -37.81319D;
+//            lng = 144.96298D;
+            let = eventObj.getDouble("latitude");
+            lng = eventObj.getDouble("longitude");
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -67,8 +69,7 @@ public class Event {
         return pictureUrl;
     }
 
-    public double getLet() {
-        return let;
+    public double getLet() {return let;
     }
 
     public double getLng() {

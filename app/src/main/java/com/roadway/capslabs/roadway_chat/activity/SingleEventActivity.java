@@ -72,6 +72,8 @@ public class SingleEventActivity extends AppCompatActivity {
                 Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
                 intent.putExtra("selected_event", id);
                 intent.putExtra("title", event.getDescription());
+                intent.putExtra("latitude", event.getLet());
+                intent.putExtra("longitude", event.getLng());
                 startActivity(intent);
             }
         });
