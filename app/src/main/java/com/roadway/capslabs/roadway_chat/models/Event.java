@@ -19,15 +19,6 @@ public class Event {
     //private final User creator;
 //    private final Bonus bonus;
 
-//    public Event(String title, String description, byte[] image, DateRange range, float rating) {
-//        this.title = title;
-//        this.description = description;
-//        this.image = image;
-//        this.range = range;
-//        this.rating = rating;
-//        this.id = 1;
-//        this.pictureUrl = "";
-//    }
 
     public Event(JSONObject eventObj) {
         try {

@@ -103,12 +103,7 @@ public class FeedActivity extends AppCompatActivity {
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject json = (JSONObject)array.get(i);
                     Event event = new Event(json);
-//                    Event event = new Event("Title_mock", json.getString("about"),
-//                            "bytes_mock".getBytes(), new DateRange("18:00 01.10.2016", "18:00 01.10.2017"), 0.0f);
                     events.add(event);
-//                    eventsAdapter.add(event.getDescription());
-//                    eventsAdapter.notifyDataSetChanged();
-
                 }
                 eventsAdapter.addEvents(events);
                 eventsAdapter.notifyDataSetChanged();

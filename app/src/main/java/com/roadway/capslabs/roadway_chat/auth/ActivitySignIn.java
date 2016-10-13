@@ -11,44 +11,74 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kirill on 25.09.16
  */
-public class ActivitySignIn extends AppCompatActivity {
+public class ActivitySignIn extends AppCompatActivity implements Validator.ValidationListener {
+    @NotEmpty
+    @Email
     private EditText email;
+    @NotEmpty
+    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC)
     private EditText password;
     private String response;
+    private Button button;
     private Activity context = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        initViews();
 
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        Button button = (Button) findViewById(R.id.btn_in);
+        final Validator validator = new Validator(this);
+        validator.setValidationListener(this);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    new LoginRequest().execute(new LoginHelper(),
-                            email.getText().toString(), password.getText().toString()).get();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException("Thread was interrupted", e);
-                } catch (ExecutionException e) {
-                    throw new RuntimeException("Exception while async task execution", e);
-                }
-                Intent activitySignUp = new Intent(view.getContext(), FeedActivity.class);
-                startActivity(activitySignUp);
+                validator.validate();
             }
         });
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        try {
+            new LoginRequest().execute(new LoginHelper(),
+                    email.getText().toString(), password.getText().toString()).get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread was interrupted", e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException("Exception while async task execution", e);
+        }
+        Intent activitySignUp = new Intent(this, FeedActivity.class);
+        startActivity(activitySignUp);
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            Log.d("response_validation", error.getCollatedErrorMessage(this));
+        }
+    }
+
+    private void initViews() {
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+        button = (Button) findViewById(R.id.btn_in);
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {

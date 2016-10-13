@@ -13,6 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.RegisterForm;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
@@ -21,17 +27,27 @@ import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Created by konstantin on 07.09.16
  */
-public class ActivitySignUp extends AppCompatActivity {
+public class ActivitySignUp extends AppCompatActivity implements Validator.ValidationListener {
+    @NotEmpty
+    @Email
     private EditText email;
+    @NotEmpty
+    @Password(min = 8)
     private EditText password1;
+    @NotEmpty
+    @ConfirmPassword
     private EditText password2;
+    @NotEmpty
     private EditText firstName;
+    @NotEmpty
     private EditText lastName;
+    private Button register;
 
     private Activity context = this;
     private String response;
@@ -40,25 +56,26 @@ public class ActivitySignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        initViews();
 
+        final Validator validator = new Validator(this);
+        validator.setValidationListener(this);
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                validator.validate();
+            }
+        });
+    }
+
+    private void initViews() {
         email = (EditText) findViewById(R.id.email);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
         firstName = (EditText) findViewById(R.id.firstname);
         lastName = (EditText) findViewById(R.id.lastname);
-
-        Button register = (Button) findViewById(R.id.submit_register_button);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Registrator registrator = new RegistratorByEmail(readRegisterForm());
-                new RegisterRequest().execute(registrator);
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "Sign Up!", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });
+        register = (Button) findViewById(R.id.submit_register_button);
     }
 
     @NonNull
@@ -69,6 +86,23 @@ public class ActivitySignUp extends AppCompatActivity {
                 password2.getText().toString(),
                 firstName.getText().toString(),
                 lastName.getText().toString());
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        Registrator registrator = new RegistratorByEmail(readRegisterForm());
+        new RegisterRequest().execute(registrator);
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Sign Up!", Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            Log.d("response_validation", error.getCollatedErrorMessage(this));
+        }
     }
 
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {

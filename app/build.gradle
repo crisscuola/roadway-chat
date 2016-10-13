@@ -35,6 +35,7 @@ dependencies {
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.2'
 }
 
 
