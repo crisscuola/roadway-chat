@@ -38,7 +38,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private TextView title;
     private TextView description;
     private TextView rating;
-    private Button subscribe, unsubscribe, showOnMap;
+    private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
 
     @Override
@@ -77,6 +77,14 @@ public class SingleEventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        showQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SingleEventActivity.this, QrCodeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void initToolbar(String title) {
@@ -92,6 +100,7 @@ public class SingleEventActivity extends AppCompatActivity {
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
         showOnMap = (Button) findViewById(R.id.btn_show_on_map);
+        showQr = (Button) findViewById(R.id.btn_show_qr);
     }
 
     private boolean isSubscribed(JSONObject event) {

@@ -99,25 +99,33 @@
             android:layout_gravity="start" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="   Subscribe   "
+            android:text="Subscribe"
             android:id="@+id/btn_subs"
             android:layout_gravity="center_horizontal" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="UnSubscribe"
             android:id="@+id/btn_unsubs"
             android:layout_gravity="center_horizontal" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Show QR code"
+            android:id="@+id/btn_show_qr"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Show on map"
             android:id="@+id/btn_show_on_map"
             android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

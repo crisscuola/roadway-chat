@@ -42,7 +42,6 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
 
     public void QrScanner(View view){
 
-
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
 
@@ -58,7 +57,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     }
 
     private void initToolbar(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_qr);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_qr_scan);
         toolbar.setTitle(title);
     }
 

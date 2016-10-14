@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/toolbar_qr"
+        android:id="@+id/toolbar_qr_scan"
         layout="@layout/toolbar"/>
 
     <Button android:layout_height="wrap_content"
