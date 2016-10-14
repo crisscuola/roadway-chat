@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -17,17 +16,15 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.activity.CreateEvent;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
 import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
+import com.roadway.capslabs.roadway_chat.activity.QrScannerActivity;
 import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
 import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
-import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
-import com.vk.sdk.VKSdk;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,7 +94,7 @@ public class DrawerFactory {
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
         SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
         SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
-        SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("Create Event");
+        SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
         SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
         SecondaryDrawerItem subevents  = new SecondaryDrawerItem().withIdentifier(7).withName("Subscribed Events");
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(8).withName("Logout");
@@ -125,7 +122,7 @@ public class DrawerFactory {
             case 4:
                 return SettingActivity.class;
             case 5:
-                return CreateEvent.class;
+                return QrScannerActivity.class;
             case  6:
                 return OwnEventsActivity.class;
             case  7:
