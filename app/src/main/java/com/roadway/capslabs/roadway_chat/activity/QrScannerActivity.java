@@ -9,34 +9,25 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
-import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
- * Created by konstantin on 14.10.16.
+ * Created by konstantin on 14.10.16
  */
 public class QrScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     private ZXingScannerView mScannerView;
     private Toolbar toolbar;
-    private final static HttpConnectionHandler handler;
-    private Drawer drawer;
-    private final static DrawerFactory drawerFactory;
-
-    static {
-        handler = new HttpConnectionHandler();
-        drawerFactory = new DrawerFactory(handler);
-    }
+    private final static DrawerFactory drawerFactory = new DrawerFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_sacnner);
         initToolbar(getString(R.string.qr_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawerFactory.getDrawerBuilder(this, toolbar).build();
 
     }
 
