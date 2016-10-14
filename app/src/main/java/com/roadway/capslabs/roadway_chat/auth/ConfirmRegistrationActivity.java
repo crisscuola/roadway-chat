@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.network.registrator.ConfirmationRegistrator;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
@@ -23,6 +24,8 @@ import org.json.JSONObject;
  * Created by kirill on 04.10.16
  */
 public class ConfirmRegistrationActivity extends AppCompatActivity {
+    @Password(scheme = Password.Scheme.NUMERIC, message = "Should be numeric")
+    private EditText codeField;
     private final Activity context = this;
 
     @Override
@@ -31,7 +34,7 @@ public class ConfirmRegistrationActivity extends AppCompatActivity {
 
         final String email = getIntent().getExtras().getString("email");
         setContentView(R.layout.activity_comfirm);
-        final Button confirm = (Button) findViewById(R.id.submit_confirm_button);
+        Button confirm = (Button) findViewById(R.id.submit_confirm_button);
         final EditText keyField = (EditText) findViewById(R.id.confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +50,6 @@ public class ConfirmRegistrationActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Object... params) {
             Registrator registrator = (ConfirmationRegistrator) params[0];
-
             return registrator.register();
         }
 
@@ -56,13 +58,14 @@ public class ConfirmRegistrationActivity extends AppCompatActivity {
             Log.d("response_confirm", result);
             try {
                 JSONObject object = new JSONObject(result);
-                if (!object.has("errors")) {
-                    Intent intent = new Intent(context, ActivityAuth.class);
-                    startActivity(intent);
-                } else {
+                if (object.has("errors")) {
                     Toast.makeText(getApplicationContext(),
                             "Confirmation failed", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                Intent intent = new Intent(context, ActivitySignIn.class);
+                startActivity(intent);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }

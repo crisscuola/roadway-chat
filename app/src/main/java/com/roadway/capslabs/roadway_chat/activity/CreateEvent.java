@@ -10,7 +10,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,12 +20,8 @@ import android.widget.Toast;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
-import com.roadway.capslabs.roadway_chat.models.DateRange;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -39,7 +34,7 @@ public class CreateEvent extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
 
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory(new HttpConnectionHandler());
+    private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private final Activity context = this;
 

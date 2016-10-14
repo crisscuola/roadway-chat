@@ -32,7 +32,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private Activity context = this;
     private Drawer drawer;
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory(new HttpConnectionHandler());
+    private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView;
     private TextView title;
