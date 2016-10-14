@@ -28,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by konstantin on 07.09.16
@@ -38,7 +37,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     @Email
     private EditText email;
     @NotEmpty
-    @Password(min = 8)
+    @Password(min = 8, message = "Password must contain numbers and letters, minimum length is 8")
     private EditText password1;
     @NotEmpty
     @ConfirmPassword
@@ -49,8 +48,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     private EditText lastName;
     private Button register;
 
-    private Activity context = this;
-    private String response;
+    private final Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,16 +90,19 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     public void onValidationSucceeded() {
         Registrator registrator = new RegistratorByEmail(readRegisterForm());
         new RegisterRequest().execute(registrator);
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Sign Up!", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
-            Log.d("response_validation", error.getCollatedErrorMessage(this));
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -116,20 +117,20 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_registration", result);
-            response = result;
+            JSONObject object;
             try {
-                JSONObject object = new JSONObject(result);
-                if (object.has("object")) {
-                    Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
-                    intent.putExtra("email", email.getText().toString());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Registration failed", Toast.LENGTH_SHORT).show();
-                }
+                object = new JSONObject(result);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
+            if (object.has("errors")) {
+                Toast.makeText(getApplicationContext(),
+                        "Registration failed", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
+            intent.putExtra("email", email.getText().toString());
+            startActivity(intent);
         }
     }
 }

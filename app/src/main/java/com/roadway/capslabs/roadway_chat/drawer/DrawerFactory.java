@@ -36,11 +36,6 @@ import java.util.List;
  * Created by kirill on 12.09.16
  */
 public class DrawerFactory {
-    private final HttpConnectionHandler handler;
-
-    public DrawerFactory(HttpConnectionHandler handler) {
-        this.handler = handler;
-    }
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
         DrawerBuilder drawer = new DrawerBuilder()

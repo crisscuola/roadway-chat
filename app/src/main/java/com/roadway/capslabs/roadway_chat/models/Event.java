@@ -9,16 +9,12 @@ import org.json.JSONObject;
 public class Event {
     private final String title;
     private final String description;
-    private byte[] image;
     private final DateRange range;
     private final float rating;
     private final int id;
     private final String pictureUrl;
     private final double let;
     private final double lng;
-    //private final User creator;
-//    private final Bonus bonus;
-
 
     public Event(JSONObject eventObj) {
         try {
@@ -28,8 +24,6 @@ public class Event {
             rating = (float) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
             pictureUrl = eventObj.getString("avatar");
-//            let = -37.81319D;
-//            lng = 144.96298D;
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
         } catch (JSONException e) {
@@ -43,10 +37,6 @@ public class Event {
 
     public String getDescription() {
         return description;
-    }
-
-    public byte[] getImage() {
-        return image;
     }
 
     public String getDateStart() {

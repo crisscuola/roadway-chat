@@ -86,7 +86,7 @@ public class EventRequestHandler {
                 .addFormDataPart("about", event.getDescription())
                 .addFormDataPart("date_start", event.getDateStart())
                 .addFormDataPart("date_end", event.getDateEnd())
-                .addFormDataPart("image","profile.png", RequestBody.create(MediaType.parse("image/png"), event.getImage()))
+                //.addFormDataPart("image","profile.png", RequestBody.create(MediaType.parse("image/png"), event.getImage()))
                 .build();
     }
 

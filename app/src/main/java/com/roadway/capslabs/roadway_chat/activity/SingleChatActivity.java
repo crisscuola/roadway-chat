@@ -26,7 +26,7 @@ public class SingleChatActivity extends AppCompatActivity {
 
     static {
         handler = new HttpConnectionHandler();
-        drawerFactory = new DrawerFactory(handler);
+        drawerFactory = new DrawerFactory();
         chatMessagesList = new ArrayList<>();
     }
 
