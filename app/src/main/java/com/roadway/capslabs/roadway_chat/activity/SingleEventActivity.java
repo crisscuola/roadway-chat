@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,9 +36,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView;
-    private TextView title;
-    private TextView description;
-    private TextView rating;
+    private TextView title, description, rating, address, metro;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
 
@@ -66,7 +65,19 @@ public class SingleEventActivity extends AppCompatActivity {
             }
         });
 
-        showOnMap.setOnClickListener(new View.OnClickListener() {
+//        showOnMap.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
+//                intent.putExtra("selected_event", id);
+//                intent.putExtra("title", event.getDescription());
+//                intent.putExtra("latitude", event.getLet());
+//                intent.putExtra("longitude", event.getLng());
+//                startActivity(intent);
+//            }
+//        });
+
+        address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
@@ -78,13 +89,13 @@ public class SingleEventActivity extends AppCompatActivity {
             }
         });
 
-        showQr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SingleEventActivity.this, QrCodeActivity.class);
-                startActivity(intent);
-            }
-        });
+//        showQr.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(SingleEventActivity.this, QrCodeActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     public void initToolbar(String title) {
@@ -96,11 +107,14 @@ public class SingleEventActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         description = (TextView) findViewById(R.id.description);
+        address = (TextView) findViewById(R.id.address);
+        metro = (TextView) findViewById(R.id.metro);
         rating = (TextView) findViewById(R.id.rating);
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
-        showOnMap = (Button) findViewById(R.id.btn_show_on_map);
-        showQr = (Button) findViewById(R.id.btn_show_qr);
+        //showQr = (Button) findViewById(R.id.btn_show_qr);
+
+        address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private boolean isSubscribed(JSONObject event) {
@@ -126,6 +140,8 @@ public class SingleEventActivity extends AppCompatActivity {
         title.setText(event.getTitle());
         description.setText(event.getDescription());
         rating.setText(String.valueOf(event.getRating()));
+        address.setText(String.valueOf(event.getAddress()));
+        metro.setText(String.valueOf(event.getMetro()));
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
                 .into(imageView);

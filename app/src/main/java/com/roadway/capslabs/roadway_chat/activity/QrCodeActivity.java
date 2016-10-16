@@ -22,6 +22,7 @@ public class QrCodeActivity extends AppCompatActivity {
         initToolbar("QR code");
         drawerFactory.getDrawerBuilder(this, toolbar).build();
     }
+
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_qr_code);
         toolbar.setTitle(title);

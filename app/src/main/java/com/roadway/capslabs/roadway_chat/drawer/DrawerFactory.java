@@ -80,26 +80,25 @@ public class DrawerFactory {
         } catch (JSONException e) {
             throw new RuntimeException("Exception while parsing json", e);
         }
-
     }
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed Events");
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed");
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
-        SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
-        SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
-        SecondaryDrawerItem subevents  = new SecondaryDrawerItem().withIdentifier(7).withName("Subscribed Events");
+        //SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
+        //SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
+        //SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
+        //SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
+        SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts");
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(8).withName("Logout");
         items.add(events);
         items.add(map);
-        items.add(profile);
-        items.add(settings);
-        items.add(create);
-        items.add(ownevents);
-        items.add(subevents);
+//        items.add(profile);
+//        items.add(settings);
+//        items.add(create);
+//        items.add(ownevents);
+        items.add(myDiscounts);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
@@ -113,14 +112,14 @@ public class DrawerFactory {
             case 2:
                 return MapsActivity.class;
             case 3:
-                return ProfileActivity.class;
+                return SubscribeEventsActivity.class;
             case 4:
                 return SettingActivity.class;
             case 5:
                 return QrScannerActivity.class;
-            case  6:
+            case 6:
                 return OwnEventsActivity.class;
-            case  7:
+            case 7:
                 return SubscribeEventsActivity.class;
             case 8:
                 return ActivityAuth.class;
@@ -133,7 +132,7 @@ public class DrawerFactory {
         try {
             return new JSONObject("{name:name, email:email}");
         } catch (JSONException e) {
-            throw new RuntimeException("Exception while parsing json",e);
+            throw new RuntimeException("Exception while parsing json", e);
         }
     }
 

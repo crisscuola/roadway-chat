@@ -9,6 +9,8 @@ import org.json.JSONObject;
 public class Event {
     private final String title;
     private final String description;
+    //private final String address;
+    //private final String metro;
     private final DateRange range;
     private final float rating;
     private final int id;
@@ -24,6 +26,8 @@ public class Event {
             rating = (float) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
             pictureUrl = eventObj.getString("avatar");
+            //address = eventObj.getString("address");
+            //metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
         } catch (JSONException e) {
@@ -59,10 +63,19 @@ public class Event {
         return pictureUrl;
     }
 
-    public double getLet() {return let;
+    public double getLet() {
+        return let;
     }
 
     public double getLng() {
         return lng;
+    }
+
+    public String getAddress() {
+        return "Mock address";
+    }
+
+    public String getMetro() {
+        return "Mock metro";
     }
 }

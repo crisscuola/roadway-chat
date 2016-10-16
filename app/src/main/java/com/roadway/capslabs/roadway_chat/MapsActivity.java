@@ -46,7 +46,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -108,7 +107,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("marker", "CLICK!!");
             }
         });
-
     }
 
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
@@ -117,7 +115,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
         markersMap.put(marker, id);
         marker.showInfoWindow();
-
     }
 
     private void showEvents() {

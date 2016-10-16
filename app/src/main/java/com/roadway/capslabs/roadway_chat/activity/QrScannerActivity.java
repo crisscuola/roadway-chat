@@ -17,7 +17,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 /**
  * Created by konstantin on 14.10.16
  */
-public class QrScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class QrScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
     private Toolbar toolbar;
     private final static DrawerFactory drawerFactory = new DrawerFactory();
@@ -25,13 +25,13 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_sacnner);
+        setContentView(R.layout.activity_qr_scanner);
         initToolbar(getString(R.string.qr_activity_title));
         drawerFactory.getDrawerBuilder(this, toolbar).build();
 
     }
 
-    public void QrScanner(View view){
+    public void QrScanner(View view) {
 
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
@@ -65,7 +65,7 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
 
-         mScannerView.resumeCameraPreview(this);
+        mScannerView.resumeCameraPreview(this);
 
     }
 }
