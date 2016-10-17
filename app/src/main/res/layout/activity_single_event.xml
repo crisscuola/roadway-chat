@@ -150,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="15sp"
+                android:textSize="25sp"
                 android:text="Address"
                 android:textColor="#2369ff"
                 android:textStyle=""
@@ -190,6 +190,12 @@
             <!--android:text="Show QR code"-->
             <!--android:id="@+id/btn_show_qr"-->
             <!--android:layout_gravity="center_horizontal" />-->
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:id="@+id/fragment"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>

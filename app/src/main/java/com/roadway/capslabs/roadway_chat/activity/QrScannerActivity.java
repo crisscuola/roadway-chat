@@ -28,7 +28,6 @@ public class QrScannerActivity extends AppCompatActivity implements ZXingScanner
         setContentView(R.layout.activity_qr_scanner);
         initToolbar(getString(R.string.qr_activity_title));
         drawerFactory.getDrawerBuilder(this, toolbar).build();
-
     }
 
     public void QrScanner(View view) {

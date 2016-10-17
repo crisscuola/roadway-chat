@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
@@ -39,6 +41,8 @@ public class SingleEventActivity extends AppCompatActivity {
     private TextView title, description, rating, address, metro;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
+    private MapView mapView;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,8 @@ public class SingleEventActivity extends AppCompatActivity {
             }
         });
 
+
+
 //        showOnMap.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -88,6 +94,7 @@ public class SingleEventActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
 //        showQr.setOnClickListener(new View.OnClickListener() {
 //            @Override
