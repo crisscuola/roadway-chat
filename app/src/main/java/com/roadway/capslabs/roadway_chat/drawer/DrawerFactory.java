@@ -18,12 +18,9 @@ import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
-import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
 import com.roadway.capslabs.roadway_chat.activity.QrScannerActivity;
-import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
 import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
 import org.json.JSONException;
@@ -50,7 +47,7 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 8) {
+                        if (position == 4) {
                             //VKSdk.logout();
                             new Logouter().execute(activity);
                         }
@@ -91,7 +88,7 @@ public class DrawerFactory {
         //SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
         //SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
         SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(8).withName("Logout");
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout");
         items.add(events);
         items.add(map);
 //        items.add(profile);
@@ -114,7 +111,7 @@ public class DrawerFactory {
             case 3:
                 return SubscribeEventsActivity.class;
             case 4:
-                return SettingActivity.class;
+                return ActivityAuth.class;
             case 5:
                 return QrScannerActivity.class;
             case 6:

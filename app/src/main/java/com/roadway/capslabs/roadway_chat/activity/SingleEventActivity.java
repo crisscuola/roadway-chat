@@ -38,7 +38,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView;
-    private TextView title, description, rating, address, metro;
+    private TextView title, description, rating, address, metro, code;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
     private MapView mapView;
@@ -120,7 +120,8 @@ public class SingleEventActivity extends AppCompatActivity {
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
         //showQr = (Button) findViewById(R.id.btn_show_qr);
-
+        code = (TextView) findViewById(R.id.code);
+        code.setVisibility(View.INVISIBLE);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
@@ -136,10 +137,12 @@ public class SingleEventActivity extends AppCompatActivity {
         if (!isSubscribed) {
             subscribe.setVisibility(View.VISIBLE);
             unsubscribe.setVisibility(View.GONE);
+            code.setVisibility(View.INVISIBLE);
             return;
         }
         subscribe.setVisibility(View.GONE);
         unsubscribe.setVisibility(View.VISIBLE);
+        code.setVisibility(View.VISIBLE);
     }
 
     private void displayEventContent(JSONObject eventObj) {
@@ -191,6 +194,14 @@ public class SingleEventActivity extends AppCompatActivity {
             super.onPostExecute(s);
             showSubscribeButton(true);
             Log.d("response_subscribe", s);
+            JSONObject object = HttpConnectionHandler.parseJSON(s);
+            try {
+                JSONObject eventObj = object.getJSONObject("object");
+                Integer codeJson = (Integer) eventObj.get("code");
+                code.setText(String.valueOf(codeJson));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

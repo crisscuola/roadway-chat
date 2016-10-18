@@ -161,6 +161,17 @@
                 android:layout_marginRight="20dp"
                 android:paddingRight="20dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                android:id="@+id/code" />
+
             <!--<Button-->
                 <!--android:layout_width="200dp"-->
                 <!--android:layout_height="wrap_content"-->
@@ -170,7 +181,9 @@
                 <!--android:layout_gravity="center_horizontal" />-->
         </LinearLayout>
 
-        <Button
+
+
+            <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Get code"
@@ -190,12 +203,12 @@
             <!--android:text="Show QR code"-->
             <!--android:id="@+id/btn_show_qr"-->
             <!--android:layout_gravity="center_horizontal" />-->
-            <fragment
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:name="com.google.android.gms.maps.MapFragment"
-                android:id="@+id/fragment"
-                android:layout_gravity="center_horizontal" />
+            <!--<fragment-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="250dp"-->
+                <!--android:name="com.google.android.gms.maps.MapFragment"-->
+                <!--android:id="@+id/fragment"-->
+                <!--android:layout_gravity="center_horizontal" />-->
 
         </LinearLayout>
     </ScrollView>
