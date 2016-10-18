@@ -151,7 +151,8 @@ public class SingleEventActivity extends AppCompatActivity {
         description.setText(event.getDescription());
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
-        metro.setText(String.valueOf(event.getMetro()));
+        String metroStation = "м. " + (event.getMetro());
+        this.metro.setText(metroStation);
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
                 .into(imageView);
