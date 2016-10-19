@@ -181,8 +181,10 @@ public class SingleEventActivity extends AppCompatActivity {
                 JSONObject eventObj = object.getJSONObject("object");
                 showSubscribeButton(isSubscribed(eventObj));
                 displayEventContent(eventObj);
-                codeJson = (Integer) eventObj.get("code");
-                code.setText(String.valueOf(codeJson));
+                if ((boolean) eventObj.get("subscribed")) {
+                    codeJson = (Integer) eventObj.get("code");
+                    code.setText(String.valueOf(codeJson));
+                }
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
             }
