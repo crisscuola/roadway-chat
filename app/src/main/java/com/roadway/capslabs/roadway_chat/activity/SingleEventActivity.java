@@ -19,6 +19,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -27,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by konstantin on 02.10.16
@@ -68,7 +71,6 @@ public class SingleEventActivity extends AppCompatActivity {
                 new UnSubscriber().execute(id);
             }
         });
-
 
 
 //        showOnMap.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +158,7 @@ public class SingleEventActivity extends AppCompatActivity {
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
                 .into(imageView);
+        displayCode(getCode(event.getId()));
     }
 
     private String getImageUrl(String url) {
@@ -183,6 +186,40 @@ public class SingleEventActivity extends AppCompatActivity {
         }
     }
 
+    private int getCode(int id) {
+        List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
+        if (codes.size() != 0) {
+            return codes.get(0).getCode();
+        }
+
+        return 0;
+    }
+
+    private void displayCode(int code) {
+        if (code != 0) {
+            this.code.setText(String.valueOf(code));
+        }
+    }
+
+    private void saveCode(JSONObject event) {
+        Code result;
+        try {
+            int eventId = event.getInt("event");
+            List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(eventId));
+            result = new Code(eventId, event.getInt("code"));
+            if (codes.size() != 0) {
+                long codeId = codes.get(0).getId();
+                result.setId(codeId);
+                Log.d("response_sub_id", String.valueOf(codeId));
+            }
+        } catch (JSONException e) {
+            throw new RuntimeException("JSON parsing error", e);
+        }
+        result.save();
+        List<Code> list = Code.listAll(Code.class);
+        Log.d("response_sub_list", String.valueOf(list.size()));
+    }
+
     private final class Subscriber extends AsyncTask<Integer, Void, String> {
         @Override
         protected String doInBackground(Integer... params) {
@@ -200,8 +237,9 @@ public class SingleEventActivity extends AppCompatActivity {
                 JSONObject eventObj = object.getJSONObject("object");
                 Integer codeJson = (Integer) eventObj.get("code");
                 code.setText(String.valueOf(codeJson));
+                saveCode(eventObj);
             } catch (JSONException e) {
-                e.printStackTrace();
+                throw new RuntimeException("JSON parsing error", e);
             }
         }
     }
