@@ -46,6 +46,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private Event event;
     private MapView mapView;
     private GoogleMap map;
+    private Integer codeJson = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +181,8 @@ public class SingleEventActivity extends AppCompatActivity {
                 JSONObject eventObj = object.getJSONObject("object");
                 showSubscribeButton(isSubscribed(eventObj));
                 displayEventContent(eventObj);
+                codeJson = (Integer) eventObj.get("code");
+                code.setText(String.valueOf(codeJson));
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
             }
@@ -192,7 +195,9 @@ public class SingleEventActivity extends AppCompatActivity {
             return codes.get(0).getCode();
         }
 
-        return 0;
+//        return event.getCode();
+        return codeJson;
+         //return 0;
     }
 
     private void displayCode(int code) {
@@ -235,7 +240,7 @@ public class SingleEventActivity extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(s);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
-                Integer codeJson = (Integer) eventObj.get("code");
+                codeJson = (Integer) eventObj.get("code");
                 code.setText(String.valueOf(codeJson));
                 saveCode(eventObj);
             } catch (JSONException e) {

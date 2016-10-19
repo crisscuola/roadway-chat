@@ -17,6 +17,7 @@ public class Event {
     private final String pictureUrl;
     private final double let;
     private final double lng;
+//    private final int code;
 
     public Event(JSONObject eventObj) {
         try {
@@ -30,6 +31,7 @@ public class Event {
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
+//            code = eventObj.getInt("code");
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -78,4 +80,6 @@ public class Event {
     public String getMetro() {
         return metro;
     }
+
+//    public  int getCode() {return code; }
 }
