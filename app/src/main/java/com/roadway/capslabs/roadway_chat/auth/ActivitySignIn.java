@@ -10,61 +10,106 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Digits;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
-import java.util.concurrent.ExecutionException;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by kirill on 25.09.16
  */
-public class ActivitySignIn extends AppCompatActivity {
+public class ActivitySignIn extends AppCompatActivity implements Validator.ValidationListener {
+    @NotEmpty
+    @Email
     private EditText email;
+    @NotEmpty
+    @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC,
+            message = "Password must contain numbers and letters, minimum length is 8")
     private EditText password;
-    private String response;
-    private Activity context = this;
+    private Button button;
+    private final Activity context = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+        initViews();
 
-        email = (EditText) findViewById(R.id.email);
-        password = (EditText) findViewById(R.id.password);
-        Button button = (Button) findViewById(R.id.btn_in);
+        final Validator validator = new Validator(this);
+        validator.setValidationListener(this);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    new LoginRequest().execute(new LoginHelper(),
-                            email.getText().toString(), password.getText().toString()).get();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException("Thread was interrupted", e);
-                } catch (ExecutionException e) {
-                    throw new RuntimeException("Exception while async task execution", e);
-                }
-                Intent activitySignUp = new Intent(view.getContext(), FeedActivity.class);
-                startActivity(activitySignUp);
+                validator.validate();
             }
         });
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        new LoginRequest().execute(email.getText().toString(), password.getText().toString());
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void initViews() {
+        email = (EditText) findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
+        button = (Button) findViewById(R.id.btn_in);
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
-            LoginHelper helper = (LoginHelper) params[0];
-            String email = (String) params[1];
-            String password= (String) params[2];
+            LoginHelper helper = new LoginHelper();
+            String email = (String) params[0];
+            String password= (String) params[1];
 
             return helper.login(context, email, password);
         }
 
         @Override
         protected void onPostExecute(String result) {
+            JSONObject object;
+            try {
+                object = new JSONObject(result);
+            } catch (JSONException e) {
+                throw new RuntimeException("Exception during json parsing", e);
+            }
+            if (object.has("errors")) {
+                Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT)
+                        .show();
+                return;
+            }
+
+            Intent activitySignUp = new Intent(context, FeedActivity.class);
+            startActivity(activitySignUp);
             Log.d("response_login", result);
-            response = result;
         }
     }
 }

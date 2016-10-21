@@ -14,7 +14,6 @@ import java.io.IOException;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,6 +24,7 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.EVENT;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.PROFILE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBSCRIBE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
@@ -33,11 +33,11 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
  * Created by kirill on 05.10.16
  */
 public class EventRequestHandler {
-    public String getAllEvents(Activity context) {
+     public <T extends Activity> String getAllEvents(T context) {
         HttpUrl url = UrlFactory.getUrl(FEED);
         Request request = buildRequest(url);
         return getResponse(context, request);
-    }
+     }
 
     public String getOwnEvents(Activity context) {
         HttpUrl url = UrlFactory.getUrl(OWN);
@@ -79,6 +79,13 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
+    public String getCreator(Activity context, String id) {
+        HttpUrl url = UrlFactory.getUrl(PROFILE).newBuilder()
+                .addQueryParameter("id", id).build();
+        Request request = buildRequest(url);
+        return getResponse(context, request);
+    }
+
     private RequestBody formBody(Event event) {
         Log.d("lolo_end", event.getDateEnd());
         return new MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -86,7 +93,7 @@ public class EventRequestHandler {
                 .addFormDataPart("about", event.getDescription())
                 .addFormDataPart("date_start", event.getDateStart())
                 .addFormDataPart("date_end", event.getDateEnd())
-                .addFormDataPart("image","profile.png", RequestBody.create(MediaType.parse("image/png"), event.getImage()))
+                //.addFormDataPart("image","profile.png", RequestBody.create(MediaType.parse("image/png"), event.getImage()))
                 .build();
     }
 

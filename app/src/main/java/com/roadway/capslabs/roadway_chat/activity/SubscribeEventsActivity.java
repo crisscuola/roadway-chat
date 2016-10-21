@@ -45,7 +45,7 @@ public class SubscribeEventsActivity extends AppCompatActivity {
 
     static {
         handler = new HttpConnectionHandler();
-        drawerFactory = new DrawerFactory(handler);
+        drawerFactory = new DrawerFactory();
     }
 
 
@@ -56,7 +56,7 @@ public class SubscribeEventsActivity extends AppCompatActivity {
         initToolbar(getString(R.string.title_activity_sub));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
-        VKSdk.initialize(this);
+        //VKSdk.initialize(this);
 
         new EventsLoader().execute(new EventRequestHandler());
 

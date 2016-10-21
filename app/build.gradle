@@ -28,13 +28,16 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.vk:androidsdk:1.6.5'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    //compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.orangegangsters:swipy:1.2.3@aar'
     compile 'com.github.centrifugal:centrifuge-android:0.37'
     compile 'com.github.franmontiel:PersistentCookieJar:v1.0.0'
     compile 'com.google.android.gms:play-services-maps:9.6.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.2'
+    compile 'me.dm7.barcodescanner:zxing:1.8.4'
+    compile 'com.github.satyan:sugar:1.4'
 }
 
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#e3e3e3"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
+
     tools:context=".auth.ActivityAuth"
     android:orientation="vertical">
 
@@ -37,6 +38,8 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="#4ccf86"
             android:text="Sign in"/>
 
         <Button
@@ -44,6 +47,7 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#4ccf86"
             android:text="Sign up"/>
 
         <Button

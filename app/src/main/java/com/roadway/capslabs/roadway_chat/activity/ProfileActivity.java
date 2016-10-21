@@ -8,7 +8,6 @@ import android.widget.Button;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 
 /**
  * Created by konstantin on 11.09.16
@@ -17,7 +16,7 @@ public class ProfileActivity extends AppCompatActivity{
 
     private Drawer drawer;
     private Toolbar toolbar;
-    private final DrawerFactory drawerFactory = new DrawerFactory(new HttpConnectionHandler());
+    private final DrawerFactory drawerFactory = new DrawerFactory();
     private Button buttonWrite;
 
     @Override

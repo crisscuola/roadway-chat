@@ -7,38 +7,31 @@ import org.json.JSONObject;
  * Created by kirill on 02.10.16
  */
 public class Event {
-    private String title;
+    private final String title;
     private final String description;
-    private byte[] image;
+    private final String address;
+    private final String metro;
     private final DateRange range;
     private final float rating;
     private final int id;
-    private final String url;
+    private final String pictureUrl;
     private final double let;
     private final double lng;
-    //private final User creator;
-//    private final Bonus bonus;
-
-//    public Event(String title, String description, byte[] image, DateRange range, float rating) {
-//        this.title = title;
-//        this.description = description;
-//        this.image = image;
-//        this.range = range;
-//        this.rating = rating;
-//        this.id = 1;
-//        this.url = "";
-//    }
+//    private final int code;
 
     public Event(JSONObject eventObj) {
         try {
-            //title = eventObj.getString("title");
+            title = eventObj.getString("title");
             description = eventObj.getString("about");
             range = new DateRange(eventObj.getString("date_start"), eventObj.getString("date_end"));
             rating = (float) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
-            url = eventObj.getString("avatar");
-            let = -37.81319D;
-            lng = 144.96298D;
+            pictureUrl = eventObj.getString("avatar");
+            address = eventObj.getString("address");
+            metro = eventObj.getString("metro");
+            let = eventObj.getDouble("latitude");
+            lng = eventObj.getDouble("longitude");
+//            code = eventObj.getInt("code");
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -50,10 +43,6 @@ public class Event {
 
     public String getDescription() {
         return description;
-    }
-
-    public byte[] getImage() {
-        return image;
     }
 
     public String getDateStart() {
@@ -72,8 +61,8 @@ public class Event {
         return id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
     public double getLet() {
@@ -83,4 +72,14 @@ public class Event {
     public double getLng() {
         return lng;
     }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getMetro() {
+        return metro;
+    }
+
+//    public  int getCode() {return code; }
 }

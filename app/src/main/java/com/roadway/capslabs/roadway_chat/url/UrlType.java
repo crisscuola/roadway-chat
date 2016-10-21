@@ -168,6 +168,17 @@ public enum UrlType {
                     .addPathSegment(PATH_GET)
                     .addPathSegment("");
         }
+    },
+    PROFILE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_PROFILE)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment("");
+        }
     };
 
 
