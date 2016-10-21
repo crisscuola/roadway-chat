@@ -29,7 +29,7 @@ public class EventsAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void deleteMessage(int position){
+    public void deleteMessage(int position) {
         eventList.remove(position);
     }
 
@@ -64,7 +64,12 @@ public class EventsAdapter extends BaseAdapter {
         rating = (TextView) rowView.findViewById(R.id.rating);
         image = (ImageView) rowView.findViewById(R.id.image);
         Event event = getItem(position);
-        textView.setText(event.getDescription());
+        String description = event.getDescription();
+        if (description.length() > 50) {
+            description = description.substring(0, 50);
+            description += "...";
+        }
+        textView.setText(description);
         rating.setText(String.valueOf(event.getRating()));
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))

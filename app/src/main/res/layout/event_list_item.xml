@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="2dp"
+    android:background="#c9c8c8"
+    android:orientation="vertical">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -11,48 +14,48 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             android:background="@color/md_orange_200"
-            android:contentDescription="content_image" />
+            android:contentDescription="content_image"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/event_short_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:padding="12dp"
             android:background="#80000000"
-            android:textColor="#ffffffff"
-            android:text="Short event description" />
+            android:padding="12dp"
+            android:text="Short event description"
+            android:textColor="#ffffffff" />
 
     </FrameLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#FFFFFF"
         android:layout_toRightOf="@+id/preview"
-        android:orientation="horizontal"
-        android:gravity="right">
+        android:background="#FFFFFF"
+        android:gravity="right"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:padding="8dp"
             android:background="#ffffff"
-            android:textColor="@color/md_orange_400"
-            android:text="Rating" />
+            android:padding="8dp"
+            android:text="Rating:"
+            android:textColor="#000" />
 
         <TextView
             android:id="@id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:padding="8dp"
             android:background="#ffffff"
-            android:textColor="@color/vk_black"
-            android:text="100" />
+            android:padding="8dp"
+            android:text="100"
+            android:textColor="@color/vk_black" />
     </LinearLayout>
 
 </LinearLayout>

@@ -33,13 +33,13 @@
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
-    <string name="feed_activity_title">Feed Events</string>
+    <string name="feed_activity_title">Feed</string>
     <string name="qr_activity_title">Qr Scan</string>
     <string name="single_chat_title">Single Chat</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_own">My Events</string>
     <string name="title_activity_sub">Subs Events</string>
-    <string name="app_title">gEvent</string>
+    <string name="app_title">Welcome</string>
     <string name="field_email">Email:</string>
     <string name="field_password1">Password :</string>
     <string name="field_password2">Repeat password:</string>

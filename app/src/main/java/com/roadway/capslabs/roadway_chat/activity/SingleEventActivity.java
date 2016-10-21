@@ -41,7 +41,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView;
-    private TextView title, description, rating, address, metro, code;
+    private TextView title, description, rating, address, metro, code, creator;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
     private MapView mapView;
@@ -53,7 +53,7 @@ public class SingleEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event);
         final int id = getIntent().getExtras().getInt("id");
-        initToolbar("SingleEventActivity");
+        initToolbar("Discount");
         initViews();
 
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
@@ -120,6 +120,7 @@ public class SingleEventActivity extends AppCompatActivity {
         address = (TextView) findViewById(R.id.address);
         metro = (TextView) findViewById(R.id.metro);
         rating = (TextView) findViewById(R.id.rating);
+        creator = (TextView) findViewById(R.id.creator);
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
         //showQr = (Button) findViewById(R.id.btn_show_qr);
@@ -155,6 +156,11 @@ public class SingleEventActivity extends AppCompatActivity {
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         String metroStation = "м. " + (event.getMetro());
+        try {
+            new ProfileLoader().execute(Integer.valueOf(eventObj.getString("user_id")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         this.metro.setText(metroStation);
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
@@ -262,6 +268,32 @@ public class SingleEventActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             showSubscribeButton(false);
+            Log.d("response_subscribe", s);
+        }
+    }
+
+    private final class ProfileLoader extends AsyncTask<Integer, Void, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            String id = String.valueOf(params[0]);
+            Log.d("response_profile", id);
+            return new EventRequestHandler().getCreator(context, id);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("response_profile", s);
+            JSONObject object = HttpConnectionHandler.parseJSON(s);
+            try {
+                JSONObject obj = object.getJSONObject("object");
+                final String firstName = obj.getString("first_name");
+                final String lastName = obj.getString("last_name");
+                final String name = firstName + " " + lastName;
+                creator.setText(name);
+            } catch (JSONException e) {
+                throw new RuntimeException("JSON parsing error", e);
+            }
             Log.d("response_subscribe", s);
         }
     }

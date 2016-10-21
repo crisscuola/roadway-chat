@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#e3e3e3"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/app_title"
+            android:text="Sign in"
             android:textSize="30sp"
             android:textColor="#333333"/>
 
@@ -31,12 +31,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
         android:orientation="vertical"
-        android:padding="40dp">
+        >
 
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:hint="Enter login"
             android:inputType="textEmailAddress"/>
 
@@ -45,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter password"
+            android:layout_marginBottom="10dp"
             android:inputType="textPassword"/>
 
         <Button
@@ -52,6 +54,7 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#4ccf86"
             android:text="Sign in"/>
 
     </LinearLayout>

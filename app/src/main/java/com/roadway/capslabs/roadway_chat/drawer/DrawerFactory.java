@@ -67,7 +67,7 @@ public class DrawerFactory {
             String email = (String) profile.get("email");
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-                    .addProfiles(new ProfileDrawerItem().withName(name).withEmail(email))
+                    .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
                     .withHeaderBackground(R.color.colorHeaderBackground)
                     .withSelectionListEnabledForSingleProfile(false)

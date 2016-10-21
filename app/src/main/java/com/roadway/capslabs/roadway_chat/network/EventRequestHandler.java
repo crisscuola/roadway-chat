@@ -14,7 +14,6 @@ import java.io.IOException;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -25,6 +24,7 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.EVENT;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.PROFILE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBSCRIBE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
@@ -76,6 +76,13 @@ public class EventRequestHandler {
         HttpUrl url = UrlFactory.getUrl(UNSUBSCRIBE);
         RequestBody formBody = formSubscribeBody(id);
         Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+    public String getCreator(Activity context, String id) {
+        HttpUrl url = UrlFactory.getUrl(PROFILE).newBuilder()
+                .addQueryParameter("id", id).build();
+        Request request = buildRequest(url);
         return getResponse(context, request);
     }
 
