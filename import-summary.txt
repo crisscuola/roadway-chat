@@ -1,0 +1,87 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .DS_Store
+* build.xml
+* doc/
+* doc/allclasses-frame.html
+* doc/deprecated-list.html
+* doc/help-doc.html
+* doc/index-all.html
+* doc/index.html
+* doc/overview-tree.html
+* doc/package-list
+* doc/packages.html
+* doc/ru/
+* doc/ru/yandex/
+* doc/ru/yandex/yandexmapkit/
+* doc/ru/yandex/yandexmapkit/MapController.html
+* doc/ru/yandex/yandexmapkit/MapView.html
+* doc/ru/yandex/yandexmapkit/OverlayManager.html
+* doc/ru/yandex/yandexmapkit/map/
+* doc/ru/yandex/yandexmapkit/map/GeoCode.html
+* doc/ru/yandex/yandexmapkit/map/GeoCodeListener.html
+* doc/ru/yandex/yandexmapkit/map/MapEvent.html
+* doc/ru/yandex/yandexmapkit/map/MapLayer.html
+* doc/ru/yandex/yandexmapkit/map/OnMapListener.html
+* doc/ru/yandex/yandexmapkit/net/
+* doc/ru/yandex/yandexmapkit/net/DownloadHandler.html
+* doc/ru/yandex/yandexmapkit/net/DownloadJob.html
+* doc/ru/yandex/yandexmapkit/net/Downloader.html
+* doc/ru/yandex/yandexmapkit/overlay/
+* doc/ru/yandex/yandexmapkit/overlay/IRender.html
+* doc/ru/yandex/yandexmapkit/overlay/Overlay.html
+* doc/ru/yandex/yandexmapkit/overlay/OverlayItem.html
+* doc/ru/yandex/yandexmapkit/overlay/balloon/
+* doc/ru/yandex/yandexmapkit/overlay/balloon/BalloonItem.html
+* doc/ru/yandex/yandexmapkit/overlay/balloon/BalloonRender.html
+* doc/ru/yandex/yandexmapkit/overlay/balloon/OnBalloonListener.html
+* doc/ru/yandex/yandexmapkit/overlay/drag/
+* doc/ru/yandex/yandexmapkit/overlay/drag/DragAndDropItem.html
+* doc/ru/yandex/yandexmapkit/overlay/drag/DragAndDropOverlay.html
+* doc/ru/yandex/yandexmapkit/overlay/location/
+* doc/ru/yandex/yandexmapkit/overlay/location/MyLocationItem.html
+* doc/ru/yandex/yandexmapkit/overlay/location/MyLocationOverlay.html
+* doc/ru/yandex/yandexmapkit/overlay/location/OnMyLocationListener.html
+* doc/ru/yandex/yandexmapkit/utils/
+* doc/ru/yandex/yandexmapkit/utils/CoordConversion.html
+* doc/ru/yandex/yandexmapkit/utils/GeoPoint.html
+* doc/ru/yandex/yandexmapkit/utils/ScreenPoint.html
+* doc/serialized-form.html
+* doc/stylesheet.css
+* proguard-project.txt
+* src/
+* src/.DS_Store
+* src/dummy.txt
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => yandexmapkitlibrary/src/main/AndroidManifest.xml
+* libs/armeabi/libcache_local.so => yandexmapkitlibrary/src/main/jniLibs/armeabi/libcache_local.so
+* libs/classes.jar => yandexmapkitlibrary/libs/classes.jar
+* libs/x86/libcache_local.so => yandexmapkitlibrary/src/main/jniLibs/x86/libcache_local.so
+* res/ => yandexmapkitlibrary/src/main/res/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

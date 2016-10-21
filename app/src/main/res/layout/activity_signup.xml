@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#e3e3e3"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -19,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Roadway Chat"
+            android:layout_marginTop="10dp"
+            android:text="Sign up"
             android:textSize="30sp"
             android:textColor="#333333"/>
 
@@ -36,10 +37,9 @@
             android:id="@+id/email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="email:"
-            android:textSize="10sp"
+            android:text="@string/field_email"
+            android:textSize="12sp"
             android:textColor="#333333"/>
         <EditText
             android:id="@+id/email"
@@ -51,10 +51,9 @@
             android:id="@+id/password1_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="password1:"
-            android:textSize="10sp"
+            android:text="@string/field_password1"
+            android:textSize="12sp"
             android:textColor="#333333"/>
         <EditText
             android:id="@+id/password1"
@@ -65,10 +64,9 @@
             android:id="@+id/password2_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="password2:"
-            android:textSize="10sp"
+            android:text="@string/field_password2"
+            android:textSize="12sp"
             android:textColor="#333333"/>
         <EditText
             android:id="@+id/password2"
@@ -76,12 +74,41 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
 
+        <TextView
+            android:id="@+id/firstname_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/field_first_name"
+            android:textSize="12sp"
+            android:textColor="#333333"/>
+        <EditText
+            android:id="@+id/firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+
+        <TextView
+            android:id="@+id/lastname_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/field_last_name"
+            android:textSize="12sp"
+            android:textColor="#333333"/>
+        <EditText
+            android:id="@+id/lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+
         <Button
-            android:id="@+id/btn_up"
+            android:id="@+id/submit_register_button"
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign up"/>
+            android:background="#4ccf86"
+            android:text="@string/button_register"/>
 
     </LinearLayout>
 

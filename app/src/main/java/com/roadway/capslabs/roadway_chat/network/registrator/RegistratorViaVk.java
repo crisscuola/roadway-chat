@@ -26,22 +26,22 @@ import okhttp3.Response;
  * Created by kirill on 26.09.16
  */
 public class RegistratorViaVk implements Registrator {
-    private final HttpConnectionHandler handler;
+    private final Activity context;
     private final String token;
 
-    public RegistratorViaVk(HttpConnectionHandler handler, String token) {
-        this.handler = handler;
+    public RegistratorViaVk(Activity context, String token) {
+        this.context = context;
         this.token = token;
     }
 
     @Override
-    public String register(Activity context) {
+    public String register() {
         HttpUrl url = UrlFactory.getUrl(UrlType.VK_REGISTER);
-        String csrfToken = handler.getCsrfToken();
+        String csrfToken = HttpConnectionHandler.getCsrfToken();
         RequestBody formBody = formBody(csrfToken);
         Request request = buildRequest(url, formBody, csrfToken);
-        String response = getResponse(context, request);
-        JSONObject object = handler.parseJSON(response);
+        String response = getResponse(request);
+        JSONObject object = HttpConnectionHandler.parseJSON(response);
 
         return object.optString("status");
     }
@@ -64,7 +64,7 @@ public class RegistratorViaVk implements Registrator {
                 .build();
     }
 
-    private String getResponse(Activity context, Request request) {
+    private String getResponse(Request request) {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         OkHttpClient client = new OkHttpClient.Builder()

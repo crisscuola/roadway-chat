@@ -1,10 +1,6 @@
 package com.roadway.capslabs.roadway_chat.network.registrator;
 
-import android.app.Activity;
-import android.util.Log;
-
 import com.roadway.capslabs.roadway_chat.models.RegisterForm;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
 import java.io.IOException;
@@ -22,44 +18,34 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.REGISTER;
  * Created by kirill on 25.09.16
  */
 public class RegistratorByEmail implements Registrator {
-
-    private final HttpConnectionHandler handler;
     private final RegisterForm registerForm;
 
-    public RegistratorByEmail(HttpConnectionHandler handler, RegisterForm registerForm) {
-        this.handler = handler;
+    public RegistratorByEmail(RegisterForm registerForm) {
         this.registerForm = registerForm;
     }
 
-    public String register(Activity context) {
-//        CookieJar cookieJar =
-//                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .cookieJar(cookieJar)
-//                .build();
-//        String csrf = handler.executeCsrf(client, cookieJar);
+    public String register() {
         HttpUrl url = UrlFactory.getUrl(REGISTER);
-        String csrfToken = handler.getCsrfToken();
-        Log.d("register_csrf", csrfToken);
-        RequestBody formBody = formBody(csrfToken);
-        Request request = buildRequest(url, formBody, csrfToken);
-        return getResponse(request);
+        //String csrfToken = HttpConnectionHandler.getCsrfToken();
+        RequestBody formBody = formBody();
+        Request request = buildRequest(url, formBody);
+        return  getResponse(request);
     }
 
-    private RequestBody formBody(String csrfToken) {
-        Log.d("status_reg_user", registerForm.toString());
+    private RequestBody formBody() {
         return new FormBody.Builder()
                 .add("email", registerForm.getEmail())
                 .add("password1", registerForm.getPassword1())
                 .add("password2", registerForm.getPassword2())
-                .add("csrfmiddlewaretoken", csrfToken)
+                .add("first_name", registerForm.getFirstName())
+                .add("last_name", registerForm.getLastName())
                 .build();
     }
 
-    private Request buildRequest(HttpUrl url, RequestBody formBody, String csrfToken) {
+    private Request buildRequest(HttpUrl url, RequestBody formBody) {
         return new Request.Builder()
                 .url(url)
-                .addHeader("X-CSRFToken", csrfToken)
+                //.addHeader("X-CSRFToken", csrfToken)
                 .post(formBody)
                 .build();
     }
@@ -68,9 +54,8 @@ public class RegistratorByEmail implements Registrator {
         OkHttpClient client = new OkHttpClient();
         try {
             Response response = client.newCall(request).execute();
-            String result = response.body().string();
-            Log.d("status_registration", result);
-            return result;
+
+            return response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }

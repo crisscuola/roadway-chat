@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#e3e3e3"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context=".auth.ActivitySignUp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/app_title"
+            android:textSize="30sp"
+            android:textColor="#333333"/>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/confirm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/description_confirm"
+            android:textSize="12sp"
+            android:textColor="#333333" />
+        <EditText
+            android:id="@+id/confirm"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/submit_confirm_button"
+            android:layout_marginTop="4dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ok"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+
+</LinearLayout>

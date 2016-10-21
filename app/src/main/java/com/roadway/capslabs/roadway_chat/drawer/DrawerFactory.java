@@ -2,28 +2,26 @@ package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.facebook.login.LoginManager;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.activity.MapActivity;
-import com.roadway.capslabs.roadway_chat.activity.ProfileActivity;
-import com.roadway.capslabs.roadway_chat.activity.SettingActivity;
-import com.roadway.capslabs.roadway_chat.auth.ActivitySignIn;
-import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-import com.vk.sdk.VKSdk;
+import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
+import com.roadway.capslabs.roadway_chat.activity.QrScannerActivity;
+import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
+import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
+import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,11 +33,6 @@ import java.util.List;
  * Created by kirill on 12.09.16
  */
 public class DrawerFactory {
-    private final HttpConnectionHandler handler;
-
-    public DrawerFactory(HttpConnectionHandler handler) {
-        this.handler = handler;
-    }
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
         DrawerBuilder drawer = new DrawerBuilder()
@@ -53,9 +46,10 @@ public class DrawerFactory {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
-                        if (position == 5) {
-                            VKSdk.logout();
-                            LoginManager.getInstance().logOut();
+
+                        if (position == 4) {
+                            //VKSdk.logout();
+                            new Logouter().execute(activity);
                         }
 
                         activity.startActivity(intent);
@@ -73,7 +67,7 @@ public class DrawerFactory {
             String email = (String) profile.get("email");
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-                    .addProfiles(new ProfileDrawerItem().withName(name).withEmail(email))
+                    .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
                     .withHeaderBackground(R.color.colorHeaderBackground)
                     .withSelectionListEnabledForSingleProfile(false)
@@ -83,22 +77,25 @@ public class DrawerFactory {
         } catch (JSONException e) {
             throw new RuntimeException("Exception while parsing json", e);
         }
-
     }
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem feed = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
-                .withBadge("19").withBadgeStyle(new BadgeStyle()
-                        .withTextColor(Color.WHITE).withColorRes(R.color.md_red_700));
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed");
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
-        SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout");
-        items.add(feed);
+        //SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
+        //SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
+        //SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
+        //SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
+        SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts");
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout");
+        items.add(events);
         items.add(map);
-        items.add(profile);
-        items.add(settings);
+//        items.add(profile);
+//        items.add(settings);
+//        items.add(create);
+//        items.add(ownevents);
+        items.add(myDiscounts);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
@@ -110,25 +107,45 @@ public class DrawerFactory {
             case 1:
                 return FeedActivity.class;
             case 2:
-                return MapActivity.class;
+                return MapsActivity.class;
             case 3:
-                return ProfileActivity.class;
+                return SubscribeEventsActivity.class;
             case 4:
-                return SettingActivity.class;
+                return ActivityAuth.class;
             case 5:
-                return ActivitySignIn.class;
+                return QrScannerActivity.class;
+            case 6:
+                return OwnEventsActivity.class;
+            case 7:
+                return SubscribeEventsActivity.class;
+            case 8:
+                return ActivityAuth.class;
             default:
                 return FeedActivity.class;
         }
     }
 
     private JSONObject getProfile() {
-        //return handler.getProfile("Profile");
         try {
             return new JSONObject("{name:name, email:email}");
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Exception while parsing json", e);
         }
-        return null;
+    }
+
+    private final class Logouter extends AsyncTask<Activity, Void, Activity> {
+        @Override
+        protected Activity doInBackground(Activity... params) {
+            Activity context = params[0];
+            new LoginHelper().logout(context);
+            return params[0];
+        }
+
+        @Override
+        protected void onPostExecute(Activity context) {
+            super.onPostExecute(context);
+            Intent intent = new Intent(context, ActivityAuth.class);
+            context.startActivity(intent);
+        }
     }
 }

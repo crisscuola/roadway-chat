@@ -7,11 +7,15 @@ public class RegisterForm {
     private final String email;
     private final String password1;
     private final String password2;
+    private final String firstName;
+    private final String lastName;
 
-    public RegisterForm(String email, String password1, String password2) {
+    public RegisterForm(String email, String password1, String password2, String firstName, String lastName) {
         this.email = email;
         this.password1 = password1;
         this.password2 = password2;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -24,6 +28,14 @@ public class RegisterForm {
 
     public String getPassword2() {
         return password2;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     @Override

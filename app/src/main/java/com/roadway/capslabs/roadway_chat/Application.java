@@ -1,7 +1,5 @@
 package com.roadway.capslabs.roadway_chat;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.vk.sdk.VKSdk;
 
 /**
@@ -13,7 +11,7 @@ public class Application extends android.app.Application {
                super.onCreate();
 
             VKSdk.initialize(this);
-            FacebookSdk.sdkInitialize(this);
-            AppEventsLogger.activateApp(this);
+//            FacebookSdk.sdkInitialize(this);
+//            AppEventsLogger.activateApp(this);
         }
 }
