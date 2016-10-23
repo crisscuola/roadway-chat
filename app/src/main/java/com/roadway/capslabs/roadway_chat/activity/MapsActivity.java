@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat;
+package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.SingleEventActivity;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
