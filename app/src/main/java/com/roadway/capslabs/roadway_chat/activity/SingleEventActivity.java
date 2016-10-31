@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,11 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
@@ -39,7 +45,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
-    private ImageView imageView;
+    private ImageView imageView, imageQr;
     private TextView title, description, rating, address, metro, code, creator;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
@@ -126,6 +132,7 @@ public class SingleEventActivity extends AppCompatActivity {
         code = (TextView) findViewById(R.id.code);
         code.setVisibility(View.INVISIBLE);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        imageQr = (ImageView) findViewById(R.id.qr_image);
     }
 
     private boolean isSubscribed(JSONObject event) {
@@ -155,6 +162,20 @@ public class SingleEventActivity extends AppCompatActivity {
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         String metroStation = "м. " + (event.getMetro());
+        String qrString = "https://ru.wikipedia.org/wiki/QR";
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = multiFormatWriter.encode(qrString, BarcodeFormat.QR_CODE,200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            imageQr.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+        //imageQr.setImageDrawable();
+
         try {
             new ProfileLoader().execute(Integer.valueOf(eventObj.getString("user_id")));
         } catch (JSONException e) {
