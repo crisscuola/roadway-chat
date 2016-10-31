@@ -7,18 +7,13 @@
         android:id="@+id/toolbar_qr_code"
         layout="@layout/toolbar"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Qr Code"
-        android:id="@+id/settings"
-        android:layout_gravity="center_horizontal" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="55dp"
+        android:id="@+id/qr_image" />
 
 </LinearLayout>

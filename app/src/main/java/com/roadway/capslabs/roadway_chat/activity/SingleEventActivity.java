@@ -46,6 +46,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView, imageQr;
+    private Bitmap bitmap;
     private TextView title, description, rating, address, metro, code, creator;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
@@ -75,6 +76,15 @@ public class SingleEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new UnSubscriber().execute(id);
+            }
+        });
+
+        showQr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), QrCodeActivity.class);
+                intent.putExtra("bitmap", bitmap);
+                startActivity(intent);
             }
         });
 
@@ -128,7 +138,7 @@ public class SingleEventActivity extends AppCompatActivity {
         creator = (TextView) findViewById(R.id.creator);
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
-        //showQr = (Button) findViewById(R.id.btn_show_qr);
+        showQr = (Button) findViewById(R.id.btn_show_qr);
         code = (TextView) findViewById(R.id.code);
         code.setVisibility(View.INVISIBLE);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -168,7 +178,7 @@ public class SingleEventActivity extends AppCompatActivity {
         try {
             bitMatrix = multiFormatWriter.encode(qrString, BarcodeFormat.QR_CODE,200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            bitmap = barcodeEncoder.createBitmap(bitMatrix);
             imageQr.setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
