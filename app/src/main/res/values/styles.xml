@@ -17,5 +17,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="WhiteEditTextTheme" parent="@android:style/Widget.EditText">
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlActivated">#fff</item>
+        <item name="colorControlHighlight">#fff</item>
+        <item name="android:textColor">#d60000</item>
+        <item name="android:textColorHint">#fff</item>
+        <item name="android:textColorHighlight">#fff</item>
+    </style>
 
 </resources>

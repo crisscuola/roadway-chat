@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -81,6 +82,9 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
+
+        email.setTextColor(Color.WHITE);
+        password.setTextColor(Color.WHITE);
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {

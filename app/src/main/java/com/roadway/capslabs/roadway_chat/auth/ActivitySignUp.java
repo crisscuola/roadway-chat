@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -70,9 +71,13 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-        firstName = (EditText) findViewById(R.id.firstname);
-        lastName = (EditText) findViewById(R.id.lastname);
+//        firstName = (EditText) findViewById(R.id.firstname);
+//        lastName = (EditText) findViewById(R.id.lastname);
         register = (Button) findViewById(R.id.submit_register_button);
+
+        email.setTextColor(Color.WHITE);
+        password1.setTextColor(Color.WHITE);
+        password2.setTextColor(Color.WHITE);
     }
 
     @NonNull
