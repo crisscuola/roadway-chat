@@ -52,7 +52,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private Event event;
     private MapView mapView;
     private GoogleMap map;
-    private Integer codeJson = 0;
+    private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,16 +173,7 @@ public class SingleEventActivity extends AppCompatActivity {
         address.setText(String.valueOf(event.getAddress()));
         String metroStation = "м. " + (event.getMetro());
         String qrString = "https://ru.wikipedia.org/wiki/QR";
-        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        BitMatrix bitMatrix = null;
-        try {
-            bitMatrix = multiFormatWriter.encode(qrString, BarcodeFormat.QR_CODE,200, 200);
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            imageQr.setImageBitmap(bitmap);
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+
 
         //imageQr.setImageDrawable();
 
@@ -195,7 +186,20 @@ public class SingleEventActivity extends AppCompatActivity {
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
                 .into(imageView);
-        displayCode(getCode(event.getId()));
+        displayCode(getCode(String.valueOf(event.getId())));
+    }
+
+    private void qrGenenartor (String link){
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        BitMatrix bitMatrix = null;
+        try {
+            bitMatrix = multiFormatWriter.encode(link, BarcodeFormat.QR_CODE,200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            imageQr.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getImageUrl(String url) {
@@ -218,8 +222,9 @@ public class SingleEventActivity extends AppCompatActivity {
                 showSubscribeButton(isSubscribed(eventObj));
                 displayEventContent(eventObj);
                 if ((boolean) eventObj.get("subscribed")) {
-                    codeJson = (Integer) eventObj.get("code");
-                    code.setText(String.valueOf(codeJson));
+                    codeJson = (String) eventObj.get("activation_link");
+                    qrGenenartor(codeJson);
+                   // code.setText(String.valueOf(codeJson));
                 }
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
@@ -227,10 +232,10 @@ public class SingleEventActivity extends AppCompatActivity {
         }
     }
 
-    private int getCode(int id) {
+    private String getCode(String id) {
         List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
         if (codes.size() != 0) {
-            return codes.get(0).getCode();
+            return String.valueOf(codes.get(0).getCode());
         }
 
 //        return event.getCode();
@@ -238,9 +243,9 @@ public class SingleEventActivity extends AppCompatActivity {
          //return 0;
     }
 
-    private void displayCode(int code) {
-        if (code != 0) {
-            this.code.setText(String.valueOf(code));
+    private void displayCode(String code) {
+        if (code != "") {
+            this.code.setText(String.valueOf(""));
         }
     }
 
@@ -249,7 +254,7 @@ public class SingleEventActivity extends AppCompatActivity {
         try {
             int eventId = event.getInt("event");
             List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(eventId));
-            result = new Code(eventId, event.getInt("code"));
+            result = new Code(eventId, event.getString("activate_link"));
             if (codes.size() != 0) {
                 long codeId = codes.get(0).getId();
                 result.setId(codeId);
@@ -278,8 +283,9 @@ public class SingleEventActivity extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(s);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
-                codeJson = (Integer) eventObj.get("code");
-                code.setText(String.valueOf(codeJson));
+                codeJson = (String) eventObj.get("activate_link");
+                qrGenenartor(codeJson);
+               // code.setText(String.valueOf(codeJson));
                 saveCode(eventObj);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
