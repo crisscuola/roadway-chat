@@ -157,11 +157,13 @@ public class SingleEventActivity extends AppCompatActivity {
         if (!isSubscribed) {
             subscribe.setVisibility(View.VISIBLE);
             unsubscribe.setVisibility(View.GONE);
+            showQr.setVisibility(View.GONE);
 //            code.setVisibility(View.INVISIBLE);
             return;
         }
         subscribe.setVisibility(View.GONE);
         unsubscribe.setVisibility(View.VISIBLE);
+        showQr.setVisibility(View.VISIBLE);
 //        code.setVisibility(View.VISIBLE);
     }
 

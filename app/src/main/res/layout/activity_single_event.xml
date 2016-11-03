@@ -213,7 +213,17 @@
                 <!--android:layout_gravity="center_horizontal" />-->
             </LinearLayout>
 
-
+            <Button
+                android:id="@+id/btn_show_qr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="#4ccf86"
+                android:layout_gravity="center_horizontal"
+                android:text="Show Qr Code" />
+            
             <Button
                 android:id="@+id/btn_subs"
                 android:layout_height="wrap_content"
@@ -236,16 +246,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Return code" />
 
-            <Button
-                android:id="@+id/btn_show_qr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="#4ccf86"
-                android:layout_gravity="center_horizontal"
-                android:text="Show Qr Code" />
+
 
             <!--<ImageView-->
                 <!--android:layout_width="150dp"-->
