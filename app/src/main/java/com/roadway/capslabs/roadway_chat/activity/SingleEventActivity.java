@@ -139,8 +139,8 @@ public class SingleEventActivity extends AppCompatActivity {
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
         showQr = (Button) findViewById(R.id.btn_show_qr);
-        code = (TextView) findViewById(R.id.code);
-        code.setVisibility(View.INVISIBLE);
+//        code = (TextView) findViewById(R.id.code);
+//        code.setVisibility(View.INVISIBLE);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
     }
@@ -157,12 +157,12 @@ public class SingleEventActivity extends AppCompatActivity {
         if (!isSubscribed) {
             subscribe.setVisibility(View.VISIBLE);
             unsubscribe.setVisibility(View.GONE);
-            code.setVisibility(View.INVISIBLE);
+//            code.setVisibility(View.INVISIBLE);
             return;
         }
         subscribe.setVisibility(View.GONE);
         unsubscribe.setVisibility(View.VISIBLE);
-        code.setVisibility(View.VISIBLE);
+//        code.setVisibility(View.VISIBLE);
     }
 
     private void displayEventContent(JSONObject eventObj) {
@@ -245,7 +245,7 @@ public class SingleEventActivity extends AppCompatActivity {
 
     private void displayCode(String code) {
         if (code != "") {
-            this.code.setText(String.valueOf(""));
+//            this.code.setText(String.valueOf(""));
         }
     }
 
