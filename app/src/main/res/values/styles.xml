@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#54b2a9</item>
+        <item name="colorPrimaryDark">#009688</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
@@ -20,10 +20,9 @@
     <style name="WhiteEditTextTheme" parent="@android:style/Widget.EditText">
         <item name="colorControlNormal">#fff</item>
         <item name="colorControlActivated">#fff</item>
-        <item name="colorControlHighlight">#fff</item>
-        <item name="android:textColor">#d60000</item>
+        <item name="colorControlHighlight">#35a79c</item>
         <item name="android:textColorHint">#fff</item>
-        <item name="android:textColorHighlight">#fff</item>
+        <item name="android:textColorHighlight">#35a79c</item>
     </style>
 
 </resources>
