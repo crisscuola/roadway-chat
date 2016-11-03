@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#fff"
+    android:background="#65c3ba"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -15,14 +15,23 @@
         android:layout_weight="0.5"
         android:orientation="vertical">
 
+        <ImageView android:src="@drawable/logo_mock"
+            android:layout_width="wrap_content"
+            android:id="@+id/logo"
+            android:layout_height="82dp"
+            android:layout_marginBottom="24dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_title" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/app_title"
             android:textSize="30sp"
-            android:textColor="#333333"/>
+            android:textColor="#fff"/>
 
     </RelativeLayout>
 
@@ -39,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#4ccf86"
+            android:background="#009688"
+            android:textColor="#fff"
             android:text="Sign in"/>
 
         <Button
@@ -47,7 +57,8 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#4ccf86"
+            android:background="#009688"
+            android:textColor="#fff"
             android:text="Sign up"/>
 
         <Button
@@ -57,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VK"/>
+
 
         <!--<Button-->
             <!--android:id="@+id/btn_fb"-->
