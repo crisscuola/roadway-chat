@@ -1,8 +1,16 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+    android:id="@+id/toolbar_maps"
+    layout="@layout/toolbar" />
+
+    <fragment
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/map"
-    tools:context=".activity.MapsActivity"
-    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    android:layout_height="wrap_content"
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    android:id="@+id/map" />
+
+</LinearLayout>

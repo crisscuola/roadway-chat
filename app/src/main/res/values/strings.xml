@@ -34,6 +34,7 @@
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="feed_activity_title">Feed</string>
+
     <string name="qr_activity_title">Qr Scan</string>
     <string name="single_chat_title">Single Chat</string>
     <string name="title_activity_maps">Map</string>

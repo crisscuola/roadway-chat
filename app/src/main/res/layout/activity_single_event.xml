@@ -247,12 +247,12 @@
                 android:layout_gravity="center_horizontal"
                 android:text="Show Qr Code" />
 
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="100dp"
-                android:id="@+id/qr_image" />
+            <!--<ImageView-->
+                <!--android:layout_width="150dp"-->
+                <!--android:layout_height="150dp"-->
+                <!--android:layout_marginLeft="100dp"-->
+                <!--android:layout_marginRight="100dp"-->
+                <!--android:id="@+id/qr_image" />-->
 
             <!--<Button-->
             <!--android:layout_width="200dp"-->

@@ -196,7 +196,7 @@ public class SingleEventActivity extends AppCompatActivity {
             bitMatrix = multiFormatWriter.encode(link, BarcodeFormat.QR_CODE,200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             bitmap = barcodeEncoder.createBitmap(bitMatrix);
-            imageQr.setImageBitmap(bitmap);
+//            imageQr.setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
