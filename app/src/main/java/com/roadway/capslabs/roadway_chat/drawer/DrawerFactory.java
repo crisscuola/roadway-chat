@@ -11,12 +11,11 @@ import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
+import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
 import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
 import com.roadway.capslabs.roadway_chat.activity.QrScannerActivity;
 import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
@@ -67,7 +66,7 @@ public class DrawerFactory {
             String email = (String) profile.get("email");
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-                    .addProfiles(new ProfileDrawerItem())
+                   // .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
                     .withHeaderBackground(R.color.colorHeaderBackground)
                     .withSelectionListEnabledForSingleProfile(false)
@@ -83,18 +82,10 @@ public class DrawerFactory {
         List<IDrawerItem> items = new ArrayList<>();
         PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed");
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        //SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
-        //SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
-        //SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
-        //SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
         SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts");
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout");
         items.add(events);
         items.add(map);
-//        items.add(profile);
-//        items.add(settings);
-//        items.add(create);
-//        items.add(ownevents);
         items.add(myDiscounts);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];

@@ -223,7 +223,7 @@
                 android:background="#4ccf86"
                 android:layout_gravity="center_horizontal"
                 android:text="Show Qr Code" />
-            
+
             <Button
                 android:id="@+id/btn_subs"
                 android:layout_height="wrap_content"
