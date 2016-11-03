@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
         <ImageView android:src="@drawable/logo_mock"
@@ -28,7 +29,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:layout_below="@id/logo"
-            android:text="Sign in"
+            android:text="@string/sign_in_title"
             android:textSize="30sp"
             android:textColor="#fff"/>
 
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="Enter login"
+            android:hint="@string/email_hint"
             android:theme="@style/WhiteEditTextTheme"
             android:inputType="textEmailAddress"/>
 
@@ -54,8 +55,8 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter password"
-            android:layout_marginBottom="10dp"
+            android:hint="@string/password_hint"
+            android:layout_marginBottom="40dp"
             android:theme="@style/WhiteEditTextTheme"
             android:inputType="textPassword"/>
 
@@ -66,7 +67,7 @@
             android:layout_height="wrap_content"
             android:background="#009688"
             android:textColor="#fff"
-            android:text="Sign in"/>
+            android:text="@string/sign_in_btn"/>
     </LinearLayout>
 
 </LinearLayout>

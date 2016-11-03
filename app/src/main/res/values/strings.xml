@@ -48,4 +48,10 @@
     <string name="button_register">Register</string>
     <string name="description_confirm">Enter verification code here (check your email)</string>
     <string name="ok">OK</string>
+    <string name="email_hint">Enter login</string>
+    <string name="password_hint">Enter password</string>
+    <string name="sign_in_btn">Sign in</string>
+    <string name="sign_in_title">Sign in</string>
+    <string name="hint_password_repeat">Repeat password</string>
+    <string name="sign_up_title">Sign up</string>
 </resources>

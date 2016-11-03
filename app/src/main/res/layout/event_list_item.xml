@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_toRightOf="@+id/preview"
-        android:background="#FFFFFF"
+        android:background="#65c3ba"
         android:gravity="right"
         android:orientation="horizontal">
 
@@ -42,20 +42,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:background="#ffffff"
+            android:background="#65c3ba"
             android:padding="8dp"
             android:text="Rating:"
-            android:textColor="#000" />
+            android:textColor="#fff" />
 
         <TextView
             android:id="@id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:background="#ffffff"
+            android:background="#65c3ba"
             android:padding="8dp"
             android:text="100"
-            android:textColor="@color/vk_black" />
+            android:textColor="#fff" />
     </LinearLayout>
 
 </LinearLayout>
