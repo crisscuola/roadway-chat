@@ -34,7 +34,7 @@ import java.util.List;
 public class DrawerFactory {
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
-        DrawerBuilder drawer = new DrawerBuilder()
+        final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
                 .withAccountHeader(getAccountHeader(activity))

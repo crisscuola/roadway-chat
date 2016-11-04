@@ -53,9 +53,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initToolbar(getString(R.string.title_activity_maps));
         drawerFactory.getDrawerBuilder(this, toolbar).build();
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
     private void initToolbar(String title) {
@@ -68,6 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
+        mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -120,6 +124,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
+
+
+    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+           // mMarker = mMap.addMarker(new MarkerOptions().position(loc));
+            if(mMap != null){
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+            }
+        }
+    };
 
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
         Marker marker;
