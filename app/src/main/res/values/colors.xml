@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorProfileName">#ddf9ff</color>
-    <color name="colorHeaderBackground">#43b977</color>
+    <color name="colorHeaderBackground">#009688</color>
+    <color name="colorSliderBackground">#83d0c9</color>
 </resources>

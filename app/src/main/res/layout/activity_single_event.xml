@@ -29,6 +29,46 @@
                 android:paddingBottom="10dp"
                 android:scaleType="fitXY" />
 
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_show_qr"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="#4ccf86"
+                android:layout_gravity="center_horizontal"
+                android:text="Show Qr Code" />
+
+            <Button
+                android:id="@+id/btn_subs"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="#4ccf86"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center_horizontal"
+                android:text="Subscribe" />
+
+            <Button
+                android:id="@+id/btn_unsubs"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="#4ccf86"
+                android:layout_gravity="center_horizontal"
+                android:text="Unsubscribe" />
+
+            </RelativeLayout>
+
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
@@ -212,39 +252,6 @@
                 <!--android:textColor="#000"-->
                 <!--android:layout_gravity="center_horizontal" />-->
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_show_qr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="#4ccf86"
-                android:layout_gravity="center_horizontal"
-                android:text="Show Qr Code" />
-            
-            <Button
-                android:id="@+id/btn_subs"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="#4ccf86"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"
-                android:text="Get code" />
-
-            <Button
-                android:id="@+id/btn_unsubs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="#4ccf86"
-                android:layout_gravity="center_horizontal"
-                android:text="Return code" />
 
 
 
