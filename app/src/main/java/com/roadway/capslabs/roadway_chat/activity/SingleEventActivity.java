@@ -131,8 +131,8 @@ public class SingleEventActivity extends AppCompatActivity {
         Code code = null;
         if (codes.size() != 0)
             code = codes.get(0);
-        return code != null ? code : new Code(0, "0");
 
+        return code != null ? code : new Code(0, "0");
     }
 
     private void showQrCodeActivity(Bitmap bitmap) {
@@ -164,25 +164,30 @@ public class SingleEventActivity extends AppCompatActivity {
         imageQr = (ImageView) findViewById(R.id.qr_image);
     }
 
-//    private boolean isSubscribed(JSONObject event) {
-//        try {
-//            return event.getBoolean("subscribed");
-//        } catch (JSONException e) {
-//            throw new RuntimeException("Key \'subscribed\' not found", e);
-//        }
-//    }
+    private boolean isSubscribed(JSONObject event) {
+        try {
+            return event.getBoolean("subscribed");
+        } catch (JSONException e) {
+            throw new RuntimeException("Key \'subscribed\' not found", e);
+        }
+    }
 
-//    private void showSubscribeButton(boolean isSubscribed) {
-//        if (!isSubscribed) {
-//            subscribe.setVisibility(View.GONE);
-//            unsubscribe.setVisibility(View.GONE);
-////            code.setVisibility(View.INVISIBLE);
-//            return;
-//        }
-//        subscribe.setVisibility(View.GONE);
-//        unsubscribe.setVisibility(View.GONE);
-////        code.setVisibility(View.VISIBLE);
-//    }
+    private boolean isUsed(JSONObject event) {
+        try {
+            return event.getBoolean("is_used");
+        } catch (JSONException e) {
+            throw new RuntimeException("Key \'subscribed\' not found", e);
+        }
+    }
+
+    private void removeCodeIfUsed(JSONObject event) {
+        if(isSubscribed(event) && isUsed(event)) {
+            Code code = hasSeenQr();
+            if (code.isCached()) {
+                code.delete();
+            }
+        }
+    }
 
     private void displayEventContent(JSONObject eventObj) {
         event = new Event(eventObj);
@@ -235,7 +240,7 @@ public class SingleEventActivity extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
-                //showSubscribeButton(isSubscribed(eventObj));
+                removeCodeIfUsed(eventObj);
                 displayEventContent(eventObj);
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
@@ -289,7 +294,7 @@ public class SingleEventActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            //showSubscribeButton(true);
+            //removeCodeIfUsed(true);
             Log.d("response_subscribe", s);
             JSONObject object = HttpConnectionHandler.parseJSON(s);
             try {
@@ -314,7 +319,7 @@ public class SingleEventActivity extends AppCompatActivity {
 //        @Override
 //        protected void onPostExecute(String s) {
 //            super.onPostExecute(s);
-//            showSubscribeButton(false);
+//            removeCodeIfUsed(false);
 //            Log.d("response_subscribe", s);
 //        }
 //    }
