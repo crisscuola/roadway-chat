@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kirill on 12.09.16
@@ -46,7 +47,13 @@ public class DrawerFactory {
 
                         if (position == 4) {
                             //VKSdk.logout();
-                            new Logouter().execute(activity);
+                            try {
+                                new Logouter().execute(activity).get();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            }
                         }
                         activity.startActivity(intent);
                         return true;

@@ -31,8 +31,8 @@ public class ActivityAuth extends AppCompatActivity  {
         setContentView(R.layout.activity_auth);
 
         if (isLoggedIn()) {
-            Intent activitySignUp = new Intent(this, FeedActivity.class);
-            startActivity(activitySignUp);
+            Intent feedActivity = new Intent(this, FeedActivity.class);
+            startActivity(feedActivity);
         }
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
@@ -74,8 +74,10 @@ public class ActivityAuth extends AppCompatActivity  {
         HttpUrl url = UrlType.FEED.getUrl().build();
         List<Cookie> cookies = cookieJar.loadForRequest(url);
         for (Cookie cookie : cookies) {
-            if("sessionid".equals(cookie.name()))
+            if("sessionid".equals(cookie.name())) {
+                Log.d("response_auth_session", cookie.value());
                 return true;
+            }
         }
 
         return false;
