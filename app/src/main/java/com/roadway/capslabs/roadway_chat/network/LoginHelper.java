@@ -10,6 +10,9 @@ import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +48,14 @@ public class LoginHelper {
     private String getLogoutResponse(Activity context, Request request) {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
-        removeCookie(cookieJar);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .build();
+
         try {
-            Response response = new OkHttpClient().newCall(request).execute();
+            Response response = client.newCall(request).execute();
+            removeCookies(cookieJar);
+            //clearCookies();
             return response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during logout request", e);
@@ -86,20 +94,21 @@ public class LoginHelper {
     }
 
     private void saveCookie(CookieJar cookieJar) {
-        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+        List<Cookie> cookies = cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build());
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.EVENT.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(), cookies);
     }
 
-    private void removeCookie(CookieJar cookieJar) {
-        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
+    private void clearCookies() {
+        CookieManager cookieManager = new CookieManager();
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
+        cookieManager.getCookieStore().removeAll();
+    }
+
+    private void removeCookies(CookieJar cookieJar) {
+        List<Cookie> cookies = cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build());
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), cookies);
     }
 }
