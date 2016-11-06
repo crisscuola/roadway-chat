@@ -18,7 +18,6 @@ import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
-import com.vk.sdk.VKSdk;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,7 +64,9 @@ public class SubscribeEventsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
+
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);

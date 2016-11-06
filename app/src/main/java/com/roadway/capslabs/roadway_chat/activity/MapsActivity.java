@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
@@ -40,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private final DrawerFactory drawerFactory = new DrawerFactory();
+    private Drawer drawer;
     private Toolbar toolbar;
 
     Activity context = this;
@@ -50,15 +52,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        initToolbar(getString(R.string.title_activity_maps));
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        initToolbar(getString(R.string.title_activity_maps));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        drawer.closeDrawer();
     }
 
     private void initToolbar(String title) {
@@ -71,7 +78,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
-        mMap.setOnMyLocationChangeListener(myLocationChangeListener);
+        //mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

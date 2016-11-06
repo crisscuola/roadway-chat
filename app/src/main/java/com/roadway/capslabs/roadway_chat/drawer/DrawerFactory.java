@@ -16,8 +16,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
-import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
-import com.roadway.capslabs.roadway_chat.activity.QrScannerActivity;
 import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
@@ -50,7 +48,6 @@ public class DrawerFactory {
                             //VKSdk.logout();
                             new Logouter().execute(activity);
                         }
-
                         activity.startActivity(intent);
                         return true;
                     }
@@ -102,14 +99,6 @@ public class DrawerFactory {
             case 3:
                 return SubscribeEventsActivity.class;
             case 4:
-                return ActivityAuth.class;
-            case 5:
-                return QrScannerActivity.class;
-            case 6:
-                return OwnEventsActivity.class;
-            case 7:
-                return SubscribeEventsActivity.class;
-            case 8:
                 return ActivityAuth.class;
             default:
                 return FeedActivity.class;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class FeedActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
+    private Drawer drawer;
     private EventsAdapter eventsAdapter;
 
     private Toolbar toolbar;
@@ -38,7 +40,7 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
 
         new EventsLoader().execute(new EventRequestHandler());
@@ -47,7 +49,9 @@ public class FeedActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
+
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
