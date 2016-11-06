@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikepenz.materialdrawer.Drawer;
+import com.roadway.capslabs.roadway_chat.MarkerAdapter;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
@@ -147,7 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
         Marker marker;
         mMap = googleMap;
-        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        mMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater()));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
         markersMap.put(marker, id);
         marker.showInfoWindow();
     }
