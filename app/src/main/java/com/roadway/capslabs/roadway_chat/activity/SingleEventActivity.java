@@ -41,50 +41,53 @@ import java.util.List;
  */
 public class SingleEventActivity extends AppCompatActivity {
     private Activity context = this;
-    private Drawer drawer;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView, imageQr;
-    private Bitmap bitmap;
-    private TextView title, description, rating, address, metro, code, creator;
+    private TextView title, description, rating, address, metro, dateEnd, creator;
     private Button subscribe, unsubscribe, showOnMap, showQr;
     private Event event;
     private MapView mapView;
     private GoogleMap map;
+    private int id;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event);
-        final int id = getIntent().getExtras().getInt("id");
+        id = getIntent().getExtras().getInt("id");
         initToolbar("Discount");
         initViews();
 
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        Drawer drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         new EventLoader().execute(id);
 
-        subscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new Subscriber().execute(id);
-            }
-        });
+//        subscribe.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new Subscriber().execute(id);
+//            }
+//        });
 
-        unsubscribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new UnSubscriber().execute(id);
-            }
-        });
+//        unsubscribe.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new UnSubscriber().execute(id);
+//            }
+//        });
 
         showQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), QrCodeActivity.class);
-                intent.putExtra("bitmap", bitmap);
-                startActivity(intent);
+                Code code = hasSeenQr();
+                if (code.isCached()) {
+                    Bitmap bitmap = qrGenenartor(code.getCode());
+                    showQrCodeActivity(bitmap);
+                    return;
+                }
+                new Subscriber().execute(id);
             }
         });
 
@@ -123,6 +126,21 @@ public class SingleEventActivity extends AppCompatActivity {
 //        });
     }
 
+    private Code hasSeenQr() {
+        List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
+        Code code = null;
+        if (codes.size() != 0)
+            code = codes.get(0);
+        return code != null ? code : new Code(0, "0");
+
+    }
+
+    private void showQrCodeActivity(Bitmap bitmap) {
+        Intent intent = new Intent(context, QrCodeActivity.class);
+        intent.putExtra("bitmap", bitmap);
+        startActivity(intent);
+    }
+
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
         toolbar.setTitle(title);
@@ -138,6 +156,7 @@ public class SingleEventActivity extends AppCompatActivity {
         creator = (TextView) findViewById(R.id.creator);
         subscribe = (Button) findViewById(R.id.btn_subs);
         unsubscribe = (Button) findViewById(R.id.btn_unsubs);
+        dateEnd = (TextView) findViewById(R.id.date_end);
         showQr = (Button) findViewById(R.id.btn_show_qr);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
@@ -145,27 +164,25 @@ public class SingleEventActivity extends AppCompatActivity {
         imageQr = (ImageView) findViewById(R.id.qr_image);
     }
 
-    private boolean isSubscribed(JSONObject event) {
-        try {
-            return event.getBoolean("subscribed");
-        } catch (JSONException e) {
-            throw new RuntimeException("Key \'subscribed\' not found", e);
-        }
-    }
+//    private boolean isSubscribed(JSONObject event) {
+//        try {
+//            return event.getBoolean("subscribed");
+//        } catch (JSONException e) {
+//            throw new RuntimeException("Key \'subscribed\' not found", e);
+//        }
+//    }
 
-    private void showSubscribeButton(boolean isSubscribed) {
-        if (!isSubscribed) {
-            subscribe.setVisibility(View.VISIBLE);
-            unsubscribe.setVisibility(View.GONE);
-            showQr.setVisibility(View.GONE);
-//            code.setVisibility(View.INVISIBLE);
-            return;
-        }
-        subscribe.setVisibility(View.GONE);
-        unsubscribe.setVisibility(View.VISIBLE);
-        showQr.setVisibility(View.VISIBLE);
-//        code.setVisibility(View.VISIBLE);
-    }
+//    private void showSubscribeButton(boolean isSubscribed) {
+//        if (!isSubscribed) {
+//            subscribe.setVisibility(View.GONE);
+//            unsubscribe.setVisibility(View.GONE);
+////            code.setVisibility(View.INVISIBLE);
+//            return;
+//        }
+//        subscribe.setVisibility(View.GONE);
+//        unsubscribe.setVisibility(View.GONE);
+////        code.setVisibility(View.VISIBLE);
+//    }
 
     private void displayEventContent(JSONObject eventObj) {
         event = new Event(eventObj);
@@ -174,10 +191,6 @@ public class SingleEventActivity extends AppCompatActivity {
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         String metroStation = "м. " + (event.getMetro());
-        String qrString = "https://ru.wikipedia.org/wiki/QR";
-
-
-        //imageQr.setImageDrawable();
 
         try {
             new ProfileLoader().execute(Integer.valueOf(eventObj.getString("user_id")));
@@ -188,20 +201,21 @@ public class SingleEventActivity extends AppCompatActivity {
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
                 .into(imageView);
-        displayCode(getCode(String.valueOf(event.getId())));
+        //displayCode(getCode(String.valueOf(event.getId())));
     }
 
-    private void qrGenenartor (String link){
+    private Bitmap qrGenenartor(String link) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-        BitMatrix bitMatrix = null;
+        BitMatrix bitMatrix;
         try {
-            bitMatrix = multiFormatWriter.encode(link, BarcodeFormat.QR_CODE,200, 200);
+            bitMatrix = multiFormatWriter.encode(link, BarcodeFormat.QR_CODE, 200, 200);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            bitmap = barcodeEncoder.createBitmap(bitMatrix);
-//            imageQr.setImageBitmap(bitmap);
+
+            return barcodeEncoder.createBitmap(bitMatrix);
         } catch (WriterException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private String getImageUrl(String url) {
@@ -221,35 +235,30 @@ public class SingleEventActivity extends AppCompatActivity {
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
-                showSubscribeButton(isSubscribed(eventObj));
+                //showSubscribeButton(isSubscribed(eventObj));
                 displayEventContent(eventObj);
-                if ((boolean) eventObj.get("subscribed")) {
-                    codeJson = (String) eventObj.get("activation_link");
-                    qrGenenartor(codeJson);
-                   // code.setText(String.valueOf(codeJson));
-                }
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
             }
         }
     }
 
-    private String getCode(String id) {
-        List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
-        if (codes.size() != 0) {
-            return String.valueOf(codes.get(0).getCode());
-        }
+//    private String getCode(String id) {
+//        List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
+//        if (codes.size() != 0) {
+//            return String.valueOf(codes.get(0).getCode());
+//        }
+//
+////        return event.getCode();
+//        return codeJson;
+//        //return 0;
+//    }
 
-//        return event.getCode();
-        return codeJson;
-         //return 0;
-    }
-
-    private void displayCode(String code) {
-        if (code != "") {
-//            this.code.setText(String.valueOf(""));
-        }
-    }
+//    private void displayCode(String code) {
+//        if (code != "") {
+////            this.code.setText(String.valueOf(""));
+//        }
+//    }
 
     private void saveCode(JSONObject event) {
         Code result;
@@ -280,35 +289,35 @@ public class SingleEventActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            showSubscribeButton(true);
+            //showSubscribeButton(true);
             Log.d("response_subscribe", s);
             JSONObject object = HttpConnectionHandler.parseJSON(s);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
                 codeJson = (String) eventObj.get("activate_link");
-                qrGenenartor(codeJson);
-               // code.setText(String.valueOf(codeJson));
+                Bitmap bitmap = qrGenenartor(codeJson);
                 saveCode(eventObj);
+                showQrCodeActivity(bitmap);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
         }
     }
 
-    private final class UnSubscriber extends AsyncTask<Integer, Void, String> {
-        @Override
-        protected String doInBackground(Integer... params) {
-            String id = String.valueOf(params[0]);
-            return new EventRequestHandler().unsubscribeEvent(context, id);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            showSubscribeButton(false);
-            Log.d("response_subscribe", s);
-        }
-    }
+//    private final class UnSubscriber extends AsyncTask<Integer, Void, String> {
+//        @Override
+//        protected String doInBackground(Integer... params) {
+//            String id = String.valueOf(params[0]);
+//            return new EventRequestHandler().unsubscribeEvent(context, id);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            showSubscribeButton(false);
+//            Log.d("response_subscribe", s);
+//        }
+//    }
 
     private final class ProfileLoader extends AsyncTask<Integer, Void, String> {
         @Override
