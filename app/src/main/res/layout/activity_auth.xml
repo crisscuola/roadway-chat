@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#65c3ba"
+    android:background="@color/colorLightBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="@string/app_title"
             android:textSize="30sp"
-            android:textColor="#fff"/>
+            android:textColor="@color/colorTextColor"/>
 
     </RelativeLayout>
 
@@ -48,8 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="#009688"
-            android:textColor="#fff"
+            android:background="@color/colorDarkBackground"
+            android:textColor="@color/colorTextColor"
             android:text="Sign in"/>
 
         <Button
@@ -57,8 +57,8 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#009688"
-            android:textColor="#fff"
+            android:background="@color/colorDarkBackground"
+            android:textColor="@color/colorTextColor"
             android:text="Sign up"/>
 
         <Button
@@ -68,23 +68,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VK"/>
-
-
-        <!--<Button-->
-            <!--android:id="@+id/btn_fb"-->
-            <!--android:layout_marginTop="4dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="FB"/>-->
-
-        <!--<com.facebook.login.widget.LoginButton-->
-            <!--android:id="@+id/login_button"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:layout_marginTop="30dp"-->
-            <!--android:layout_marginBottom="30dp" />-->
-
     </LinearLayout>
 
 </LinearLayout>

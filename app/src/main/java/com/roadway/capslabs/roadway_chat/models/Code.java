@@ -20,4 +20,8 @@ public class Code extends SugarRecord {
     public String getCode() {
         return code;
     }
+
+    public boolean isCached() {
+        return !code.equals("0");
+    }
 }

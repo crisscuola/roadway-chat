@@ -68,7 +68,7 @@ public class DrawerFactory {
                     .withActivity(activity)
                    // .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
-                    .withHeaderBackground(R.color.colorHeaderBackground)
+                    .withHeaderBackground(R.color.colorDarkBackground)
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
 
