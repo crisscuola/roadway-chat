@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorSliderBackground"
@@ -11,7 +11,9 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="50dp"
+        android:layout_marginTop="57dp"
         android:orientation="vertical">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,26 +29,14 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:scaleType="fitXY" />
 
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_show_qr"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/qr_icon"
-                    android:background="@color/colorDarkBackground"
-                    android:textColor="@color/colorTextColor"
-                    android:layout_centerInParent="true"
-                    android:paddingLeft="25dp"
-                    android:text="Show Qr Code" />
 
                 <Button
                     android:id="@+id/btn_subs"
@@ -236,4 +226,23 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/btn_show_qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/qr_icon"
+            android:background="@color/colorDarkBackground"
+            android:textColor="@color/colorTextColor"
+
+            android:paddingLeft="25dp"
+            android:text="Show Qr Code" />
+    </LinearLayout>
+
+</RelativeLayout>
