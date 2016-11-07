@@ -46,7 +46,7 @@ public class SingleEventActivity extends AppCompatActivity {
 
     private ImageView imageView, imageQr;
     private TextView title, description, rating, address, metro, dateEnd, creator;
-    private Button subscribe, unsubscribe, showOnMap, showQr;
+    private Button showQr;
     private Event event;
     private MapView mapView;
     private GoogleMap map;
@@ -61,22 +61,8 @@ public class SingleEventActivity extends AppCompatActivity {
         initToolbar("Discount");
         initViews();
 
-        Drawer drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawerFactory.getDrawerBuilder(this, toolbar).build();
         new EventLoader().execute(id);
-
-//        subscribe.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new Subscriber().execute(id);
-//            }
-//        });
-
-//        unsubscribe.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                new UnSubscriber().execute(id);
-//            }
-//        });
 
         showQr.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +75,15 @@ public class SingleEventActivity extends AppCompatActivity {
                 }
                 new Subscriber().execute(id);
             }
+        });
+
+        description.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(SingleEventActivity.this, EventDescriptionActivity.class);
+            intent.putExtra("description", event.getDescription());
+            startActivity(intent);
+        }
         });
 
 
@@ -154,8 +149,6 @@ public class SingleEventActivity extends AppCompatActivity {
         metro = (TextView) findViewById(R.id.metro);
         rating = (TextView) findViewById(R.id.rating);
         creator = (TextView) findViewById(R.id.creator);
-        subscribe = (Button) findViewById(R.id.btn_subs);
-        unsubscribe = (Button) findViewById(R.id.btn_unsubs);
         dateEnd = (TextView) findViewById(R.id.date_end);
         showQr = (Button) findViewById(R.id.btn_show_qr);
 //        code = (TextView) findViewById(R.id.code);
@@ -191,8 +184,15 @@ public class SingleEventActivity extends AppCompatActivity {
 
     private void displayEventContent(JSONObject eventObj) {
         event = new Event(eventObj);
-        title.setText(event.getTitle());
-        description.setText(event.getDescription());
+
+        String description = event.getDescription();
+        if (description.length() > 400) {
+            description = description.substring(0, 400);
+            description += "...";
+        }
+
+        this.title.setText(event.getTitle());
+        this.description.setText(description);
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         String metroStation = "м. " + (event.getMetro());
