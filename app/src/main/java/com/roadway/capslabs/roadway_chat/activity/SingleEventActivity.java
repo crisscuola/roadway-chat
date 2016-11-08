@@ -44,7 +44,7 @@ public class SingleEventActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
-    private ImageView imageView, imageQr;
+    private ImageView imageView, imageQr, arrow;
     private TextView title, description, rating, address, metro, dateEnd, creator;
     private Button showQr;
     private Event event;
@@ -75,15 +75,6 @@ public class SingleEventActivity extends AppCompatActivity {
                 }
                 new Subscriber().execute(id);
             }
-        });
-
-        description.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(SingleEventActivity.this, EventDescriptionActivity.class);
-            intent.putExtra("description", event.getDescription());
-            startActivity(intent);
-        }
         });
 
 
@@ -155,6 +146,7 @@ public class SingleEventActivity extends AppCompatActivity {
 //        code.setVisibility(View.INVISIBLE);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
+        arrow = (ImageView) findViewById(R.id.arrow);
     }
 
     private boolean isSubscribed(JSONObject event) {
@@ -189,6 +181,16 @@ public class SingleEventActivity extends AppCompatActivity {
         if (description.length() > 400) {
             description = description.substring(0, 400);
             description += "...";
+            arrow.setVisibility(View.VISIBLE);
+
+            this.description.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(SingleEventActivity.this, EventDescriptionActivity.class);
+                    intent.putExtra("description", event.getDescription());
+                    startActivity(intent);
+                }
+            });
         }
 
         this.title.setText(event.getTitle());

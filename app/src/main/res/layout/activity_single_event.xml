@@ -134,16 +134,35 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/description"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Description"
-                    android:textAppearance="?android:attr/textAppearance"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_marginRight="5dp"
+                        android:text="Description"
+                        android:textAppearance="?android:attr/textAppearance"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/arrow"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_right"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -201,10 +220,9 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/address"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="4dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
@@ -212,11 +230,23 @@
                     android:paddingRight="20dp"
                     android:paddingTop="7dp"
                     android:paddingBottom="10dp"
-                    android:text="Address"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#2369ff"
-                    android:textSize="18sp"
-                    android:background="@color/colorVeryLight"/>
+                    >
+                     <ImageView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/map_location_blue"/>
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#2369ff"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
