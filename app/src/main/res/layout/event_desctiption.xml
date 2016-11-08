@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSliderBackground">
+    android:background="#fff">
 
     <include
         android:id="@+id/toolbar_description"
@@ -25,14 +25,5 @@
         android:textColor="@color/colorTextColor"
         android:textSize="15sp"
         android:background="@color/colorLightBackground"/>
-
-    <RatingBar
-        android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="?android:attr/ratingBarStyleSmall"
-        android:numStars="5"
-        android:stepSize="0.1"
-        android:isIndicator="true" />
 
 </LinearLayout>
