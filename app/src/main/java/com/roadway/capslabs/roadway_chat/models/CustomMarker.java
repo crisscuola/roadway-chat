@@ -7,9 +7,9 @@ public class CustomMarker {
 
     private final String title;
     private final String description;
-    private final int id;
+    private final Integer id;
 
-    public CustomMarker(String title, String description, int id) {
+    public CustomMarker(String title, String description, Integer id) {
         this.title = title;
         this.description = description;
         this.id = id;

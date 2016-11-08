@@ -14,9 +14,11 @@ import com.google.android.gms.maps.model.Marker;
 public class MarkerAdapter implements InfoWindowAdapter {
     LayoutInflater inflater = null;
     private TextView textViewTitle, description;
+    private String desc;
 
-    public MarkerAdapter(LayoutInflater inflater) {
+    public MarkerAdapter(LayoutInflater inflater, String desc) {
         this.inflater = inflater;
+        this.desc = desc;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class MarkerAdapter implements InfoWindowAdapter {
             description = (TextView) v.findViewById(R.id.marker_despription);
 
             textViewTitle.setText(marker.getTitle());
-            //description.setText(marker.);
+            description.setText(desc);
 
         }
         return (v);
@@ -35,7 +37,6 @@ public class MarkerAdapter implements InfoWindowAdapter {
 
     @Override
     public View getInfoContents(Marker marker) {
-
 
         return (null);
     }

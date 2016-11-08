@@ -225,6 +225,18 @@
                         android:orientation="horizontal">
                     </LinearLayout>
             </LinearLayout>
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="10dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:id="@+id/map" />
         </LinearLayout>
     </ScrollView>
 

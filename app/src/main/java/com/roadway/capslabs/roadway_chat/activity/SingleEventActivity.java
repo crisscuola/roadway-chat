@@ -1,11 +1,14 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,17 +17,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.mikepenz.materialdrawer.Drawer;
+import com.roadway.capslabs.roadway_chat.MarkerAdapter;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
+import com.roadway.capslabs.roadway_chat.models.CustomMarker;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -34,13 +45,16 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by konstantin on 02.10.16
  */
-public class SingleEventActivity extends AppCompatActivity {
+public class SingleEventActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Activity context = this;
+    private OnMapReadyCallback callback = this;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
@@ -49,7 +63,8 @@ public class SingleEventActivity extends AppCompatActivity {
     private Button showQr;
     private Event event;
     private MapView mapView;
-    private GoogleMap map;
+    private GoogleMap mMap;
+    private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
     private int id;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
@@ -227,6 +242,53 @@ public class SingleEventActivity extends AppCompatActivity {
         return "http://" + UrlConst.URL + url;
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        mMap = googleMap;
+        //mMap.setOnMyLocationChangeListener(myLocationChangeListener);
+        int id = 0;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+
+        String title = (String) getIntent().getExtras().get("title");
+        if (event != null) {
+            LatLng latlng = new LatLng(event.getLet(), event.getLng());
+
+            final CustomMarker customMarker = new CustomMarker(event.getTitle(), event.getDescription(), event.getId());
+
+            setMarker(latlng, mMap, "id = " + String.valueOf(id) + " " + title, customMarker);
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latlng)
+                    .zoom(15)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
+
+    }
+
+    public void setMarker(LatLng latLng, GoogleMap googleMap, String title, CustomMarker customMarker) {
+        Marker marker;
+        mMap = googleMap;
+        String lolo = "TEST!!!";
+        mMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), lolo));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng));//.title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
+        markersMap.put(marker, customMarker);
+
+        marker.showInfoWindow();
+    }
+
     private final class EventLoader extends AsyncTask<Integer, Void, String> {
         @Override
         protected String doInBackground(Integer... params) {
@@ -245,6 +307,10 @@ public class SingleEventActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
             }
+
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(callback);
         }
     }
 
