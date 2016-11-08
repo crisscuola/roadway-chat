@@ -31,7 +31,6 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-import com.roadway.capslabs.roadway_chat.MarkerAdapter;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
@@ -255,8 +254,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
             return;
         }
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+//        mMap.setMyLocationEnabled(true);
+//        mMap.getUiSettings().setZoomControlsEnabled(true);
 
 
         String title = (String) getIntent().getExtras().get("title");
@@ -284,7 +284,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         Marker marker;
         mMap = googleMap;
         String lolo = "TEST!!!";
-        mMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), lolo));
+       // mMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), lolo));
         marker = mMap.addMarker(new MarkerOptions().position(latLng));//.title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
         markersMap.put(marker, customMarker);
 

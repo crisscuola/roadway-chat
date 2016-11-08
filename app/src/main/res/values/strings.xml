@@ -39,7 +39,7 @@
     <string name="single_chat_title">Single Chat</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_own">My Events</string>
-    <string name="title_activity_sub">Subs Events</string>
+    <string name="title_activity_sub">My Discounts</string>
     <string name="app_title">Discount Basket</string>
     <string name="field_email">Email:</string>
     <string name="field_password1">Password :</string>
