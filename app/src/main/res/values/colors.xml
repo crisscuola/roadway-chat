@@ -9,6 +9,7 @@
     <color name="colorToolbar">#35a79c</color>
     <color name="colorLightBackground">#65c3ba</color>
     <color name="colorSliderBackground">#83d0c9</color>
+    <color name="colorVeryLight">#b4f2ed</color>
     <color name="colorBackgroundGrey">#c9c8c8</color>
 
 </resources>

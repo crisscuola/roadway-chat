@@ -42,10 +42,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     @NotEmpty
     @ConfirmPassword
     private EditText password2;
-    @NotEmpty
-    private EditText firstName;
-    @NotEmpty
-    private EditText lastName;
+
     private Button register;
 
     private final Activity context = this;
@@ -71,8 +68,6 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-//        firstName = (EditText) findViewById(R.id.firstname);
-//        lastName = (EditText) findViewById(R.id.lastname);
         register = (Button) findViewById(R.id.submit_register_button);
 
         email.setTextColor(Color.WHITE);
@@ -85,9 +80,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         return new RegisterForm(
                 email.getText().toString(),
                 password1.getText().toString(),
-                password2.getText().toString(),
-                firstName.getText().toString(),
-                lastName.getText().toString());
+                password2.getText().toString());
     }
 
     @Override
