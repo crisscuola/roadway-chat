@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSliderBackground"
+    android:background="#fff"
     android:orientation="vertical">
 
     <include
@@ -216,7 +216,7 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#2369ff"
                     android:textSize="18sp"
-                    android:background="@color/colorLightBackground"/>
+                    android:background="@color/colorVeryLight"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -242,6 +242,7 @@
             android:background="@color/colorDarkBackground"
             android:textColor="@color/colorTextColor"
             android:paddingLeft="25dp"
+            android:paddingRight="25dp"
             android:text="Show Qr Code" />
     </LinearLayout>
 
