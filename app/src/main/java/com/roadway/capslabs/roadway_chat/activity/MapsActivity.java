@@ -4,8 +4,10 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -46,6 +48,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Drawer drawer;
     private Toolbar toolbar;
     private String description;
+    private LatLng location;
+    private double lat, lng;
 
     Activity context = this;
     List<Event> events = new ArrayList<>();
@@ -119,6 +123,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }
 
+        LatLng userLocation = getLocation();
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(userLocation)
+                .zoom(15)
+                .bearing(0)
+                .tilt(0)
+                .build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
         final int finalId = id;
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -138,7 +153,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
     }
 
 
@@ -146,12 +160,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onMyLocationChange(Location location) {
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-           // mMarker = mMap.addMarker(new MarkerOptions().position(loc));
-            if(mMap != null){
+            // mMarker = mMap.addMarker(new MarkerOptions().position(loc));
+            if (mMap != null) {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
             }
         }
     };
+
+    private LatLng getLocation() {
+
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = service.getBestProvider(criteria, false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        }
+        Location location = service.getLastKnownLocation(provider);
+        LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+
+        return userLocation;
+    }
 
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, CustomMarker customMarker) {
         Marker marker;
@@ -206,7 +234,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            final String allEvents = handler.getAllEvents(context);
+            location = getLocation();
+            lat = location.latitude;
+            lng = location.longitude;
+            final String allEvents = handler.getAllEvents(context,lat,lng);
             Log.d("response_create_alleve", allEvents);
             return allEvents;
         }

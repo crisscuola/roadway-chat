@@ -8,12 +8,9 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
-import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
-import java.util.List;
 
-import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
 import okhttp3.HttpUrl;
@@ -36,9 +33,13 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
  * Created by kirill on 05.10.16
  */
 public class EventRequestHandler {
-     public <T extends Activity> String getAllEvents(T context) {
-        HttpUrl url = UrlFactory.getUrl(FEED);
+     public <T extends Activity> String getAllEvents(T context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(FEED).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
         Request request = buildRequest(url);
+        Log.d("Location", String.valueOf(url));
         return getResponse(context, request);
      }
 
