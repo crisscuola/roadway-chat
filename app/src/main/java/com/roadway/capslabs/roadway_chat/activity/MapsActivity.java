@@ -24,10 +24,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikepenz.materialdrawer.Drawer;
-import com.roadway.capslabs.roadway_chat.MarkerAdapter;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
-import com.roadway.capslabs.roadway_chat.models.CustomMarker;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -52,7 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Activity context = this;
     List<Event> events = new ArrayList<>();
-    private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
+    private Map<Marker, Integer> markersMap = new HashMap<Marker, Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +79,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
-
+        //mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -102,13 +101,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("intent", String.valueOf(id));
 
             String title = (String) getIntent().getExtras().get("title");
-            String description = (String) getIntent().getExtras().get("about");
 
             LatLng latlng = new LatLng(lat, lng);
 
-            final CustomMarker customMarker = new CustomMarker(title, description, id);
-
-            setMarker(latlng, mMap, title, description, customMarker);
+            setMarker(latlng, mMap, title, id);
 
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
@@ -119,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .tilt(0)
                     .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        } else {
+        }  else {
 
         new EventsLoader().execute(new EventRequestHandler());
 
@@ -133,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        }
+    }
 
         final int finalId = id;
 
@@ -143,16 +139,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Intent intent = new Intent(context, SingleEventActivity.class);
                 if (getIntent().hasExtra("selected_event")) {
                     intent.putExtra("id", finalId);
+                    intent.putExtra("distance","LOL");
                     startActivity(intent);
                 } else {
-                    intent.putExtra("id", markersMap.get(marker).getId());
+                    intent.putExtra("id", markersMap.get(marker));
                     startActivity(intent);
                 }
 
                 Log.d("marker", "CLICK!!");
             }
         });
-
     }
 
 
@@ -170,22 +166,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return userLocation;
     }
 
-    public void setMarker(LatLng latLng, GoogleMap googleMap, String title, String description, CustomMarker customMarker) {
+    public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
         Marker marker;
-        googleMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), title ,description));
-        marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
-       // markersMap.put(marker, customMarker);
-
+        mMap = googleMap;
+       // googleMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), title, "LOL"));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
+        markersMap.put(marker, id);
         marker.showInfoWindow();
     }
 
     private void showEvents() {
         Log.d("events", String.valueOf(events.size()) + " " + events.get(0).getLet());
         for (Event event : events) {
-            LatLng latLng = new LatLng(event.getLet(), event.getLng());
-            CustomMarker customMarker = new CustomMarker(event.getTitle(), event.getDescription(), event.getId());
-            setMarker(latLng, mMap, event.getTitle(), event.getDescription(), customMarker);
-            Log.d("TestMarker", event.getTitle() + event.getDescription());
+            final LatLng latLng = new LatLng(event.getLet(), event.getLng());
+            setMarker(latLng, mMap, event.getTitle(), event.getId());
         }
     }
 
@@ -193,8 +187,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
-
-
 
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -222,10 +214,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            location = getLocation();
-            lat = location.latitude;
-            lng = location.longitude;
-            final String allEvents = handler.getAllEvents(context,lat,lng);
+            final String allEvents = handler.getAllEvents(context,lat ,lng);
             Log.d("response_create_alleve", allEvents);
             return allEvents;
         }
