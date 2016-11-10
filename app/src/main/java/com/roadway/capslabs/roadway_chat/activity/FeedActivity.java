@@ -55,6 +55,8 @@ public class FeedActivity extends AppCompatActivity {
         location = getLocation();
         lat = location.latitude;
         lng = location.longitude;
+//        lat = 1;
+//        lng = 1;
         Log.d("Location", String.valueOf(lat) + " " + String.valueOf(lng));
 
         new EventsLoader().execute(new EventRequestHandler());

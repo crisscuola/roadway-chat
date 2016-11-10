@@ -112,6 +112,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 intent.putExtra("title", event.getDescription());
                 intent.putExtra("latitude", event.getLet());
                 intent.putExtra("longitude", event.getLng());
+                intent.putExtra("about", event.getDescription());
                 startActivity(intent);
             }
         });
