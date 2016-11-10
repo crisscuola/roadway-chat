@@ -72,7 +72,7 @@ public class EventsAdapter extends BaseAdapter {
         }
         textView.setText(description);
         rating.setText(String.valueOf(event.getRating()));
-        String km = event.getDateEnd() + "km";
+        String km = event.getDistance() + "km";
         distance.setText(km);
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
