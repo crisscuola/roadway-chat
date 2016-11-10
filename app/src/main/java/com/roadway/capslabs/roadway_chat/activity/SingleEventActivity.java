@@ -155,7 +155,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         metro = (TextView) findViewById(R.id.metro);
         rating = (TextView) findViewById(R.id.rating);
         creator = (TextView) findViewById(R.id.creator);
-        dateEnd = (TextView) findViewById(R.id.date_end);
+        dateEnd = (TextView) findViewById(R.id.date);
         showQr = (Button) findViewById(R.id.btn_show_qr);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);

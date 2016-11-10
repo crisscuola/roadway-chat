@@ -14,6 +14,7 @@ public class Event {
     private final DateRange range;
     private final float rating;
     private final int id;
+    private final int distance;
     private final String pictureUrl;
     private final double let;
     private final double lng;
@@ -32,6 +33,7 @@ public class Event {
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
+            distance = (int) eventObj.getDouble("distance");
 //            distance = eventObj.getDouble("distance");
 //            code = eventObj.getInt("code");
         } catch (JSONException e) {
@@ -75,7 +77,9 @@ public class Event {
         return lng;
     }
 
-   // public double getDistance() {return distance; }
+    public int getDistance() {
+        return distance;
+    }
 
     public String getAddress() {
         return address;
@@ -84,6 +88,4 @@ public class Event {
     public String getMetro() {
         return metro;
     }
-
-//    public  int getCode() {return code; }
 }
