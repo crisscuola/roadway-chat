@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class EventsAdapter extends BaseAdapter {
     private List<Event> eventList = new ArrayList<>();
-    private TextView textView, rating;
+    private TextView textView, rating, date;
     private ImageView image;
     private Context context;
 
@@ -63,6 +63,7 @@ public class EventsAdapter extends BaseAdapter {
         textView = (TextView) rowView.findViewById(R.id.event_short_description);
         rating = (TextView) rowView.findViewById(R.id.rating);
         image = (ImageView) rowView.findViewById(R.id.image);
+        date = (TextView) rowView.findViewById(R.id.date_end);
         Event event = getItem(position);
         String description = event.getDescription();
         if (description.length() > 50) {
@@ -71,6 +72,7 @@ public class EventsAdapter extends BaseAdapter {
         }
         textView.setText(description);
         rating.setText(String.valueOf(event.getRating()));
+        date.setText(event.getDateEnd());
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .fit()

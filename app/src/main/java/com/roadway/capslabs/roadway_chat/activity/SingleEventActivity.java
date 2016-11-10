@@ -192,8 +192,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         event = new Event(eventObj);
 
         String description = event.getDescription();
-        if (description.length() > 400) {
-            description = description.substring(0, 400);
+        if (description.length() > 250) {
+            description = description.substring(0, 250);
             description += "...";
             arrow.setVisibility(View.VISIBLE);
 
@@ -211,6 +211,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         this.description.setText(description);
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
+        dateEnd.setText(event.getDateEnd());
         String metroStation = "м. " + (event.getMetro());
 
         try {
