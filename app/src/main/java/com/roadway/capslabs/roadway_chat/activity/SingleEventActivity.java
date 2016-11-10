@@ -65,7 +65,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
     private int id;
-    private float distance;
+    private double distance;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
     @Override
@@ -73,7 +73,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event);
         id = getIntent().getExtras().getInt("id");
-        distance = getIntent().getExtras().getFloat("distance");
+        distance = getIntent().getExtras().getDouble("distance");
         initToolbar("Discount");
         initViews();
 
@@ -115,6 +115,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 intent.putExtra("latitude", event.getLet());
                 intent.putExtra("longitude", event.getLng());
                 intent.putExtra("about", event.getDescription());
+                intent.putExtra("distance", distance);
                 startActivity(intent);
             }
         });

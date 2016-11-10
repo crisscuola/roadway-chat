@@ -47,15 +47,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Toolbar toolbar;
     private LatLng location;
     private double lat, lng;
+    private double distance;
 
     Activity context = this;
     List<Event> events = new ArrayList<>();
     private Map<Marker, Integer> markersMap = new HashMap<Marker, Integer>();
+    private Map<Integer, Double> distanceMap = new HashMap<Integer, Double>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        location = getLocation();
+        lat = location.latitude;
+        lng = location.longitude;
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -93,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
+
         if (getIntent().hasExtra("selected_event")) {
             id = (int) getIntent().getExtras().get("selected_event");
             double lat = (double) getIntent().getExtras().get("latitude");
@@ -119,10 +126,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         new EventsLoader().execute(new EventRequestHandler());
 
-        LatLng userLocation = getLocation();
-
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(userLocation)
+                .target(location)
                 .zoom(15)
                 .bearing(0)
                 .tilt(0)
@@ -133,13 +138,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         final int finalId = id;
 
+
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+
                 Intent intent = new Intent(context, SingleEventActivity.class);
                 if (getIntent().hasExtra("selected_event")) {
                     intent.putExtra("id", finalId);
-                    intent.putExtra("distance","LOL");
+                    intent.putExtra("distance", distance);
                     startActivity(intent);
                 } else {
                     intent.putExtra("id", markersMap.get(marker));
