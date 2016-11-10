@@ -36,6 +36,7 @@ import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.CustomMarker;
 import com.roadway.capslabs.roadway_chat.models.Event;
+import com.roadway.capslabs.roadway_chat.models.SingleEvent;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
@@ -60,7 +61,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private ImageView imageView, imageQr, arrow;
     private TextView title, description, rating, address, metro, dateEnd, creator;
     private Button showQr;
-    private Event event;
+    private SingleEvent event;
     private MapView mapView;
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
@@ -189,7 +190,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private void displayEventContent(JSONObject eventObj) {
-        event = new Event(eventObj);
+        event = new SingleEvent(eventObj);
 
         String description = event.getDescription();
         if (description.length() > 250) {
@@ -317,23 +318,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
-//    private String getCode(String id) {
-//        List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
-//        if (codes.size() != 0) {
-//            return String.valueOf(codes.get(0).getCode());
-//        }
-//
-////        return event.getCode();
-//        return codeJson;
-//        //return 0;
-//    }
-
-//    private void displayCode(String code) {
-//        if (code != "") {
-////            this.code.setText(String.valueOf(""));
-//        }
-//    }
-
     private void saveCode(JSONObject event) {
         Code result;
         try {
@@ -377,21 +361,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             }
         }
     }
-
-//    private final class UnSubscriber extends AsyncTask<Integer, Void, String> {
-//        @Override
-//        protected String doInBackground(Integer... params) {
-//            String id = String.valueOf(params[0]);
-//            return new EventRequestHandler().unsubscribeEvent(context, id);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//            removeCodeIfUsed(false);
-//            Log.d("response_subscribe", s);
-//        }
-//    }
 
     private final class ProfileLoader extends AsyncTask<Integer, Void, String> {
         @Override
