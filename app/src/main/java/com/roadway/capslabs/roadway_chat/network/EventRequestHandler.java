@@ -49,9 +49,13 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
-    public String getSubsEvents(Activity context) {
-        HttpUrl url = UrlFactory.getUrl(SUBS);
+    public String getSubsEvents(Activity context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(SUBS).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
         Request request = buildRequest(url);
+        Log.d("Location_Subs", String.valueOf(url));
         return getResponse(context, request);
     }
 
