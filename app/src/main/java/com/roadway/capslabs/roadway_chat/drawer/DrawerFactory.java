@@ -89,13 +89,13 @@ public class DrawerFactory {
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
         PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
-                .withIcon(R.drawable.events);
+                .withIcon(R.drawable.list).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map")
-                .withIcon(R.drawable.placeholder);
+                .withIcon(R.drawable.map).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts")
-                .withIcon(R.drawable.list);
+                .withIcon(R.drawable.favourite).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout").withIcon(R.drawable.logout)
-                .withDescriptionTextColorRes(R.color.red);
+                .withTextColorRes(R.color.red);
         items.add(events);
         items.add(map);
         items.add(myDiscounts);

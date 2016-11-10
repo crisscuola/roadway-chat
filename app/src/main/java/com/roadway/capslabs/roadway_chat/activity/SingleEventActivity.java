@@ -216,7 +216,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         dateEnd.setText(event.getDateEnd());
-        String distanceToEvent = "Distance to this event: " + distance;
+        String distanceToEvent = "Distance to this event: " + distance + " km";
         distanceView.setText(distanceToEvent);
         String metroStation = "м. " + (event.getMetro());
 
