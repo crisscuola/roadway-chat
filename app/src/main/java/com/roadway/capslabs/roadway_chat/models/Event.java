@@ -14,12 +14,10 @@ public class Event {
     private final DateRange range;
     private final float rating;
     private final int id;
-    private final float distance;
+    private final double distance;
     private final String pictureUrl;
     private final double let;
     private final double lng;
-//    private final double distance;
-//    private final int code;
 
     public Event(JSONObject eventObj) {
         try {
@@ -33,9 +31,8 @@ public class Event {
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
-            distance = (int) eventObj.getDouble("distance");
-//            distance = eventObj.getDouble("distance");
-//            code = eventObj.getInt("code");
+            double distDouble = eventObj.getDouble("distance");
+            distance = (float) Math.round(distDouble * 10d) / 10d;
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -77,7 +74,7 @@ public class Event {
         return lng;
     }
 
-    public float getDistance() {
+    public double getDistance() {
         return distance;
     }
 
