@@ -13,6 +13,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
@@ -87,10 +88,14 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed");
-        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout");
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
+                .withIcon(R.drawable.events);
+        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map")
+                .withIcon(R.drawable.placeholder);
+        SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts")
+                .withIcon(R.drawable.list);
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout").withIcon(R.drawable.logout)
+                .withDescriptionTextColorRes(R.color.red);
         items.add(events);
         items.add(map);
         items.add(myDiscounts);
