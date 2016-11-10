@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
+
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
@@ -82,6 +83,7 @@ public class FeedActivity extends AppCompatActivity {
                 Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
                 Event event = eventsAdapter.getItem(i);
                 intent.putExtra("id", event.getId());
+                intent.putExtra("distance", event.getDistance());
                 startActivity(intent);
             }
         });

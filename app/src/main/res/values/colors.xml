@@ -11,5 +11,6 @@
     <color name="colorSliderBackground">#83d0c9</color>
     <color name="colorVeryLight">#b4f2ed</color>
     <color name="colorBackgroundGrey">#c9c8c8</color>
+    <color name="red">#c70000</color>
 
 </resources>

@@ -56,4 +56,5 @@
     <string name="hint_password_repeat">Repeat password</string>
     <string name="sign_up_title">Sign up</string>
     <string name="organization_instruction">Show this code to organization</string>
+    <string name="date">date</string>
 </resources>

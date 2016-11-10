@@ -14,7 +14,7 @@ public class Event {
     private final DateRange range;
     private final float rating;
     private final int id;
-    private final int distance;
+    private final float distance;
     private final String pictureUrl;
     private final double let;
     private final double lng;
@@ -77,7 +77,7 @@ public class Event {
         return lng;
     }
 
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
