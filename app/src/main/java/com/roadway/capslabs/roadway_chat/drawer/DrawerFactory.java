@@ -2,9 +2,7 @@ package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -75,7 +73,7 @@ public class DrawerFactory {
                     .withActivity(activity)
                    // .addProfiles(new ProfileDrawerItem())
                     .withTextColorRes(R.color.colorProfileName)
-                    .withHeaderBackground(R.drawable.drawer2)
+                    .withHeaderBackground(R.drawable.drawer)
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
 
