@@ -1,10 +1,10 @@
 package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -15,7 +15,6 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
@@ -49,16 +48,16 @@ public class DrawerFactory {
                         Intent intent = new Intent(activity, toActivity);
 
                         if (position == 4) {
-                            //VKSdk.logout();
-                            try {
-                                new Logouter().execute(activity).get();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        activity.startActivity(intent);
+                            getAlert(activity).show();
+//                            try {
+//                                new Logouter().execute(activity).get();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            } catch (ExecutionException e) {
+//                                e.printStackTrace();
+//                            }
+                        } else
+                            activity.startActivity(intent);
                         return true;
                     }
                 });
@@ -89,7 +88,7 @@ public class DrawerFactory {
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
         PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
-                .withIcon(R.drawable.list).withTextColorRes(R.color.md_black_1000);
+                .withIcon(R.drawable.list).withSelectedTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map")
                 .withIcon(R.drawable.map).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts")
@@ -142,5 +141,41 @@ public class DrawerFactory {
             Intent intent = new Intent(context, ActivityAuth.class);
             context.startActivity(intent);
         }
+    }
+
+    private AlertDialog.Builder getAlert(final Activity context) {
+        String title = "Warning!";
+        String message = "Are you sure you want to logout?";
+        String button1String = "Logout";
+        String button2String = "Cancel";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    new Logouter().execute(context).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+
+        return ad;
     }
 }
