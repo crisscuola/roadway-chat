@@ -2,22 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#35a79c" >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/marker_title"
         android:text="TEST!"
-        android:textColor="#fff"/>
+        android:textSize="15sp"
+        android:layout_marginBottom="2dp"
+        android:textColor="#000"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/marker_description"
         android:text="TEST!"
-        android:textColor="#fff"/>
+        android:textSize="12sp"
+        android:textColor="#000"/>
 
 
 </LinearLayout>

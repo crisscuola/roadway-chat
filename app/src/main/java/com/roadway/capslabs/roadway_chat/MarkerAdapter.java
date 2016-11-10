@@ -15,10 +15,12 @@ public class MarkerAdapter implements InfoWindowAdapter {
     LayoutInflater inflater = null;
     private TextView textViewTitle, description;
     private String desc;
+    private String title;
 
-    public MarkerAdapter(LayoutInflater inflater, String desc) {
+    public MarkerAdapter(LayoutInflater inflater,String title, String desc) {
         this.inflater = inflater;
         this.desc = desc;
+        this.title = title;
     }
 
     @Override
@@ -40,14 +42,17 @@ public class MarkerAdapter implements InfoWindowAdapter {
     @Override
     public View getInfoContents(Marker marker) {
 
-        //View v = getLayoutInflater().inflate(R.layout.custom_infowindow, null);
         View v = inflater.inflate(R.layout.marker_window, null);
 
         if (marker != null) {
+            if (desc.length() > 30) {
+                desc = desc.substring(0, 30);
+                desc += "  ...";
+            }
             textViewTitle = (TextView) v.findViewById(R.id.marker_title);
             description = (TextView) v.findViewById(R.id.marker_description);
 
-            textViewTitle.setText(marker.getTitle());
+            textViewTitle.setText(title);
             description.setText(desc);
 
         }

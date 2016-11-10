@@ -35,7 +35,6 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.CustomMarker;
-import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.models.SingleEvent;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -110,7 +109,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             public void onClick(View view) {
                 Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
                 intent.putExtra("selected_event", id);
-                intent.putExtra("title", event.getDescription());
+                intent.putExtra("title", event.getTitle());
                 intent.putExtra("latitude", event.getLet());
                 intent.putExtra("longitude", event.getLng());
                 intent.putExtra("about", event.getDescription());

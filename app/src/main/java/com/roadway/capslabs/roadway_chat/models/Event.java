@@ -41,6 +41,8 @@ public class Event {
         }
     }
 
+
+
     public String getTitle() {
         return title;
     }

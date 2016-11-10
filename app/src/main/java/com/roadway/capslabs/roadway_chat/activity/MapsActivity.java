@@ -83,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
-        //mMap.setOnMyLocationChangeListener(myLocationChangeListener);
+
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -119,7 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .tilt(0)
                     .build();
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        } else
+        } else {
 
         new EventsLoader().execute(new EventRequestHandler());
 
@@ -133,6 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+        }
 
         final int finalId = id;
 
@@ -152,20 +153,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
     }
 
-
-    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
-        @Override
-        public void onMyLocationChange(Location location) {
-            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
-            // mMarker = mMap.addMarker(new MarkerOptions().position(loc));
-            if (mMap != null) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
-            }
-        }
-    };
 
     private LatLng getLocation() {
 
@@ -181,13 +170,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return userLocation;
     }
 
-    public void setMarker(LatLng latLng, GoogleMap googleMap, String title,String description, CustomMarker customMarker) {
+    public void setMarker(LatLng latLng, GoogleMap googleMap, String title, String description, CustomMarker customMarker) {
         Marker marker;
-        mMap = googleMap;
-        String lolo = "TEST!!!";
-        mMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), description));
-        marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
-        markersMap.put(marker, customMarker);
+        googleMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), title ,description));
+        marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
+       // markersMap.put(marker, customMarker);
 
         marker.showInfoWindow();
     }
@@ -195,9 +182,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void showEvents() {
         Log.d("events", String.valueOf(events.size()) + " " + events.get(0).getLet());
         for (Event event : events) {
-            final LatLng latLng = new LatLng(event.getLet(), event.getLng());
-            final CustomMarker customMarker = new CustomMarker(event.getTitle(), event.getDescription(), event.getId());
+            LatLng latLng = new LatLng(event.getLet(), event.getLng());
+            CustomMarker customMarker = new CustomMarker(event.getTitle(), event.getDescription(), event.getId());
             setMarker(latLng, mMap, event.getTitle(), event.getDescription(), customMarker);
+            Log.d("TestMarker", event.getTitle() + event.getDescription());
         }
     }
 

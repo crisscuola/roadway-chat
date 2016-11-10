@@ -98,7 +98,7 @@ public class FeedActivity extends AppCompatActivity {
 
         }
         Location location = service.getLastKnownLocation(provider);
-        LatLng userLocation = new LatLng(1,1);
+        LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
 
         return userLocation;
     }
