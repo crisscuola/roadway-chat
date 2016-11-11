@@ -146,7 +146,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Intent intent = new Intent(context, SingleEventActivity.class);
                 if (getIntent().hasExtra("selected_event")) {
                     intent.putExtra("id", finalId);
-                    intent.putExtra("distance", distance);
+                    //intent.putExtra("distance", distance);
                     startActivity(intent);
                 } else {
                     intent.putExtra("id", markersMap.get(marker));

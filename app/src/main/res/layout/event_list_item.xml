@@ -45,16 +45,14 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:src="@drawable/distance"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="2dp"
             android:background="@color/colorLightBackground"
-            android:text="Distance:"
             android:textColor="@color/colorTextColor" />
 
         <TextView
@@ -72,17 +70,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/price_icon_stroked"/>
+            android:layout_marginStart="20dp"
+            android:src="@drawable/price_icon_stroked"
+            android:layout_marginLeft="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/colorLightBackground"
-            android:padding="4dp"
-            android:text="Rating:"
+            android:padding="2dp"
+
             android:textColor="@color/colorTextColor" />
 
         <TextView

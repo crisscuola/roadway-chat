@@ -12,7 +12,7 @@ public class SingleEvent {
     private final String address;
     private final String metro;
     private final DateRange range;
-    private final float rating;
+    private final int rating;
     private final int id;
     private final String pictureUrl;
     private final double let;
@@ -23,7 +23,7 @@ public class SingleEvent {
             title = eventObj.getString("title");
             description = eventObj.getString("about");
             range = new DateRange(eventObj.getString("date_start"), eventObj.getString("date_end"));
-            rating = (float) eventObj.getDouble("rating");
+            rating = (int) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
             pictureUrl = eventObj.getString("avatar");
             address = eventObj.getString("address");

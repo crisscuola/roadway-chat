@@ -60,14 +60,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView, imageQr, arrow;
-    private TextView title, description, rating, address, metro, dateEnd, creator, distanceView;
+    private TextView title, description, rating, address, metro, dateEnd, creator;
     private Button showQr;
     private SingleEvent event;
     private MapView mapView;
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
     private int id;
-    private double distance;
+    //private double distance;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
     @Override
@@ -75,7 +75,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event);
         id = getIntent().getExtras().getInt("id");
-        distance = getIntent().getExtras().getDouble("distance");
+        //distance = getIntent().getExtras().getDouble("distance");
         initToolbar("Discount");
         initViews();
 
@@ -117,7 +117,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 intent.putExtra("latitude", event.getLet());
                 intent.putExtra("longitude", event.getLng());
                 intent.putExtra("about", event.getDescription());
-                intent.putExtra("distance", distance);
+                //intent.putExtra("distance", distance);
                 startActivity(intent);
             }
         });
@@ -162,7 +162,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         creator = (TextView) findViewById(R.id.creator);
         dateEnd = (TextView) findViewById(R.id.date);
         showQr = (Button) findViewById(R.id.btn_show_qr);
-        distanceView = (TextView) findViewById(R.id.distance_view);
+        //distanceView = (TextView) findViewById(R.id.distance_view);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -219,8 +219,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         dateEnd.setText(event.getDateEnd());
-        String distanceToEvent = "Distance to this event: " + distance + " km";
-        distanceView.setText(distanceToEvent);
+        //String distanceToEvent = "Distance to this event: " + distance + " km";
+        //distanceView.setText(distanceToEvent);
         String metroStation = "м. " + (event.getMetro());
 
         try {
