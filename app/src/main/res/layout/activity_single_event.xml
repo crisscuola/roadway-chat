@@ -219,6 +219,73 @@
                     <!--android:textSize="15sp"-->
                     <!--android:text="Distance to you..."/>-->
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/url_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="5dp"
+                        android:autoLink="map"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:text="Site: "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="20dp"
+                        android:textColor="#2369ff"
+                        android:autoLink="map"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="20dp"
+                        android:text="Url"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    
+                    <TextView
+                        android:id="@+id/phone_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="5dp"
+                        android:autoLink="map"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:text="Phone: "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="20dp"
+                            android:textColor="#2369ff"
+                            android:autoLink="map"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="20dp"
+                            android:text="Phone"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="18sp" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/metro"
                     android:layout_width="wrap_content"
@@ -238,6 +305,7 @@
                     android:layout_marginBottom="4dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:textSize="18sp"
                     android:paddingLeft="10dp"
                     android:paddingRight="20dp"
                     android:paddingTop="7dp"

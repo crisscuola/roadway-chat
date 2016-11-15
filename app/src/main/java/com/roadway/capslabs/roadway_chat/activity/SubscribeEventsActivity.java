@@ -1,9 +1,15 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
@@ -38,6 +45,8 @@ public class SubscribeEventsActivity extends AppCompatActivity {
     private ListView listView;
     private Drawer drawer;
     private Toolbar toolbar;
+    private double lat, lng;
+    private LatLng location;
 
     private EventsAdapter eventsAdapter;
     private final Activity context = this;
@@ -56,6 +65,9 @@ public class SubscribeEventsActivity extends AppCompatActivity {
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
         //VKSdk.initialize(this);
+        location = getLocation();
+        lat = location.latitude;
+        lng = location.longitude;
 
         new EventsLoader().execute(new EventRequestHandler());
 
@@ -71,6 +83,20 @@ public class SubscribeEventsActivity extends AppCompatActivity {
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
+    }
+
+    private LatLng getLocation() {
+
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = service.getBestProvider(criteria, false);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        }
+        Location location = service.getLastKnownLocation(provider);
+        LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+
+        return userLocation;
     }
 
     private void initAdapter() {
@@ -92,7 +118,7 @@ public class SubscribeEventsActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getSubsEvents(context, 1,1);
+            return handler.getSubsEvents(context, lat,lng);
         }
 
         @Override

@@ -46,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Drawer drawer;
     private Toolbar toolbar;
     private LatLng location;
+    private LatLng currentLocation = new LatLng(55.766458,37.684197);
     private double lat, lng;
     private double distance;
 
@@ -62,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         location = getLocation();
         lat = location.latitude;
         lng = location.longitude;
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -88,7 +90,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
-        //mMap.setOnMyLocationChangeListener(myLocationChangeListener);
+        mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -126,8 +128,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         new EventsLoader().execute(new EventRequestHandler());
 
+        location = getLocation();
+
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(location)
+                .target(currentLocation)
                 .zoom(15)
                 .bearing(0)
                 .tilt(0)
@@ -173,6 +177,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return userLocation;
     }
 
+    private GoogleMap.OnMyLocationChangeListener myLocationChangeListener = new GoogleMap.OnMyLocationChangeListener() {
+        @Override
+        public void onMyLocationChange(Location location) {
+            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+            // mMarker = mMap.addMarker(new MarkerOptions().position(loc));
+//            if(mMap != null){
+//                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 16.0f));
+//            }
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            currentLocation = loc;
+        }
+    };
+
+
+
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
         Marker marker;
         mMap = googleMap;
@@ -199,6 +219,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(final Location location) {
             //your code here
+           // getLocation();
+            lat = location.getLatitude();
+            lng = location.getLongitude();
         }
 
         @Override

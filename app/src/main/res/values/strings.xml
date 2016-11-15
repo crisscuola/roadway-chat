@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">roadway-chat</string>
+    <string name="app_name">Discount Basket</string>
     <string name="action_settings">Settings</string>
     <integer name="com_vk_sdk_AppId">5620732</integer>
     <string name="facebook_app_id">1752993431632257</string>

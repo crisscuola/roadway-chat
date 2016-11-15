@@ -2,15 +2,14 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -60,14 +59,18 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
     private ImageView imageView, imageQr, arrow;
-    private TextView title, description, rating, address, metro, dateEnd, creator;
+    private TextView title, description, rating, address, metro, dateEnd, creator, url, phone;
     private Button showQr;
     private SingleEvent event;
     private MapView mapView;
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
     private int id;
+    private String urlSting = "http://www.vk.com";
+    private String number = "100";
+
     //private double distance;
+
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
     @Override
@@ -123,6 +126,41 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         });
 
 
+        url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(urlSting));
+                startActivity(intent);
+                startActivity(intent);
+            }
+        });
+
+        phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String uri = "tel:" + number.trim();
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse(uri));
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                startActivity(intent);
+            }
+        });
+
+
+
+
 //        showQr.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -162,6 +200,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         creator = (TextView) findViewById(R.id.creator);
         dateEnd = (TextView) findViewById(R.id.date);
         showQr = (Button) findViewById(R.id.btn_show_qr);
+        url = (TextView) findViewById(R.id.url);
+        phone = (TextView) findViewById(R.id.phone);
         //distanceView = (TextView) findViewById(R.id.distance_view);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
@@ -219,6 +259,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         dateEnd.setText(event.getDateEnd());
+        url.setText(urlSting);
+        phone.setText(number);
         //String distanceToEvent = "Distance to this event: " + distance + " km";
         //distanceView.setText(distanceToEvent);
         String metroStation = "м. " + (event.getMetro());
