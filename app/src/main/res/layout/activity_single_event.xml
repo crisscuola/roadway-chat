@@ -33,6 +33,29 @@
                     android:contentDescription="event_visual"
                     android:scaleType="fitXY" />
 
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#ffffffff"
+                    android:src="@drawable/favorite"
+                    android:contentDescription="favorite"
+                    android:scaleType="fitXY" />
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/star"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="#000"-->
+                    <!--android:contentDescription="favorite"-->
+                    <!--android:scaleType="fitXY" />-->
+
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -68,7 +91,7 @@
                         android:layout_gravity="center"
                         android:textColor="#ffffffff"
                         android:padding="4dp"
-                        android:text="18.12.16 12:00" />
+                        android:text="..." />
 
                     <ImageView
                         android:id="@+id/price_icon"
@@ -94,7 +117,7 @@
                         android:textColor="#ffffffff"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
-                        android:text="100" />
+                        android:text="..." />
                 </LinearLayout>
             </FrameLayout>
 
@@ -293,6 +316,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/qr_icon"
+            android:drawableRight="@drawable/star"
             android:background="@color/colorDarkBackground"
             android:textColor="@color/colorTextColor"
             android:paddingLeft="25dp"

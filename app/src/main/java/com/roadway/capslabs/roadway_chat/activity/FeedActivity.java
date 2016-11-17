@@ -92,7 +92,6 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     private LatLng getLocation() {
-
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = service.getBestProvider(criteria, false);
@@ -100,7 +99,8 @@ public class FeedActivity extends AppCompatActivity {
 
         }
         Location location = service.getLastKnownLocation(provider);
-        LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+        //LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng userLocation = new LatLng(1,1);
 
         return userLocation;
     }

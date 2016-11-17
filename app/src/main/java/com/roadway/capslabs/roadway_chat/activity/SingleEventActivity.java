@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,7 +60,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
 
-    private ImageView imageView, imageQr, arrow;
+    private ImageView imageView, imageQr, arrow, favorite;
     private TextView title, description, rating, address, metro, dateEnd, creator;
     private Button showQr;
     private SingleEvent event;
@@ -92,6 +93,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     return;
                 }
                 new Subscriber().execute(id);
+            }
+        });
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new UnSubscriber().execute(id);
             }
         });
 
@@ -168,6 +176,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);
+        favorite = (ImageView) findViewById(R.id.star);
+        favorite.setVisibility(View.GONE);
     }
 
     private boolean isSubscribed(JSONObject event) {
@@ -314,6 +324,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONObject eventObj = object.getJSONObject("object");
+                if (isSubscribed(eventObj))
+                    favorite.setVisibility(View.VISIBLE);
                 removeCodeIfUsed(eventObj);
                 displayEventContent(eventObj);
             } catch (JSONException e) {
@@ -392,6 +404,28 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
+            Log.d("response_subscribe", s);
+        }
+    }
+
+    private final class UnSubscriber extends AsyncTask<Integer, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            favorite.setOnClickListener(null);
+        }
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            String id = String.valueOf(params[0]);
+            return new EventRequestHandler().unsubscribeEvent(context, id);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            favorite.setVisibility(View.GONE);
+            Toast.makeText(context, "Event is unmarked", Toast.LENGTH_SHORT).show();
             Log.d("response_subscribe", s);
         }
     }
