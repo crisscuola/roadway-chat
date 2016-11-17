@@ -53,14 +53,16 @@ public class FeedActivity extends AppCompatActivity {
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
 
-        location = getLocation();
-        lat = location.latitude;
-        lng = location.longitude;
+//        location = getLocation();
+//        lat = location.latitude;
+//        lng = location.longitude;
 //        lat = 1;
 //        lng = 1;
         Log.d("Location", String.valueOf(lat) + " " + String.valueOf(lng));
 
         new EventsLoader().execute(new EventRequestHandler());
+
+
     }
 
     @Override
@@ -69,6 +71,10 @@ public class FeedActivity extends AppCompatActivity {
         drawer.closeDrawer();
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);

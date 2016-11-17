@@ -32,6 +32,7 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
@@ -57,6 +58,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private OnMapReadyCallback callback = this;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
+    private Drawer drawer;
 
     private ImageView imageView, imageQr, arrow;
     private TextView title, description, rating, address, metro, dateEnd, creator, url, phone;
@@ -82,7 +84,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         initToolbar("Discount");
         initViews();
 
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
         new EventLoader().execute(id);
 
         showQr.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +170,12 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //                startActivity(intent);
 //            }
 //        });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        drawer.closeDrawer();
     }
 
     private Code hasSeenQr() {
