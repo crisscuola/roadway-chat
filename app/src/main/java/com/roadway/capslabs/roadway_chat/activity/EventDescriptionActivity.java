@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 
@@ -15,6 +16,7 @@ import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 public class EventDescriptionActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
+    private Drawer drawer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,11 +26,17 @@ public class EventDescriptionActivity extends AppCompatActivity {
         String descriptionText = getIntent().getExtras().getString("description");
         description.setText(descriptionText);
         initToolbar("Description");
-        drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
     }
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_description);
         toolbar.setTitle(title);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        drawer.closeDrawer();
     }
 }
