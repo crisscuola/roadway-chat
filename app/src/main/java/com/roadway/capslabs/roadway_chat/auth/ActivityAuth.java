@@ -24,16 +24,10 @@ import okhttp3.HttpUrl;
  * Created by konstantin on 07.09.16
  */
 public class ActivityAuth extends AppCompatActivity  {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-
-        if (isLoggedIn()) {
-            Intent feedActivity = new Intent(this, FeedActivity.class);
-            startActivity(feedActivity);
-        }
 
         //FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -68,18 +62,8 @@ public class ActivityAuth extends AppCompatActivity  {
         });
     }
 
-    private boolean isLoggedIn() {
-        CookieJar cookieJar =
-                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this));
-        HttpUrl url = UrlType.FEED.getUrl().build();
-        List<Cookie> cookies = cookieJar.loadForRequest(url);
-        for (Cookie cookie : cookies) {
-            if("sessionid".equals(cookie.name())) {
-                Log.d("response_auth_session", cookie.value());
-                return true;
-            }
-        }
-
-        return false;
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 }

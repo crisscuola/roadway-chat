@@ -35,39 +35,14 @@
 
     </RelativeLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView android:text="@string/registering_message" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:orientation="vertical">
+        android:id="@+id/informationTextView"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <Button
-            android:id="@+id/btn_in"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/colorDarkBackground"
-            android:textColor="@color/colorTextColor"
-            android:text="@string/sign_in"/>
-
-        <Button
-            android:id="@+id/submit_register_button"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorDarkBackground"
-            android:textColor="@color/colorTextColor"
-            android:text="@string/sign_up"/>
-
-        <Button
-            android:id="@+id/btn_vk"
-            android:layout_marginTop="4dp"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="VK"/>
-    </LinearLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/registrationProgressBar" />
 
 </LinearLayout>

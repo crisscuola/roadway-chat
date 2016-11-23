@@ -22,6 +22,7 @@
         android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:id="@+id/qr_image" />
+        android:id="@+id/qr_image"
+        android:contentDescription="@string/qr_code_image" />
 
 </LinearLayout>
