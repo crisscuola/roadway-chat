@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -21,14 +21,14 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.auth.ActivitySignIn;
-import com.roadway.capslabs.roadway_chat.auth.ActivitySignUp;
-import com.roadway.capslabs.roadway_chat.auth.ActivityVk;
+import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.gcm.QuickstartPreferences;
 import com.roadway.capslabs.roadway_chat.gcm.RegistrationIntentService;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -39,12 +39,15 @@ import okhttp3.HttpUrl;
  */
 public class Splash extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final int DELAY = 2000;
     private static final String TAG = "SplashActivity";
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private ProgressBar mRegistrationProgressBar;
     private TextView mInformationTextView;
     private boolean isReceiverRegistered;
+    private boolean isDelayed = false;
+    private int shouldWaitMills = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,29 @@ public class Splash extends AppCompatActivity {
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
         mInformationTextView = (TextView) findViewById(R.id.informationTextView);
 
-        mRegistrationBroadcastReceiver = getRecieverInstanse();
+        initReceiver();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                if (isLoggedIn()) {
+                    startFeedActivity();
+                    finish();
+                } else {
+                    Intent authActivity = new Intent(Splash.this, ActivityAuth.class);
+                    startActivity(authActivity);
+                }
+            }
+        }, DELAY);
+    }
+
+    private void startFeedActivity() {
+        Intent feedActivity = new Intent(this, FeedActivity.class);
+        startActivity(feedActivity);
+    }
+
+    private void initReceiver() {
+        mRegistrationBroadcastReceiver = getReceiverInstance();
         registerReceiver();
 
         if (checkPlayServices()) {
@@ -62,41 +87,6 @@ public class Splash extends AppCompatActivity {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
-
-        if (isLoggedIn()) {
-            Intent feedActivity = new Intent(this, FeedActivity.class);
-            startActivity(feedActivity);
-        }
-
-        Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
-
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent activitySignUp = new Intent(view.getContext(), ActivitySignUp.class);
-                startActivity(activitySignUp);
-            }
-        });
-
-        Button buttonSignIn = (Button) findViewById(R.id.btn_in);
-
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ActivitySignIn.class);
-                startActivity(intent);
-            }
-        });
-
-        Button buttonVk = (Button) findViewById(R.id.btn_vk);
-
-        buttonVk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ActivityVk.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -112,11 +102,10 @@ public class Splash extends AppCompatActivity {
         super.onPause();
     }
 
-    private BroadcastReceiver getRecieverInstanse() {
+    private BroadcastReceiver getReceiverInstance() {
         return new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
                 SharedPreferences sharedPreferences =
                         PreferenceManager.getDefaultSharedPreferences(context);
                 boolean sentToken = sharedPreferences
@@ -136,7 +125,7 @@ public class Splash extends AppCompatActivity {
         HttpUrl url = UrlType.FEED.getUrl().build();
         List<Cookie> cookies = cookieJar.loadForRequest(url);
         for (Cookie cookie : cookies) {
-            if("sessionid".equals(cookie.name())) {
+            if ("sessionid".equals(cookie.name())) {
                 Log.d("response_auth_session", cookie.value());
                 return true;
             }
@@ -145,13 +134,14 @@ public class Splash extends AppCompatActivity {
         return false;
     }
 
-    private void registerReceiver(){
-        if(!isReceiverRegistered) {
+    private void registerReceiver() {
+        if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                     new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
             isReceiverRegistered = true;
         }
     }
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from

@@ -16,6 +16,7 @@
 
 package com.roadway.capslabs.roadway_chat.gcm;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 
 public class MyGcmListenerService extends GcmListenerService {
@@ -77,7 +79,7 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, ActivityAuth.class);
+        Intent intent = new Intent(this, FeedActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -85,10 +87,11 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                .setContentTitle("GCM Message")
+                .setContentTitle("Discount Basket")
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
