@@ -1,7 +1,8 @@
 package com.roadway.capslabs.roadway_chat.network;
 
 import android.app.Activity;
-import android.util.Log;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
-import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Cookie;
@@ -32,10 +32,16 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGOUT;
  * Created by kirill on 25.09.16
  */
 public class LoginHelper {
+
     public String login(Activity context, String email, String password) {
         HttpUrl url = UrlFactory.getUrl(LOGIN);
         RequestBody formBody = formBody(email, password);
         Request request = buildRequest(url, formBody);
+
+        SharedPreferences sharedPref = context.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("email",email).apply();
+
         return getResponse(context, request);
     }
 

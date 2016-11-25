@@ -29,8 +29,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
+import com.roadway.capslabs.roadway_chat.activity.RankActivity;
 
 public class MyGcmListenerService extends GcmListenerService {
 
@@ -79,7 +78,7 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, FeedActivity.class);
+        Intent intent = new Intent(this, RankActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

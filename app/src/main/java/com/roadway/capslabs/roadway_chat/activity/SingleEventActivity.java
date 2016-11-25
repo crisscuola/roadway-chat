@@ -62,9 +62,10 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private ImageView imageView, imageQr, arrow;
     private TextView title, description, rating, address, metro, dateEnd, creator, url, phone;
-    private Button showQr;
+    private Button showQr, vk, fb, insta;
     private SingleEvent event;
     private MapView mapView;
+
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
     private int id;
@@ -112,6 +113,27 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //                startActivity(intent);
 //            }
 //        });
+
+        vk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("share", "Share Vk");
+            }
+        });
+
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("share", "Share Fb");
+            }
+        });
+
+        insta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("share", "Share Insta");
+            }
+        });
 
         address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +235,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //distanceView = (TextView) findViewById(R.id.distance_view);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
+        vk = (Button) findViewById(R.id.vk);
+        fb = (Button) findViewById(R.id.fb);
+        insta = (Button) findViewById(R.id.insta);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);

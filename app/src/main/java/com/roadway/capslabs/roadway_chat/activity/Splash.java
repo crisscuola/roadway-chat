@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -27,8 +26,6 @@ import com.roadway.capslabs.roadway_chat.gcm.RegistrationIntentService;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -56,6 +53,7 @@ public class Splash extends AppCompatActivity {
 
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
         mInformationTextView = (TextView) findViewById(R.id.informationTextView);
+
 
         initReceiver();
         new Handler().postDelayed(new Runnable() {

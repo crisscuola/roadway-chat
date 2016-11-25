@@ -15,9 +15,7 @@ import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Digits;
 import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
@@ -58,6 +56,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             }
         });
     }
+
 
     @Override
     public void onValidationSucceeded() {
@@ -112,6 +111,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             }
 
             Intent activitySignUp = new Intent(context, FeedActivity.class);
+            activitySignUp.putExtra("email", email.getText().toString());
             startActivity(activitySignUp);
             Log.d("response_login", result);
         }

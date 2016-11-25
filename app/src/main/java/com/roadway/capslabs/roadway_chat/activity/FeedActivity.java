@@ -2,7 +2,9 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
@@ -19,7 +21,6 @@ import android.widget.ListView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
-
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
@@ -42,12 +43,26 @@ public class FeedActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private LatLng location;
     private double lat, lng;
+    private String email;
 
     private final Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("email")) {
+                 email = getIntent().getExtras().getString("email");
+            }
+        }
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("email",email).apply();
+
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
