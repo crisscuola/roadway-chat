@@ -105,7 +105,7 @@ public class DrawerFactory {
                 .withIcon(R.drawable.map).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName("My Favorites")
                 .withIcon(R.drawable.favorite).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName("Restores")
+        SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
                 .withIcon(R.drawable.favourite).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.logout)
                 .withTextColorRes(R.color.red);

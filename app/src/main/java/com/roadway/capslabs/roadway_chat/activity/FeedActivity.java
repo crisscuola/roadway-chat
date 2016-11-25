@@ -41,6 +41,7 @@ public class FeedActivity extends AppCompatActivity {
     private EventsAdapter eventsAdapter;
 
     private Toolbar toolbar;
+    private android.widget.SearchView searchView;
     private LatLng location;
     private double lat, lng;
     private String email;
@@ -94,6 +95,9 @@ public class FeedActivity extends AppCompatActivity {
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
+
+        searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
+       // searchView.setVisibility(View.VISIBLE);
     }
 
     private void initAdapter() {

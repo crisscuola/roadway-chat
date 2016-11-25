@@ -82,8 +82,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_single_event);
         id = getIntent().getExtras().getInt("id");
         //distance = getIntent().getExtras().getDouble("distance");
-        initToolbar("Discount");
         initViews();
+        initToolbar("Discount");
+
 
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
         new EventLoader().execute(id);
