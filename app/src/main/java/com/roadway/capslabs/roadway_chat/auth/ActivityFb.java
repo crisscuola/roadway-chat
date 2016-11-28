@@ -23,7 +23,7 @@ public class ActivityFb extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fb);
 
-        //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
 
         initToolbar();
 

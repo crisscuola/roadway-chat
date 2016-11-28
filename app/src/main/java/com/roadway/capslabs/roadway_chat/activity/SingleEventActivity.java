@@ -34,12 +34,14 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.auth.ActivityFb;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.CustomMarker;
 import com.roadway.capslabs.roadway_chat.models.SingleEvent;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.share.ShareVk;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
 import com.squareup.picasso.Picasso;
 
@@ -118,6 +120,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         vk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(), ShareVk.class);
+                String url = "http://p30700.mail.ru/event/view/" + id ;
+                intent.putExtra("url", url);
+                intent.putExtra("title", event.getTitle());
+                startActivity(intent);
+
                 Log.d("share", "Share Vk");
             }
         });
@@ -126,6 +135,11 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Log.d("share", "Share Fb");
+                Intent intent = new Intent(view.getContext(), ActivityFb.class);
+                String url = "http://p30700.mail.ru/event/view/" + id ;
+                intent.putExtra("url", url);
+                intent.putExtra("title", event.getTitle());
+                startActivity(intent);
             }
         });
 
