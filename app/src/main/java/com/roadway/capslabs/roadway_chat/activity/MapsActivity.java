@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,6 +53,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng currentLocation = new LatLng(55.751841,37.623012);
     private double lat, lng;
     private double distance;
+    private View bottomSheet;
+    private BottomSheetBehavior behavior;
+    private TextView textView1, textView2;
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -79,6 +83,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         initToolbar(getString(R.string.title_activity_maps));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        textView1 = (TextView) findViewById(R.id.textView_1);
+        textView2 = (TextView) findViewById(R.id.textView_2);
+        bottomSheet = findViewById(R.id.design_bottom_sheet);
+        behavior = BottomSheetBehavior.from(bottomSheet);
+
+        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // React to dragging events
+                Log.d(TAG, "onSlide: " + slideOffset);
+            }
+
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Log.d(TAG, "onStateChanged: " + newState);
+                // React to state change
+            }
+        });
 
 
     }
@@ -88,6 +111,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onStop();
         drawer.closeDrawer();
     }
+
+
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_maps);
@@ -99,6 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
+        mMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
         mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -226,22 +252,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        View bottomSheet = findViewById(R.id.design_bottom_sheet);
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                // React to dragging events
-                Log.d(TAG, "onSlide: " + slideOffset);
-            }
-
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                Log.d(TAG, "onStateChanged: " + newState);
-                // React to state change
-            }
-        });
-        return false;
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        String title = marker.getTitle();
+        textView1.setText(title);
+        textView2.setText(title);
+        return true;
     }
 
     private final LocationListener mLocationListener = new LocationListener() {
