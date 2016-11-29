@@ -10,10 +10,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,9 +49,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Drawer drawer;
     private Toolbar toolbar;
     private LatLng location;
-    private LatLng currentLocation = new LatLng(55.766458,37.684197);
+    private LatLng currentLocation = new LatLng(55.751841,37.623012);
     private double lat, lng;
     private double distance;
+
+    private static final String TAG = MapsActivity.class.getSimpleName();
 
     Activity context = this;
     List<Event> events = new ArrayList<>();
@@ -67,11 +72,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+
+//        mapFragment = ((SupportMapFragment) context.getChildFragmentManager().findFragmentById(R.id.map)).getMap();
+
         mapFragment.getMapAsync(this);
 
         initToolbar(getString(R.string.title_activity_maps));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
+        View bottomSheet = findViewById(R.id.design_bottom_sheet);
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // React to dragging events
+                Log.d(TAG, "onSlide: " + slideOffset);
+            }
+
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Log.d(TAG, "onStateChanged: " + newState);
+                // React to state change
+            }
+        });
     }
 
     @Override
@@ -132,7 +155,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(currentLocation)
-                .zoom(15)
+                .zoom(10)
                 .bearing(0)
                 .tilt(0)
                 .build();

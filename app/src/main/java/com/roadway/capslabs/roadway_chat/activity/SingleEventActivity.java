@@ -64,7 +64,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private ImageView imageView, imageQr, arrow;
     private TextView title, description, rating, address, metro, dateEnd, creator, url, phone;
-    private Button showQr, vk, fb, insta;
+    private Button showQr, vk, fb;
     private SingleEvent event;
     private MapView mapView;
 
@@ -143,12 +143,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
-        insta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("share", "Share Insta");
-            }
-        });
 
         address.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,7 +246,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //        code.setVisibility(View.INVISIBLE);
         vk = (Button) findViewById(R.id.vk);
         fb = (Button) findViewById(R.id.fb);
-        insta = (Button) findViewById(R.id.insta);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);
@@ -478,6 +471,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 final String firstName = obj.getString("first_name");
                 final String lastName = obj.getString("last_name");
                 final String name = firstName + " " + lastName;
+
                 creator.setText(name);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
