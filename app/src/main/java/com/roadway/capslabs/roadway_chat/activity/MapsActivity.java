@@ -80,21 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initToolbar(getString(R.string.title_activity_maps));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        View bottomSheet = findViewById(R.id.design_bottom_sheet);
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
-        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                // React to dragging events
-                Log.d(TAG, "onSlide: " + slideOffset);
-            }
 
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                Log.d(TAG, "onStateChanged: " + newState);
-                // React to state change
-            }
-        });
     }
 
     @Override
@@ -166,6 +152,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final int finalId = id;
 
 
+
+
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -225,7 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        // googleMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), title, "LOL"));
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
         markersMap.put(marker, id);
-        marker.showInfoWindow();
+        //marker.showInfoWindow();
     }
 
     private void showEvents() {
@@ -238,6 +226,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        View bottomSheet = findViewById(R.id.design_bottom_sheet);
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(bottomSheet);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                // React to dragging events
+                Log.d(TAG, "onSlide: " + slideOffset);
+            }
+
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                Log.d(TAG, "onStateChanged: " + newState);
+                // React to state change
+            }
+        });
         return false;
     }
 
