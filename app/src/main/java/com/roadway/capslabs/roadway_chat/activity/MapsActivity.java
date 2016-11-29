@@ -185,8 +185,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         != PackageManager.PERMISSION_GRANTED) {
 
         }
-        Location location = service.getLastKnownLocation(provider);
-        LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+        //Location location = service.getLastKnownLocation(provider);
+        LatLng userLocation = new LatLng(2134124,321312);
 
         return userLocation;
     }
