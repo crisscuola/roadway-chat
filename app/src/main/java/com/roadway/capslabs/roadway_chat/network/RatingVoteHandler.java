@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import android.util.Log;
+
 import com.roadway.capslabs.roadway_chat.models.RatingVote;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
@@ -26,6 +28,7 @@ public class RatingVoteHandler {
     }
 
     private RequestBody formBody(RatingVote vote, String id) {
+        Log.d("Rate", id + " " + vote.getStars() + " " + vote.getText());
         return new FormBody.Builder()
                 .add("id", String.valueOf(id))
                 .add("rate", String.valueOf(vote.getStars()))
@@ -44,8 +47,9 @@ public class RatingVoteHandler {
         OkHttpClient client = new OkHttpClient();
         try {
             Response response = client.newCall(request).execute();
-
-            return response.body().string();
+            String body = response.body().string();
+            Log.d("Rate_response", body);
+            return body;
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }

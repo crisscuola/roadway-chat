@@ -193,7 +193,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLngl)
-                .zoom(10)
+                .zoom(15)
                 .bearing(0)
                 .tilt(0)
                 .build();

@@ -91,18 +91,6 @@ public class RankActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-//            JSONObject object;
-//            try {
-//                object = new JSONObject(result);
-//            } catch (JSONException e) {
-//                throw new RuntimeException("Exception during json parsing", e);
-//            }
-//            if (object.has("errors")) {
-//                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT)
-//                        .show();
-//                return;
-//            }
-
             Toast.makeText(getApplicationContext(), "Thank you!", Toast.LENGTH_SHORT)
                     .show();
             Intent feedActivity = new Intent(context, FeedActivity.class);
