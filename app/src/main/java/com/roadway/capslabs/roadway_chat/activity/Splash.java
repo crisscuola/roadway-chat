@@ -23,7 +23,6 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.gcm.QuickstartPreferences;
@@ -64,8 +63,8 @@ public class Splash extends AppCompatActivity {
         }
 
 
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, token);
+//        String token = FirebaseInstanceId.getInstance().getToken();
+//        Log.d(TAG, token);
         initReceiver();
         new Handler().postDelayed(new Runnable() {
             @Override

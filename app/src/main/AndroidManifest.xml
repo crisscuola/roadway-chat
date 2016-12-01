@@ -155,6 +155,8 @@
         <!-- [END gcm_receiver] -->
 
         <!-- [START gcm_listener] -->
+
+
         <service
             android:name=".gcm.MyGcmListenerService"
             android:exported="false" >
@@ -176,6 +178,7 @@
             android:name=".gcm.RegistrationIntentService"
             android:exported="false">
         </service>
+
 
     </application>
 

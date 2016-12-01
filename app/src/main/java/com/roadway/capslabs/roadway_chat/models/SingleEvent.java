@@ -17,6 +17,8 @@ public class SingleEvent {
     private final String pictureUrl;
     private final double let;
     private final double lng;
+    private final String phone;
+    private final String url;
 
     public SingleEvent(JSONObject eventObj) {
         try {
@@ -30,6 +32,9 @@ public class SingleEvent {
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
+            phone = eventObj.getString("phone");
+            url = eventObj.getString("url");
+
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -78,4 +83,8 @@ public class SingleEvent {
     public String getMetro() {
         return metro;
     }
+
+    public String getPhone() { return phone;}
+
+    public String getUrl() { return url;}
 }
