@@ -20,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -259,14 +258,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onLocationChanged(Location loc) {
 
-            Toast.makeText(
-                    getBaseContext(),
-                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(
+//                    getBaseContext(),
+//                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
+//                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
             String longitude = "Longitude: " + loc.getLongitude();
-            Log.d(TAG, longitude);
+//            Log.d(TAG, longitude);
             String latitude = "Latitude: " + loc.getLatitude();
-            Log.d(TAG, latitude);
+//            Log.d(TAG, latitude);
 
         /*------- To get city name from coordinates -------- */
             String cityName = null;

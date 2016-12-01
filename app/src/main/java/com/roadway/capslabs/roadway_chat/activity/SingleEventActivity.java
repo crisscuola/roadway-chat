@@ -468,11 +468,10 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             JSONObject object = HttpConnectionHandler.parseJSON(s);
             try {
                 JSONObject obj = object.getJSONObject("object");
-                final String firstName = obj.getString("first_name");
-                final String lastName = obj.getString("last_name");
-                final String name = firstName + " " + lastName;
+                JSONObject  org = obj.getJSONObject("organization");
+                final String nameOrg = org.getString("name");
 
-                creator.setText(name);
+                creator.setText(nameOrg);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
