@@ -412,7 +412,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private void saveCode(JSONObject event) {
         Code result;
         try {
-            int eventId = event.getInt("event");
+            int eventId = event.getInt("id");
             List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(eventId));
             result = new Code(eventId, event.getString("activate_link"));
             if (codes.size() != 0) {

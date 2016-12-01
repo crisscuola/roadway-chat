@@ -18,17 +18,18 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.VOTE;
  * Created by kirill on 28.11.16
  */
 public class RatingVoteHandler {
-    public String vote(RatingVote vote) {
+    public String vote(RatingVote vote, String id) {
         HttpUrl url = UrlFactory.getUrl(VOTE);
-        RequestBody formBody = formBody(vote);
+        RequestBody formBody = formBody(vote, id);
         Request request = buildRequest(url, formBody);
         return  getResponse(request);
     }
 
-    private RequestBody formBody(RatingVote vote) {
+    private RequestBody formBody(RatingVote vote, String id) {
         return new FormBody.Builder()
-                .add("vote", String.valueOf(vote.getStars()))
-                .add("text", vote.getText())
+                .add("id", String.valueOf(id))
+                .add("rate", String.valueOf(vote.getStars()))
+                .add("response", vote.getText())
                 .build();
     }
 

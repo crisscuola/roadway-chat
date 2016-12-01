@@ -12,7 +12,7 @@ public class RatingVote {
         this.text = text;
     }
 
-    public int getStars() {
+    public float getStars() {
         return stars;
     }
 

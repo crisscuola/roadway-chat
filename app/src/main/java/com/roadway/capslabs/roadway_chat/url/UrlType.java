@@ -187,7 +187,7 @@ public enum UrlType {
                     .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_EVENT)
-                    .addPathSegment(PATH_GET)
+                    .addPathSegment(RESPONSE)
                     .addPathSegment("");
         }
     };

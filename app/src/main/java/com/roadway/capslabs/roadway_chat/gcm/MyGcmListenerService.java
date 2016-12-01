@@ -48,6 +48,7 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Data: " + data.toString());
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
@@ -67,7 +68,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(message, data);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -76,9 +77,11 @@ public class MyGcmListenerService extends GcmListenerService {
      * Create and show a simple notification containing the received GCM message.
      *
      * @param message GCM message received.
+     * @param data data received.
      */
-    private void sendNotification(String message) {
+    private void sendNotification(String message, Bundle data) {
         Intent intent = new Intent(this, RankActivity.class);
+        intent.putExtras(data);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

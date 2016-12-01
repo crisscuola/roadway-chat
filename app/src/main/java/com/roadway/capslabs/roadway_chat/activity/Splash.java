@@ -63,9 +63,6 @@ public class Splash extends AppCompatActivity {
             return;
         }
 
-
-        String token = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, token);
         initReceiver();
         new Handler().postDelayed(new Runnable() {
             @Override
