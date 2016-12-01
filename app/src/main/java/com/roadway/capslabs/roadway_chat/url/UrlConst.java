@@ -31,4 +31,6 @@ public class UrlConst {
     public final static String PATH_UPDATE = "update";
     public final static String PATH_API = "api";
     public final static String HTTP = "http";
+    public final static String RESPONSE = "response";
+    public final static String CONFIRMED_RESPONSES = "confirmed_responses";
 }

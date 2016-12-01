@@ -187,7 +187,18 @@ public enum UrlType {
                     .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_EVENT)
-                    .addPathSegment(PATH_GET)
+                    .addPathSegment(RESPONSE)
+                    .addPathSegment("");
+        }
+    },
+    CONFIRMED {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(CONFIRMED_RESPONSES)
                     .addPathSegment("");
         }
     };

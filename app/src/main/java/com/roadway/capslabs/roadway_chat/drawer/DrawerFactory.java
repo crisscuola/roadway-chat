@@ -24,6 +24,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
 import com.roadway.capslabs.roadway_chat.activity.RankActivity;
+import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
 import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
@@ -129,7 +130,7 @@ public class DrawerFactory {
             case 3:
                 return SubscribeEventsActivity.class;
             case 4:
-                return RankActivity.class;
+                return RateListActivity.class;
             case 5:
                 return ActivityAuth.class;
             default:

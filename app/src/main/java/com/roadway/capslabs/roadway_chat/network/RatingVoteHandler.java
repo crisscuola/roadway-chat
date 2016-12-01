@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.network;
 
+import android.util.Log;
+
 import com.roadway.capslabs.roadway_chat.models.RatingVote;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 
@@ -18,17 +20,19 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.VOTE;
  * Created by kirill on 28.11.16
  */
 public class RatingVoteHandler {
-    public String vote(RatingVote vote) {
+    public String vote(RatingVote vote, String id) {
         HttpUrl url = UrlFactory.getUrl(VOTE);
-        RequestBody formBody = formBody(vote);
+        RequestBody formBody = formBody(vote, id);
         Request request = buildRequest(url, formBody);
         return  getResponse(request);
     }
 
-    private RequestBody formBody(RatingVote vote) {
+    private RequestBody formBody(RatingVote vote, String id) {
+        Log.d("Rate", id + " " + vote.getStars() + " " + vote.getText());
         return new FormBody.Builder()
-                .add("vote", String.valueOf(vote.getStars()))
-                .add("text", vote.getText())
+                .add("id", String.valueOf(id))
+                .add("rate", String.valueOf(vote.getStars()))
+                .add("response", vote.getText())
                 .build();
     }
 
@@ -43,8 +47,9 @@ public class RatingVoteHandler {
         OkHttpClient client = new OkHttpClient();
         try {
             Response response = client.newCall(request).execute();
-
-            return response.body().string();
+            String body = response.body().string();
+            Log.d("Rate_response", body);
+            return body;
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }

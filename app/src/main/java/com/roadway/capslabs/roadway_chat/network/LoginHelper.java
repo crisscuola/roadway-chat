@@ -3,10 +3,12 @@ package com.roadway.capslabs.roadway_chat.network;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
@@ -40,7 +42,7 @@ public class LoginHelper {
 
         SharedPreferences sharedPref = context.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("email",email).apply();
+        editor.putString("email", email).apply();
 
         return getResponse(context, request);
     }
@@ -69,9 +71,11 @@ public class LoginHelper {
     }
 
     private RequestBody formBody(String email, String password) {
+        String token = FirebaseInstanceId.getInstance().getToken();
         return new FormBody.Builder()
                 .add("email", email)
                 .add("password", password)
+                .add("registration_id", token)
                 .build();
     }
 
