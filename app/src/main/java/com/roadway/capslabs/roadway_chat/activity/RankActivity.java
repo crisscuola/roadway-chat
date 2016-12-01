@@ -82,7 +82,7 @@ public class RankActivity extends AppCompatActivity {
         protected String doInBackground(Object... params) {
             RatingVote vote = (RatingVote) params[0];
             String id = (String) params[1];
-            return new RatingVoteHandler().vote(vote, id);
+            return new RatingVoteHandler().vote(context, vote, id);
         }
 
         @Override

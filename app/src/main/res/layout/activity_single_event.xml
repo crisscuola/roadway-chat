@@ -44,6 +44,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:textColor="#ffffffff"
+                    android:visibility="gone"
                     android:src="@drawable/favorite"
                     android:contentDescription="@string/favorite_icon"
                     android:scaleType="fitXY" />
@@ -425,7 +426,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/qr_icon"
-            android:drawableRight="@drawable/star"
             android:background="@color/colorDarkBackground"
             android:textColor="@color/colorTextColor"
             android:paddingLeft="25dp"

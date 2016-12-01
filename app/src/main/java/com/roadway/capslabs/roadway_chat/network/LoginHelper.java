@@ -105,6 +105,7 @@ public class LoginHelper {
 
     private void saveCookie(CookieJar cookieJar) {
         List<Cookie> cookies = cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build());
+        cookieJar.saveFromResponse(UrlType.VOTE.getUrl().build(), cookies);
         cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), cookies);
         cookieJar.saveFromResponse(UrlType.EVENT.getUrl().build(), cookies);
         cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(), cookies);
@@ -120,5 +121,6 @@ public class LoginHelper {
     private void removeCookies(CookieJar cookieJar) {
         List<Cookie> cookies = cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build());
         cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.VOTE.getUrl().build(), cookies);
     }
 }
