@@ -61,8 +61,7 @@ public class Splash extends AppCompatActivity {
             mRegistrationProgressBar.setVisibility(View.INVISIBLE);
             return;
         }
-
-
+        
 //        String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, token);
         initReceiver();
