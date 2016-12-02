@@ -18,11 +18,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.RatingVote;
-import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 import com.roadway.capslabs.roadway_chat.network.RatingVoteHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by konstantin on 25.11.16
