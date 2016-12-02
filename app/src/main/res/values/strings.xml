@@ -82,4 +82,5 @@
     <string name="rating_description">Rank this Discount from 1 to 5 stars</string>
     <string name="rank">Rate!</string>
     <string name="no_internet">Please enable internet connection</string>
+    <string name="rate_activity_title">Rate</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +23,7 @@ public class Event {
 
     public Event(JSONObject eventObj) {
         try {
+            Log.d("Rate_distance", String.valueOf(eventObj.has("distance")));
             title = eventObj.getString("title");
             description = eventObj.getString("about");
             range = new DateRange(eventObj.getString("date_start"), eventObj.getString("date_end"));
@@ -31,13 +34,14 @@ public class Event {
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
-            double distDouble = eventObj.getDouble("distance");
+            double distDouble = 0;
+            if (eventObj.has("distance"))
+                distDouble = eventObj.getDouble("distance");
             distance = (float) Math.round(distDouble * 10d) / 10d;
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
     }
-
 
 
     public String getTitle() {

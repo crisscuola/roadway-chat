@@ -69,7 +69,7 @@ public class RateListActivity extends AppCompatActivity{
         }
 
         setContentView(R.layout.activity_rate_list);
-        initToolbar(getString(R.string.feed_activity_title));
+        initToolbar(getString(R.string.rate_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
 
