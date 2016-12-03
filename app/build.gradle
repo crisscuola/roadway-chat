@@ -28,7 +28,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.vk:androidsdk:1.6.5'
-    //compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.orangegangsters:swipy:1.2.3@aar'
     compile 'com.github.centrifugal:centrifuge-android:0.37'

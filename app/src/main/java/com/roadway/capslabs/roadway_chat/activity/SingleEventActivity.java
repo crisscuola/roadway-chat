@@ -122,7 +122,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(), ShareVk.class);
-                String url = "http://p30700.mail.ru/event/view/" + id ;
+                String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
                 intent.putExtra("url", url);
                 intent.putExtra("title", event.getTitle());
                 startActivity(intent);
@@ -139,7 +139,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 String url = "http://p30700.mail.ru/event/view/" + id ;
                 intent.putExtra("url", url);
                 intent.putExtra("title", event.getTitle());
-                startActivity(intent);
+                //startActivity(intent);
             }
         });
 
@@ -164,7 +164,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             public void onClick(View view) {
 
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(urlSting));
+                intent.setData(Uri.parse(event.getUrl()));
                 startActivity(intent);
                 startActivity(intent);
             }
@@ -174,7 +174,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
 
-                String uri = "tel:" + number.trim();
+                String uri = "tel:" + event.getPhone().trim();
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(uri));
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -300,8 +300,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
         dateEnd.setText(event.getDateEnd());
-        url.setText(urlSting);
-        phone.setText(number);
+        url.setText(event.getUrl());
+        phone.setText(event.getPhone());
         //String distanceToEvent = "Distance to this event: " + distance + " km";
         //distanceView.setText(distanceToEvent);
         String metroStation = "м. " + (event.getMetro());

@@ -5,10 +5,13 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
@@ -25,7 +28,10 @@ public class ShareVk extends AppCompatActivity {
     private Activity context = this;
     private Button share;
     private String url, title;
+    private Toolbar toolbar;
 
+    private final DrawerFactory drawerFactory = new DrawerFactory();
+    private Drawer drawer;
 
 
     @Override
@@ -34,6 +40,9 @@ public class ShareVk extends AppCompatActivity {
         setContentView(R.layout.activity_vk_share);
         url = getIntent().getExtras().getString("url");
         title = getIntent().getExtras().getString("title");
+
+        initToolbar(getString(R.string.vk_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         share = (Button) findViewById(R.id.sharePost);
 
@@ -65,19 +74,25 @@ public class ShareVk extends AppCompatActivity {
                 }
             });
         }
+    }
 
-
-
+    private void initToolbar(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_share_vk);
+        toolbar.setTitle(title);
 
     }
+
+//    @Override
+//    public void onBackPressed() {
+//
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-//        if (VKAccessToken.currentToken() != null) {
-//            Intent intent = new Intent(this, ShareVk.class);
-//            startActivity(intent);
-//        }
+        if (VKAccessToken.currentToken() == null) {
+            onBackPressed();
+        }
     }
 
     public void alertShow () {
