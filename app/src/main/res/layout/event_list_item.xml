@@ -40,37 +40,6 @@
 
 
         <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/stars_1"
-            android:src="@drawable/favorite"/>
-        <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/stars_2"
-            android:src="@drawable/favorite"/>
-        <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/stars_3"
-            android:src="@drawable/favorite"/>
-        <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/stars_4"
-            android:src="@drawable/favorite"/>
-        <ImageView
-            android:layout_marginTop="5dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/stars_5"
-            android:src="@drawable/favorite"/>
-
-        <ImageView
             android:id="@+id/distance_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,11 +68,11 @@
 
         <ImageView
             android:id="@+id/price_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:src="@drawable/price_icon_stroked"
+            android:src="@drawable/favorite"
             android:layout_marginLeft="20dp" />
 
         <TextView

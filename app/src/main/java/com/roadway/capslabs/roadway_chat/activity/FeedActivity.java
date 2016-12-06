@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class FeedActivity extends AppCompatActivity {
+public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
     private EventsAdapter eventsAdapter;
@@ -53,6 +54,7 @@ public class FeedActivity extends AppCompatActivity {
     private final Activity context = this;
     private LocationManager locationManager;
     private LatLng latLngl;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,11 @@ public class FeedActivity extends AppCompatActivity {
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
+
 //        location = getLocation();
 //        lat = location.latitude;
 //        lng = location.longitude;
@@ -96,14 +103,12 @@ public class FeedActivity extends AppCompatActivity {
 
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-        lat = location.getLatitude();
-        lng = location.getLongitude();
-
-        latLngl = new LatLng(lat, lng);
+//        lat = location.getLatitude();
+//        lng = location.getLongitude();
+//
+//        latLngl = new LatLng(lat, lng);
 
         new EventsLoader().execute(new EventRequestHandler());
-
-
     }
 
     @Override
@@ -141,6 +146,19 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initAdapter();
+                new EventsLoader().execute(new EventRequestHandler());
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 300);
+
+    }
 
 
     private class MyLocationListener implements LocationListener {
