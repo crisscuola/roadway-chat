@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/logo"
             android:layout_height="82dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="14dp"
             android:layout_centerInParent="true"
             android:contentDescription="@string/app_title" />
 
@@ -35,7 +35,6 @@
 
     </RelativeLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +46,7 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="14dp"
             android:background="@color/colorDarkBackground"
             android:textColor="@color/colorTextColor"
             android:text="@string/sign_in"/>
@@ -68,6 +67,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VK"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/enter_as_guest"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorTextColor"
+            android:gravity="center_horizontal"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>
