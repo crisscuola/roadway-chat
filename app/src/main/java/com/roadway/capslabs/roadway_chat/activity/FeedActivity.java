@@ -55,6 +55,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private LocationManager locationManager;
     private LatLng latLngl;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +65,13 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
-                 email = getIntent().getExtras().getString("email");
+                email = getIntent().getExtras().getString("email");
             }
         }
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("email",email).apply();
+        editor.putString("email", email).apply();
 
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
@@ -101,14 +102,35 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-//        lat = location.getLatitude();
-//        lng = location.getLongitude();
+        Location location = getLastKnownLocation();
+
+        lat = location.getLatitude();
+        lng = location.getLongitude();
 //
 //        latLngl = new LatLng(lat, lng);
 
         new EventsLoader().execute(new EventRequestHandler());
+    }
+
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 
     @Override
