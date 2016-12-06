@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class FeedActivity extends AppCompatActivity {
+public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
     private EventsAdapter eventsAdapter;
@@ -53,6 +54,8 @@ public class FeedActivity extends AppCompatActivity {
     private final Activity context = this;
     private LocationManager locationManager;
     private LatLng latLngl;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,18 +65,23 @@ public class FeedActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
-                 email = getIntent().getExtras().getString("email");
+                email = getIntent().getExtras().getString("email");
             }
         }
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("email",email).apply();
+        editor.putString("email", email).apply();
 
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
 
 //        location = getLocation();
 //        lat = location.latitude;
@@ -94,16 +102,35 @@ public class FeedActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        Location location = getLastKnownLocation();
 
         lat = location.getLatitude();
         lng = location.getLongitude();
-
-        latLngl = new LatLng(lat, lng);
+//
+//        latLngl = new LatLng(lat, lng);
 
         new EventsLoader().execute(new EventRequestHandler());
+    }
 
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 
     @Override
@@ -141,6 +168,19 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initAdapter();
+                new EventsLoader().execute(new EventRequestHandler());
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 300);
+
+    }
 
 
     private class MyLocationListener implements LocationListener {
