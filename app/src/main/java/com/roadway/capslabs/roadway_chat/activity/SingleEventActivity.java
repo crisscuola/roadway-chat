@@ -13,10 +13,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -87,8 +89,18 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         initViews();
         initToolbar("Discount");
 
-
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+
+        drawer.getActionBarDrawerToggle().setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Back", Toast.LENGTH_SHORT).show();
+                //onBackPressed();
+            }
+        });
+
         new EventLoader().execute(id);
 
         showQr.setOnClickListener(new View.OnClickListener() {
@@ -204,6 +216,20 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (id == android.R.id.home) {
+            // 3.
+            // here you can define your custom click listener / onClick method
+            // for ActionBarDrawerToggle
+
+            Toast.makeText(this, "Back!", Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
@@ -226,7 +252,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
-        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(title);
+        //toolbar.setTitle(title);
     }
 
     public void initViews() {
