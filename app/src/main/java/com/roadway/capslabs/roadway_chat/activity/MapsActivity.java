@@ -69,15 +69,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Map<Marker, Integer> markersMap = new HashMap<Marker, Integer>();
     private Map<Integer, Double> distanceMap = new HashMap<Integer, Double>();
     private LocationManager locationManager;
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
-//        location = getLocation();
-
-
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -96,7 +93,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = getLastKnownLocation();
 
         lat = location.getLatitude();
         lng = location.getLongitude();
@@ -129,6 +126,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+    }
+
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 
     @Override
@@ -187,9 +204,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         new EventsLoader().execute(new EventRequestHandler());
 
-//        location = getLocation();
-
-
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(latLngl)
                 .zoom(15)
@@ -201,9 +215,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
         final int finalId = id;
-
-
-
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -218,7 +229,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     intent.putExtra("id", markersMap.get(marker));
                     startActivity(intent);
                 }
-
                 Log.d("marker", "CLICK!!");
             }
         });

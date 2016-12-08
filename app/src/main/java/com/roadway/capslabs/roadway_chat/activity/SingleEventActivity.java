@@ -13,13 +13,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -79,6 +78,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     //private double distance;
 
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
+    private LoginButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,18 +89,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         initViews();
         initToolbar("Discount");
 
+
+
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
-
-        drawer.getActionBarDrawerToggle().setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Back", Toast.LENGTH_SHORT).show();
-                //onBackPressed();
-            }
-        });
-
         new EventLoader().execute(id);
 
         showQr.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +142,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 String url = "http://p30700.mail.ru/event/view/" + id ;
                 intent.putExtra("url", url);
                 intent.putExtra("title", event.getTitle());
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
 
@@ -216,20 +207,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (id == android.R.id.home) {
-            // 3.
-            // here you can define your custom click listener / onClick method
-            // for ActionBarDrawerToggle
-
-            Toast.makeText(this, "Back!", Toast.LENGTH_LONG).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
@@ -252,9 +229,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(title);
-        //toolbar.setTitle(title);
+        toolbar.setTitle(title);
     }
 
     public void initViews() {
