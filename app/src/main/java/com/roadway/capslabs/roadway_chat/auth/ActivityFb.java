@@ -71,7 +71,7 @@ public class ActivityFb extends AppCompatActivity {
                         .setContentTitle("title")
                         .setContentDescription(
                                 "Description")
-                        .setContentUrl(Uri.parse("your url")).build();
+                        .setContentUrl(Uri.parse("http://p30700.lab1.stud.tech-mail.ru")).build();
                 shareDialog.show(linkContent);
 
                 shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
