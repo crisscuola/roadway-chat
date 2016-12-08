@@ -1,10 +1,16 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +23,9 @@ import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.utils.IntentUtil;
 import com.roadway.capslabs.roadway_chat.utils.PrefUtil;
@@ -30,6 +39,9 @@ public class ActivityFb extends AppCompatActivity {
     private TextView info;
     private ImageView profileImgView;
     private LoginButton loginButton;
+    private Button post;
+    private  FacebookSdk  fb;
+    private Activity contex = this;
 
     private PrefUtil prefUtil;
     private IntentUtil intentUtil;
@@ -49,6 +61,38 @@ public class ActivityFb extends AppCompatActivity {
         info = (TextView) findViewById(R.id.info);
         profileImgView = (ImageView) findViewById(R.id.profile_img);
         loginButton = (LoginButton) findViewById(R.id.login_button);
+        post = (Button) findViewById(R.id.button_post_fb);
+
+        post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareDialog shareDialog = new ShareDialog(contex);
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setContentTitle("title")
+                        .setContentDescription(
+                                "Description")
+                        .setContentUrl(Uri.parse("your url")).build();
+                shareDialog.show(linkContent);
+
+                shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+                    @Override
+                    public void onSuccess(Sharer.Result result) {
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+
+                    }
+
+                     });
+            }
+        });
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -81,6 +125,23 @@ public class ActivityFb extends AppCompatActivity {
                 info.setText("Login attempt failed.");
             }
         });
+    }
+
+    public void alertShow () {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityFb.this);
+        builder.setTitle("Важное сообщение!")
+                .setMessage("Репост в VK успешно добавлен!")
+                .setIcon(R.drawable.logo2)
+                .setCancelable(false)
+                .setNegativeButton("ОК",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                onBackPressed();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
