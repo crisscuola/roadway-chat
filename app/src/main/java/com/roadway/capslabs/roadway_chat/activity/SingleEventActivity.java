@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -77,6 +78,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     //private double distance;
 
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
+    private LoginButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //distance = getIntent().getExtras().getDouble("distance");
         initViews();
         initToolbar("Discount");
+
 
 
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
@@ -139,7 +142,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 String url = "http://p30700.mail.ru/event/view/" + id ;
                 intent.putExtra("url", url);
                 intent.putExtra("title", event.getTitle());
-                //startActivity(intent);
+                startActivity(intent);
             }
         });
 

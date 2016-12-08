@@ -148,6 +148,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/vk" />
+
                 <Button
                     android:layout_width="40dp"
                     android:id="@+id/fb"

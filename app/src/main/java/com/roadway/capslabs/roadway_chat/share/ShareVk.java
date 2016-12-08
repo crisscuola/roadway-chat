@@ -46,8 +46,6 @@ public class ShareVk extends AppCompatActivity {
 
         share = (Button) findViewById(R.id.sharePost);
 
-
-
         if (VKAccessToken.currentToken() == null) {
         VKSdk.login(context, scope);
         } else {
