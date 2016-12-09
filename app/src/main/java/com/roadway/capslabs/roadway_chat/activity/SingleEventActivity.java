@@ -35,7 +35,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.auth.ActivityFb;
+import com.roadway.capslabs.roadway_chat.share.ShareFb;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.CustomMarker;
@@ -138,7 +138,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Log.d("share", "Share Fb");
-                Intent intent = new Intent(view.getContext(), ActivityFb.class);
+                Intent intent = new Intent(view.getContext(), ShareFb.class);
                 String url = "http://p30700.mail.ru/event/view/" + id ;
                 intent.putExtra("url", url);
                 intent.putExtra("title", event.getTitle());

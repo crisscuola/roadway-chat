@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat;
+package com.roadway.capslabs.roadway_chat.adapters;
 
 /**
  * Created by konstantin on 06.11.16.
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
+import com.roadway.capslabs.roadway_chat.R;
 
 public class MarkerAdapter implements InfoWindowAdapter {
     LayoutInflater inflater = null;
