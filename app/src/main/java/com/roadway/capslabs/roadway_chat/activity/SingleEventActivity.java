@@ -65,7 +65,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private ImageView imageView, imageQr, arrow;
     private TextView title, description, rating, address, metro, dateEnd, creator, url, phone;
-    private Button showQr, vk, fb;
+    private Button showQr, vk, fb, add;
     private SingleEvent event;
     private MapView mapView;
 
@@ -249,6 +249,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //        code.setVisibility(View.INVISIBLE);
         vk = (Button) findViewById(R.id.vk);
         fb = (Button) findViewById(R.id.fb);
+        add = (Button) findViewById(R.id.add);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);

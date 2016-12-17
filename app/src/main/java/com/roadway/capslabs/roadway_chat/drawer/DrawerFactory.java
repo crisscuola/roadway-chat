@@ -23,9 +23,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
-import com.roadway.capslabs.roadway_chat.activity.RankActivity;
 import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
-import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
+import com.roadway.capslabs.roadway_chat.activity.FavoriteEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
@@ -128,7 +127,7 @@ public class DrawerFactory {
             case 2:
                 return MapsActivity.class;
             case 3:
-                return SubscribeEventsActivity.class;
+                return FavoriteEventsActivity.class;
             case 4:
                 return RateListActivity.class;
             case 5:

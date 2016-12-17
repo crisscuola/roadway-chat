@@ -156,6 +156,13 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/fb" />
 
+                <Button
+                    android:layout_width="40dp"
+                    android:id="@+id/add"
+                    android:layout_marginLeft="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/favorite" />
+
             </LinearLayout>
 
             <TextView

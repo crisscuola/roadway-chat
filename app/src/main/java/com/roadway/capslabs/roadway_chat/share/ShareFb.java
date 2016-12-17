@@ -130,7 +130,7 @@ public class ShareFb extends AppCompatActivity {
     public void alertShow () {
         AlertDialog.Builder builder = new AlertDialog.Builder(ShareFb.this);
         builder.setTitle("Важное сообщение!")
-                .setMessage("Репост в VK успешно добавлен!")
+                .setMessage("Репост в Fb успешно добавлен!")
                 .setIcon(R.drawable.logo2)
                 .setCancelable(false)
                 .setNegativeButton("ОК",
