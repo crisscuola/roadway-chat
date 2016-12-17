@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorSliderBackground">
 
     <include
         android:id="@+id/toolbar_qr_code"
         layout="@layout/toolbar"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Qr Code"
-        android:id="@+id/settings"
-        android:layout_gravity="center_horizontal" />
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorTextColor"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="@string/organization_instruction"/>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:id="@+id/qr_image"
+        android:contentDescription="@string/qr_code_image" />
 
 </LinearLayout>

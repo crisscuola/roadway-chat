@@ -179,8 +179,29 @@ public enum UrlType {
                     .addPathSegment(PATH_GET)
                     .addPathSegment("");
         }
+    },
+    VOTE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(RESPONSE)
+                    .addPathSegment("");
+        }
+    },
+    CONFIRMED {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(CONFIRMED_RESPONSES)
+                    .addPathSegment("");
+        }
     };
-
 
     public abstract HttpUrl.Builder getUrl();
 }

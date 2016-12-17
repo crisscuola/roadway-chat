@@ -1,8 +1,14 @@
 package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -14,12 +20,11 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.roadway.capslabs.roadway_chat.MapsActivity;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.activity.OwnEventsActivity;
-import com.roadway.capslabs.roadway_chat.activity.QrScannerActivity;
-import com.roadway.capslabs.roadway_chat.activity.SubscribeEventsActivity;
+import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
+import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
+import com.roadway.capslabs.roadway_chat.activity.FavoriteEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
@@ -28,6 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by kirill on 12.09.16
@@ -35,7 +41,7 @@ import java.util.List;
 public class DrawerFactory {
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
-        DrawerBuilder drawer = new DrawerBuilder()
+        final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
                 .withAccountHeader(getAccountHeader(activity))
@@ -47,12 +53,17 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 4) {
-                            //VKSdk.logout();
-                            new Logouter().execute(activity);
-                        }
-
-                        activity.startActivity(intent);
+                        if (position == 5) {
+                            getAlert(activity).show();
+//                            try {
+//                                new Logouter().execute(activity).get();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            } catch (ExecutionException e) {
+//                                e.printStackTrace();
+//                            }
+                        } else
+                            activity.startActivity(intent);
                         return true;
                     }
                 });
@@ -65,11 +76,18 @@ public class DrawerFactory {
             JSONObject profile = getProfile();
             String name = (String) profile.get("name");
             String email = (String) profile.get("email");
+            SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+            String email_s = null;
+            email_s = sharedPref.getString("email", "Guest");
+
+            Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.drawer);
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
-                    .addProfiles(new ProfileDrawerItem())
-                    .withTextColorRes(R.color.colorProfileName)
-                    .withHeaderBackground(R.color.colorHeaderBackground)
+                    .addProfiles(new ProfileDrawerItem().withEmail(email_s))
+                    .withTextColorRes(R.color.black)
+                    //.withHeaderBackground(R.drawable.drawer3)
+
+
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
 
@@ -81,26 +99,26 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed");
-        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map");
-        //SecondaryDrawerItem profile = new SecondaryDrawerItem().withIdentifier(3).withName("Profile");
-        //SecondaryDrawerItem settings = new SecondaryDrawerItem().withIdentifier(4).withName("Settings");
-        //SecondaryDrawerItem create = new SecondaryDrawerItem().withIdentifier(5).withName("QrScanner");
-        //SecondaryDrawerItem ownevents  = new SecondaryDrawerItem().withIdentifier(6).withName("My Events");
-        SecondaryDrawerItem myDiscounts = new SecondaryDrawerItem().withIdentifier(7).withName("My discounts");
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(4).withName("Logout");
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
+                .withIcon(R.drawable.list).withSelectedTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map")
+                .withIcon(R.drawable.map).withTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName("My Favorites")
+                .withIcon(R.drawable.star_drawer).withTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
+                .withIcon(R.drawable.favourite).withTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.logout)
+                .withTextColorRes(R.color.red);
         items.add(events);
         items.add(map);
-//        items.add(profile);
-//        items.add(settings);
-//        items.add(create);
-//        items.add(ownevents);
-        items.add(myDiscounts);
+        items.add(myFavorites);
+        items.add(Restores);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
         return items.toArray(array);
     }
+
 
     private Class<? extends Activity> getActivity(int i) {
         switch (i) {
@@ -109,16 +127,10 @@ public class DrawerFactory {
             case 2:
                 return MapsActivity.class;
             case 3:
-                return SubscribeEventsActivity.class;
+                return FavoriteEventsActivity.class;
             case 4:
-                return ActivityAuth.class;
+                return RateListActivity.class;
             case 5:
-                return QrScannerActivity.class;
-            case 6:
-                return OwnEventsActivity.class;
-            case 7:
-                return SubscribeEventsActivity.class;
-            case 8:
                 return ActivityAuth.class;
             default:
                 return FeedActivity.class;
@@ -147,5 +159,41 @@ public class DrawerFactory {
             Intent intent = new Intent(context, ActivityAuth.class);
             context.startActivity(intent);
         }
+    }
+
+    private AlertDialog.Builder getAlert(final Activity context) {
+        String title = "Warning!";
+        String message = "Are you sure you want to logout?";
+        String button1String = "Logout";
+        String button2String = "Cancel";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(button1String, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    new Logouter().execute(context).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+
+        return ad;
     }
 }

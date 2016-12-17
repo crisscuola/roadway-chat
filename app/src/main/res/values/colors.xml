@@ -3,6 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorTextColor">#fff</color>
     <color name="colorProfileName">#ddf9ff</color>
-    <color name="colorHeaderBackground">#43b977</color>
+    <color name="colorDarkBackground">#009688</color>
+    <color name="colorToolbar">#35a79c</color>
+    <color name="colorLightBackground">#65c3ba</color>
+    <color name="colorSliderBackground">#83d0c9</color>
+    <color name="colorVeryLight">#b4f2ed</color>
+    <color name="colorBackgroundGrey">#c9c8c8</color>
+    <color name="red">#c70000</color>
+    <color name="black">#000</color>
+
 </resources>

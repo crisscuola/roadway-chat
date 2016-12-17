@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,30 +14,35 @@ public class Event {
     private final String address;
     private final String metro;
     private final DateRange range;
-    private final float rating;
+    private final int rating;
     private final int id;
+    private final double distance;
     private final String pictureUrl;
     private final double let;
     private final double lng;
-//    private final int code;
 
     public Event(JSONObject eventObj) {
         try {
+            Log.d("Rate_distance", String.valueOf(eventObj.has("distance")));
             title = eventObj.getString("title");
             description = eventObj.getString("about");
             range = new DateRange(eventObj.getString("date_start"), eventObj.getString("date_end"));
-            rating = (float) eventObj.getDouble("rating");
+            rating = (int) eventObj.getDouble("rating");
             id = eventObj.getInt("id");
             pictureUrl = eventObj.getString("avatar");
             address = eventObj.getString("address");
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
-//            code = eventObj.getInt("code");
+            double distDouble = 0;
+            if (eventObj.has("distance"))
+                distDouble = eventObj.getDouble("distance");
+            distance = (float) Math.round(distDouble * 10d) / 10d;
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
     }
+
 
     public String getTitle() {
         return title;
@@ -53,7 +60,7 @@ public class Event {
         return range.getDateEnd();
     }
 
-    public float getRating() {
+    public int getRating() {
         return rating;
     }
 
@@ -73,6 +80,10 @@ public class Event {
         return lng;
     }
 
+    public double getDistance() {
+        return distance;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -80,6 +91,4 @@ public class Event {
     public String getMetro() {
         return metro;
     }
-
-//    public  int getCode() {return code; }
 }
