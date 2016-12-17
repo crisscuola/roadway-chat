@@ -20,16 +20,12 @@ public class AccessTokenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_access_token);
-
         init();
-
     }
 
     private void init() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         prefUtil = new PrefUtil(this);
-
         tokenTV = (TextView) findViewById(R.id.token_tv);
         tokenTV.setText(prefUtil.getToken());
     }
@@ -37,11 +33,10 @@ public class AccessTokenActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
-
+        
         return super.onOptionsItemSelected(item);
     }
 }

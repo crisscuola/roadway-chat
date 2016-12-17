@@ -59,8 +59,6 @@ public class RateListActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
@@ -109,7 +107,6 @@ public class RateListActivity extends AppCompatActivity{
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_rate);
         toolbar.setTitle(title);
-
         searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
         // searchView.setVisibility(View.VISIBLE);
     }
@@ -140,10 +137,6 @@ public class RateListActivity extends AppCompatActivity{
         @Override
         public void onLocationChanged(Location loc) {
 
-//            Toast.makeText(
-//                    getBaseContext(),
-//                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-//                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
             String longitude = "Longitude: " + loc.getLongitude();
 //            Log.d(TAG, longitude);
             String latitude = "Latitude: " + loc.getLatitude();

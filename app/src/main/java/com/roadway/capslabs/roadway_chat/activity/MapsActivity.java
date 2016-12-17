@@ -21,8 +21,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,22 +56,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
     private Toolbar toolbar;
-   // private LatLng location;
-    private LatLng currentLocation = new LatLng(55.751841, 37.623012);
+    private Activity context = this;
     private LatLng latLngl;
     private double lat, lng;
     private double distance;
     private View bottomSheet;
     private BottomSheetBehavior behavior;
-    private TextView textView1, textView2;
-    private ListView listView;
+    private LatLng currentLocation = new LatLng(55.751841, 37.623012);
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
-    Activity context = this;
-    List<Event> events = new ArrayList<>();
+    private List<Event> events = new ArrayList<>();
     private Map<Marker, Integer> markersMap = new HashMap<Marker, Integer>();
-    private Map<Integer, Double> distanceMap = new HashMap<Integer, Double>();
     private LocationManager locationManager;
     private LocationManager mLocationManager;
     private ItemAdapter mAdapter;
@@ -85,8 +79,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-
-//        mapFragment = ((SupportMapFragment) context.getChildFragmentManager().findFragmentById(R.id.map)).getMap();
 
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
@@ -112,9 +104,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         initToolbar(getString(R.string.title_activity_maps));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-//        textView1 = (TextView) findViewById(R.id.textView_1);
-//        textView2 = (TextView) findViewById(R.id.textView_2);
-//        listView = (ListView) findViewById(R.id.listView);
         bottomSheet = findViewById(R.id.design_bottom_sheet);
         behavior = BottomSheetBehavior.from(bottomSheet);
 
@@ -248,10 +237,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
         Marker marker;
         mMap = googleMap;
-       // googleMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), title, "LOL"));
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
         markersMap.put(marker, id);
-//        marker.showInfoWindow();
     }
 
     private void showEvents() {
@@ -266,8 +253,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onMarkerClick(Marker marker) {
         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         String title = marker.getTitle();
-//        textView1.setText(title);
-//        textView2.setText(title);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
@@ -302,16 +287,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
     }
 
-
     private class MyLocationListener implements LocationListener {
 
         @Override
         public void onLocationChanged(Location loc) {
-
-//            Toast.makeText(
-//                    getBaseContext(),
-//                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-//                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
             String longitude = "Longitude: " + loc.getLongitude();
 //            Log.d(TAG, longitude);
             String latitude = "Latitude: " + loc.getLatitude();
@@ -346,8 +325,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-
     }
 
 

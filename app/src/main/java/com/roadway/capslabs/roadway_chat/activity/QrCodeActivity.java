@@ -28,13 +28,10 @@ public class QrCodeActivity extends AppCompatActivity {
         imageQr = (ImageView) findViewById(R.id.qr_image);
         Bitmap bitmap = (Bitmap) getIntent().getExtras().get("bitmap");
         imageQr.setImageBitmap(bitmap);
-
     }
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_qr_code);
         toolbar.setTitle(title);
     }
-
-
 }

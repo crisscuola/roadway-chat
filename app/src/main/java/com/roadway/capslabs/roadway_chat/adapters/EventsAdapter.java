@@ -30,10 +30,6 @@ public class EventsAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void deleteMessage(int position) {
-        eventList.remove(position);
-    }
-
     public void add(Event msg) {
         eventList.add(msg);
     }

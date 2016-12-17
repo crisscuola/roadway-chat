@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
@@ -43,25 +42,22 @@ import java.util.Locale;
 public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
+    private Toolbar toolbar;
     private EventsAdapter eventsAdapter;
 
-    private Toolbar toolbar;
+
     private android.widget.SearchView searchView;
-    private LatLng location;
     private double lat, lng;
     private String email;
 
     private final Activity context = this;
     private LocationManager locationManager;
-    private LatLng latLngl;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
@@ -80,21 +76,16 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
         mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
 
-//        location = getLocation();
-//        lat = location.latitude;
-//        lng = location.longitude;
-//        lat = 1;
-//        lng = 1;
         Log.d("Location", String.valueOf(lat) + " " + String.valueOf(lng));
 
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener locationListener = new MyLocationListener();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
 
             return;
@@ -102,13 +93,9 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
-
         Location location = getLastKnownLocation();
-
         lat = location.getLatitude();
         lng = location.getLongitude();
-//
-//        latLngl = new LatLng(lat, lng);
 
         new EventsLoader().execute(new EventRequestHandler());
     }
@@ -147,7 +134,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
-
         searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
        // searchView.setVisibility(View.VISIBLE);
     }
@@ -179,19 +165,11 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 300);
-
     }
 
-
     private class MyLocationListener implements LocationListener {
-
         @Override
         public void onLocationChanged(Location loc) {
-
-//            Toast.makeText(
-//                    getBaseContext(),
-//                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-//                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
             String longitude = "Longitude: " + loc.getLongitude();
 //            Log.d(TAG, longitude);
             String latitude = "Latitude: " + loc.getLatitude();
@@ -226,8 +204,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-
     }
 
 

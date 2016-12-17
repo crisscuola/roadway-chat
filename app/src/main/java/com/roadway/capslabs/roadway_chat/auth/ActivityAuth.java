@@ -3,22 +3,10 @@ package com.roadway.capslabs.roadway_chat.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.url.UrlType;
-
-import java.util.List;
-
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 
 /**
  * Created by konstantin on 07.09.16
@@ -28,8 +16,6 @@ public class ActivityAuth extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-
-        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
@@ -53,13 +39,6 @@ public class ActivityAuth extends AppCompatActivity  {
 
         Button buttonVk = (Button) findViewById(R.id.btn_vk);
 
-        buttonVk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ActivityVk.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

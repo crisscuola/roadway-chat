@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -35,13 +34,13 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.share.ShareFb;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.CustomMarker;
 import com.roadway.capslabs.roadway_chat.models.SingleEvent;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.share.ShareFb;
 import com.roadway.capslabs.roadway_chat.share.ShareVk;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
 import com.squareup.picasso.Picasso;
@@ -72,13 +71,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
     private int id;
-    private String urlSting = "http://www.vk.com";
-    private String number = "100";
-
-    //private double distance;
-
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
-    private LoginButton loginButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +82,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //distance = getIntent().getExtras().getDouble("distance");
         initViews();
         initToolbar("Discount");
-
-
 
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
         new EventLoader().execute(id);
@@ -106,19 +98,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 new Subscriber().execute(id);
             }
         });
-
-
-//        showOnMap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(SingleEventActivity.this, MapsActivity.class);
-//                intent.putExtra("selected_event", id);
-//                intent.putExtra("title", event.getDescription());
-//                intent.putExtra("latitude", event.getLet());
-//                intent.putExtra("longitude", event.getLng());
-//                startActivity(intent);
-//            }
-//        });
 
         vk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +125,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
-
         address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,7 +138,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 startActivity(intent);
             }
         });
-
 
         url.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,28 +159,12 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 intent.setData(Uri.parse(uri));
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
+
                     return;
                 }
                 startActivity(intent);
             }
         });
-
-
-
-
-//        showQr.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(SingleEventActivity.this, QrCodeActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -282,7 +243,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private void displayEventContent(JSONObject eventObj) {
         event = new SingleEvent(eventObj);
-
         String description = event.getDescription();
         if (description.length() > 250) {
             description = description.substring(0, 250);
@@ -352,10 +312,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             return;
         }
 
-//        mMap.setMyLocationEnabled(true);
-//        mMap.getUiSettings().setZoomControlsEnabled(true);
-
-
         String title = (String) getIntent().getExtras().get("title");
         if (event != null) {
             LatLng latlng = new LatLng(event.getLet(), event.getLng());
@@ -380,11 +336,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, CustomMarker customMarker) {
         Marker marker;
         mMap = googleMap;
-        String lolo = "TEST!!!";
-       // mMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), lolo));
-        marker = mMap.addMarker(new MarkerOptions().position(latLng));//.title(title));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.subscribe_icon)));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng));
         markersMap.put(marker, customMarker);
-
         marker.showInfoWindow();
     }
 

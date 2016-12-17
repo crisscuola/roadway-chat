@@ -49,8 +49,6 @@ public class RankActivity extends AppCompatActivity {
                     Toast.makeText(context, "Please vote your visit", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
                 RatingVote ratingVote = getRatingVote();
                 new RateRequest().execute(ratingVote, subscription_id);
                 Log.d("Rank", "Rank: " + String.valueOf(ratingVote.getStars()) + "  " + ratingVote.getText() + ", id=" + subscription_id);

@@ -61,7 +61,7 @@ public class Splash extends AppCompatActivity {
             mRegistrationProgressBar.setVisibility(View.INVISIBLE);
             return;
         }
-        
+
 //        String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, token);
         initReceiver();
@@ -90,7 +90,6 @@ public class Splash extends AppCompatActivity {
         registerReceiver();
 
         if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
@@ -129,7 +128,6 @@ public class Splash extends AppCompatActivity {
     private boolean isLoggedIn() {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this));
-
         HttpUrl url = UrlType.FEED.getUrl().build();
         List<Cookie> cookies = cookieJar.loadForRequest(url);
         for (Cookie cookie : cookies) {
@@ -138,7 +136,6 @@ public class Splash extends AppCompatActivity {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -150,11 +147,6 @@ public class Splash extends AppCompatActivity {
         }
     }
 
-    /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
     private boolean checkPlayServices() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
@@ -188,5 +180,4 @@ public class Splash extends AppCompatActivity {
                     }
                 }).show();
     }
-
 }

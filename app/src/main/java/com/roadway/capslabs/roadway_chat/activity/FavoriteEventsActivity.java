@@ -72,7 +72,6 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
         mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
 
         new EventsLoader().execute(new EventRequestHandler());
@@ -92,12 +91,12 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     }
 
     private LatLng getLocation() {
-
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         String provider = service.getBestProvider(criteria, false);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
         }
         Location location = service.getLastKnownLocation(provider);
         LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
