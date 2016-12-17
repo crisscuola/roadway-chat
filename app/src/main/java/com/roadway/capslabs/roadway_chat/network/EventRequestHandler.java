@@ -8,6 +8,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
+import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
 
@@ -33,11 +34,25 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
  * Created by kirill on 05.10.16
  */
 public class EventRequestHandler {
-     public <T extends Activity> String getAllEvents(T context) {
-        HttpUrl url = UrlFactory.getUrl(FEED);
+     public <T extends Activity> String getAllEvents(T context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(FEED).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
         Request request = buildRequest(url);
+        Log.d("Location", String.valueOf(url));
         return getResponse(context, request);
      }
+
+    public <T extends Activity> String getAllEvents(T context, double lat, double lng, UrlType urlType) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(urlType).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location", String.valueOf(url));
+        return getResponse(context, request);
+    }
 
     public String getOwnEvents(Activity context) {
         HttpUrl url = UrlFactory.getUrl(OWN);
@@ -45,9 +60,13 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
-    public String getSubsEvents(Activity context) {
-        HttpUrl url = UrlFactory.getUrl(SUBS);
+    public String getSubsEvents(Activity context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(SUBS).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
         Request request = buildRequest(url);
+        Log.d("Location_Subs", String.valueOf(url));
         return getResponse(context, request);
     }
 

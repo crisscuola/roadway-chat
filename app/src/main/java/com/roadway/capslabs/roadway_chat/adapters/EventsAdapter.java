@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class EventsAdapter extends BaseAdapter {
     private List<Event> eventList = new ArrayList<>();
-    private TextView textView, rating;
+    private TextView textView, rating, distance;
     private ImageView image;
     private Context context;
 
@@ -63,6 +64,7 @@ public class EventsAdapter extends BaseAdapter {
         textView = (TextView) rowView.findViewById(R.id.event_short_description);
         rating = (TextView) rowView.findViewById(R.id.rating);
         image = (ImageView) rowView.findViewById(R.id.image);
+        distance = (TextView) rowView.findViewById(R.id.distance);
         Event event = getItem(position);
         String description = event.getDescription();
         if (description.length() > 50) {
@@ -71,6 +73,8 @@ public class EventsAdapter extends BaseAdapter {
         }
         textView.setText(description);
         rating.setText(String.valueOf(event.getRating()));
+        String km = event.getDistance() + "km";
+        distance.setText(km);
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .fit()

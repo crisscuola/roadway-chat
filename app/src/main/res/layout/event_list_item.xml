@@ -2,29 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="2dp"
-    android:background="#c9c8c8"
+    android:background="@color/colorBackgroundGrey"
+    android:padding="5dp"
     android:orientation="vertical">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="150dp">
+        android:layout_height="170dp">
 
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/md_orange_200"
+            android:background="@color/colorSliderBackground"
             android:contentDescription="content_image"
             android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/event_short_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_gravity="center_horizontal|bottom"
             android:background="#80000000"
             android:padding="12dp"
+            android:textSize="15sp"
             android:text="Short event description"
             android:textColor="#ffffffff" />
 
@@ -33,29 +34,66 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_toRightOf="@+id/preview"
-        android:background="#FFFFFF"
-        android:gravity="right"
+        android:background="@color/colorLightBackground"
+        android:gravity="end"
         android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/distance_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/distance"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:background="#ffffff"
-            android:padding="8dp"
-            android:text="Rating:"
-            android:textColor="#000" />
+            android:layout_gravity="center"
+            android:padding="2dp"
+            android:background="@color/colorLightBackground"
+            android:textColor="@color/colorTextColor" />
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorLightBackground"
+            android:padding="4dp"
+            android:text="15"
+            android:textColor="@color/colorTextColor" />
+
+        <ImageView
+            android:id="@+id/price_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/favorite"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorLightBackground"
+            android:padding="2dp"
+
+            android:textColor="@color/colorTextColor" />
 
         <TextView
             android:id="@id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:background="#ffffff"
-            android:padding="8dp"
+            android:layout_gravity="center"
+            android:background="@color/colorLightBackground"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
             android:text="100"
-            android:textColor="@color/vk_black" />
+            android:textColor="@color/colorTextColor" />
     </LinearLayout>
 
 </LinearLayout>

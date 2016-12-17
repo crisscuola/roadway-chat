@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,9 +15,7 @@ import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Digits;
 import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
@@ -58,6 +57,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         });
     }
 
+
     @Override
     public void onValidationSucceeded() {
         new LoginRequest().execute(email.getText().toString(), password.getText().toString());
@@ -81,6 +81,9 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
+
+        email.setTextColor(Color.WHITE);
+        password.setTextColor(Color.WHITE);
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {
@@ -108,6 +111,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             }
 
             Intent activitySignUp = new Intent(context, FeedActivity.class);
+            activitySignUp.putExtra("email", email.getText().toString());
             startActivity(activitySignUp);
             Log.d("response_login", result);
         }

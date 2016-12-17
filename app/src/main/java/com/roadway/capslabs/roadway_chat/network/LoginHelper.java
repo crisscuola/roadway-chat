@@ -1,16 +1,21 @@
 package com.roadway.capslabs.roadway_chat.network;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.List;
 
 import okhttp3.Cookie;
@@ -29,10 +34,16 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGOUT;
  * Created by kirill on 25.09.16
  */
 public class LoginHelper {
+
     public String login(Activity context, String email, String password) {
         HttpUrl url = UrlFactory.getUrl(LOGIN);
         RequestBody formBody = formBody(email, password);
         Request request = buildRequest(url, formBody);
+
+        SharedPreferences sharedPref = context.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("email", email).apply();
+
         return getResponse(context, request);
     }
 
@@ -45,9 +56,14 @@ public class LoginHelper {
     private String getLogoutResponse(Activity context, Request request) {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
-        removeCookie(cookieJar);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .build();
+
         try {
-            Response response = new OkHttpClient().newCall(request).execute();
+            Response response = client.newCall(request).execute();
+            removeCookies(cookieJar);
+            //clearCookies();
             return response.body().string();
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during logout request", e);
@@ -55,9 +71,11 @@ public class LoginHelper {
     }
 
     private RequestBody formBody(String email, String password) {
+        String token = FirebaseInstanceId.getInstance().getToken();
         return new FormBody.Builder()
                 .add("email", email)
                 .add("password", password)
+                .add("registration_id", token)
                 .build();
     }
 
@@ -86,20 +104,23 @@ public class LoginHelper {
     }
 
     private void saveCookie(CookieJar cookieJar) {
-        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build()));
+        List<Cookie> cookies = cookieJar.loadForRequest(UrlType.LOGIN.getUrl().build());
+        cookieJar.saveFromResponse(UrlType.VOTE.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.EVENT.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(), cookies);
     }
 
-    private void removeCookie(CookieJar cookieJar) {
-        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.LOGOUT.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
-        cookieJar.saveFromResponse(UrlType.CREATE.getUrl().build(),
-                cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build()));
+    private void clearCookies() {
+        CookieManager cookieManager = new CookieManager();
+        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(cookieManager);
+        cookieManager.getCookieStore().removeAll();
+    }
+
+    private void removeCookies(CookieJar cookieJar) {
+        List<Cookie> cookies = cookieJar.loadForRequest(UrlType.LOGOUT.getUrl().build());
+        cookieJar.saveFromResponse(UrlType.FEED.getUrl().build(), cookies);
+        cookieJar.saveFromResponse(UrlType.VOTE.getUrl().build(), cookies);
     }
 }

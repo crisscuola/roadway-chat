@@ -37,8 +37,6 @@ public class RegistratorByEmail implements Registrator {
                 .add("email", registerForm.getEmail())
                 .add("password1", registerForm.getPassword1())
                 .add("password2", registerForm.getPassword2())
-                .add("first_name", registerForm.getFirstName())
-                .add("last_name", registerForm.getLastName())
                 .build();
     }
 

@@ -7,17 +7,21 @@ import com.orm.SugarRecord;
  */
 public class Code extends SugarRecord {
     int eventId;
-    int code;
+    String code;
 
     public Code() {
     }
 
-    public Code(int eventId, int code) {
+    public Code(int eventId, String code) {
         this.eventId = eventId;
         this.code = code;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
+    }
+
+    public boolean isCached() {
+        return !code.equals("0");
     }
 }

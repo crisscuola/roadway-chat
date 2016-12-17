@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "71210251007",
+    "firebase_url": "https://discount-basket.firebaseio.com",
+    "project_id": "discount-basket",
+    "storage_bucket": "discount-basket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71210251007:android:96feb6e6a46ee8f8",
+        "android_client_info": {
+          "package_name": "com.roadway.capslabs.roadway_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71210251007-qv0leaj0svsdnkvgpblqpmcqf6bdbcan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqCe_sTbzTau97N3vK_DZZybQRGmz-bpY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

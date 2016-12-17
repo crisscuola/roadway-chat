@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical">
 
     <include
@@ -10,7 +11,9 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="50dp"
+        android:layout_marginTop="57dp"
         android:orientation="vertical">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,16 +21,149 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/image"
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_height="170dp">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/event_pic"
+                    android:scaleType="fitXY" />
+
+                <ImageView
+                    android:id="@+id/star"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#ffffffff"
+                    android:visibility="gone"
+                    android:src="@drawable/favorite"
+                    android:contentDescription="@string/favorite_icon"
+                    android:scaleType="fitXY" />
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/star"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="#000"-->
+                    <!--android:contentDescription="favorite"-->
+                    <!--android:scaleType="fitXY" />-->
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:gravity="end"
+                    android:textColor="#ffffffff"
+                    android:background="#80000000"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:id="@+id/date_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginRight="3dp"
+                        android:textColor="#ffffffff"
+                        android:src="@drawable/time_icon"
+                        android:contentDescription="@string/date" />
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#ffffffff" />
+
+                    <TextView
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#ffffffff"
+                        android:padding="4dp"
+                        android:text="@string/three_dots" />
+
+                    <ImageView
+                        android:id="@+id/price_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/price_icon_stroked"
+                        android:contentDescription="@string/price_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#ffffffff"
+                        android:padding="4dp" />
+
+                    <TextView
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="#ffffffff"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/three_dots" />
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:contentDescription="event_visual"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:scaleType="fitXY" />
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:textColor="#ffffffff"
+                android:background="#80000000"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:textColor="#ffffffff"
+                    android:text="Share :"/>
+
+                <Button
+                    android:layout_width="40dp"
+                    android:id="@+id/vk"
+                    android:layout_marginLeft="30dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/vk" />
+
+                <Button
+                    android:layout_width="40dp"
+                    android:id="@+id/fb"
+                    android:layout_marginLeft="30dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb" />
+
+                <Button
+                    android:layout_width="40dp"
+                    android:id="@+id/add"
+                    android:layout_marginLeft="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/favorite" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/title"
@@ -36,7 +172,7 @@
                 android:layout_gravity="start"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Title"
+                android:text="@string/title"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -52,7 +188,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,21 +197,42 @@
                     android:layout_gravity="start"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Description:"
+                    android:text="@string/event_description"
                     android:textAppearance="?android:attr/textAppearance"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/description"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Description"
-                    android:textAppearance="?android:attr/textAppearance"
-                    android:textSize="15sp" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/description"
+                        android:textAppearance="?android:attr/textAppearance"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/arrow"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/arrow_right"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:contentDescription="@string/arrow_icon" />
+
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -87,7 +245,7 @@
                     android:layout_gravity="start"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Creator:"
+                    android:text="@string/creator_event_field"
                     android:textAppearance="?android:attr/textAppearance"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -99,34 +257,7 @@
                     android:layout_gravity="start"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Creator"
-                    android:textAppearance="?android:attr/textAppearance"
-                    android:textSize="15sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Rating:"
-                    android:textAppearance="?android:attr/textAppearance"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Rating"
+                    android:text="@string/creator"
                     android:textAppearance="?android:attr/textAppearance"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -146,6 +277,88 @@
                 android:gravity="start"
                 android:orientation="vertical">
 
+                <!--<TextView-->
+                    <!--android:id="@+id/distance_view"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:paddingLeft="10dp"-->
+                    <!--android:paddingRight="20dp"-->
+                    <!--android:textSize="15sp"-->
+                    <!--android:text="Distance to you..."/>-->
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/url_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:autoLink="map"
+                        android:paddingLeft="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingRight="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="@string/site_event_field"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="20dp"
+                        android:textColor="#2369ff"
+                        android:autoLink="map"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="20dp"
+                        android:text="Url"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/phone_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="5dp"
+                        android:autoLink="map"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:text="Phone: "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="20dp"
+                            android:textColor="#2369ff"
+                            android:autoLink="map"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="20dp"
+                            android:text="Phone"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:textSize="18sp" />
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/metro"
                     android:layout_width="wrap_content"
@@ -159,93 +372,73 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/address"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginBottom="4dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:textSize="18sp"
                     android:paddingLeft="10dp"
                     android:paddingRight="20dp"
                     android:paddingTop="7dp"
-                    android:paddingBottom="10dp"
-                    android:text="Address"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#2369ff"
-                    android:textSize="18sp"
-                    android:background="#eaeaea"/>
+                    android:paddingBottom="10dp" >
+
+                     <ImageView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:src="@drawable/map_location_blue"/>
+
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#2369ff"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/code_sign"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:paddingLeft="10dp"
-                            android:text="Discount code: "
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                        <TextView
-                            android:id="@+id/code"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp"
-                            android:layout_marginRight="20dp"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceLarge" />
                     </LinearLayout>
-
-                <!--<Button-->
-                <!--android:layout_width="200dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Show on map"-->
-                <!--android:id="@+id/btn_show_on_map"-->
-                <!--android:textColor="#000"-->
-                <!--android:layout_gravity="center_horizontal" />-->
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_subs"
-                android:layout_height="wrap_content"
+            <fragment
                 android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="#4ccf86"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal"
-                android:text="Get code" />
-
-            <Button
-                android:id="@+id/btn_unsubs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="#4ccf86"
-                android:layout_gravity="center_horizontal"
-                android:text="Return code" />
-
-            <!--<Button-->
-            <!--android:layout_width="200dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Show QR code"-->
-            <!--android:id="@+id/btn_show_qr"-->
-            <!--android:layout_gravity="center_horizontal" />-->
-            <!--<fragment-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="250dp"-->
-            <!--android:name="com.google.android.gms.maps.MapFragment"-->
-            <!--android:id="@+id/fragment"-->
-            <!--android:layout_gravity="center_horizontal" />-->
-
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="10dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:id="@+id/map" />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/btn_show_qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/qr_icon"
+            android:background="@color/colorDarkBackground"
+            android:textColor="@color/colorTextColor"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="Show Qr Code" />
+    </LinearLayout>
+
+</RelativeLayout>
