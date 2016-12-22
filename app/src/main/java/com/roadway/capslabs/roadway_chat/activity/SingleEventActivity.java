@@ -10,13 +10,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -84,6 +87,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         initToolbar("Discount");
 
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
+
         new EventLoader().execute(id);
 
         showQr.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +194,23 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
-        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+
+        drawer =  drawerFactory.getDrawerBuilder(this, toolbar)
+                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+                    @Override
+                    public boolean onNavigationClickListener(View view) {
+                        onBackPressed();
+                        return false;
+                    }
+                })
+                .build();
+        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+        drawer.getActionBarDrawerToggle().onDrawerStateChanged(DrawerLayout.STATE_IDLE);
+        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(title);
+
     }
 
     public void initViews() {

@@ -44,6 +44,7 @@ public class DrawerFactory {
         final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
                 .withAccountHeader(getAccountHeader(activity))
                 .addDrawerItems(
                         getDrawerItems()
@@ -86,7 +87,6 @@ public class DrawerFactory {
                     .addProfiles(new ProfileDrawerItem().withEmail(email_s))
                     .withTextColorRes(R.color.black)
                     //.withHeaderBackground(R.drawable.drawer3)
-
 
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
