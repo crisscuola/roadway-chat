@@ -16,9 +16,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,8 +34,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.adapters.ItemAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
+import com.roadway.capslabs.roadway_chat.models.Item;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 
@@ -47,7 +52,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ItemAdapter.ItemListener {
 
     private GoogleMap mMap;
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -61,6 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private View bottomSheet;
     private BottomSheetBehavior behavior;
     private TextView textView1, textView2;
+    private ListView listView;
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -70,6 +76,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Map<Integer, Double> distanceMap = new HashMap<Integer, Double>();
     private LocationManager locationManager;
     private LocationManager mLocationManager;
+    private ItemAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +112,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         initToolbar(getString(R.string.title_activity_maps));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-        textView1 = (TextView) findViewById(R.id.textView_1);
-        textView2 = (TextView) findViewById(R.id.textView_2);
+//        textView1 = (TextView) findViewById(R.id.textView_1);
+//        textView2 = (TextView) findViewById(R.id.textView_2);
+//        listView = (ListView) findViewById(R.id.listView);
         bottomSheet = findViewById(R.id.design_bottom_sheet);
         behavior = BottomSheetBehavior.from(bottomSheet);
 
@@ -175,7 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(false);
 
 
         if (getIntent().hasExtra("selected_event")) {
@@ -186,6 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.d("intent", String.valueOf(id));
 
             String title = (String) getIntent().getExtras().get("title");
+
 
             LatLng latlng = new LatLng(lat, lng);
 
@@ -242,7 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        // googleMap.setInfoWindowAdapter(new MarkerAdapter(getLayoutInflater(), title, "LOL"));
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
         markersMap.put(marker, id);
-        //marker.showInfoWindow();
+//        marker.showInfoWindow();
     }
 
     private void showEvents() {
@@ -257,9 +266,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onMarkerClick(Marker marker) {
         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         String title = marker.getTitle();
-        textView1.setText(title);
-        textView2.setText(title);
+//        textView1.setText(title);
+//        textView2.setText(title);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mAdapter = new ItemAdapter(createItems(), this);
+        recyclerView.setAdapter(mAdapter);
+
+        marker.showInfoWindow();
         return true;
+    }
+
+    public List<Item> createItems() {
+
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(new Item(R.mipmap.ic_launcher, "Item 1",1));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 2",2));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 3",3));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+
+        return items;
+    }
+
+    @Override
+    public void onItemClick(Item item) {
+        //behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        int id  = item.getmId();
+        Event event = events.get(id);
+        Intent intent = new Intent(MapsActivity.this, SingleEventActivity.class);
+        intent.putExtra("id", event.getId());
+        intent.putExtra("distance", event.getDistance());
+        startActivity(intent);
     }
 
 

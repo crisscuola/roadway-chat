@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,7 +37,7 @@ import java.util.List;
 /**
  * Created by konstantin on 06.10.16.
  */
-public class SubscribeEventsActivity extends AppCompatActivity {
+public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
 
     private final static DrawerFactory drawerFactory;
@@ -47,7 +48,7 @@ public class SubscribeEventsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private double lat, lng;
     private LatLng location;
-
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private EventsAdapter eventsAdapter;
     private final Activity context = this;
 
@@ -68,6 +69,11 @@ public class SubscribeEventsActivity extends AppCompatActivity {
         location = getLocation();
         lat = location.latitude;
         lng = location.longitude;
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
 
         new EventsLoader().execute(new EventRequestHandler());
 
@@ -106,12 +112,25 @@ public class SubscribeEventsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(SubscribeEventsActivity.this, SingleEventActivity.class);
+                Intent myIntent = new Intent(FavoriteEventsActivity.this, SingleEventActivity.class);
                 Event event = eventsAdapter.getItem(i);
                 myIntent.putExtra("id", event.getId());
                 startActivity(myIntent);
             }
         });
+    }
+
+    @Override
+    public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initAdapter();
+                new EventsLoader().execute(new EventRequestHandler());
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 300);
     }
 
     private final class EventsLoader extends AsyncTask<Object, Void, String> {

@@ -7,13 +7,39 @@
         android:id="@+id/toolbar_share_vk"
         layout="@layout/toolbar" />
 
-    <Button
-        android:layout_width="match_parent"
+
+    <ImageView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/username"
+        android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="Post Discount"
         android:background="#009688"
         android:textColor="#fff"
         android:id="@+id/sharePost"
         android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Logout"
+        android:background="#009688"
+        android:textColor="#fff"
+        android:id="@+id/logout"
+        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

@@ -26,13 +26,14 @@
         android:layout_centerInParent="true" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Post !"
+        android:layout_marginTop="50dp"
+        android:text="Post Discount"
+        android:background="#009688"
+        android:textColor="#fff"
         android:id="@+id/button_post_fb"
-        android:layout_below="@+id/login_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp" />
+        android:layout_gravity="center_horizontal" />
 
 
 </RelativeLayout>
