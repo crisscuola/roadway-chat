@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@color/colorToolbar"
     app:titleTextColor="@color/colorTextColor"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:theme="@style/AppTheme"
     >
 
     <SearchView
