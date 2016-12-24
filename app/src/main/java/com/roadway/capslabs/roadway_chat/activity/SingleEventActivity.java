@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,15 +12,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -65,8 +65,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
 
-    private ImageView imageView, imageQr, arrow;
-    private TextView title, description, rating, address, metro, dateEnd, creator, url, phone;
+    private ImageView imageView, imageQr, arrow, star;
+    private TextView title, description, rating, address, metro, dateEnd, creator, url, phone, adres, share;
     private Button showQr, vk, fb, add;
     private SingleEvent event;
     private MapView mapView;
@@ -143,6 +143,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             }
         });
 
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("add", "STAR CLICK !!!");
+            }
+        });
+
         url.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +176,16 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 startActivity(intent);
             }
         });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("add", "Click share!!");
+                getAlert();
+            }
+        });
+
+
     }
 
     @Override
@@ -219,6 +236,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         description = (TextView) findViewById(R.id.description);
         address = (TextView) findViewById(R.id.address);
         metro = (TextView) findViewById(R.id.metro);
+        adres = (TextView) findViewById(R.id.addres);
         rating = (TextView) findViewById(R.id.rating);
         creator = (TextView) findViewById(R.id.creator);
         dateEnd = (TextView) findViewById(R.id.date);
@@ -234,6 +252,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);
+        star = (ImageView) findViewById(R.id.star);
+        share = (TextView) findViewById(R.id.share);
     }
 
     private boolean isSubscribed(JSONObject event) {
@@ -283,6 +303,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         this.description.setText(description);
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
+        address.setText("Как добраться ?");
+
+        adres.setText(adressParse(String.valueOf(event.getAddress())));
         dateEnd.setText(event.getDateEnd());
         //url.setText(event.getUrl());
         //phone.setText(event.getPhone());
@@ -314,6 +337,56 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             e.printStackTrace();
         }
         return null;
+    }
+
+    private String adressParse(String adress) {
+
+        String[] array = adress.split(",");
+        for (int i = 0; i < array.length; i++){
+            Log.d("add", array[i]);
+           // array[i] = array[i].replaceAll(" ", "");
+        }
+
+        adress = "г." + array[2] + ", ул." + array[0] + ", д. " + array[1];
+
+        Log.d("add", adress);
+
+        return adress;
+    }
+
+    protected void getAlert() {
+        final CharSequence[] items = {"Vk", "Fb"};
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+        dialogBuilder.setTitle("Choose SocialNetwork");
+        dialogBuilder.setItems(items, new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (which == 0) {
+                    Log.d("add", "vk");
+                    Intent intent = new Intent(context, ShareVk.class);
+                    String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
+                    intent.putExtra("url", url);
+                    intent.putExtra("title", event.getTitle());
+                    startActivity(intent);
+
+                }
+                if (which == 1) {
+                    Log.d("add", "fb");
+                    Intent intent = new Intent(context, ShareFb.class);
+                    String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
+                    intent.putExtra("url", url);
+                    intent.putExtra("title", event.getTitle());
+                    startActivity(intent);
+
+                    Log.d("share", "Share Vk");
+                }
+            }
+
+        });
+        dialogBuilder.create().show();
+
+        return;
     }
 
     private String getImageUrl(String url) {

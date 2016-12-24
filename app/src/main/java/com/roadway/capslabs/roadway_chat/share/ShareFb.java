@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,9 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.utils.IntentUtil;
 import com.roadway.capslabs.roadway_chat.utils.PrefUtil;
 
@@ -40,11 +43,15 @@ public class ShareFb extends AppCompatActivity {
     private ImageView profileImgView;
     private LoginButton loginButton;
     private Button post;
+    private Toolbar toolbar;
     private  FacebookSdk  fb;
     private Activity contex = this;
 
     private PrefUtil prefUtil;
     private IntentUtil intentUtil;
+
+    private final DrawerFactory drawerFactory = new DrawerFactory();
+    private Drawer drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,9 @@ public class ShareFb extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_fb);
+
+        initToolbar(getString(R.string.fb_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         prefUtil = new PrefUtil(this);
         intentUtil = new IntentUtil(this);
@@ -142,6 +152,12 @@ public class ShareFb extends AppCompatActivity {
                         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void initToolbar(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_share_fb);
+        toolbar.setTitle(title);
+
     }
 
     @Override

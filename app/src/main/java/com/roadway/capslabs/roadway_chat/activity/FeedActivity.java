@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -44,6 +45,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private Drawer drawer;
     private Toolbar toolbar;
     private EventsAdapter eventsAdapter;
+    private ImageView star;
 
 
     private android.widget.SearchView searchView;
@@ -76,7 +78,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
+        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.black});
 
         Log.d("Location", String.valueOf(lat) + " " + String.valueOf(lng));
 
@@ -98,6 +100,15 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         lng = location.getLongitude();
 
         new EventsLoader().execute(new EventRequestHandler());
+
+        star = (ImageView)  findViewById(R.id.star_e);
+
+//        star.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Log.d("add", "STAR CLICK !!!");
+//            }
+//        });
     }
 
     private Location getLastKnownLocation() {
@@ -135,6 +146,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
         searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
+
        // searchView.setVisibility(View.VISIBLE);
     }
 

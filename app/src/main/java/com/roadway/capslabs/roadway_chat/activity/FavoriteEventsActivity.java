@@ -72,7 +72,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.colorToolbar});
+        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.black});
 
         new EventsLoader().execute(new EventRequestHandler());
 

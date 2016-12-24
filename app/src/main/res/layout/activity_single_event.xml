@@ -234,6 +234,15 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/darker_gray" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -409,6 +418,18 @@
                 android:background="@android:color/darker_gray" />
 
             <TextView
+                android:id="@+id/addres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:paddingLeft="15dp"
+                android:paddingStart="30dp"
+                android:paddingRight="15dp"
+                android:paddingEnd="15dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="15sp" />
+
+            <TextView
                 android:id="@+id/metro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -432,7 +453,7 @@
                 android:paddingRight="15dp"
                 android:paddingEnd="15dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp" >
+                android:paddingBottom="5dp" >
 
                  <ImageView
                      android:layout_width="wrap_content"
@@ -442,7 +463,7 @@
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="25dp"
                     android:text="Address"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#2369ff"
@@ -461,10 +482,11 @@
             <fragment
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="7dp"
+                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:id="@+id/map" />
@@ -475,9 +497,9 @@
         android:id="@+id/btn_show_qr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/qr_icon"
-        android:background="@color/colorDarkBackground"
-        android:textColor="@color/colorWhiteBackground"
+        android:drawableLeft="@drawable/qr_icon_gray"
+        android:background="@color/colorWhiteBackground"
+        android:textColor="@color/black"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
         android:text="Show Qr Code" />

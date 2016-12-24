@@ -17,6 +17,20 @@
             android:background="@color/colorSliderBackground"
             android:contentDescription="content_image"
             android:scaleType="fitXY" />
+        <ImageView
+            android:id="@+id/star_e"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="20dp"
+            android:textColor="#ffffffff"
+            android:src="@drawable/favorite_off"
+            android:contentDescription="@string/favorite_icon"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/event_short_description"

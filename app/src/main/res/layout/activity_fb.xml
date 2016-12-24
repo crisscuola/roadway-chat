@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:background="@android:color/darker_gray">
+
+    <include
+        android:id="@+id/toolbar_share_fb"
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/info"
@@ -17,23 +22,25 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/info"/>
+        android:layout_below="@id/info"
+        android:layout_gravity="center_horizontal" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Post Discount"
-        android:background="#009688"
-        android:textColor="#fff"
+        android:background="#fff"
+        android:textColor="#000"
         android:id="@+id/button_post_fb"
         android:layout_gravity="center_horizontal" />
 
 
-</RelativeLayout>
+</LinearLayout>

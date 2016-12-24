@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
 
     <include
         android:id="@+id/toolbar_share_vk"
@@ -27,8 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Post Discount"
-        android:background="#009688"
-        android:textColor="#fff"
+        android:background="#fff"
+        android:textColor="#000"
         android:id="@+id/sharePost"
         android:layout_gravity="center_horizontal" />
 
@@ -37,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Logout"
-        android:background="#009688"
-        android:textColor="#fff"
+        android:background="#fff"
+        android:textColor="#000"
         android:id="@+id/logout"
         android:layout_gravity="center_horizontal" />
 
