@@ -30,7 +30,7 @@
         android:orientation="vertical"
         android:paddingTop="8dp"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="32dp"
+        app:behavior_peekHeight="100dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <!--<TextView-->
