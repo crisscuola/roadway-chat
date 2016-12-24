@@ -136,12 +136,12 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getSubsEvents(context, lat,lng);
+            return handler.getFavoritesEvents(context, lat,lng);
         }
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("response_crete_event", result);
+            Log.d("response_farovtite", result);
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONArray array = object.getJSONArray("object_list");

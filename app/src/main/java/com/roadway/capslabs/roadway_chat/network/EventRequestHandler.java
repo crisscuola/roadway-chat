@@ -23,11 +23,14 @@ import okhttp3.Response;
 
 import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.EVENT;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.FAVOR;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.FAVORITE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.PROFILE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBSCRIBE;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.UNFAVORITE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
 
 /**
@@ -70,6 +73,16 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
+    public String getFavoritesEvents(Activity context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(FAVOR).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location_Subs", String.valueOf(url));
+        return getResponse(context, request);
+    }
+
     public String getEvent(Activity context, String id) {
         HttpUrl url = UrlFactory.getUrl(EVENT).newBuilder()
                 .addQueryParameter("id", id).build();
@@ -90,6 +103,22 @@ public class EventRequestHandler {
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
     }
+
+    public String favoriteEvent(Activity context, String id){
+        HttpUrl url = UrlFactory.getUrl(FAVORITE);
+        RequestBody formBody = formSubscribeBody(id);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+    public String unfavotiteEvent(Activity context, String id){
+        HttpUrl url = UrlFactory.getUrl(UNFAVORITE);
+        RequestBody formBody = formSubscribeBody(id);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+
 
     public String unsubscribeEvent(Activity context, String id){
         HttpUrl url = UrlFactory.getUrl(UNSUBSCRIBE);
