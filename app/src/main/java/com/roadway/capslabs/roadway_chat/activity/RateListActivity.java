@@ -99,10 +99,10 @@ public class RateListActivity extends AppCompatActivity{
         drawer.closeDrawer();
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//    }
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_rate);

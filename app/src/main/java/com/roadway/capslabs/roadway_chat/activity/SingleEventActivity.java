@@ -147,6 +147,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Log.d("add", "STAR CLICK !!!");
+                new Favoriter().execute(id);
+//                new UnFavoriter().execute(id);
             }
         });
 
@@ -500,6 +502,56 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
+        }
+    }
+
+    private final class Favoriter extends AsyncTask<Integer, Void, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            String id = String.valueOf(params[0]);
+            return new EventRequestHandler().favoriteEvent(context, id);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //removeCodeIfUsed(true);
+            Log.d("response_favorite", s);
+            JSONObject object = HttpConnectionHandler.parseJSON(s);
+//            try {
+//                JSONObject eventObj = object.getJSONObject("object");
+//                codeJson = (String) eventObj.get("activate_link");
+//                Bitmap bitmap = qrGenenartor(codeJson);
+//                saveCode(eventObj);
+//                showQrCodeActivity(bitmap);
+//            } catch (JSONException e) {
+//                throw new RuntimeException("JSON parsing error", e);
+//            }
+        }
+    }
+
+    private final class UnFavoriter extends AsyncTask<Integer, Void, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            String id = String.valueOf(params[0]);
+            return new EventRequestHandler().unfavotiteEvent(context, id);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //removeCodeIfUsed(true);
+            Log.d("response_favorite", s);
+            JSONObject object = HttpConnectionHandler.parseJSON(s);
+//            try {
+//                JSONObject eventObj = object.getJSONObject("object");
+//                codeJson = (String) eventObj.get("activate_link");
+//                Bitmap bitmap = qrGenenartor(codeJson);
+//                saveCode(eventObj);
+//                showQrCodeActivity(bitmap);
+//            } catch (JSONException e) {
+//                throw new RuntimeException("JSON parsing error", e);
+//            }
         }
     }
 
