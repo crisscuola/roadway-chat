@@ -82,8 +82,8 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
 
-        email.setTextColor(Color.WHITE);
-        password.setTextColor(Color.WHITE);
+        email.setTextColor(Color.BLACK);
+        password.setTextColor(Color.BLACK);
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {

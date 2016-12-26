@@ -70,9 +70,9 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         password2 = (EditText) findViewById(R.id.password2);
         register = (Button) findViewById(R.id.submit_register_button);
 
-        email.setTextColor(Color.WHITE);
-        password1.setTextColor(Color.WHITE);
-        password2.setTextColor(Color.WHITE);
+        email.setTextColor(Color.BLACK);
+        password1.setTextColor(Color.BLACK);
+        password2.setTextColor(Color.BLACK);
     }
 
     @NonNull
