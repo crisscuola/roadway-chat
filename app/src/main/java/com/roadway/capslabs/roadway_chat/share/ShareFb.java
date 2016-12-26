@@ -60,6 +60,8 @@ public class ShareFb extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
+        final String url = getIntent().getExtras().getString("url");
+
         setContentView(R.layout.activity_fb);
 
         initToolbar(getString(R.string.fb_activity_title));
@@ -81,13 +83,13 @@ public class ShareFb extends AppCompatActivity {
                         .setContentTitle("title")
                         .setContentDescription(
                                 "Description")
-                        .setContentUrl(Uri.parse("your url")).build();
+                        .setContentUrl(Uri.parse(url)).build();
                 shareDialog.show(linkContent);
 
                 shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
                     @Override
                     public void onSuccess(Sharer.Result result) {
-
+                        alertShow();
                     }
 
                     @Override
@@ -139,7 +141,7 @@ public class ShareFb extends AppCompatActivity {
 
     public void alertShow () {
         AlertDialog.Builder builder = new AlertDialog.Builder(ShareFb.this);
-        builder.setTitle("Важное сообщение!")
+        builder.setTitle("Поздравляем!")
                 .setMessage("Репост в Fb успешно добавлен!")
                 .setIcon(R.drawable.logo2)
                 .setCancelable(false)
