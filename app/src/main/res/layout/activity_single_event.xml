@@ -501,6 +501,13 @@
         </LinearLayout>
     </ScrollView>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:background="@android:color/darker_gray" />
+
     <Button
         android:id="@+id/btn_show_qr"
         android:layout_width="match_parent"
