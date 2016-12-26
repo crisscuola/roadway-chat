@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/white">
 
     <include
         android:id="@+id/toolbar_share_vk"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Post Discount"
-        android:background="#fff"
+        android:background="@color/vk_share_gray_line"
         android:textColor="#000"
         android:id="@+id/sharePost"
         android:layout_gravity="center_horizontal" />
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Logout"
-        android:background="#fff"
+        android:background="@color/vk_share_gray_line"
         android:textColor="#000"
         android:id="@+id/logout"
         android:layout_gravity="center_horizontal" />
