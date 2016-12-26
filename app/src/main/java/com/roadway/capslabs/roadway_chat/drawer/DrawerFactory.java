@@ -89,6 +89,7 @@ public class DrawerFactory {
                     .withActivity(activity)
                     .addProfiles(new ProfileDrawerItem().withEmail(email_s))
                     .withTextColorRes(R.color.black)
+                    .withProfileImagesVisible(false)
                     //.withHeaderBackground(R.drawable.drawer3)
 
                     .withSelectionListEnabledForSingleProfile(false)
