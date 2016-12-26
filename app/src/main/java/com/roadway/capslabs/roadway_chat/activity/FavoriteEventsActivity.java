@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -78,6 +79,12 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 //        location = getLocation();
 //        lat = location.latitude;
 //        lng = location.longitude;
+
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        String email_s = "Lolo";
+        email_s = sharedPref.getString("email", "Guest");
+
+        Log.d("SHARED", email_s);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);

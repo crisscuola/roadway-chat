@@ -1,12 +1,12 @@
 package com.roadway.capslabs.roadway_chat.drawer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -21,10 +21,10 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.activity.FavoriteEventsActivity;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
 import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
-import com.roadway.capslabs.roadway_chat.activity.FavoriteEventsActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
@@ -77,9 +77,12 @@ public class DrawerFactory {
             JSONObject profile = getProfile();
             String name = (String) profile.get("name");
             String email = (String) profile.get("email");
-            SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
-            String email_s = null;
-            email_s = sharedPref.getString("email", "Guest");
+//            SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+//            String email_s = null;
+//            email_s = sharedPref.getString("email", "Guest");
+
+            final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(activity);
+            String email_s = (mSharedPreference.getString("email", "Default_Value"));
 
             Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.drawer);
             AccountHeader headerResult = new AccountHeaderBuilder()

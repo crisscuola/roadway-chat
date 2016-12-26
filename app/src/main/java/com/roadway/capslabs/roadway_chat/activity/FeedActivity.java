@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -64,12 +65,17 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (extras != null) {
             if (extras.containsKey("email")) {
                 email = getIntent().getExtras().getString("email");
+
+//                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPref.edit();
+//                editor.putString("email", email).commit();
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("email", email);
+                editor.commit();
             }
         }
-
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("email", email).apply();
 
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
