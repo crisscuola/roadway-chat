@@ -31,6 +31,14 @@
         <item name="android:textColorHighlight">#35a79c</item>
     </style>
 
+    <style name="BlackEditTextTheme" parent="@android:style/Widget.EditText">
+        <item name="colorControlNormal">#000</item>
+        <item name="colorControlActivated">#000</item>
+        <item name="colorControlHighlight">@color/vk_share_gray_line</item>
+        <item name="android:textColorHint">#000</item>
+        <item name="android:textColorHighlight">@color/vk_share_gray_line</item>
+    </style>
+
     <style name="CustomTheme" parent="MaterialDrawerTheme">
         <!-- ...and here we setting appcompat’s color theming attrs -->
         <item name="colorPrimary">@color/material_drawer_primary</item>

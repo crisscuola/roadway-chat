@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#65c3ba"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -31,7 +31,7 @@
             android:layout_below="@id/logo"
             android:text="@string/sign_up_title"
             android:textSize="30sp"
-            android:textColor="#fff"/>
+            android:textColor="#000"/>
 
     </RelativeLayout>
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/email_hint"
             android:layout_marginBottom="10dp"
-            android:theme="@style/WhiteEditTextTheme"
+            android:theme="@style/BlackEditTextTheme"
             android:inputType="textEmailAddress"/>
 
         <!--<TextView-->
@@ -71,7 +71,7 @@
             android:id="@+id/password1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/WhiteEditTextTheme"
+            android:theme="@style/BlackEditTextTheme"
             android:hint="@string/password_hint"
             android:layout_marginBottom="10dp"
             android:inputType="textPassword"/>
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:theme="@style/WhiteEditTextTheme"
+            android:theme="@style/BlackEditTextTheme"
             android:hint="@string/hint_password_repeat"
             android:inputType="textPassword"/>
 
@@ -125,8 +125,8 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#009688"
-            android:textColor="#fff"
+            android:background="@color/vk_share_gray_line"
+            android:textColor="#000"
             android:text="@string/button_register"/>
 
     </LinearLayout>

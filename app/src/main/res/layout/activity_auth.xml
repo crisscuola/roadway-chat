@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorLightBackground"
+    android:background="@color/md_white_1000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"
-            android:background="@color/colorDarkBackground"
+            android:background="@color/vk_share_gray_line"
             android:textColor="@color/colorTextColor"
             android:text="@string/sign_in"/>
 
@@ -56,7 +56,7 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorDarkBackground"
+            android:background="@color/vk_share_gray_line"
             android:textColor="@color/colorTextColor"
             android:text="@string/sign_up"/>
 
