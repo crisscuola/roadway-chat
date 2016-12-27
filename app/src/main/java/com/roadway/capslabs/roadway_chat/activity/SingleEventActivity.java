@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -428,10 +430,20 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     }
 
+
+     public Bitmap resizeMarker() {
+         int height = 50;
+         int width = 50;
+         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker);
+         Bitmap b = bitmapdraw.getBitmap();
+         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+         return smallMarker;
+     }
+
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, CustomMarker customMarker) {
         Marker marker;
         mMap = googleMap;
-        marker = mMap.addMarker(new MarkerOptions().position(latLng));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(resizeMarker())));
         markersMap.put(marker, customMarker);
         marker.showInfoWindow();
     }
