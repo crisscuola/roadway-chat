@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -72,6 +75,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private Button showQr, vk, fb, add;
     private SingleEvent event;
     private MapView mapView;
+    private ProgressBar progressBar;
 
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
@@ -231,7 +235,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
-
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     public void initViews() {
@@ -258,6 +263,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         arrow = (ImageView) findViewById(R.id.arrow);
         star = (ImageView) findViewById(R.id.star);
         share = (TextView) findViewById(R.id.share);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     }
 
     private boolean isSubscribed(JSONObject event) {
@@ -307,7 +313,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         this.description.setText(description);
         rating.setText(String.valueOf(event.getRating()));
         address.setText(String.valueOf(event.getAddress()));
-        address.setText("Как добраться ?");
+        address.setText("Show on map");
 
         adres.setText(adressParse(String.valueOf(event.getAddress())));
         dateEnd.setText(event.getDateEnd());
@@ -458,6 +464,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_get_event", result);
+            progressBar.setVisibility(View.GONE);
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONObject eventObj = object.getJSONObject("object");

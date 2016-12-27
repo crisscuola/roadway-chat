@@ -11,6 +11,7 @@ import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -176,6 +177,8 @@ public class EventRequestHandler {
 
             Log.d("response_create_handler", resp);
             return resp;
+        } catch (SocketTimeoutException e) {
+            throw new RuntimeException("Could not load event due to timeout exception" + request.url(), e);
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }

@@ -41,6 +41,7 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
+    compile 'com.github.jd-alexander:library:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

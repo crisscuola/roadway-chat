@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -22,6 +23,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.directions.route.Route;
+import com.directions.route.RouteException;
+import com.directions.route.Routing;
+import com.directions.route.RoutingListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -30,6 +35,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.ItemAdapter;
@@ -50,7 +56,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ItemAdapter.ItemListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ItemAdapter.ItemListener, RoutingListener {
 
     private GoogleMap mMap;
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -122,6 +128,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+//        LatLng start = latLngl;
+//        LatLng waypoint = latLngl;
+//        LatLng end = new LatLng(55.751841, 37.623012);
+//
+//        Routing routing = new Routing.Builder()
+//                .travelMode(Routing.TravelMode.WALKING)
+//                .withListener(this)
+//                .waypoints(start, waypoint, end)
+//                .build();
+//        routing.execute();
 
     }
 
@@ -189,11 +205,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             setMarker(latlng, mMap, title, id);
 
+            setRoute(latlng);
+
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 13));
 
+            double targetLat = ( lat + latLngl.latitude ) / 2;
+            double targetLng = ( lng + latLngl.longitude ) / 2;
+
+            LatLng target = new LatLng(targetLat,targetLng);
+
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(latlng)
-                    .zoom(15)
+                    .target(target)
+                    .zoom(10)
                     .bearing(0)
                     .tilt(0)
                     .build();
@@ -230,6 +253,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("marker", "CLICK!!");
             }
         });
+    }
+
+
+
+    public void setRoute(LatLng endPoint) {
+        LatLng start = latLngl;
+
+        LatLng waypoint = latLngl;
+        LatLng end = endPoint;
+
+        Routing routing = new Routing.Builder()
+                .travelMode(Routing.TravelMode.WALKING)
+                .withListener(this)
+                .waypoints(start, waypoint, end)
+                .build();
+        routing.execute();
     }
 
 
@@ -286,6 +325,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         intent.putExtra("distance", event.getDistance());
         startActivity(intent);
     }
+
+    @Override
+    public void onRoutingFailure(RouteException e) {
+
+    }
+
+    @Override
+    public void onRoutingStart() {
+
+    }
+
+    @Override
+    public void onRoutingSuccess(ArrayList<Route> arrayList, int i) {
+
+        List<LatLng> points = arrayList.get(0).getPoints();
+
+        PolylineOptions options = new PolylineOptions();
+
+        options.color( Color.parseColor( "#CC0000FF" ) );
+        options.width( 5 );
+        options.visible( true );
+
+        for ( LatLng locRecorded : points )
+        {
+            options.add( locRecorded );
+        }
+
+        mMap.addPolyline( options );
+    }
+
+    @Override
+    public void onRoutingCancelled() {
+
+    }
+
 
     private class MyLocationListener implements LocationListener {
 

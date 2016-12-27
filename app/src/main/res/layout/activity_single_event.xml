@@ -422,8 +422,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Address"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
-                android:paddingStart="30dp"
+                android:paddingStart="15dp"
                 android:paddingRight="15dp"
                 android:paddingEnd="15dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -443,12 +444,12 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="15sp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@android:color/darker_gray" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginRight="15dp"-->
+                <!--android:background="@android:color/darker_gray" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -471,10 +472,11 @@
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="Address"
+                    android:text="Show on map"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#2369ff"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    />
 
             </LinearLayout>
 
