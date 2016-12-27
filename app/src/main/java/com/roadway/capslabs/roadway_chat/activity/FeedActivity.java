@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
@@ -47,6 +50,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private Toolbar toolbar;
     private EventsAdapter eventsAdapter;
     private ImageView star;
+    private ProgressBar progressBar;
 
 
     private android.widget.SearchView searchView;
@@ -152,7 +156,9 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
         searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
-
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.VISIBLE);
        // searchView.setVisibility(View.VISIBLE);
     }
 
@@ -174,6 +180,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
+        progressBar.setVisibility(View.VISIBLE);
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.postDelayed(new Runnable() {
             @Override
@@ -234,6 +241,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         @Override
         protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.GONE);
             Log.d("response_crete_event", result);
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
