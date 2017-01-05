@@ -111,14 +111,9 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         new EventsLoader().execute(new EventRequestHandler());
 
-        star = (ImageView)  findViewById(R.id.star_e);
+        //star = (ImageView)  findViewById(R.id.star_e);
 
-//        star.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("add", "STAR CLICK !!!");
-//            }
-//        });
+
     }
 
     private Location getLastKnownLocation() {
@@ -164,6 +159,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void initAdapter() {
         ListView listView = (ListView) findViewById(R.id.events_list);
+//        SwipeLayout listView = (SwipeLayout) findViewById(R.id.events_list);
         eventsAdapter = new EventsAdapter(this);
         listView.setAdapter(eventsAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -176,6 +172,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

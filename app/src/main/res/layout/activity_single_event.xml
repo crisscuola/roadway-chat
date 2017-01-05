@@ -472,7 +472,7 @@
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="Show on map"
+                    android:text="Route to Discount"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#2369ff"
                     android:textSize="18sp"

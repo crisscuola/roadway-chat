@@ -1,6 +1,9 @@
 package com.roadway.capslabs.roadway_chat.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +11,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.Event;
+import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
+import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +29,11 @@ import java.util.List;
 public class EventsAdapter extends BaseAdapter {
     private List<Event> eventList = new ArrayList<>();
     private TextView textView, rating, distance;
-    private ImageView image;
-    private Context context;
+    private ImageView image,star;
+    private Activity context;
 
-    public EventsAdapter(Context context) {
+
+    public EventsAdapter(Activity context) {
         this.context = context;
     }
 
@@ -53,6 +60,7 @@ public class EventsAdapter extends BaseAdapter {
         return position;
     }
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -61,16 +69,30 @@ public class EventsAdapter extends BaseAdapter {
         rating = (TextView) rowView.findViewById(R.id.rating);
         image = (ImageView) rowView.findViewById(R.id.image);
         distance = (TextView) rowView.findViewById(R.id.distance);
+        star = (ImageView)  rowView.findViewById(R.id.star_e);
         Event event = getItem(position);
         String description = event.getDescription();
+        String title = event.getTitle();
         if (description.length() > 50) {
             description = description.substring(0, 50);
             description += "...";
         }
-        textView.setText(description);
+//        textView.setText(description);
+        textView.setText(title);
         rating.setText(String.valueOf(event.getRating()));
         String km = event.getDistance() + "km";
         distance.setText(km);
+
+        star.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("add", "STAR CLICK !!!");
+                Event event = getItem(position);
+                int id = event.getId();
+//                new Favoriter().execute(id);
+                new UnFavoriter().execute(id);
+            }
+        });
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .fit()
@@ -82,5 +104,55 @@ public class EventsAdapter extends BaseAdapter {
 
     private String getImageUrl(String url) {
         return "http://" + UrlConst.URL + url;
+    }
+
+    private final class Favoriter extends AsyncTask<Integer, Void, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            String id = String.valueOf(params[0]);
+            return new EventRequestHandler().favoriteEvent(context, id);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //removeCodeIfUsed(true);
+            Log.d("response_favorite", s);
+            JSONObject object = HttpConnectionHandler.parseJSON(s);
+//            try {
+//                JSONObject eventObj = object.getJSONObject("object");
+//                codeJson = (String) eventObj.get("activate_link");
+//                Bitmap bitmap = qrGenenartor(codeJson);
+//                saveCode(eventObj);
+//                showQrCodeActivity(bitmap);
+//            } catch (JSONException e) {
+//                throw new RuntimeException("JSON parsing error", e);
+//            }
+        }
+    }
+
+    private final class UnFavoriter extends AsyncTask<Integer, Void, String> {
+        @Override
+        protected String doInBackground(Integer... params) {
+            String id = String.valueOf(params[0]);
+            return new EventRequestHandler().unfavotiteEvent(context, id);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //removeCodeIfUsed(true);
+            Log.d("response_favorite", s);
+            JSONObject object = HttpConnectionHandler.parseJSON(s);
+//            try {
+//                JSONObject eventObj = object.getJSONObject("object");
+//                codeJson = (String) eventObj.get("activate_link");
+//                Bitmap bitmap = qrGenenartor(codeJson);
+//                saveCode(eventObj);
+//                showQrCodeActivity(bitmap);
+//            } catch (JSONException e) {
+//                throw new RuntimeException("JSON parsing error", e);
+//            }
+        }
     }
 }

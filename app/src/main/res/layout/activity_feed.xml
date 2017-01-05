@@ -20,6 +20,14 @@
         android:id="@+id/events_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <!--<com.daimajia.swipe.SwipeLayout-->
+        <!--android:id="@+id/events_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+    <!--</com.daimajia.swipe.SwipeLayout>-->
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

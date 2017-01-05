@@ -312,8 +312,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         this.title.setText(event.getTitle());
         this.description.setText(description);
         rating.setText(String.valueOf(event.getRating()));
-        address.setText(String.valueOf(event.getAddress()));
-        address.setText("Show on map");
+        //address.setText(String.valueOf(event.getAddress()));
+        //address.setText("Route to Discount");
 
         adres.setText(adressParse(String.valueOf(event.getAddress())));
         dateEnd.setText(event.getDateEnd());

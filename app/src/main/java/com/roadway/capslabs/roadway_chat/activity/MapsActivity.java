@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.directions.route.Route;
 import com.directions.route.RouteException;
@@ -36,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.clustering.ClusterManager;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.ItemAdapter;
@@ -56,7 +58,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ItemAdapter.ItemListener, RoutingListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ItemAdapter.ItemListener, RoutingListener,ClusterManager.OnClusterItemInfoWindowClickListener<MyItem> {
 
     private GoogleMap mMap;
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -68,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double distance;
     private View bottomSheet;
     private BottomSheetBehavior behavior;
-    private LatLng currentLocation = new LatLng(55.751841, 37.623012);
+
 
     private static final String TAG = MapsActivity.class.getSimpleName();
 
@@ -77,6 +79,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private LocationManager mLocationManager;
     private ItemAdapter mAdapter;
+
+    private ClusterManager<MyItem> mClusterManager;
+    private MyItem clickedClusterItem;
+    private TextView adress ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
 //        LatLng start = latLngl;
 //        LatLng waypoint = latLngl;
 //        LatLng end = new LatLng(55.751841, 37.623012);
@@ -167,11 +174,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         drawer.closeDrawer();
     }
 
-
-
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_maps);
         toolbar.setTitle(title);
+        adress =  (TextView) findViewById(R.id.bottom_adress);
+    }
+
+    private void addItems(LatLng latlng, String title) {
+
+        double lat = latlng.latitude;
+        double lng = latlng.longitude;
+
+        MyItem offsetItem = new MyItem(lat, lng, title , title );
+        mClusterManager.addItem(offsetItem);
     }
 
     @Override
@@ -179,17 +194,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
-        mMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
+        mClusterManager = new ClusterManager<MyItem>(this, mMap);
+
+        mMap.setOnCameraChangeListener(mClusterManager);
+        mMap.setOnMarkerClickListener(mClusterManager);
+        mMap.setInfoWindowAdapter(mClusterManager.getMarkerManager());
+        mMap.setOnInfoWindowClickListener(mClusterManager);
+
+        mClusterManager.setOnClusterItemInfoWindowClickListener(this);
+        mClusterManager
+                .setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+                    @Override
+                    public boolean onClusterItemClick(MyItem item) {
+                        clickedClusterItem = item;
+                        return false;
+                    }
+                });
+
+        mClusterManager.getMarkerCollection().setOnInfoWindowAdapter(new MyCustomAdapterForItems());
+
+        //mMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
-
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-
 
         if (getIntent().hasExtra("selected_event")) {
             id = (int) getIntent().getExtras().get("selected_event");
@@ -232,34 +265,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .tilt(0)
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
     }
 
-        final int finalId = id;
-
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-
-                Intent intent = new Intent(context, SingleEventActivity.class);
-                if (getIntent().hasExtra("selected_event")) {
-                    intent.putExtra("id", finalId);
-                    //intent.putExtra("distance", distance);
-                    startActivity(intent);
-                } else {
-                    intent.putExtra("id", markersMap.get(marker));
-                    startActivity(intent);
-                }
-                Log.d("marker", "CLICK!!");
-            }
-        });
+//        final int finalId = id;
+//
+//        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+//            @Override
+//            public void onInfoWindowClick(Marker marker) {
+//
+//                Intent intent = new Intent(context, SingleEventActivity.class);
+//                if (getIntent().hasExtra("selected_event")) {
+//                    intent.putExtra("id", finalId);
+//                    //intent.putExtra("distance", distance);
+//                    startActivity(intent);
+//                } else {
+//                    intent.putExtra("id", markersMap.get(marker));
+//                    startActivity(intent);
+//                }
+//                Log.d("marker", "CLICK!!");
+//            }
+//        });
     }
 
+    @Override
+    public void onClusterItemInfoWindowClick(MyItem myItem) {
 
+        Intent i = new Intent(this, MapsActivity.class);
+        i.setAction(myItem.getTitle());
+        startActivity(i);
+
+        if (myItem.getTitle().equals("some title")){
+            //do something specific to this InfoWindow....
+        }
+    }
 
     public void setRoute(LatLng endPoint) {
         LatLng start = latLngl;
-
         LatLng waypoint = latLngl;
         LatLng end = endPoint;
 
@@ -271,7 +312,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         routing.execute();
     }
 
-
+    public void showSheet() {
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new ItemAdapter(createItems(), this);
+        recyclerView.setAdapter(mAdapter);
+    }
 
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, int id) {
         Marker marker;
@@ -284,34 +332,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("events", String.valueOf(events.size()) + " " + events.get(0).getLet());
         for (Event event : events) {
             final LatLng latLng = new LatLng(event.getLet(), event.getLng());
-            setMarker(latLng, mMap, event.getTitle(), event.getId());
+            addItems(latLng,event.getTitle());
+//            setMarker(latLng, mMap, event.getTitle(), event.getId());
         }
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        String title = marker.getTitle();
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+       // marker.getTitle();
         mAdapter = new ItemAdapter(createItems(), this);
         recyclerView.setAdapter(mAdapter);
-
-        marker.showInfoWindow();
+//        marker.showInfoWindow();
         return true;
     }
 
     public List<Item> createItems() {
-
         ArrayList<Item> items = new ArrayList<>();
         items.add(new Item(R.mipmap.ic_launcher, "Item 1",1));
         items.add(new Item(R.mipmap.ic_launcher, "Item 2",2));
         items.add(new Item(R.mipmap.ic_launcher, "Item 3",3));
         items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
         return items;
     }
 
@@ -360,6 +411,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    public class MyCustomAdapterForItems implements GoogleMap.InfoWindowAdapter {
+
+        private final View myContentsView;
+
+        MyCustomAdapterForItems() {
+            myContentsView = getLayoutInflater().inflate(
+                    R.layout.marker_window, null);
+        }
+        @Override
+        public View getInfoWindow(Marker marker) {
+
+            TextView tvTitle = ((TextView) myContentsView
+                    .findViewById(R.id.marker_title));
+            TextView tvSnippet = ((TextView) myContentsView
+                    .findViewById(R.id.marker_description));
+
+            tvTitle.setText(clickedClusterItem.getTitle());
+            tvSnippet.setText(clickedClusterItem.getSnippet());
+
+            String title = clickedClusterItem.getTitle();
+
+            Log.d("FU", title);
+            showSheet();
+            adress.setText(title);
+
+            return myContentsView;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            return null;
+        }
+    }
 
     private class MyLocationListener implements LocationListener {
 
@@ -400,8 +484,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
     }
-
-
+    
     private final class EventsLoader extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
@@ -424,6 +507,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     events.add(event);
                 }
                 showEvents();
+
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
