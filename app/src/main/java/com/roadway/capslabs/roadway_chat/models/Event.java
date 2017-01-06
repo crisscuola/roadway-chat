@@ -20,6 +20,7 @@ public class Event {
     private final String pictureUrl;
     private final double let;
     private final double lng;
+    private final boolean favor;
 
     public Event(JSONObject eventObj) {
         try {
@@ -34,6 +35,7 @@ public class Event {
             metro = eventObj.getString("metro");
             let = eventObj.getDouble("latitude");
             lng = eventObj.getDouble("longitude");
+            favor = eventObj.getBoolean("favourite");
             double distDouble = 0;
             if (eventObj.has("distance"))
                 distDouble = eventObj.getDouble("distance");
@@ -91,4 +93,6 @@ public class Event {
     public String getMetro() {
         return metro;
     }
+
+    public boolean getFavor() {return favor; }
 }

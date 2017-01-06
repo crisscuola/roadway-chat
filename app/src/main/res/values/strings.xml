@@ -80,7 +80,7 @@
     <string name="creator_event_field">Creator:</string>
     <string name="creator">Creator</string>
     <string name="site_event_field">Site:</string>
-    <string name="rating_description">Rank this Discount from 1 to 5 stars</string>
+    <string name="rating_description">Rank this Discount</string>
     <string name="rank">Rate!</string>
     <string name="no_internet">Please enable internet connection</string>
     <string name="rate_activity_title">Rate</string>

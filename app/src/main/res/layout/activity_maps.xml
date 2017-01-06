@@ -49,12 +49,18 @@
             android:textSize="15sp"
             android:text="Adress" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="0dp"
+            android:dividerHeight="3dp"
             android:background="#fff" />
 
     </LinearLayout>

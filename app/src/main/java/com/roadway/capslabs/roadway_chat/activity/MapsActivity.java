@@ -199,6 +199,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
         mClusterManager = new ClusterManager<MyItem>(this, mMap);
 
@@ -239,7 +240,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             LatLng latlng = new LatLng(lat, lng);
 
-            setMarker(latlng, mMap, title, id);
+            //setMarker(latlng, mMap, title, id);
 
             setRoute(latlng);
 

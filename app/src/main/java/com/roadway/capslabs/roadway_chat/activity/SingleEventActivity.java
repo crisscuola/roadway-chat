@@ -8,8 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -76,6 +76,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private SingleEvent event;
     private MapView mapView;
     private ProgressBar progressBar;
+    private boolean favor;
 
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
@@ -88,6 +89,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_event);
         id = getIntent().getExtras().getInt("id");
+
         //distance = getIntent().getExtras().getDouble("distance");
         initViews();
         initToolbar("Discount");
@@ -152,9 +154,18 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("add", "STAR CLICK !!!");
+            Log.d("add", "STAR CLICK !!!");
+
+             if (favor)  {
+                 new UnFavoriter().execute(id);
+                 star.setImageResource(R.drawable.favorite_off);
+                 star.refreshDrawableState();
+             } else {
                 new Favoriter().execute(id);
-//                new UnFavoriter().execute(id);
+                star.setImageResource(R.drawable.favorite_on);
+                star.refreshDrawableState();
+             }
+                favor = !favor;
             }
         });
 
@@ -189,7 +200,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Log.d("add", "Click share!!");
-                getAlert();
+                //getAlert();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "www.vk.com");
+                startActivity(Intent.createChooser(intent, "Share"));
             }
         });
 
@@ -274,6 +291,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         }
     }
 
+    private boolean isFavor(JSONObject event) {
+        try {
+            return event.getBoolean("favourite");
+        } catch (JSONException e) {
+            throw new RuntimeException("Key \'favourite\' not found", e);
+        }
+    }
+
     private boolean isUsed(JSONObject event) {
         try {
             return event.getBoolean("is_used");
@@ -315,7 +340,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //address.setText(String.valueOf(event.getAddress()));
         //address.setText("Route to Discount");
 
-        adres.setText(adressParse(String.valueOf(event.getAddress())));
+        //adres.setText(adressParse(String.valueOf(event.getAddress())));
+        adres.setText(event.getAddress());
         dateEnd.setText(event.getDateEnd());
         //url.setText(event.getUrl());
         //phone.setText(event.getPhone());
@@ -407,6 +433,10 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+
+        mMap.getUiSettings().setAllGesturesEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+
         //mMap.setOnMyLocationChangeListener(myLocationChangeListener);
         int id = 0;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -470,6 +500,16 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 JSONObject eventObj = object.getJSONObject("object");
                 removeCodeIfUsed(eventObj);
                 displayEventContent(eventObj);
+                if (isFavor(eventObj)) {
+                    Log.d("FAVOR", "T");
+                    favor = true;
+                    star.setImageResource(R.drawable.favorite_on);
+                } else  {
+                    Log.d("FAVOR","F");
+                    favor = false;
+                    star.setImageResource(R.drawable.favorite_off);
+                }
+
             } catch (JSONException e) {
                 throw new RuntimeException("Error while parsing json", e);
             }

@@ -31,6 +31,7 @@ public class EventsAdapter extends BaseAdapter {
     private TextView textView, rating, distance;
     private ImageView image,star;
     private Activity context;
+    private boolean favor;
 
 
     public EventsAdapter(Activity context) {
@@ -73,10 +74,21 @@ public class EventsAdapter extends BaseAdapter {
         Event event = getItem(position);
         String description = event.getDescription();
         String title = event.getTitle();
+        favor = event.getFavor();
+
         if (description.length() > 50) {
             description = description.substring(0, 50);
             description += "...";
         }
+
+        if (favor) {
+            Log.d("FAVOR", "T");
+            star.setImageResource(R.drawable.favorite_on);
+        } else  {
+            Log.d("FAVOR","F");
+            star.setImageResource(R.drawable.favorite_off);
+        }
+
 //        textView.setText(description);
         textView.setText(title);
         rating.setText(String.valueOf(event.getRating()));
@@ -89,9 +101,21 @@ public class EventsAdapter extends BaseAdapter {
                 Log.d("add", "STAR CLICK !!!");
                 Event event = getItem(position);
                 int id = event.getId();
-//                new Favoriter().execute(id);
-                new UnFavoriter().execute(id);
-            }
+
+//                if (favor)  {
+//                    new UnFavoriter().execute(id);
+//                    favor = !favor;
+//                    star.setImageResource(R.drawable.favorite_off);
+//                    star.refreshDrawableState();
+//                } else {
+//                    new Favoriter().execute(id);
+//                    star.setImageResource(R.drawable.favorite_on);
+//                    star.refreshDrawableState();
+//                    }
+//                favor = !favor;
+
+                }
+
         });
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))

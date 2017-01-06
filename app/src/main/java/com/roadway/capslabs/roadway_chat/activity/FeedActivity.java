@@ -167,6 +167,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
                 Event event = eventsAdapter.getItem(i);
+                intent.putExtra("favourite", event.getFavor());
                 intent.putExtra("id", event.getId());
                 intent.putExtra("distance", event.getDistance());
                 startActivity(intent);

@@ -5,16 +5,25 @@
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:gravity="center_vertical"
         android:textColor="#000"
-        android:textSize="22sp" />
+        android:textSize="20sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>
