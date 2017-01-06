@@ -6,19 +6,23 @@ package com.roadway.capslabs.roadway_chat.models;
 
 public class Item {
 
-    private int mDrawableRes;
+   // private int mDrawableRes;
     private int mId;
     private String mTitle;
+    private Event mEvent;
 
-    public Item(int drawable, String title, int id) {
-        mDrawableRes = drawable;
-        mId =id;
+    public Item(String title, int id, Event event) {
+      //  mDrawableRes = drawable;
         mTitle = title;
+        mId =id;
+        mEvent = event;
     }
 
-    public int getDrawableResource() {
-        return mDrawableRes;
-    }
+
+
+//    public int getDrawableResource() {
+//        return mDrawableRes;
+//    }
 
     public String getTitle() {
         return mTitle;
@@ -27,5 +31,7 @@ public class Item {
     public int getmId() {
         return mId;
     }
+
+    public  Event getmEvent() {return mEvent;}
 
 }

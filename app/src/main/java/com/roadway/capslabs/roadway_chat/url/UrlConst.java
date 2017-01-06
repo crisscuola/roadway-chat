@@ -27,6 +27,7 @@ public class UrlConst {
     public final static String PATH_CREATE = "create";
     public final static String PATH_GET = "get";
     public final static String PATH_ALL = "all";
+    public final static String PATH_MAP = "map";
     public final static String PATH_OWN = "own";
     public final static String PATH_SUBS = "subscribed";
     public final static String PATH_FAVOR = "favourite";

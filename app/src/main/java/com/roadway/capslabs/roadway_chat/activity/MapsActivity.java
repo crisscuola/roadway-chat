@@ -44,6 +44,7 @@ import com.roadway.capslabs.roadway_chat.adapters.ItemAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.models.Item;
+import com.roadway.capslabs.roadway_chat.models.MapsMarker;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 
@@ -75,7 +76,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = MapsActivity.class.getSimpleName();
 
     private List<Event> events = new ArrayList<>();
+    private List<MapsMarker> markers = new ArrayList<>();
     private Map<Marker, Integer> markersMap = new HashMap<Marker, Integer>();
+    private Map<Integer, List<Event>> eventMap = new HashMap<Integer, List<Event>>();
     private LocationManager locationManager;
     private LocationManager mLocationManager;
     private ItemAdapter mAdapter;
@@ -180,12 +183,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         adress =  (TextView) findViewById(R.id.bottom_adress);
     }
 
-    private void addItems(LatLng latlng, String title) {
+    private void addItems(LatLng latlng, String title, String adress, int id) {
 
         double lat = latlng.latitude;
         double lng = latlng.longitude;
 
-        MyItem offsetItem = new MyItem(lat, lng, title , title );
+        MyItem offsetItem = new MyItem(lat, lng, title , adress, id);
         mClusterManager.addItem(offsetItem);
     }
 
@@ -290,10 +293,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onClusterItemInfoWindowClick(MyItem myItem) {
 
-        Intent i = new Intent(this, MapsActivity.class);
-        i.setAction(myItem.getTitle());
-        startActivity(i);
-
         if (myItem.getTitle().equals("some title")){
             //do something specific to this InfoWindow....
         }
@@ -312,12 +311,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         routing.execute();
     }
 
-    public void showSheet() {
+    public void showSheet(int id) {
         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ItemAdapter(createItems(), this);
+        mAdapter = new ItemAdapter(createItems(id), this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -329,12 +328,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void showEvents() {
-        Log.d("events", String.valueOf(events.size()) + " " + events.get(0).getLet());
-        for (Event event : events) {
-            final LatLng latLng = new LatLng(event.getLet(), event.getLng());
-            addItems(latLng,event.getTitle());
-//            setMarker(latLng, mMap, event.getTitle(), event.getId());
+//        Log.d("events", String.valueOf(events.size()) + " " + events.get(0).getLet());
+//        for (Event event : events) {
+//            final LatLng latLng = new LatLng(event.getLet(), event.getLng());
+//            addItems(latLng,event.getTitle());
+////            setMarker(latLng, mMap, event.getTitle(), event.getId());
+//        }
+
+        Log.d("FUС", String.valueOf(markers.size()));
+
+        for (MapsMarker marker : markers) {
+            final LatLng latLng = new LatLng(marker.getLat(), marker.getLng());
+            addItems(latLng,  marker.getName(), marker.getAdress(), marker.getId());
         }
+
     }
 
     @Override
@@ -344,36 +351,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
        // marker.getTitle();
-        mAdapter = new ItemAdapter(createItems(), this);
+        //mAdapter = new ItemAdapter(createItems(), this);
         recyclerView.setAdapter(mAdapter);
 //        marker.showInfoWindow();
         return true;
     }
 
-    public List<Item> createItems() {
+    public List<Item> createItems(int id) {
         ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item(R.mipmap.ic_launcher, "Item 1",1));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 2",2));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 3",3));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
-        items.add(new Item(R.mipmap.ic_launcher, "Item 4",4));
+
+        List<Event> eve = eventMap.get(id);
+
+        for (int i = 0; i < eve.size();  i++) {
+             Log.d("SER", String.valueOf(eve.get(i).getTitle()) + i );
+            items.add(new Item(eve.get(i).getTitle(),eve.get(i).getId(), eve.get(i)));
+        }
+
         return items;
     }
+
 
     @Override
     public void onItemClick(Item item) {
         //behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         int id  = item.getmId();
-        Event event = events.get(id);
+        //item.getmEvent().getId();
+        //Event event = events.get(id);
         Intent intent = new Intent(MapsActivity.this, SingleEventActivity.class);
-        intent.putExtra("id", event.getId());
-        intent.putExtra("distance", event.getDistance());
+        intent.putExtra("id", item.getmEvent().getId());
+        intent.putExtra("distance", item.getmEvent().getDistance());
         startActivity(intent);
     }
 
@@ -430,10 +436,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             tvTitle.setText(clickedClusterItem.getTitle());
             tvSnippet.setText(clickedClusterItem.getSnippet());
 
-            String title = clickedClusterItem.getTitle();
+            String title = clickedClusterItem.getSnippet();
+
+            int id = clickedClusterItem.getId();
 
             Log.d("FU", title);
-            showSheet();
+
+            showSheet(id);
             adress.setText(title);
 
             return myContentsView;
@@ -484,12 +493,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {}
     }
-    
+
     private final class EventsLoader extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            final String allEvents = handler.getAllEvents(context,lat ,lng);
+            final String allEvents = handler.getMapEvents(context,lat ,lng);
             Log.d("response_create_alleve", allEvents);
             return allEvents;
         }
@@ -501,11 +510,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             try {
                 JSONArray array = object.getJSONArray("object_list");
 
+                int identy;
+
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject json = (JSONObject) array.get(i);
-                    Event event = new Event(json);
-                    events.add(event);
+                    MapsMarker mapsMarker = new MapsMarker(json);
+                  //  Event event = new Event(json);
+                    identy = mapsMarker.getId();
+
+
+
+                    Log.d("FU_", String.valueOf(identy));
+                    markers.add(mapsMarker);
+
+                    List<Event> eventes = new ArrayList<>();
+
+                    try {
+                        JSONArray eve = json.getJSONArray("events");
+
+                        for (int j = 0; j < eve.length(); j++) {
+
+                            JSONObject jsonE = (JSONObject) eve.get(j);
+                            Event event = new Event(jsonE);
+
+                            eventes.add(event);
+                        }
+                        eventMap.put(identy,eventes);
+
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException("JSON parsing error", e);
+                    }
+
+                    //events.add(event);
                 }
+
                 showEvents();
 
             } catch (JSONException e) {

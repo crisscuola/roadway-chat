@@ -35,7 +35,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter, parent, false));
+                .inflate(R.layout.bottom_item, parent, false));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         public void setData(Item item) {
             this.item = item;
-            imageView.setImageResource(item.getDrawableResource());
+            //imageView.setImageResource(item.getDrawableResource());
             textView.setText(item.getTitle());
         }
 

@@ -27,6 +27,7 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.EVENT;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FAVOR;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FAVORITE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.MAP;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.PROFILE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
@@ -47,6 +48,16 @@ public class EventRequestHandler {
         Log.d("Location", String.valueOf(url));
         return getResponse(context, request);
      }
+
+    public <T extends Activity> String getMapEvents(T context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(MAP).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location", String.valueOf(url));
+        return getResponse(context, request);
+    }
 
     public <T extends Activity> String getAllEvents(T context, double lat, double lng, UrlType urlType) {
         String latParam = String.valueOf(lat);

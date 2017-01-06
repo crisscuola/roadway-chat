@@ -90,6 +90,16 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+
+    MAP {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return EVENT.getUrl()
+                    .addPathSegment("map")
+                    .addPathSegment("");
+        }
+    },
+
     OWN {
         @Override
         public HttpUrl.Builder getUrl() {

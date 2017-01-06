@@ -11,6 +11,7 @@
         android:text="TEST!"
         android:textSize="15sp"
         android:layout_marginBottom="2dp"
+        android:visibility="visible"
         android:textColor="#000"/>
 
     <TextView
@@ -19,6 +20,7 @@
         android:id="@+id/marker_description"
         android:text="TEST!"
         android:textSize="12sp"
+        android:visibility="gone"
         android:textColor="#000"/>
 
 
