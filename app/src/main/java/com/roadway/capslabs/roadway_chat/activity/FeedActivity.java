@@ -19,6 +19,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +32,7 @@ import android.widget.ProgressBar;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
+import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
@@ -52,6 +55,9 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private ImageView star;
     private ProgressBar progressBar;
 
+    private RecyclerView recyclerView;
+    private FeedRecyclerViewAdapter recyclerAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private android.widget.SearchView searchView;
     private double lat, lng;
@@ -158,22 +164,37 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void initAdapter() {
-        ListView listView = (ListView) findViewById(R.id.events_list);
-//        SwipeLayout listView = (SwipeLayout) findViewById(R.id.events_list);
-        eventsAdapter = new EventsAdapter(this);
-        listView.setAdapter(eventsAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //ListView listView = (ListView) findViewById(R.id.events_list);
+        recyclerView = (RecyclerView) findViewById(R.id.feed_recycler_view);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerAdapter = new FeedRecyclerViewAdapter(this, new FeedRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(Event event) {
                 Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
-                Event event = eventsAdapter.getItem(i);
                 intent.putExtra("favourite", event.getFavor());
                 intent.putExtra("id", event.getId());
                 intent.putExtra("distance", event.getDistance());
                 startActivity(intent);
             }
         });
+        recyclerView.setAdapter(recyclerAdapter);
 
+//        SwipeLayout listView = (SwipeLayout) findViewById(R.id.events_list);
+        //eventsAdapter = new EventsAdapter(this);
+//        listView.setAdapter(eventsAdapter);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
+//                Event event = eventsAdapter.getItem(i);
+//                intent.putExtra("favourite", event.getFavor());
+//                intent.putExtra("id", event.getId());
+//                intent.putExtra("distance", event.getDistance());
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -250,8 +271,10 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                     Event event = new Event(json);
                     events.add(event);
                 }
-                eventsAdapter.addEvents(events);
-                eventsAdapter.notifyDataSetChanged();
+                //eventsAdapter.addEvents(events);
+                //eventsAdapter.notifyDataSetChanged();
+                recyclerAdapter.addEvents(events);
+                recyclerAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }

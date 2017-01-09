@@ -71,6 +71,7 @@ public class EventsAdapter extends BaseAdapter {
         image = (ImageView) rowView.findViewById(R.id.image);
         distance = (TextView) rowView.findViewById(R.id.distance);
         star = (ImageView)  rowView.findViewById(R.id.star_e);
+
         Event event = getItem(position);
         String description = event.getDescription();
         String title = event.getTitle();
@@ -101,21 +102,7 @@ public class EventsAdapter extends BaseAdapter {
                 Log.d("add", "STAR CLICK !!!");
                 Event event = getItem(position);
                 int id = event.getId();
-
-//                if (favor)  {
-//                    new UnFavoriter().execute(id);
-//                    favor = !favor;
-//                    star.setImageResource(R.drawable.favorite_off);
-//                    star.refreshDrawableState();
-//                } else {
-//                    new Favoriter().execute(id);
-//                    star.setImageResource(R.drawable.favorite_on);
-//                    star.refreshDrawableState();
-//                    }
-//                favor = !favor;
-
                 }
-
         });
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
