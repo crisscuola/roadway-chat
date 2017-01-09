@@ -201,13 +201,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Log.d("add", "Click share!!");
-                getAlert();
-//                Intent intent = new Intent();
-//                intent.setAction(Intent.ACTION_SEND);
-//
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_TEXT, "www.vk.com");
-//                startActivity(Intent.createChooser(intent, "Share"));
+                //getAlert();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "www.vk.com");
+                startActivity(Intent.createChooser(intent, "Share"));
             }
         });
 

@@ -16,11 +16,6 @@
         android:layout_height="wrap_content"
         tools:context="com.shppandroid1.app.MainActivity">
 
-        <!--<ListView-->
-            <!--android:id="@+id/events_list"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content" />-->
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/feed_recycler_view"
             android:scrollbars="vertical"
