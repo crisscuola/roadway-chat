@@ -14,5 +14,17 @@
     <color name="colorBackgroundGrey">#efefef</color>
     <color name="red">#c70000</color>
     <color name="black">#000</color>
+    <color name="l_1">#ef1e25</color>
+    <color name="l_2">#029a55</color>
+    <color name="l_3">#0252a2</color>
+    <color name="l_4">#019ee0</color>
+    <color name="l_5">#745c2f</color>
+    <color name="l_6">#fbaa33</color>
+    <color name="l_7">#b61d8e</color>
+    <color name="l_8">#ffd803</color>
+    <color name="l_9">#acadaf</color>
+    <color name="l_10">#b1d332</color>
+    <color name="l_11">#5091bb</color>
+    <color name="l_12">#ffa8af</color>
 
 </resources>

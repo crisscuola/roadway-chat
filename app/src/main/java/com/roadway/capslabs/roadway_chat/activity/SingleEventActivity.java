@@ -80,6 +80,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
+    private Map<Integer, String> colors = new HashMap<Integer, String>();
     private int id;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
 
@@ -200,13 +201,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
                 Log.d("add", "Click share!!");
-                //getAlert();
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "www.vk.com");
-                startActivity(Intent.createChooser(intent, "Share"));
+                getAlert();
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_SEND);
+//
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_TEXT, "www.vk.com");
+//                startActivity(Intent.createChooser(intent, "Share"));
             }
         });
 
@@ -336,7 +337,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
         this.title.setText(event.getTitle());
         this.description.setText(description);
-        rating.setText(String.valueOf(event.getRating()));
+        rating.setText(String.valueOf(event.getCountUsed()));
         //address.setText(String.valueOf(event.getAddress()));
         //address.setText("Route to Discount");
 
@@ -355,6 +356,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             e.printStackTrace();
         }
         this.metro.setText(metroStation);
+        metro.setTextColor(Color.parseColor(metroColor(event.getColor())));
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .placeholder(R.drawable.event_placeholder)
                 .into(imageView);
@@ -373,6 +375,29 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    private String metroColor(int colorNum) {
+
+        colors.put(1,"#ef1e25");
+        colors.put(2,"#029a55");
+        colors.put(3,"#0252a2");
+        colors.put(4,"#019ee0");
+        colors.put(5,"#745c2f");
+        colors.put(6,"#fbaa33");
+        colors.put(7,"#b61d8e");
+        colors.put(8,"#ffd803");
+        colors.put(9,"#acadaf");
+        colors.put(10,"#b1d332");
+        colors.put(11,"#5091bb");
+        colors.put(12,"#ffa8af");
+
+        String color = "#000";
+
+        color = colors.get(colorNum);
+
+        return color;
     }
 
     private String adressParse(String adress) {

@@ -19,6 +19,8 @@ public class SingleEvent {
     private final double lng;
     private final String phone;
     private final String url;
+    private final int countUsed;
+    private final int color;
 
     public SingleEvent(JSONObject eventObj) {
         try {
@@ -34,6 +36,8 @@ public class SingleEvent {
             lng = eventObj.getDouble("longitude");
             phone = eventObj.getString("phone");
             url = eventObj.getString("url");
+            countUsed = eventObj.getInt("count_used");
+            color = eventObj.getInt("line_number");
 
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
@@ -87,4 +91,10 @@ public class SingleEvent {
     public String getPhone() { return phone;}
 
     public String getUrl() { return url;}
+
+    public int getCountUsed() {return countUsed;}
+
+    public int getColor() {return  color;}
+
+
 }
