@@ -76,10 +76,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
             if (extras.containsKey("email")) {
                 email = getIntent().getExtras().getString("email");
 
-//                SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPref.edit();
-//                editor.putString("email", email).commit();
-
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString("email", email);
@@ -164,7 +160,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void initAdapter() {
-        //ListView listView = (ListView) findViewById(R.id.events_list);
         recyclerView = (RecyclerView) findViewById(R.id.feed_recycler_view);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -271,8 +266,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                     Event event = new Event(json);
                     events.add(event);
                 }
-                //eventsAdapter.addEvents(events);
-                //eventsAdapter.notifyDataSetChanged();
+
                 recyclerAdapter.addEvents(events);
                 recyclerAdapter.notifyDataSetChanged();
             } catch (JSONException e) {

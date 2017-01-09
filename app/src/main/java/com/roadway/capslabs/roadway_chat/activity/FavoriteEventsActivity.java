@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
+import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
@@ -50,13 +53,15 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     private final static DrawerFactory drawerFactory;
     private final static HttpConnectionHandler handler;
 
-    private ListView listView;
+    private RecyclerView recyclerView;
+    private FeedRecyclerViewAdapter recyclerAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     private Drawer drawer;
     private Toolbar toolbar;
     private double lat, lng;
     private LatLng location;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private EventsAdapter eventsAdapter;
     private final Activity context = this;
 
     static {
@@ -140,18 +145,19 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     }
 
     private void initAdapter() {
-        listView = (ListView) findViewById(R.id.events_list_favor);
-        eventsAdapter = new EventsAdapter(this);
-        listView.setAdapter(eventsAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerView = (RecyclerView) findViewById(R.id.favor_recycler_view);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerAdapter = new FeedRecyclerViewAdapter(this, new FeedRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(Event event) {
                 Intent myIntent = new Intent(FavoriteEventsActivity.this, SingleEventActivity.class);
-                Event event = eventsAdapter.getItem(i);
                 myIntent.putExtra("id", event.getId());
                 startActivity(myIntent);
             }
         });
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
@@ -246,12 +252,12 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 //                    Event event = new Event("Title_mock", json.getString("about"),
 //                            "bytes_mock".getBytes(), new DateRange("18:00 01.10.2016", "18:00 01.10.2017"), 0.0f);
                     events.add(event);
-//                    eventsAdapter.add(event.getDescription());
-//                    eventsAdapter.notifyDataSetChanged();
+//                    recyclerAdapter.add(event.getDescription());
+//                    recyclerAdapter.notifyDataSetChanged();
 
                 }
-                eventsAdapter.addEvents(events);
-                eventsAdapter.notifyDataSetChanged();
+                recyclerAdapter.addEvents(events);
+                recyclerAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
