@@ -71,7 +71,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feed);
+        setContentView(R.layout.activity_favor);
         initToolbar(getString(R.string.title_activity_sub));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
@@ -140,7 +140,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     }
 
     private void initAdapter() {
-        listView = (ListView) findViewById(R.id.events_list);
+        listView = (ListView) findViewById(R.id.events_list_favor);
         eventsAdapter = new EventsAdapter(this);
         listView.setAdapter(eventsAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
