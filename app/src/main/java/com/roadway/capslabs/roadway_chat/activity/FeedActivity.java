@@ -31,6 +31,7 @@ import android.widget.ProgressBar;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.adapters.EndlessRecyclerViewScrollListener;
 import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
@@ -57,7 +58,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private RecyclerView recyclerView;
     private FeedRecyclerViewAdapter recyclerAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
     private android.widget.SearchView searchView;
     private double lat, lng;
@@ -67,6 +68,8 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private LocationManager locationManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LocationManager mLocationManager;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +115,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         lng = location.getLongitude();
 
         new EventsLoader().execute(new EventRequestHandler());
-
-        //star = (ImageView)  findViewById(R.id.star_e);
-
-
     }
 
     private Location getLastKnownLocation() {
@@ -174,22 +173,20 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                 startActivity(intent);
             }
         });
-        recyclerView.setAdapter(recyclerAdapter);
 
-//        SwipeLayout listView = (SwipeLayout) findViewById(R.id.events_list);
-        //eventsAdapter = new EventsAdapter(this);
-//        listView.setAdapter(eventsAdapter);
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
-//                Event event = eventsAdapter.getItem(i);
-//                intent.putExtra("favourite", event.getFavor());
-//                intent.putExtra("id", event.getId());
-//                intent.putExtra("distance", event.getDistance());
-//                startActivity(intent);
-//            }
-//        });
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadNextData(totalItemsCount);
+            }
+        };
+
+        recyclerView.addOnScrollListener(scrollListener);
+        recyclerView.setAdapter(recyclerAdapter);
+    }
+
+    private void loadNextData(int offset) {
+        Log.d("feed_activity", "load new data, " + offset);
     }
 
     @Override

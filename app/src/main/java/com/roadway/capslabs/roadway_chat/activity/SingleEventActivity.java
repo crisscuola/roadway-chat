@@ -207,6 +207,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, url);
+
                 startActivity(Intent.createChooser(intent, "Share"));
             }
         });

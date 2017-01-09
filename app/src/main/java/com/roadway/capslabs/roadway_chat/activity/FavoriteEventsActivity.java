@@ -22,13 +22,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
@@ -243,18 +241,22 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
         protected void onPostExecute(String result) {
             Log.d("response_farovtite", result);
             JSONObject object = HttpConnectionHandler.parseJSON(result);
+
             try {
                 JSONArray array = object.getJSONArray("object_list");
+
+                if (array.length() == 0) {
+                    TextView noItemsTextView = (TextView) findViewById(R.id.no_favor_textview);
+                    noItemsTextView.setVisibility(View.VISIBLE);
+
+                    return;
+                }
+
                 List<Event> events = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject json = (JSONObject)array.get(i);
                     Event event = new Event(json);
-//                    Event event = new Event("Title_mock", json.getString("about"),
-//                            "bytes_mock".getBytes(), new DateRange("18:00 01.10.2016", "18:00 01.10.2017"), 0.0f);
                     events.add(event);
-//                    recyclerAdapter.add(event.getDescription());
-//                    recyclerAdapter.notifyDataSetChanged();
-
                 }
                 recyclerAdapter.addEvents(events);
                 recyclerAdapter.notifyDataSetChanged();
