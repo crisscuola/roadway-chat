@@ -8,6 +8,15 @@
         android:id="@+id/toolbar_feed"
         layout="@layout/toolbar" />
 
+    <TextView
+        android:id="@+id/no_favor_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_items"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:visibility="gone" />
+
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

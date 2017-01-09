@@ -14,16 +14,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
+import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
@@ -42,10 +43,13 @@ import java.util.Locale;
 /**
  * Created by kirill on 01.12.16
  */
-public class RateListActivity extends AppCompatActivity{
+public class RateListActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
-    private EventsAdapter eventsAdapter;
+
+    private FeedRecyclerViewAdapter recyclerAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
     private Toolbar toolbar;
     private android.widget.SearchView searchView;
@@ -112,24 +116,22 @@ public class RateListActivity extends AppCompatActivity{
     }
 
     private void initAdapter() {
-        ListView listView = (ListView) findViewById(R.id.events_list);
-        eventsAdapter = new EventsAdapter(this);
-        listView.setAdapter(eventsAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerView = (RecyclerView) findViewById(R.id.rate_recycler_view);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerAdapter = new FeedRecyclerViewAdapter(this, new FeedRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(Event event) {
                 Intent intent = new Intent(RateListActivity.this, RankActivity.class);
-                Event event = eventsAdapter.getItem(i);
                 Bundle bundle = new Bundle();
                 bundle.putString("subscription_id", String.valueOf(event.getId()));
                 intent.putExtras(bundle);
-//                intent.putExtra("id", event.getId());
-//                intent.putExtra("distance", event.getDistance());
                 startActivity(intent);
             }
         });
+        recyclerView.setAdapter(recyclerAdapter);
     }
-
 
 
     private class MyLocationListener implements LocationListener {
@@ -153,8 +155,7 @@ public class RateListActivity extends AppCompatActivity{
                     System.out.println(addresses.get(0).getLocality());
                     cityName = addresses.get(0).getLocality();
                 }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
@@ -164,13 +165,16 @@ public class RateListActivity extends AppCompatActivity{
         }
 
         @Override
-        public void onProviderDisabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+        }
 
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+        }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 
 
@@ -178,7 +182,7 @@ public class RateListActivity extends AppCompatActivity{
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getAllEvents(context,lat,lng, UrlType.CONFIRMED);
+            return handler.getAllEvents(context, lat, lng, UrlType.CONFIRMED);
         }
 
         @Override
@@ -187,6 +191,14 @@ public class RateListActivity extends AppCompatActivity{
             JSONObject object = HttpConnectionHandler.parseJSON(result);
             try {
                 JSONArray array = object.getJSONArray("object_list");
+
+                if (array.length() == 0) {
+                    TextView noItemsTextView = (TextView) findViewById(R.id.no_rate_textview);
+                    noItemsTextView.setVisibility(View.VISIBLE);
+
+                    return;
+                }
+
                 List<Event> events = new ArrayList<>();
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject json = (JSONObject) array.get(i);
@@ -194,8 +206,8 @@ public class RateListActivity extends AppCompatActivity{
                     Event event = new Event(eventJson);
                     events.add(event);
                 }
-                eventsAdapter.addEvents(events);
-                eventsAdapter.notifyDataSetChanged();
+                recyclerAdapter.addEvents(events);
+                recyclerAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
