@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -95,7 +96,10 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         initViews();
         initToolbar("Discount");
 
-        drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
+//        drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
+//
+//        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         new EventLoader().execute(id);
 
@@ -211,8 +215,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 startActivity(Intent.createChooser(intent, "Share"));
             }
         });
-
-
     }
 
     @Override
@@ -239,7 +241,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle(title);
         drawer =  drawerFactory.getDrawerBuilder(this, toolbar)
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
@@ -250,10 +252,11 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 })
                 .build();
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
-        drawer.getActionBarDrawerToggle().onDrawerStateChanged(DrawerLayout.STATE_IDLE);
-        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(title);
+//        drawer.getActionBarDrawerToggle().onDrawerStateChanged(DrawerLayout.STATE_IDLE);
+//        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        //getSupportActionBar().setTitle(title);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
     }

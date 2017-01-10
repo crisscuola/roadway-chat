@@ -17,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -141,11 +142,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 
     private void initToolbar(String title) {
