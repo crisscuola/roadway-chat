@@ -365,7 +365,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (int i = 0; i < eve.size();  i++) {
              Log.d("SER", String.valueOf(eve.get(i).getTitle()) + i );
-            items.add(new Item(eve.get(i).getTitle(),eve.get(i).getId(), eve.get(i)));
+            items.add(new Item(eve.get(i).getTitle(),eve.get(i).getId(), eve.get(i), eve.get(i).getRating()));
         }
 
         return items;

@@ -10,12 +10,14 @@ public class Item {
     private int mId;
     private String mTitle;
     private Event mEvent;
+    private int mRating;
 
-    public Item(String title, int id, Event event) {
+    public Item(String title, int id, Event event, int rating) {
       //  mDrawableRes = drawable;
         mTitle = title;
         mId =id;
         mEvent = event;
+        mRating = rating;
     }
 
 
@@ -34,4 +36,6 @@ public class Item {
 
     public  Event getmEvent() {return mEvent;}
 
+    public int getmRating() {return mRating;
+    }
 }

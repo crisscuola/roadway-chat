@@ -56,7 +56,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView imageView;
-        public TextView textView;
+        public TextView textView, rating;
         public Item item;
 
         public ViewHolder(View itemView) {
@@ -64,6 +64,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             itemView.setOnClickListener(this);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
             textView = (TextView) itemView.findViewById(R.id.textView);
+            rating = (TextView) itemView.findViewById(R.id.bottom_rating);
 
         }
 
@@ -71,6 +72,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             this.item = item;
             //imageView.setImageResource(item.getDrawableResource());
             textView.setText(item.getTitle());
+            rating.setText(String.valueOf(item.getmRating()));
         }
 
         @Override
