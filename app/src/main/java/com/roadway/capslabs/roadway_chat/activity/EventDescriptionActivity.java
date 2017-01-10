@@ -2,8 +2,11 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -26,17 +29,41 @@ public class EventDescriptionActivity extends AppCompatActivity {
         String descriptionText = getIntent().getExtras().getString("description");
         description.setText(descriptionText);
         initToolbar("Description");
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
     }
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_description);
-        toolbar.setTitle(title);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(title);
+
+        drawer =  drawerFactory.getDrawerBuilderWithout(this)
+                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+                    @Override
+                    public boolean onNavigationClickListener(View view) {
+                        onBackPressed();
+                        return false;
+                    }
+                })
+                .build();
+
+        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -223,8 +223,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         drawer.closeDrawer();
     }
 
-
-
     private Code hasSeenQr() {
         List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
         Code code = null;
@@ -239,7 +237,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         intent.putExtra("bitmap", bitmap);
         startActivity(intent);
     }
-
 
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
@@ -261,23 +258,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-//        drawer.getActionBarDrawerToggle().onDrawerStateChanged(DrawerLayout.STATE_IDLE);
-//        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-        //getSupportActionBar().setTitle(title);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -288,8 +271,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
     public void initViews() {
         imageView = (ImageView) findViewById(R.id.image);

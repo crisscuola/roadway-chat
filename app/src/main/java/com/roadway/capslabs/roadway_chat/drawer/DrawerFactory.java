@@ -87,13 +87,6 @@ public class DrawerFactory {
 
                         if (position == 5) {
                             getAlert(activity).show();
-//                            try {
-//                                new Logouter().execute(activity).get();
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            } catch (ExecutionException e) {
-//                                e.printStackTrace();
-//                            }
                         } else
                             activity.startActivity(intent);
                         return true;
