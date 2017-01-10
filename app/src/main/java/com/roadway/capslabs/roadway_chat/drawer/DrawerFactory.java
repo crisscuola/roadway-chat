@@ -72,6 +72,37 @@ public class DrawerFactory {
         return drawer;
     }
 
+    public DrawerBuilder getDrawerBuilderWithout(final Activity activity) {
+        final DrawerBuilder drawer = new DrawerBuilder()
+                .withActivity(activity)
+                .withActionBarDrawerToggle(true)
+                .withAccountHeader(getAccountHeader(activity))
+                .addDrawerItems(
+                        getDrawerItems()
+                ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Class<? extends Activity> toActivity = getActivity(position);
+                        Intent intent = new Intent(activity, toActivity);
+
+                        if (position == 5) {
+                            getAlert(activity).show();
+//                            try {
+//                                new Logouter().execute(activity).get();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            } catch (ExecutionException e) {
+//                                e.printStackTrace();
+//                            }
+                        } else
+                            activity.startActivity(intent);
+                        return true;
+                    }
+                });
+
+        return drawer;
+    }
+
     private AccountHeader getAccountHeader(Activity activity) {
         try {
             JSONObject profile = getProfile();

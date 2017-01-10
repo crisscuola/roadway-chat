@@ -14,12 +14,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -223,6 +223,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         drawer.closeDrawer();
     }
 
+
+
     private Code hasSeenQr() {
         List<Code> codes = Code.find(Code.class, "event_id = ?", String.valueOf(id));
         Code code = null;
@@ -238,11 +240,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         startActivity(intent);
     }
 
+
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_map);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
-        drawer =  drawerFactory.getDrawerBuilder(this, toolbar)
+
+
+        drawer =  drawerFactory.getDrawerBuilderWithout(this)
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
                     public boolean onNavigationClickListener(View view) {
@@ -251,8 +256,12 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     }
                 })
                 .build();
-        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+
+        //drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
+        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 //        drawer.getActionBarDrawerToggle().onDrawerStateChanged(DrawerLayout.STATE_IDLE);
 //        drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
@@ -260,6 +269,27 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
     }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            finish(); // close this activity and return to preview activity (if there is any)
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void initViews() {
         imageView = (ImageView) findViewById(R.id.image);
