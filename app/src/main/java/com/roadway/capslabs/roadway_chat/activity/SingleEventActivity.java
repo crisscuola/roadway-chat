@@ -31,7 +31,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -519,7 +518,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, CustomMarker customMarker) {
         Marker marker;
         mMap = googleMap;
-        marker = mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(resizeMarker())));
+        marker = mMap.addMarker(new MarkerOptions().position(latLng));//.icon(BitmapDescriptorFactory.fromBitmap(resizeMarker())));
         markersMap.put(marker, customMarker);
         marker.showInfoWindow();
     }
