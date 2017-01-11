@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.adapters;
 
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.setData(mItems.get(position));
+
+        if(holder.getPosition() == position)
+            holder.itemView.setBackgroundColor(Color.WHITE);
+        else
+            holder.itemView.setBackgroundColor(Color.GRAY);
     }
 
     @Override
@@ -52,6 +58,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public long getItemId(int position) {
         return position;
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

@@ -269,6 +269,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .tilt(0)
                 .build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+
     }
 
 //        final int finalId = id;
@@ -424,18 +426,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         MyCustomAdapterForItems() {
             myContentsView = getLayoutInflater().inflate(
-                    R.layout.marker_window, null);
+                    R.layout.custom_bubble, null);
         }
         @Override
         public View getInfoWindow(Marker marker) {
 
             TextView tvTitle = ((TextView) myContentsView
                     .findViewById(R.id.marker_title));
-            TextView tvSnippet = ((TextView) myContentsView
-                    .findViewById(R.id.marker_description));
+//            TextView tvSnippet = ((TextView) myContentsView
+//                    .findViewById(R.id.marker_description));
 
             tvTitle.setText(clickedClusterItem.getTitle());
-            tvSnippet.setText(clickedClusterItem.getSnippet());
+//            tvSnippet.setText(clickedClusterItem.getSnippet());
 
             String title = clickedClusterItem.getSnippet();
 

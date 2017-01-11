@@ -26,8 +26,9 @@
 
         <ImageView
             android:id="@+id/price_icon"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:paddingTop="2dp"
             android:src="@drawable/rating"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
@@ -40,6 +41,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:text="0"
+            android:paddingTop="3dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"

@@ -43,9 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:id="@+id/bottom_adress"
             android:textColor="#000"
-            android:layout_marginLeft="15dp"
             android:textSize="15sp"
             android:text="Adress" />
 
