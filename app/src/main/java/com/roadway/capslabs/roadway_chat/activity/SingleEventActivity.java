@@ -373,7 +373,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         this.metro.setText(metroStation);
         metro.setTextColor(Color.parseColor(metroColor(event.getColor())));
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
-                .placeholder(R.drawable.event_placeholder)
+                .placeholder(R.drawable.event_placehold_m)
                 .into(imageView);
         //displayCode(getCode(String.valueOf(event.getId())));
     }

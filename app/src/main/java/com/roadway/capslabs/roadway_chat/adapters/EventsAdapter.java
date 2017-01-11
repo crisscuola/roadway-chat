@@ -107,7 +107,7 @@ public class EventsAdapter extends BaseAdapter {
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .fit()
-                .placeholder(R.drawable.event_placeholder)
+                .placeholder(R.drawable.event_placehold_m)
                 .into(image);
 
         return rowView;

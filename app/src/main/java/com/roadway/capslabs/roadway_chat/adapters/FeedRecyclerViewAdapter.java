@@ -77,7 +77,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
                 .fit()
-                .placeholder(R.drawable.event_placeholder)
+                .placeholder(R.drawable.event_placehold_m)
                 .into(holder.image);
 
     }

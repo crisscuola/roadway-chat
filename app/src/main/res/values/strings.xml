@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Discount Basket</string>
+    <string name="app_name">АкциоН</string>
     <string name="action_settings">Settings</string>
     <integer name="com_vk_sdk_AppId">5620732</integer>
     <string name="facebook_app_id">123248598163822</string>
@@ -41,7 +41,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_own">My Events</string>
     <string name="title_activity_sub">My Favorites</string>
-    <string name="app_title">сатисфАкция</string>
+    <string name="app_title">АкциоН</string>
     <string name="field_email">Email:</string>
     <string name="field_password1">Password :</string>
     <string name="field_password2">Repeat password:</string>

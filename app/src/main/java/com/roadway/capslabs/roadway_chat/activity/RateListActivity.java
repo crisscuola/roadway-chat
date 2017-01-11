@@ -59,6 +59,7 @@ public class RateListActivity extends AppCompatActivity {
     private final Activity context = this;
     private LocationManager locationManager;
     private LatLng latLngl;
+    private LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +86,9 @@ public class RateListActivity extends AppCompatActivity {
             return;
         }
         locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        Location location = getLastKnownLocation();
 
         lat = location.getLatitude();
         lng = location.getLongitude();
@@ -133,6 +134,26 @@ public class RateListActivity extends AppCompatActivity {
         recyclerView.setAdapter(recyclerAdapter);
     }
 
+
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
 
     private class MyLocationListener implements LocationListener {
 
