@@ -48,10 +48,12 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
         if (favor) {
             Log.d("FAVOR", "T");
+            holder.star.setVisibility(View.VISIBLE);
             holder.star.setImageResource(R.drawable.favorite_on);
         } else {
             Log.d("FAVOR", "F");
             holder.star.setImageResource(R.drawable.favorite_off);
+            holder.star.setVisibility(View.GONE);
         }
 
         holder.textView.setText(title);
@@ -59,6 +61,8 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         String km = event.getDistance() + "km";
         holder.distance.setText(km);
         Log.d("recycler", holder.textView.getText().toString());
+
+
         holder.star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

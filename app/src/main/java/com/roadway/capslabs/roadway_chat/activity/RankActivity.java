@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -23,7 +25,7 @@ import com.roadway.capslabs.roadway_chat.network.RatingVoteHandler;
 /**
  * Created by konstantin on 25.11.16
  */
-public class RankActivity extends AppCompatActivity {
+public class RankActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private Activity context = this;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -31,6 +33,9 @@ public class RankActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button buttonRank;
     private EditText review;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar progressBar;
+    private String subscription_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +45,13 @@ public class RankActivity extends AppCompatActivity {
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         Bundle data = getIntent().getExtras();
-        final String subscription_id =  data.getString("subscription_id");
+        subscription_id =  data.getString("subscription_id");
+
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+//        mSwipeRefreshLayout.setOnRefreshListener(this);
+//        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.black});
 
         buttonRank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +84,21 @@ public class RankActivity extends AppCompatActivity {
 
     private RatingVote getRatingVote() {
         return new RatingVote((int) ratingBar.getRating(), review.getText().toString());
+    }
+
+    @Override
+    public void onRefresh() {
+//        progressBar.setVisibility(View.VISIBLE);
+//        mSwipeRefreshLayout.setRefreshing(true);
+//        mSwipeRefreshLayout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                initViews("Rank");
+//                RatingVote ratingVote = getRatingVote();
+//                new RateRequest().execute(ratingVote, subscription_id);
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        }, 300);
     }
 
     private final class RateRequest extends AsyncTask<Object, Void, String> {
