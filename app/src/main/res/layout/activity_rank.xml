@@ -37,6 +37,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="50dp"
             android:id="@+id/review"
+            android:theme="@style/BlackEditTextTheme"
             android:layout_gravity="center_horizontal" />
 
         <Button

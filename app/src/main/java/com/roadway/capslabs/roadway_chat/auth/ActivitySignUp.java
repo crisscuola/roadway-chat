@@ -1,11 +1,13 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by konstantin on 07.09.16
@@ -103,6 +106,32 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         }
     }
 
+    private AlertDialog.Builder getAlert(final Activity context) {
+        String title = "Check your email";
+        String message = "Please check your email to complete registration";
+        String okString = "OK";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(okString, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(context, ActivitySignIn.class);
+                context.startActivity(intent);
+            }
+        });
+
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+
+        return ad;
+    }
+
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
@@ -125,9 +154,10 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
                         "Registration failed", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
-            intent.putExtra("email", email.getText().toString());
-            startActivity(intent);
+            getAlert(context).show();
+//            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
+//            intent.putExtra("email", email.getText().toString());
+//            startActivity(intent);
         }
     }
 }

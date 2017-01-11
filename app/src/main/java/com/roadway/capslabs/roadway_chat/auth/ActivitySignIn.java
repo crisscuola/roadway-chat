@@ -98,6 +98,8 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
 
         @Override
         protected void onPostExecute(String result) {
+            Log.d("response_login", result);
+
             JSONObject object;
             try {
                 object = new JSONObject(result);
@@ -113,7 +115,6 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             Intent activitySignUp = new Intent(context, FeedActivity.class);
             activitySignUp.putExtra("email", email.getText().toString());
             startActivity(activitySignUp);
-            Log.d("response_login", result);
         }
     }
 }
