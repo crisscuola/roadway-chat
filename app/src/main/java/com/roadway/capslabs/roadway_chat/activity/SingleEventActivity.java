@@ -92,7 +92,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_single_event);
-        initViews();
         initToolbar("Discount");
 
         if (!ConnectionChecker.isOnline(this)) {
@@ -100,6 +99,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             progressBar.setVisibility(View.GONE);
             return;
         }
+
+        initViews();
 
         id = getIntent().getExtras().getInt("id");
 
@@ -221,7 +222,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     @Override
     protected void onStop() {
         super.onStop();
-        drawer.closeDrawer();
     }
 
     private Code hasSeenQr() {
