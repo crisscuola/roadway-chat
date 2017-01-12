@@ -112,9 +112,10 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
                 return;
             }
 
-            Intent activitySignUp = new Intent(context, FeedActivity.class);
-            activitySignUp.putExtra("email", email.getText().toString());
-            startActivity(activitySignUp);
+            Intent feeedActivity = new Intent(context, FeedActivity.class);
+            feeedActivity.putExtra("email", email.getText().toString());
+            feeedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(feeedActivity);
         }
     }
 }

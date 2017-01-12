@@ -56,15 +56,11 @@ public class DrawerFactory {
 
                         if (position == 5) {
                             getAlert(activity).show();
-//                            try {
-//                                new Logouter().execute(activity).get();
-//                            } catch (InterruptedException e) {
-//                                e.printStackTrace();
-//                            } catch (ExecutionException e) {
-//                                e.printStackTrace();
-//                            }
+
                         } else
                             activity.startActivity(intent);
+
+
                         return true;
                     }
                 });
@@ -87,8 +83,11 @@ public class DrawerFactory {
 
                         if (position == 5) {
                             getAlert(activity).show();
+
                         } else
+
                             activity.startActivity(intent);
+
                         return true;
                     }
                 });
@@ -185,6 +184,7 @@ public class DrawerFactory {
         protected void onPostExecute(Activity context) {
             super.onPostExecute(context);
             Intent intent = new Intent(context, ActivityAuth.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);
         }
     }

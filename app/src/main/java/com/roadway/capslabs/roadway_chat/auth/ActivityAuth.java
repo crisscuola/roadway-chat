@@ -54,4 +54,10 @@ public class ActivityAuth extends AppCompatActivity  {
     protected void onPostResume() {
         super.onPostResume();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }
