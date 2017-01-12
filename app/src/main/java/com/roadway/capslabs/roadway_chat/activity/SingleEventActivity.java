@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.share.ShareFb;
 import com.roadway.capslabs.roadway_chat.share.ShareVk;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -74,7 +77,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private TextView title, description, rating, address, metro, dateEnd, creator, url, phone, adres, share;
     private Button showQr, vk, fb, add;
     private SingleEvent event;
-    private MapView mapView;
     private ProgressBar progressBar;
     private boolean favor;
 
@@ -88,17 +90,18 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_event);
-        id = getIntent().getExtras().getInt("id");
 
-        //distance = getIntent().getExtras().getDouble("distance");
+        setContentView(R.layout.activity_single_event);
         initViews();
         initToolbar("Discount");
 
-//        drawer =  drawerFactory.getDrawerBuilder(this, toolbar).build();
-//
-//        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
+        id = getIntent().getExtras().getInt("id");
 
         new EventLoader().execute(id);
 
@@ -118,7 +121,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         vk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(view.getContext(), ShareVk.class);
                 String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
                 intent.putExtra("url", url);

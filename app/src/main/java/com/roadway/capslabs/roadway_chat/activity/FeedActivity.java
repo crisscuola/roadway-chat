@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,20 +24,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EndlessRecyclerViewScrollListener;
-import com.roadway.capslabs.roadway_chat.adapters.EventsAdapter;
 import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,8 +49,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
     private Toolbar toolbar;
-    private EventsAdapter eventsAdapter;
-    private ImageView star;
     private ProgressBar progressBar;
 
     private RecyclerView recyclerView;
@@ -75,6 +69,17 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_feed);
+        initToolbar(getString(R.string.feed_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            progressBar.setVisibility(View.GONE);
+            return;
+        }
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
@@ -87,16 +92,11 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
             }
         }
 
-        setContentView(R.layout.activity_feed);
-        initToolbar(getString(R.string.feed_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorScheme(new int[]{R.color.black});
-
-        Log.d("Location", String.valueOf(lat) + " " + String.valueOf(lng));
 
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);

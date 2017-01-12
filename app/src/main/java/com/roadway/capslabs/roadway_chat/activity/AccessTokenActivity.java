@@ -9,7 +9,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.utils.PrefUtil;
 
 /**
- * Created by konstantin on 08.12.16.
+ * Created by konstantin on 08.12.16
  */
 public class AccessTokenActivity extends AppCompatActivity {
 
