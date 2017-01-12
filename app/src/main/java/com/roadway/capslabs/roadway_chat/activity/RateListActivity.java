@@ -30,6 +30,7 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +65,16 @@ public class RateListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_rate_list);
+        initToolbar(getString(R.string.rate_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
@@ -71,9 +82,6 @@ public class RateListActivity extends AppCompatActivity {
             }
         }
 
-        setContentView(R.layout.activity_rate_list);
-        initToolbar(getString(R.string.rate_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
         initAdapter();
 
         locationManager = (LocationManager)

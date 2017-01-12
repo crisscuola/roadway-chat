@@ -19,6 +19,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.RatingVote;
 import com.roadway.capslabs.roadway_chat.network.RatingVoteHandler;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 /**
  * Created by konstantin on 25.11.16
@@ -35,9 +36,15 @@ public class RankActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_rank);
         initViews("Rank");
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
 
         Bundle data = getIntent().getExtras();
         final String subscription_id =  data.getString("subscription_id");
@@ -60,7 +67,6 @@ public class RankActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        drawer.closeDrawer();
     }
 
     private void initViews(String title) {

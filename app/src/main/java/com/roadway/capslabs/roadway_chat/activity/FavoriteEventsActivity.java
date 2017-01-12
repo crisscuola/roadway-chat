@@ -3,6 +3,7 @@ package com.roadway.capslabs.roadway_chat.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,10 +13,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +35,7 @@ import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,7 +47,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by konstantin on 06.10.16.
+ * Created by konstantin on 06.10.16
  */
 public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -58,7 +62,6 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     private Drawer drawer;
     private Toolbar toolbar;
     private double lat, lng;
-    private LatLng location;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private final Activity context = this;
 
@@ -70,13 +73,19 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     private LocationManager mLocationManager;
     private LocationManager locationManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_favor);
         initToolbar(getString(R.string.title_activity_sub));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
+
         initAdapter();
 
 //        location = getLocation();
@@ -119,9 +128,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     @Override
     protected void onStop() {
         super.onStop();
-        drawer.closeDrawer();
     }
-
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
@@ -265,6 +272,4 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
             }
         }
     }
-
-
 }

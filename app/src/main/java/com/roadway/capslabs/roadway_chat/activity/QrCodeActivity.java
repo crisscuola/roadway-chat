@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 /**
  * Created by konstantin on 14.10.16
@@ -29,6 +30,11 @@ public class QrCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
         initToolbar("QR code");
+
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
 
         imageQr = (ImageView) findViewById(R.id.qr_image);
         Bitmap bitmap = (Bitmap) getIntent().getExtras().get("bitmap");
