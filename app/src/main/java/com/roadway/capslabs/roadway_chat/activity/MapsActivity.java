@@ -3,7 +3,6 @@ package com.roadway.capslabs.roadway_chat.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -12,14 +11,12 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,8 +40,9 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.adapters.ItemAdapter;
+import com.roadway.capslabs.roadway_chat.adapters.CustomClusterItemAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.models.CustomClusterItem;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.models.Item;
 import com.roadway.capslabs.roadway_chat.models.MapsMarker;
@@ -63,7 +61,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, ItemAdapter.ItemListener, RoutingListener,ClusterManager.OnClusterItemInfoWindowClickListener<MyItem> {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, CustomClusterItemAdapter.ItemListener, RoutingListener,ClusterManager.OnClusterItemInfoWindowClickListener<CustomClusterItem> {
 
     private GoogleMap mMap;
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -85,10 +83,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Map<Integer, List<Event>> eventMap = new HashMap<Integer, List<Event>>();
     private LocationManager locationManager;
     private LocationManager mLocationManager;
-    private ItemAdapter mAdapter;
+    private CustomClusterItemAdapter mAdapter;
 
-    private ClusterManager<MyItem> mClusterManager;
-    private MyItem clickedClusterItem;
+    private ClusterManager<CustomClusterItem> mClusterManager;
+    private CustomClusterItem clickedClusterItem;
     private TextView adress ;
 
     @Override
@@ -197,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         double lat = latlng.latitude;
         double lng = latlng.longitude;
 
-        MyItem offsetItem = new MyItem(lat, lng, title , adress, id);
+        CustomClusterItem offsetItem = new CustomClusterItem(lat, lng, title , adress, id);
         mClusterManager.addItem(offsetItem);
     }
 
@@ -210,7 +208,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
-        mClusterManager = new ClusterManager<MyItem>(this, mMap);
+        mClusterManager = new ClusterManager<CustomClusterItem>(this, mMap);
 
         mMap.setOnCameraChangeListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
@@ -219,9 +217,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mClusterManager.setOnClusterItemInfoWindowClickListener(this);
         mClusterManager
-                .setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<MyItem>() {
+                .setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<CustomClusterItem>() {
                     @Override
-                    public boolean onClusterItemClick(MyItem item) {
+                    public boolean onClusterItemClick(CustomClusterItem item) {
                         clickedClusterItem = item;
                         return false;
                     }
@@ -303,9 +301,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onClusterItemInfoWindowClick(MyItem myItem) {
+    public void onClusterItemInfoWindowClick(CustomClusterItem customClusterItem) {
 
-        if (myItem.getTitle().equals("some title")){
+        if (customClusterItem.getTitle().equals("some title")){
             //do something specific to this InfoWindow....
         }
     }
@@ -328,7 +326,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ItemAdapter(createItems(id), this);
+        mAdapter = new CustomClusterItemAdapter(createItems(id), this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -363,7 +361,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
        // marker.getTitle();
-        //mAdapter = new ItemAdapter(createItems(), this);
+        //mAdapter = new CustomClusterItemAdapter(createItems(), this);
         recyclerView.setAdapter(mAdapter);
 //        marker.showInfoWindow();
         return true;

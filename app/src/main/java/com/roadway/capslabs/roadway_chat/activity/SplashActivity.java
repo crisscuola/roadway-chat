@@ -38,7 +38,7 @@ import okhttp3.HttpUrl;
 /**
  * Created by kirill on 23.11.16
  */
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int DELAY = 2000;
     private static final String TAG = "SplashActivity";
@@ -73,7 +73,7 @@ public class Splash extends AppCompatActivity {
                     startFeedActivity();
                     finish();
                 } else {
-                    Intent authActivity = new Intent(Splash.this, ActivityAuth.class);
+                    Intent authActivity = new Intent(SplashActivity.this, ActivityAuth.class);
                     startActivity(authActivity);
                 }
             }

@@ -95,6 +95,16 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
+    public String getRecommendedEvents(Activity context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(FAVOR).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location_Subs", String.valueOf(url));
+        return getResponse(context, request);
+    }
+
     public String getEvent(Activity context, String id) {
         HttpUrl url = UrlFactory.getUrl(EVENT).newBuilder()
                 .addQueryParameter("id", id).build();
