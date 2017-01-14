@@ -115,4 +115,5 @@
     <string name="login_wrong_pass_format">Password must contain numbers and letters, minimum length is 8</string>
     <string name="reg_second_pass_message">Passwords must match</string>
     <string name="reg_empty_second_pass_message">Confirm password</string>
+    <string name="recommended_menu_item">Recommended</string>
 </resources>

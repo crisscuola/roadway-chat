@@ -88,6 +88,7 @@
     <string name="organization_instruction">Покажите этот код организации</string>
     <string name="feed_menu_item">Лента</string>
     <string name="map_menu_item">Карта</string>
+    <string name="recommended_menu_item">Рекомендуемое</string>
     <string name="rank_menu_item">Оценки</string>
     <string name="logout_menu_item">Выход</string>
     <string name="warning_alert_title">Внимание!</string>
