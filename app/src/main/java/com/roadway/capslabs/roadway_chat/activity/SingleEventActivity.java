@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -266,8 +267,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //distanceView = (TextView) findViewById(R.id.distance_view);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
-        vk = (Button) findViewById(R.id.vk);
-        fb = (Button) findViewById(R.id.fb);
         add = (Button) findViewById(R.id.add);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
