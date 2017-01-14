@@ -127,14 +127,14 @@ public class DrawerFactory {
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
         PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
-                .withIcon(R.drawable.list).withSelectedTextColorRes(R.color.md_black_1000);
+                .withIcon(R.drawable.ic_format_list_bulleted_grey600_48dp).withSelectedTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map")
-                .withIcon(R.drawable.map).withTextColorRes(R.color.md_black_1000);
+                .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName("My Favorites")
-                .withIcon(R.drawable.favorite_off).withTextColorRes(R.color.md_black_1000);
+                .withIcon(R.drawable.ic_heart_outline_grey600_48dp).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
-                .withIcon(R.drawable.favourite).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.logout)
+                .withIcon(R.drawable.ic_star_half_grey600_48dp).withTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.ic_logout_grey600_48dp)
                 .withTextColorRes(R.color.red);
         items.add(events);
         items.add(map);

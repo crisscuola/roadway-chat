@@ -2,7 +2,6 @@ package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,7 +10,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,7 +28,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -92,6 +89,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_single_event);
+        initViews();
         initToolbar("Discount");
 
         if (!ConnectionChecker.isOnline(this)) {
@@ -100,7 +98,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             return;
         }
 
-        initViews();
 
         id = getIntent().getExtras().getInt("id");
 
