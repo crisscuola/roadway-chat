@@ -268,8 +268,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //distanceView = (TextView) findViewById(R.id.distance_view);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
-        vk = (Button) findViewById(R.id.vk);
-        fb = (Button) findViewById(R.id.fb);
+//        vk = (Button) findViewById(R.id.vk);
+//        fb = (Button) findViewById(R.id.fb);
 //        url = (TextView) findViewById(R.id.url);
 //        phone = (TextView) findViewById(R.id.phone);
 
