@@ -126,15 +126,15 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName("Feed")
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.feed_menu_item)
                 .withIcon(R.drawable.ic_format_list_bulleted_grey600_48dp).withSelectedTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName("Map")
+        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.map_menu_item)
                 .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName("My Favorites")
+        SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName(R.string.fav_menu_item)
                 .withIcon(R.drawable.ic_heart_outline_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
+        SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.rank_menu_item)
                 .withIcon(R.drawable.ic_star_half_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.ic_logout_grey600_48dp)
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.logout_menu_item).withIcon(R.drawable.ic_logout_grey600_48dp)
                 .withTextColorRes(R.color.red);
         items.add(events);
         items.add(map);
@@ -190,10 +190,10 @@ public class DrawerFactory {
     }
 
     private AlertDialog.Builder getAlert(final Activity context) {
-        String title = "Warning!";
-        String message = "Are you sure you want to logout?";
-        String button1String = "Logout";
-        String button2String = "Cancel";
+        String title = context.getString(R.string.warning_alert_title);
+        String message = context.getString(R.string.logout_alert_message);
+        String button1String = context.getString(R.string.logout_alert_btn);
+        String button2String = context.getString(R.string.cancel_alert_btn);
 
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
         ad.setTitle(title);

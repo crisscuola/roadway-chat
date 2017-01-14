@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
-
     tools:context=".auth.ActivityAuth"
     android:orientation="vertical">
 
@@ -64,11 +63,15 @@
         <Button
             android:id="@+id/btn_guest"
             android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/vk_share_gray_line"
+            android:layout_gravity="center"
+            android:background="#ffffff"
             android:textColor="@color/colorTextColor"
-            android:text="Guest"/>
+            android:text="@string/guest"
+            style="?android:attr/borderlessButtonStyle" />
 
         <!--<TextView-->
             <!--android:layout_width="match_parent"-->

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -36,14 +37,14 @@ import java.util.concurrent.ExecutionException;
  * Created by konstantin on 07.09.16
  */
 public class ActivitySignUp extends AppCompatActivity implements Validator.ValidationListener {
-    @NotEmpty
-    @Email
+    @NotEmpty(messageResId = R.string.login_empty_message)
+    @Email(messageResId = R.string.login_wrong_email_format)
     private EditText email;
-    @NotEmpty
-    @Password(min = 8, message = "Password must contain numbers and letters, minimum length is 8")
+    @NotEmpty(messageResId = R.string.login_empty_pass_message)
+    @Password(min = 8, messageResId = R.string.login_wrong_pass_format)
     private EditText password1;
-    @NotEmpty
-    @ConfirmPassword
+    @NotEmpty(messageResId = R.string.reg_empty_second_pass_message)
+    @ConfirmPassword(messageResId = R.string.reg_second_pass_message)
     private EditText password2;
 
     private Button register;
@@ -94,16 +95,33 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        dropEditTextColors();
+
+        TextView errorsTextView = (TextView) findViewById(R.id.reg_errors);
+        StringBuilder sb = new StringBuilder();
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
 
+            sb.append(message).append("\n");
             if (view instanceof EditText) {
-                ((EditText) view).setError(message);
+                EditText editText = (EditText) view;
+                editText.setTextColor(getResources().getColor(R.color.red));
+                editText.setHintTextColor(getResources().getColor(R.color.red));
             } else {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
+        errorsTextView.setText(sb.toString());
+    }
+
+    private void dropEditTextColors() {
+        email.setTextColor(getResources().getColor(R.color.black));
+        email.setHintTextColor(getResources().getColor(R.color.black));
+        password1.setTextColor(getResources().getColor(R.color.black));
+        password1.setHintTextColor(getResources().getColor(R.color.black));
+        password2.setTextColor(getResources().getColor(R.color.black));
+        password2.setHintTextColor(getResources().getColor(R.color.black));
     }
 
     private AlertDialog.Builder getAlert(final Activity context) {
