@@ -106,6 +106,7 @@
     <string name="event_description_title">Description</string>
     <string name="qr_code_title">QR code</string>
     <string name="rank_title">Rank</string>
+    <string name="recommended_title">Recommended</string>
     <string name="thank_you_toast">Thank you!</string>
     <string name="guest">Guest</string>
 

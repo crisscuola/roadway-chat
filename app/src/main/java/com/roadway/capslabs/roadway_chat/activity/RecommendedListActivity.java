@@ -74,7 +74,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_recommended);
-        initToolbar(getString(R.string.title_activity_sub));
+        initToolbar(getString(R.string.recommended_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         if (!ConnectionChecker.isOnline(this)) {

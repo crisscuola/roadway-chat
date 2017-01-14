@@ -8,23 +8,11 @@
     android:padding="@dimen/activity_horizontal_margin"
     tools:context=".auth.ActivitySignUp">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:paddingBottom="0dp"
-        android:orientation="vertical"
-        >
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical">
 
         <ImageView
@@ -32,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="82dp"
             android:layout_centerInParent="true"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="44dp"
             android:contentDescription="@string/app_title"
             android:src="@drawable/logo_m" />
 
@@ -47,65 +35,77 @@
 
     </RelativeLayout>
 
-
-    <LinearLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingBottom="0dp">
 
-        <EditText
-            android:id="@+id/email"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/email_hint"
-            android:inputType="textEmailAddress"
-            android:theme="@style/BlackEditTextTheme" />
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/password1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:theme="@style/BlackEditTextTheme" />
 
-        <EditText
-            android:id="@+id/password2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
-            android:hint="@string/hint_password_repeat"
-            android:inputType="textPassword"
-            android:theme="@style/BlackEditTextTheme" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/submit_register_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@color/vk_share_gray_line"
-            android:text="@string/button_register"
-            android:textColor="#000" />
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress"
+                    android:theme="@style/BlackEditTextTheme" />
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/password1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:theme="@style/BlackEditTextTheme" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+                <EditText
+                    android:id="@+id/password2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:hint="@string/hint_password_repeat"
+                    android:inputType="textPassword"
+                    android:theme="@style/BlackEditTextTheme" />
 
-        android:orientation="vertical">
+                <Button
+                    android:id="@+id/submit_register_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/vk_share_gray_line"
+                    android:text="@string/button_register"
+                    android:textColor="#000" />
 
-        <TextView
-            android:id="@+id/reg_errors"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ff0000"
-            android:textSize="15sp" />
+            </LinearLayout>
 
-    </LinearLayout>
-</LinearLayout>
-</ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/reg_errors"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ff0000"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

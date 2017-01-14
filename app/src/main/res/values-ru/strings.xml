@@ -107,6 +107,7 @@
     <string name="event_description_title">Описание</string>
     <string name="qr_code_title">Qr код</string>
     <string name="rank_title">Оценка</string>
+    <string name="recommended_title">Рекомендуемое</string>
     <string name="thank_you_toast">Спасибо!</string>
     <string name="guest">Войти как гость</string>
 
