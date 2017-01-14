@@ -136,9 +136,7 @@ public class DrawerFactory {
 
         SecondaryDrawerItem recommended = new SecondaryDrawerItem().withIdentifier(4).withName("Recommended")
                 .withIcon(R.drawable.ic_thumb_up_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem rank = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
-
-
+        SecondaryDrawerItem rank = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.rank_menu_item)
                 .withIcon(R.drawable.ic_star_half_grey600_48dp).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.logout_menu_item).withIcon(R.drawable.ic_logout_grey600_48dp)
                 .withTextColorRes(R.color.red);
