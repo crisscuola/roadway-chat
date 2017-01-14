@@ -8,10 +8,22 @@
     tools:context=".auth.ActivityAuth"
     android:orientation="vertical">
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:paddingBottom="0dp"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginBottom="30dp"
         android:orientation="vertical">
 
@@ -26,7 +38,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:gravity="center"
             android:layout_below="@id/logo"
             android:text="@string/sign_in_title"
@@ -85,5 +96,8 @@
 
     </LinearLayout>
 
+    </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

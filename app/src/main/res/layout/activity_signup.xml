@@ -8,6 +8,19 @@
     android:padding="@dimen/activity_horizontal_margin"
     tools:context=".auth.ActivitySignUp">
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:paddingBottom="0dp"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/logo"
-            android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/sign_up_title"
             android:textColor="#000"
@@ -93,5 +105,7 @@
             android:textSize="15sp" />
 
     </LinearLayout>
+</LinearLayout>
+</ScrollView>
 
 </LinearLayout>
