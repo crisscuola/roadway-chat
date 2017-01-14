@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -71,7 +72,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private Drawer drawer;
 
     private ImageView imageView, imageQr, arrow, star;
-    private TextView title, description, rating, address, metro, dateEnd, creator, url, phone, adres, share;
+    private TextView title, description, rating, address, metro, dateEnd, creator, adres;
+    private RelativeLayout phone, url, share;
     private Button showQr, vk, fb, add;
     private SingleEvent event;
     private ProgressBar progressBar;
@@ -281,8 +283,12 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         creator = (TextView) findViewById(R.id.creator);
         dateEnd = (TextView) findViewById(R.id.date);
         showQr = (Button) findViewById(R.id.btn_show_qr);
-        url = (TextView) findViewById(R.id.url);
-        phone = (TextView) findViewById(R.id.phone);
+//        url = (TextView) findViewById(R.id.url);
+//        phone = (TextView) findViewById(R.id.phone);
+//        share = (TextView) findViewById(R.id.share);
+        url = (RelativeLayout) findViewById(R.id.relative_url);
+        phone = (RelativeLayout) findViewById(R.id.relative_call);
+        share = (RelativeLayout) findViewById(R.id.relative_share);
         //distanceView = (TextView) findViewById(R.id.distance_view);
 //        code = (TextView) findViewById(R.id.code);
 //        code.setVisibility(View.INVISIBLE);
@@ -293,7 +299,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);
         star = (ImageView) findViewById(R.id.star);
-        share = (TextView) findViewById(R.id.share);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
     }
 

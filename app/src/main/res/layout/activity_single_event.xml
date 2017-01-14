@@ -281,7 +281,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                android:id="@+id/relative_url">
 
                 <ImageView
                     android:id="@+id/link_icon"
@@ -327,7 +328,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                android:id="@+id/relative_call">
 
                 <ImageView
                     android:id="@+id/call_icon"
@@ -373,7 +375,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="60dp"
+                android:id="@+id/relative_share">
 
                 <ImageView
                     android:id="@+id/share_icon"

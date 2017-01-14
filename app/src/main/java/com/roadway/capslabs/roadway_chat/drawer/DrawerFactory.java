@@ -25,6 +25,7 @@ import com.roadway.capslabs.roadway_chat.activity.FavoriteEventsActivity;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.activity.MapsActivity;
 import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
+import com.roadway.capslabs.roadway_chat.activity.RecommendedListActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
 
@@ -54,7 +55,7 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 5) {
+                        if (position == 6) {
                             getAlert(activity).show();
 
                         } else
@@ -81,7 +82,7 @@ public class DrawerFactory {
                         Class<? extends Activity> toActivity = getActivity(position);
                         Intent intent = new Intent(activity, toActivity);
 
-                        if (position == 5) {
+                        if (position == 6) {
                             getAlert(activity).show();
 
                         } else
@@ -113,7 +114,7 @@ public class DrawerFactory {
                     .addProfiles(new ProfileDrawerItem().withEmail(email_s))
                     .withTextColorRes(R.color.black)
                     .withProfileImagesVisible(false)
-                    //.withHeaderBackground(R.drawable.drawer3)
+                    .withHeaderBackground(R.drawable.drawer4)
 
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
@@ -132,14 +133,17 @@ public class DrawerFactory {
                 .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName("My Favorites")
                 .withIcon(R.drawable.ic_heart_outline_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem Restores = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
+        SecondaryDrawerItem recommended = new SecondaryDrawerItem().withIdentifier(4).withName("Recommended")
+                .withIcon(R.drawable.ic_thumb_up_grey600_48dp).withTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem rank = new SecondaryDrawerItem().withIdentifier(4).withName("Rank")
                 .withIcon(R.drawable.ic_star_half_grey600_48dp).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName("Logout").withIcon(R.drawable.ic_logout_grey600_48dp)
                 .withTextColorRes(R.color.red);
         items.add(events);
         items.add(map);
         items.add(myFavorites);
-        items.add(Restores);
+        items.add(recommended);
+        items.add(rank);
         items.add(logout);
         IDrawerItem[] array = new IDrawerItem[items.size()];
 
@@ -156,8 +160,10 @@ public class DrawerFactory {
             case 3:
                 return FavoriteEventsActivity.class;
             case 4:
-                return RateListActivity.class;
+                return RecommendedListActivity.class;
             case 5:
+                return RateListActivity.class;
+            case 6:
                 return ActivityAuth.class;
             default:
                 return FeedActivity.class;
