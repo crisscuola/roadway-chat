@@ -166,7 +166,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                  star.refreshDrawableState();
              } else {
                 new Favoriter().execute(id);
-                star.setImageResource(R.drawable.favorite_on);
+                star.setImageResource(R.drawable.favorite_on2);
                 star.refreshDrawableState();
              }
                 favor = !favor;
@@ -541,7 +541,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 if (isFavor(eventObj)) {
                     Log.d("FAVOR", "T");
                     favor = true;
-                    star.setImageResource(R.drawable.favorite_on);
+                    star.setImageResource(R.drawable.favorite_on2);
                 } else  {
                     Log.d("FAVOR","F");
                     favor = false;
