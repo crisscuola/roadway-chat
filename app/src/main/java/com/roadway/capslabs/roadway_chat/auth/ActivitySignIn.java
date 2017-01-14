@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -31,12 +32,12 @@ import java.util.List;
  * Created by kirill on 25.09.16
  */
 public class ActivitySignIn extends AppCompatActivity implements Validator.ValidationListener {
-    @NotEmpty
-    @Email
+    @NotEmpty(messageResId = R.string.login_empty_message)
+    @Email(messageResId = R.string.login_wrong_email_format)
     private EditText email;
-    @NotEmpty
+    @NotEmpty(messageResId = R.string.login_empty_pass_message)
     @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC,
-            message = "Password must contain numbers and letters, minimum length is 8")
+            messageResId = R.string.login_wrong_pass_format)
     private EditText password;
     private Button button;
     private final Activity context = this;
@@ -65,16 +66,31 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        dropEditTextColors();
+
+        TextView errorsTextView = (TextView) findViewById(R.id.login_errors);
+        StringBuilder sb = new StringBuilder();
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
 
+            sb.append(message).append("\n");
             if (view instanceof EditText) {
-                ((EditText) view).setError(message);
+                EditText editText = (EditText) view;
+                editText.setTextColor(getResources().getColor(R.color.red));
+                editText.setHintTextColor(getResources().getColor(R.color.red));
             } else {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
+        errorsTextView.setText(sb.toString());
+    }
+
+    private void dropEditTextColors() {
+        email.setTextColor(getResources().getColor(R.color.black));
+        email.setHintTextColor(getResources().getColor(R.color.black));
+        password.setTextColor(getResources().getColor(R.color.black));
+        password.setHintTextColor(getResources().getColor(R.color.black));
     }
 
     private void initViews() {
@@ -112,10 +128,10 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
                 return;
             }
 
-            Intent feeedActivity = new Intent(context, FeedActivity.class);
-            feeedActivity.putExtra("email", email.getText().toString());
-            feeedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(feeedActivity);
+            Intent feedActivity = new Intent(context, FeedActivity.class);
+            feedActivity.putExtra("email", email.getText().toString());
+            feedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(feedActivity);
         }
     }
 }

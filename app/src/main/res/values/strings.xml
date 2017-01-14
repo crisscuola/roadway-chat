@@ -86,4 +86,33 @@
     <string name="rate_activity_title">Rate</string>
     <string name="enter_as_guest">Enter as guest</string>
     <string name="no_items">No items</string>
+    <string name="feed_menu_item">Feed</string>
+    <string name="map_menu_item">Map</string>
+    <string name="fav_menu_item">My Favorites</string>
+    <string name="rank_menu_item">Rank</string>
+    <string name="logout_menu_item">Logout</string>
+    <string name="warning_alert_title">Warning!</string>
+    <string name="logout_alert_message">Are you sure you want to logout?</string>
+    <string name="logout_alert_btn">Logout</string>
+    <string name="cancel_alert_btn">Cancel</string>
+    <string name="single_event_title">Discount</string>
+    <string name="route_to_discount">Route to Discount</string>
+    <string name="show_qr_code">Show Qr Code</string>
+    <string name="website_btn">Go to website</string>
+    <string name="call_organization_btn">Call organization</string>
+    <string name="share_with_friends">Share with friends</string>
+    <string name="address_single_event">Address</string>
+    <string name="metro_station">Metro station</string>
+    <string name="event_description_title">Description</string>
+    <string name="qr_code_title">QR code</string>
+    <string name="rank_title">Rank</string>
+    <string name="thank_you_toast">Thank you!</string>
+    <string name="guest">Guest</string>
+
+    <string name="login_empty_message"></string>
+    <string name="login_wrong_email_format">Invalid email</string>
+    <string name="login_empty_pass_message">Fill in the field</string>
+    <string name="login_wrong_pass_format">Password must contain numbers and letters, minimum length is 8</string>
+    <string name="reg_second_pass_message">Passwords must match</string>
+    <string name="reg_empty_second_pass_message">Confirm password</string>
 </resources>

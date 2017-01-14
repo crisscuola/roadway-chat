@@ -43,7 +43,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_rank);
-        initViews("Rank");
+        initViews(getString(R.string.rank_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
         if (!ConnectionChecker.isOnline(this)) {
@@ -117,7 +117,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(), "Thank you!", Toast.LENGTH_SHORT)
+            Toast.makeText(getApplicationContext(), R.string.thank_you_toast, Toast.LENGTH_SHORT)
                     .show();
             Intent feedActivity = new Intent(context, FeedActivity.class);
             startActivity(feedActivity);

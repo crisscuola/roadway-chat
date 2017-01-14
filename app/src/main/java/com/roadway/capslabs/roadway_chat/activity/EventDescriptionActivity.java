@@ -31,7 +31,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.event_desctiption);
-        initToolbar("Description");
+        initToolbar(getString(R.string.event_description_title));
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);

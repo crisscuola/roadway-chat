@@ -29,7 +29,7 @@ public class QrCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code);
-        initToolbar("QR code");
+        initToolbar(getString(R.string.qr_code_title));
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);

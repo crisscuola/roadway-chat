@@ -92,7 +92,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
         setContentView(R.layout.activity_single_event);
         initViews();
-        initToolbar("Discount");
+        initToolbar(getString(R.string.single_event_title));
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
@@ -115,31 +115,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     return;
                 }
                 new Subscriber().execute(id);
-            }
-        });
-
-        vk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ShareVk.class);
-                String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
-                intent.putExtra("url", url);
-                intent.putExtra("title", event.getTitle());
-                startActivity(intent);
-
-                Log.d("share", "Share Vk");
-            }
-        });
-
-        fb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("share", "Share Fb");
-                Intent intent = new Intent(view.getContext(), ShareFb.class);
-                String url = "http://p30700.mail.ru/event/view/" + id ;
-                intent.putExtra("url", url);
-                intent.putExtra("title", event.getTitle());
-                startActivity(intent);
             }
         });
 
@@ -283,6 +258,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         creator = (TextView) findViewById(R.id.creator);
         dateEnd = (TextView) findViewById(R.id.date);
         showQr = (Button) findViewById(R.id.btn_show_qr);
+
 //        url = (TextView) findViewById(R.id.url);
 //        phone = (TextView) findViewById(R.id.phone);
 //        share = (TextView) findViewById(R.id.share);
@@ -294,6 +270,10 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //        code.setVisibility(View.INVISIBLE);
         vk = (Button) findViewById(R.id.vk);
         fb = (Button) findViewById(R.id.fb);
+
+//        url = (TextView) findViewById(R.id.url);
+//        phone = (TextView) findViewById(R.id.phone);
+
         add = (Button) findViewById(R.id.add);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);

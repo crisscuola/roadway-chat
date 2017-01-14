@@ -86,4 +86,33 @@
     <string name="date">date</string>
     <string name="description">Описание</string>
     <string name="organization_instruction">Покажите этот код организации</string>
+    <string name="feed_menu_item">Лента</string>
+    <string name="map_menu_item">Карта</string>
+    <string name="rank_menu_item">Оценки</string>
+    <string name="logout_menu_item">Выход</string>
+    <string name="warning_alert_title">Внимание!</string>
+    <string name="logout_alert_message">Вы уверены, что хотите выйти?</string>
+    <string name="logout_alert_btn">Выйти</string>
+    <string name="cancel_alert_btn">Отмена</string>
+    <string name="fav_menu_item">Избранное</string>
+    <string name="single_event_title">Акция</string>
+    <string name="route_to_discount">Проложить путь</string>
+    <string name="show_qr_code">Показать Qr-код</string>
+    <string name="call_organization_btn">Позвонить</string>
+    <string name="share_with_friends">Поделиться</string>
+    <string name="address_single_event">Адрес</string>
+    <string name="metro_station">Станция метро</string>
+    <string name="website_btn">Перейти на сайт</string>
+    <string name="event_description_title">Описание</string>
+    <string name="qr_code_title">Qr код</string>
+    <string name="rank_title">Оценка</string>
+    <string name="thank_you_toast">Спасибо!</string>
+    <string name="guest">Войти как гость</string>
+
+    <string name="login_empty_message"></string>
+    <string name="login_wrong_email_format">Неверный формат почты</string>
+    <string name="login_empty_pass_message">Введите пароль</string>
+    <string name="login_wrong_pass_format">Пароль должен содержать цифры и буквы, минимум 8 символов</string>
+    <string name="reg_second_pass_message">Пароли должны совпадать</string>
+    <string name="reg_empty_second_pass_message">Подтвердите пароль</string>
 </resources>

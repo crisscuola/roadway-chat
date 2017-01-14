@@ -11,7 +11,6 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-
         android:layout_height="0dip"
         android:layout_weight="1"
         android:paddingBottom="0dp"
@@ -124,45 +123,6 @@
                 </LinearLayout>
 
             </FrameLayout>
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center_horizontal|bottom"
-                android:textColor="#ffffffff"
-                android:background="#80000000"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:textColor="#ffffffff"
-                    android:text="Share :"/>
-
-                <Button
-                    android:layout_width="40dp"
-                    android:id="@+id/vk"
-                    android:layout_marginLeft="30dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/vk" />
-
-                <Button
-                    android:layout_width="40dp"
-                    android:id="@+id/fb"
-                    android:layout_marginLeft="30dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/fb" />
-
-                <Button
-                    android:layout_width="40dp"
-                    android:id="@+id/add"
-                    android:layout_marginLeft="50dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/favorite" />
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/title"
@@ -302,7 +262,7 @@
                     android:paddingTop="15dp"
                     android:paddingLeft="55dp"
                     android:paddingRight="15dp"
-                    android:text="Go to website"
+                    android:text="@string/website_btn"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="18sp"
                      />
@@ -349,7 +309,7 @@
                     android:paddingTop="15dp"
                     android:paddingLeft="55dp"
                     android:paddingRight="15dp"
-                    android:text="Call organization"
+                    android:text="@string/call_organization_btn"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="18sp"
                     />
@@ -396,7 +356,7 @@
                     android:paddingTop="15dp"
                     android:paddingLeft="55dp"
                     android:paddingRight="15dp"
-                    android:text="Share with friends"
+                    android:text="@string/share_with_friends"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="18sp"
                     />
@@ -424,7 +384,7 @@
                 android:id="@+id/addres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Address"
+                android:text="@string/address_single_event"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
                 android:paddingStart="15dp"
@@ -443,7 +403,7 @@
                 android:paddingRight="15dp"
                 android:paddingEnd="15dp"
                 android:layout_marginTop="5dp"
-                android:text="Metro station"
+                android:text="@string/metro_station"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="15sp" />
 
@@ -469,13 +429,14 @@
                  <ImageView
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:src="@drawable/map_location_blue"/>
+                     android:src="@drawable/map_location_blue"
+                     android:contentDescription="@string/route_to_discount" />
 
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="Route to Discount"
+                    android:text="@string/route_to_discount"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#2369ff"
                     android:textSize="18sp"
@@ -484,12 +445,12 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:orientation="horizontal">
-            </LinearLayout>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="start"-->
+                <!--android:orientation="horizontal">-->
+            <!--</LinearLayout>-->
 
 
             <fragment
@@ -522,7 +483,7 @@
         android:textColor="@color/black"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:text="Show Qr Code" />
+        android:text="@string/show_qr_code" />
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
