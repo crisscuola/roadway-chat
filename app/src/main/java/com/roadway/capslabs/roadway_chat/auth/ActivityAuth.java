@@ -44,8 +44,8 @@ public class ActivityAuth extends AppCompatActivity  {
         buttonGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), FeedActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(view.getContext(), FeedActivity.class);
+//                startActivity(intent);
             }
         });
     }
