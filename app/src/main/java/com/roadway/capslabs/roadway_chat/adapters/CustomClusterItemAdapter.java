@@ -19,12 +19,12 @@ import java.util.List;
  * Created by konstantin on 17.12.16.
  */
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+public class CustomClusterItemAdapter extends RecyclerView.Adapter<CustomClusterItemAdapter.ViewHolder> {
 
     private List<Item> mItems;
     private ItemListener mListener;
 
-    public ItemAdapter(List<Item> items, MapsActivity listener) {
+    public CustomClusterItemAdapter(List<Item> items, MapsActivity listener) {
         mItems = items;
         mListener = listener;
     }

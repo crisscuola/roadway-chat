@@ -1,4 +1,4 @@
-package com.roadway.capslabs.roadway_chat.activity;
+package com.roadway.capslabs.roadway_chat.models;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
@@ -6,13 +6,13 @@ import com.google.maps.android.clustering.ClusterItem;
 /**
  * Created by konstantin on 05.01.17.
  */
-public class MyItem implements ClusterItem {
+public class CustomClusterItem implements ClusterItem {
     private final LatLng mPosition;
     private final String mTitle;
     private final String mSnippet;
     private final int mId;
 
-    public MyItem(double lat, double lng, String title, String snippet, int id) {
+    public CustomClusterItem(double lat, double lng, String title, String snippet, int id) {
         mId = id;
         mPosition = new LatLng(lat, lng);
         mTitle = title;

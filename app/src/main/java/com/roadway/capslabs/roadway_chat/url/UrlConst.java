@@ -31,6 +31,7 @@ public class UrlConst {
     public final static String PATH_OWN = "own";
     public final static String PATH_SUBS = "subscribed";
     public final static String PATH_FAVOR = "favourite";
+    public final static String PATH_RECOMMENDED = "recommended";
     public final static String PATH_PROFILE = "profile";
     public final static String PATH_UPDATE = "update";
     public final static String PATH_API = "api";

@@ -162,6 +162,20 @@ public enum UrlType {
         }
     },
 
+    RECOMMENDED {
+        @Override
+        public  HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_FAVOR)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment("");
+
+        }
+    },
+
     FAVORITE {
         @Override
         public HttpUrl.Builder getUrl() {

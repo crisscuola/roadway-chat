@@ -49,7 +49,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         if (favor) {
             Log.d("FAVOR", "T");
             holder.star.setVisibility(View.VISIBLE);
-            holder.star.setImageResource(R.drawable.favorite_on);
+            holder.star.setImageResource(R.drawable.favorite_on2);
         } else {
             Log.d("FAVOR", "F");
             holder.star.setImageResource(R.drawable.favorite_off);
