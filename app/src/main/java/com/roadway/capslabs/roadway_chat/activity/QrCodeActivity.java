@@ -48,6 +48,12 @@ public class QrCodeActivity extends AppCompatActivity {
         imageQr.setImageBitmap(bitmap);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        drawer.closeDrawer();
+    }
+
     private void initTool(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_no);
         toolbar.setTitle(title);

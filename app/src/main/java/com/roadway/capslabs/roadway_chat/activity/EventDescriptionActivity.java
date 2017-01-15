@@ -73,6 +73,7 @@ public class EventDescriptionActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
 
     @Override

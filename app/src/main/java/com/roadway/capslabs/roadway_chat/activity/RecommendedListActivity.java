@@ -128,6 +128,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
 
     private void initTool(String title) {
@@ -172,6 +173,13 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
 
     @Override
     public void onRefresh() {
+
+        if (!ConnectionChecker.isOnline(context)) {
+            ConnectionChecker.showNoInternetMessage(context);
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.postDelayed(new Runnable() {
             @Override

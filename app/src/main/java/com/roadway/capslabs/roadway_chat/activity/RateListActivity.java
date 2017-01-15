@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +45,7 @@ import java.util.Locale;
 /**
  * Created by kirill on 01.12.16
  */
-public class RateListActivity extends AppCompatActivity {
+public class RateListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
 
@@ -61,6 +62,7 @@ public class RateListActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LatLng latLngl;
     private LocationManager mLocationManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,10 @@ public class RateListActivity extends AppCompatActivity {
         }
 
         initAdapter();
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.black});
 
         locationManager = (LocationManager)
                 getSystemService(Context.LOCATION_SERVICE);
@@ -170,6 +176,26 @@ public class RateListActivity extends AppCompatActivity {
             }
         }
         return bestLocation;
+    }
+
+    @Override
+    public void onRefresh() {
+        if (!ConnectionChecker.isOnline(context)) {
+            ConnectionChecker.showNoInternetMessage(context);
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+
+        //progressBar.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initAdapter();
+                new EventsLoader().execute(new EventRequestHandler());
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 300);
     }
 
     private class MyLocationListener implements LocationListener {

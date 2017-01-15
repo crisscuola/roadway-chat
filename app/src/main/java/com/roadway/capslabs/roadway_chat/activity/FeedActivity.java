@@ -146,6 +146,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
 
 

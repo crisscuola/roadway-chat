@@ -209,6 +209,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
 
     private Code hasSeenQr() {

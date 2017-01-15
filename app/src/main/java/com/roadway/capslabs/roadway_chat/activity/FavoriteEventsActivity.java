@@ -129,6 +129,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
 
 

@@ -84,6 +84,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onStop() {
         super.onStop();
+        drawer.closeDrawer();
     }
 
     private void initTool(String title) {
