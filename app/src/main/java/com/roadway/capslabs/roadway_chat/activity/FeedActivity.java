@@ -141,14 +141,13 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onStop() {
         super.onStop();
-        drawer.closeDrawer();
     }
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
         searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
        // searchView.setVisibility(View.VISIBLE);
@@ -183,6 +182,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void loadNextData(int offset) {
         Log.d("feed_activity", "load new data, " + offset);
+        new NextEventsLoader().execute(new EventRequestHandler());
     }
 
     @Override
@@ -262,6 +262,41 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                 recyclerAdapter.addEvents(events);
                 recyclerAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                throw new RuntimeException("JSON parsing error", e);
+            }
+        }
+    }
+
+    private final class NextEventsLoader extends AsyncTask<Object, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected String doInBackground(Object... params) {
+            EventRequestHandler handler = (EventRequestHandler) params[0];
+            return handler.getAllEvents(context,lat,lng);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.d("response_crete_event", result);
+            JSONObject object = HttpConnectionHandler.parseJSON(result);
+            try {
+                JSONArray array = object.getJSONArray("object_list");
+                List<Event> events = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject json = (JSONObject) array.get(i);
+                    Event event = new Event(json);
+                    events.add(event);
+                }
+
+                recyclerAdapter.addEvents(events);
+                recyclerAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }

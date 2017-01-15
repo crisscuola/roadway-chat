@@ -54,7 +54,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
         Bundle data = getIntent().getExtras();
         subscription_id =  data.getString("subscription_id");
 
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
 
 //        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
 //        mSwipeRefreshLayout.setOnRefreshListener(this);

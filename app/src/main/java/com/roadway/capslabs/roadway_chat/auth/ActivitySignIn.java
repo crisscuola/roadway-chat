@@ -22,6 +22,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +62,10 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
         new LoginRequest().execute(email.getText().toString(), password.getText().toString());
     }
 

@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 /**
  * Created by konstantin on 07.09.16
@@ -48,11 +48,6 @@ public class ActivityAuth extends AppCompatActivity  {
 //                startActivity(intent);
             }
         });
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
     }
 
     @Override

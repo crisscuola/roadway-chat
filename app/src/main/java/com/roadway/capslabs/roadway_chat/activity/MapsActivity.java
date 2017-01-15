@@ -115,7 +115,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+                LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         Location location = getLastKnownLocation();
 

@@ -26,6 +26,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.RegisterForm;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
 import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,6 +90,11 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
+
         Registrator registrator = new RegistratorByEmail(readRegisterForm());
         new RegisterRequest().execute(registrator);
     }
