@@ -12,7 +12,7 @@ import android.util.Log;
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
-    private int visibleThreshold = 7;
+    private int visibleThreshold = 3;
     // The current offset index of data you have loaded
     private int currentPage = 0;
     // The total number of items in the dataset after the last load
@@ -77,6 +77,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             if (totalItemCount == 0) {
                 this.loading = true;
             }
+            Log.d("feed_activity", "1 ");
         }
         // If it’s still loading, we check to see if the dataset count has
         // changed, if so we conclude it has finished loading and update the current page
@@ -84,6 +85,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         if (loading && (totalItemCount > previousTotalItemCount)) {
             loading = false;
             previousTotalItemCount = totalItemCount;
+            Log.d("feed_activity", "2 ");
         }
 
         // If it isn’t currently loading, we check to see if we have breached
@@ -94,6 +96,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
             currentPage++;
             onLoadMore(currentPage, totalItemCount, view);
             loading = true;
+            Log.d("feed_activity", "3 ");
         }
 
         Log.d("feed_activity", "last visible " + lastVisibleItemPosition + " " + loading);

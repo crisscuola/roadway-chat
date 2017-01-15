@@ -28,6 +28,7 @@ import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
 import com.roadway.capslabs.roadway_chat.activity.RecommendedListActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,8 +41,10 @@ import java.util.concurrent.ExecutionException;
  * Created by kirill on 12.09.16
  */
 public class DrawerFactory {
+    public Activity drawerContext;
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
+        drawerContext = activity;
         final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
@@ -105,7 +108,7 @@ public class DrawerFactory {
 //            String email_s = null;
 //            email_s = sharedPref.getString("email", "Guest");
 
-            final SharedPreferences mSharedPreference= PreferenceManager.getDefaultSharedPreferences(activity);
+            final SharedPreferences mSharedPreference = PreferenceManager.getDefaultSharedPreferences(activity);
             String email_s = (mSharedPreference.getString("email", "Default_Value"));
 
             Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.drawer);
@@ -183,13 +186,24 @@ public class DrawerFactory {
         @Override
         protected Activity doInBackground(Activity... params) {
             Activity context = params[0];
-            new LoginHelper().logout(context);
+
+            if (!ConnectionChecker.isOnline(context)) {
+                return null;
+            } else {
+                new LoginHelper().logout(context);
+            }
+
             return params[0];
         }
 
         @Override
         protected void onPostExecute(Activity context) {
             super.onPostExecute(context);
+            if (context == null) {
+                ConnectionChecker.showNoInternetMessage(drawerContext);
+                return;
+            }
+
             Intent intent = new Intent(context, ActivityAuth.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(intent);

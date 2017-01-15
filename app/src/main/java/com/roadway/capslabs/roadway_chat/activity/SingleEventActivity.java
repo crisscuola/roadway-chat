@@ -296,7 +296,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);
         star = (ImageView) findViewById(R.id.star);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
     }
 
     private boolean isSubscribed(JSONObject event) {
