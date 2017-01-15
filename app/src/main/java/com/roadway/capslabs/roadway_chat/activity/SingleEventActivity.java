@@ -90,15 +90,18 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.single_event_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            return;
+        }
+
         setContentView(R.layout.activity_single_event);
         initViews();
         initToolbar(getString(R.string.single_event_title));
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
 
 
         id = getIntent().getExtras().getInt("id");
@@ -108,6 +111,16 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         showQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (!ConnectionChecker.isOnline(context)) {
+                    ConnectionChecker.showNoInternetMessage(context);
+
+//                    String code = "https://ru.wikipedia.org/wiki/QR";
+//                    Bitmap bitmap = qrGenenartor(code);
+//                    showQrCodeActivity(bitmap);
+                    return;
+                }
+
                 Code code = hasSeenQr();
                 if (code.isCached()) {
                     Bitmap bitmap = qrGenenartor(code.getCode());
@@ -211,6 +224,11 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         Intent intent = new Intent(context, QrCodeActivity.class);
         intent.putExtra("bitmap", bitmap);
         startActivity(intent);
+    }
+
+    public void initTool(String title){
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
     }
 
     public void initToolbar(String title) {

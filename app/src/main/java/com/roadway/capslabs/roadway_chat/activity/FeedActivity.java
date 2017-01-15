@@ -70,15 +70,20 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.event_description_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            return;
+        }
+
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            progressBar.setVisibility(View.GONE);
-            return;
-        }
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -143,6 +148,13 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onStop();
     }
 
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
+
+    }
+
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
@@ -187,6 +199,13 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
+
+        if (!ConnectionChecker.isOnline(context)) {
+            ConnectionChecker.showNoInternetMessage(context);
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+
         progressBar.setVisibility(View.VISIBLE);
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.postDelayed(new Runnable() {

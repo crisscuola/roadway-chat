@@ -93,15 +93,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.title_activity_maps));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            return;
+        }
+
         setContentView(R.layout.activity_maps);
         initToolbar(getString(R.string.title_activity_maps));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            return;
-        }
-        
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
@@ -116,6 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         locationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
 
         Location location = getLastKnownLocation();
 
@@ -182,6 +187,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
     }
 
     private void initToolbar(String title) {

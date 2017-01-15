@@ -66,14 +66,18 @@ public class RateListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.rate_activity_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            return;
+        }
+
         setContentView(R.layout.activity_rate_list);
         initToolbar(getString(R.string.rate_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            return;
-        }
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -116,6 +120,11 @@ public class RateListActivity extends AppCompatActivity {
 //    public void onBackPressed() {
 //
 //    }
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
+    }
 
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_rate);

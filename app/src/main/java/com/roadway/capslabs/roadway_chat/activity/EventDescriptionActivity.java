@@ -1,12 +1,8 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -30,17 +26,28 @@ public class EventDescriptionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.event_description_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            return;
+        }
+
         setContentView(R.layout.event_desctiption);
         initToolbar(getString(R.string.event_description_title));
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            return;
-        }
 
         TextView description = (TextView) findViewById(R.id.description);
         String descriptionText = getIntent().getExtras().getString("description");
         description.setText(descriptionText);
+    }
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
     }
 
     public void initToolbar(String title) {
