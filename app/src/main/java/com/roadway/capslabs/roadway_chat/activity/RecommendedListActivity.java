@@ -73,14 +73,18 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.recommended_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            return;
+        }
+
         setContentView(R.layout.activity_recommended);
         initToolbar(getString(R.string.recommended_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            return;
-        }
 
         initAdapter();
 
@@ -124,6 +128,11 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
     }
 
     private void initToolbar(String title) {

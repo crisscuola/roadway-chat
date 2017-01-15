@@ -42,14 +42,20 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.rank_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            return;
+        }
+
         setContentView(R.layout.activity_rank);
         initViews(getString(R.string.rank_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            return;
-        }
 
         Bundle data = getIntent().getExtras();
         subscription_id =  data.getString("subscription_id");
@@ -78,6 +84,11 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
     }
 
     private void initViews(String title) {

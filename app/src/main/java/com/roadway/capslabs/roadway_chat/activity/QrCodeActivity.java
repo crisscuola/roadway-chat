@@ -28,17 +28,29 @@ public class QrCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_code);
-        initToolbar(getString(R.string.qr_code_title));
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
+
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.qr_code_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
             return;
         }
+
+        setContentView(R.layout.activity_qr_code);
+        initToolbar(getString(R.string.qr_code_title));
+
 
         imageQr = (ImageView) findViewById(R.id.qr_image);
         Bitmap bitmap = (Bitmap) getIntent().getExtras().get("bitmap");
         imageQr.setImageBitmap(bitmap);
+    }
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
     }
 
     public void initToolbar(String title) {

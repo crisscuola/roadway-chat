@@ -3,7 +3,6 @@ package com.roadway.capslabs.roadway_chat.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,12 +12,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -77,14 +74,18 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.title_activity_sub));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            return;
+        }
+
         setContentView(R.layout.activity_favor);
         initToolbar(getString(R.string.title_activity_sub));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-            return;
-        }
 
         initAdapter();
 
@@ -130,6 +131,12 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
         super.onStop();
     }
 
+
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
+    }
+
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
@@ -167,6 +174,12 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onRefresh() {
+        if (!ConnectionChecker.isOnline(context)) {
+            ConnectionChecker.showNoInternetMessage(context);
+            mSwipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.postDelayed(new Runnable() {
             @Override
