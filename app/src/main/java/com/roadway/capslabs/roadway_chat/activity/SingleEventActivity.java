@@ -78,6 +78,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private SingleEvent event;
     private ProgressBar progressBar;
     private boolean favor;
+    private String fullDescription;
 
     private GoogleMap mMap;
     private Map<Marker, CustomMarker> markersMap = new HashMap<Marker, CustomMarker>();
@@ -102,8 +103,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         initViews();
         initToolbar(getString(R.string.single_event_title));
 
-
-
         id = getIntent().getExtras().getInt("id");
 
         new EventLoader().execute(id);
@@ -111,13 +110,8 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         showQr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (!ConnectionChecker.isOnline(context)) {
                     ConnectionChecker.showNoInternetMessage(context);
-
-//                    String code = "https://ru.wikipedia.org/wiki/QR";
-//                    Bitmap bitmap = qrGenenartor(code);
-//                    showQrCodeActivity(bitmap);
                     return;
                 }
 
@@ -336,6 +330,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private void displayEventContent(JSONObject eventObj) {
         event = new SingleEvent(eventObj);
         String description = event.getDescription();
+        fullDescription = description;
         if (description.length() > 250) {
             description = description.substring(0, 250);
             description += "...";
@@ -345,7 +340,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(SingleEventActivity.this, EventDescriptionActivity.class);
-                    intent.putExtra("description", event.getDescription());
+                    intent.putExtra("description", fullDescription);
                     startActivity(intent);
                 }
             });

@@ -260,7 +260,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("response_farovtite", result);
+            Log.d("response_favorite", result);
             JSONObject object = HttpConnectionHandler.parseJSON(result);
 
             try {

@@ -117,4 +117,5 @@
     <string name="login_wrong_pass_format">Пароль должен содержать цифры и буквы, минимум 8 символов</string>
     <string name="reg_second_pass_message">Пароли должны совпадать</string>
     <string name="reg_empty_second_pass_message">Подтвердите пароль</string>
+    <string name="no_internet_connection">Отсутствует интернет соединение</string>
 </resources>

@@ -26,19 +26,8 @@ public class EventDescriptionActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!ConnectionChecker.isOnline(this)) {
-            ConnectionChecker.showNoInternetMessage(this);
-
-            setContentView(R.layout.no_internet);
-            initTool(getString(R.string.event_description_title));
-            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-
-            return;
-        }
-
         setContentView(R.layout.event_desctiption);
         initToolbar(getString(R.string.event_description_title));
-
 
         TextView description = (TextView) findViewById(R.id.description);
         String descriptionText = getIntent().getExtras().getString("description");
