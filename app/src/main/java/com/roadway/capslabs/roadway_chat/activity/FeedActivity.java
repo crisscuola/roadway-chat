@@ -72,9 +72,8 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
-
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.event_description_title));
+            initTool(getString(R.string.feed_activity_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
             return;
@@ -83,7 +82,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
