@@ -47,6 +47,7 @@ import java.util.Locale;
 
 public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
+    private final int step = 20;
     private Drawer drawer;
     private Toolbar toolbar;
     private ProgressBar progressBar;
@@ -161,7 +162,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
-       // searchView.setVisibility(View.VISIBLE);
+        // searchView.setVisibility(View.VISIBLE);
     }
 
     private void initAdapter() {
@@ -193,7 +194,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     private void loadNextData(int offset) {
         Log.d("feed_activity", "load new data, " + offset);
-        new NextEventsLoader().execute(new EventRequestHandler());
+        new NextEventsLoader().execute(new EventRequestHandler(), offset, step);
     }
 
     @Override
@@ -236,8 +237,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                     System.out.println(addresses.get(0).getLocality());
                     cityName = addresses.get(0).getLocality();
                 }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
@@ -247,13 +247,16 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
 
         @Override
-        public void onProviderDisabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+        }
 
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+        }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 
 
@@ -261,7 +264,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getAllEvents(context,lat,lng);
+            return handler.getAllEvents(context, lat, lng);
         }
 
         @Override
@@ -296,7 +299,9 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getAllEvents(context,lat,lng);
+            int offset = (int) params[1];
+            int step = (int) params[2];
+            return handler.getNextEvents(context, lat, lng, offset, step);
         }
 
         @Override

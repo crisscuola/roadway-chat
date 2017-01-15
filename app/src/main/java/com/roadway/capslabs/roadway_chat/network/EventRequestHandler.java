@@ -49,12 +49,17 @@ public class EventRequestHandler {
         return getResponse(context, request);
      }
 
-    public <T extends Activity> String getNextEvents(T context, double lat, double lng, int offset) {
+    public <T extends Activity> String getNextEvents(T context, double lat, double lng, int offset, int step) {
         String latParam = String.valueOf(lat);
         String lngParam = String.valueOf(lng);
         String offsetString = String.valueOf(offset);
-        HttpUrl url = UrlFactory.getUrl(FEED).newBuilder().addQueryParameter("lat", latParam)
-                .addQueryParameter("lng",lngParam).build();
+        String stepString = String.valueOf(step);
+        HttpUrl url = UrlFactory.getUrl(FEED).newBuilder()
+                .addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam)
+                .addQueryParameter("offset", offsetString)
+                .addQueryParameter("limit", stepString)
+                .build();
         Request request = buildRequest(url);
         Log.d("Location", String.valueOf(url));
         return getResponse(context, request);
