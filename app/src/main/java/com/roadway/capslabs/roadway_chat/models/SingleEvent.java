@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,8 +39,12 @@ public class SingleEvent {
             phone = eventObj.getString("phone");
             url = eventObj.getString("url");
             countUsed = eventObj.getInt("count_used");
-            color = eventObj.getInt("line_number");
+            String line = eventObj.getString("line_number");
+            if (line.equals("null")) {
+                color = 0;
+            } else color = eventObj.getInt("line_number");
 
+            Log.d("color", String.valueOf(color));
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }

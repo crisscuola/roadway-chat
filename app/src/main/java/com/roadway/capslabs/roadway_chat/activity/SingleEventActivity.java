@@ -377,6 +377,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private String metroColor(int colorNum) {
 
+        colors.put(0,"#000000");
         colors.put(1,"#ef1e25");
         colors.put(2,"#029a55");
         colors.put(3,"#0252a2");
