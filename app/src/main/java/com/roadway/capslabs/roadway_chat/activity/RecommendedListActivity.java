@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -60,6 +61,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     private double lat, lng;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private final Activity context = this;
+    private Button again;
 
     static {
         handler = new HttpConnectionHandler();
@@ -78,6 +80,15 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.recommended_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, RecommendedListActivity.class);
+                    startActivity(intent);
+                }
+            });
             return;
         }
 

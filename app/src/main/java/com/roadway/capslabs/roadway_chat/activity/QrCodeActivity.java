@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
@@ -24,6 +27,8 @@ public class QrCodeActivity extends AppCompatActivity {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private Drawer drawer;
     private ImageView imageQr;
+    private Button again;
+    private Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,16 @@ public class QrCodeActivity extends AppCompatActivity {
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.qr_code_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, QrCodeActivity.class);
+                    startActivity(intent);
+                }
+            });
 
             return;
         }

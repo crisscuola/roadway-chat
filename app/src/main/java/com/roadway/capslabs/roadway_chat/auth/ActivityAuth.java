@@ -2,12 +2,12 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.roadway.capslabs.roadway_chat.R;
-import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 /**
  * Created by konstantin on 07.09.16
@@ -17,6 +17,10 @@ public class ActivityAuth extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        ActivityCompat.requestPermissions(ActivityAuth.this,
+                new String[]{android.Manifest.permission.CALL_PHONE},
+                1);
 
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
@@ -55,4 +59,7 @@ public class ActivityAuth extends AppCompatActivity  {
         super.onBackPressed();
         finish();
     }
+
+
+
 }

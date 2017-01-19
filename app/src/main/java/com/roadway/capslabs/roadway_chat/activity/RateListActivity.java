@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -39,8 +40,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by kirill on 01.12.16
@@ -63,6 +66,8 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
     private LatLng latLngl;
     private LocationManager mLocationManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Map<Integer, Integer> subs = new HashMap<Integer, Integer>();
+    private Button again;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +78,17 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.rate_activity_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, RateListActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             return;
         }
 
@@ -149,7 +165,9 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
             public void onItemClick(Event event) {
                 Intent intent = new Intent(RateListActivity.this, RankActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("subscription_id", String.valueOf(event.getId()));
+                bundle.putString("subscription_id", String.valueOf(subs.get(event.getId())));
+//                subs.get(String.valueOf(event.getId()));
+                Log.d("Rank",String.valueOf(subs.get(event.getId())));
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -268,6 +286,8 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
                     JSONObject json = (JSONObject) array.get(i);
                     JSONObject eventJson = json.getJSONObject("event");
                     Event event = new Event(eventJson);
+                    subs.put(event.getId(),((JSONObject) array.get(i)).getInt("id"));
+                    Log.d("Rank", String.valueOf(((JSONObject) array.get(i)).getInt("id")));
                     events.add(event);
                 }
                 recyclerAdapter.addEvents(events);

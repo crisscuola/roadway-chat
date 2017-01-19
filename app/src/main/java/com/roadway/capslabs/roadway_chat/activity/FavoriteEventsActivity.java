@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -69,6 +70,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
     private LocationManager mLocationManager;
     private LocationManager locationManager;
+    private Button again;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,17 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.title_activity_sub));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, FavoriteEventsActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             return;
         }
 

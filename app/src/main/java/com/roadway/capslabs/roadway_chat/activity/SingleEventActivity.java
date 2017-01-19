@@ -85,6 +85,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private Map<Integer, String> colors = new HashMap<Integer, String>();
     private int id;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
+    private Button again;
 
 
     @Override
@@ -96,6 +97,17 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.single_event_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SingleEventActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             return;
         }
 

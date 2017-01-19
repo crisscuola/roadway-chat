@@ -23,6 +23,7 @@ public class Event {
     private final boolean favor;
     private final int countUsed;
 
+
     public Event(JSONObject eventObj) {
         try {
             Log.d("Rate_distance", String.valueOf(eventObj.has("distance")));

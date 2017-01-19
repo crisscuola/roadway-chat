@@ -1,5 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -47,6 +49,8 @@ public class SplashActivity extends AppCompatActivity {
     private ProgressBar mRegistrationProgressBar;
     private TextView mInformationTextView;
     private boolean isReceiverRegistered;
+    private Button again;
+    private Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +62,21 @@ public class SplashActivity extends AppCompatActivity {
 
         if (!isOnline()) {
             showNoInternetMessage();
-            mRegistrationProgressBar.setVisibility(View.INVISIBLE);
+
+            setContentView(R.layout.no_internet);
+
+            //mRegistrationProgressBar.setVisibility(View.INVISIBLE);
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SplashActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             return;
         }
 

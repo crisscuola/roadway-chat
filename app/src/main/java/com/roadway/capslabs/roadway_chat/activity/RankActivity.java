@@ -37,6 +37,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProgressBar progressBar;
     private String subscription_id;
+    private Button again;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +49,16 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.rank_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, RankActivity.class);
+                    startActivity(intent);
+                }
+            });
 
             return;
         }

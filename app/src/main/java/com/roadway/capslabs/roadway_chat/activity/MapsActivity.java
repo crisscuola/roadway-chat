@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.directions.route.Route;
@@ -88,6 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ClusterManager<CustomClusterItem> mClusterManager;
     private CustomClusterItem clickedClusterItem;
     private TextView adress ;
+    private Button again;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             setContentView(R.layout.no_internet);
             initTool(getString(R.string.title_activity_maps));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, MapsActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             return;
         }
 
