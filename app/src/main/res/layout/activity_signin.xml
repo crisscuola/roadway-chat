@@ -8,33 +8,6 @@
     android:padding="@dimen/activity_horizontal_margin"
     tools:context=".auth.ActivityAuth">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="82dp"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="44dp"
-            android:contentDescription="@string/app_title"
-            android:src="@drawable/logo_m" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/logo"
-            android:gravity="center"
-            android:text="@string/sign_in_title"
-            android:textColor="#000"
-            android:textSize="30sp" />
-
-    </RelativeLayout>
-
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -43,75 +16,111 @@
         android:paddingBottom="0dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="200dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="0dp"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:hint="@string/email_hint"
-                    android:inputType="textEmailAddress"
-                    android:theme="@style/BlackEditTextTheme" />
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="40dp"
-                    android:hint="@string/password_hint"
-                    android:inputType="textPassword"
-                    android:theme="@style/BlackEditTextTheme" />
-
-                <Button
-                    android:id="@+id/btn_in"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:background="@color/vk_share_gray_line"
-                    android:text="@string/sign_in_btn"
-                    android:textColor="#000" />
-
-                <Button
-                    android:id="@+id/btn_guest"
-                    android:layout_marginTop="4dp"
-                    android:paddingLeft="7dp"
-                    android:paddingRight="7dp"
+                <ImageView
+                    android:id="@+id/logo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="#ffffff"
-                    android:textColor="@color/colorTextColor"
-                    android:text="@string/fogot"
-                    style="?android:attr/borderlessButtonStyle" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_weight="0.5"
-                android:orientation="vertical">
+                    android:layout_height="82dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="20dp"
+                    android:contentDescription="@string/app_title"
+                    android:src="@drawable/logo_m" />
 
                 <TextView
-                    android:id="@+id/login_errors"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#ff0000"
-                    android:textSize="15sp" />
+                    android:layout_below="@id/logo"
+                    android:gravity="center"
+                    android:text="@string/sign_in_title"
+                    android:textColor="#000"
+                    android:textSize="30sp" />
 
+            </RelativeLayout>
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:hint="@string/email_hint"
+                        android:inputType="textEmailAddress"
+                        android:theme="@style/BlackEditTextTheme" />
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="40dp"
+                        android:hint="@string/password_hint"
+                        android:inputType="textPassword"
+                        android:theme="@style/BlackEditTextTheme" />
+
+                    <Button
+                        android:id="@+id/btn_in"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:background="@color/vk_share_gray_line"
+                        android:text="@string/sign_in_btn"
+                        android:textColor="#000" />
+
+                    <Button
+                        android:id="@+id/btn_guest"
+                        android:layout_marginTop="4dp"
+                        android:paddingLeft="7dp"
+                        android:paddingRight="7dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="#ffffff"
+                        android:textColor="@color/colorTextColor"
+                        android:text="@string/fogot"
+                        style="?android:attr/borderlessButtonStyle" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="0.5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/login_errors"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ff0000"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+
+
 
     </ScrollView>
 

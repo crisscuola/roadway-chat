@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
         if (!isOnline()) {
             showNoInternetMessage();
 
-            setContentView(R.layout.no_internet);
+            setContentView(R.layout.no_internet_without_toolbar);
 
             //mRegistrationProgressBar.setVisibility(View.INVISIBLE);
 
