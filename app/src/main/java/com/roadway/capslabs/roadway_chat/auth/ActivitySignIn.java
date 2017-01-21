@@ -42,6 +42,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             messageResId = R.string.login_wrong_pass_format)
     private EditText password;
     private Button button;
+    TextView errorsTextView;
     private final Activity context = this;
 
     @Override
@@ -67,6 +68,8 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             ConnectionChecker.showNoInternetMessage(this);
             return;
         }
+
+        dropEditTextColors();
         new LoginRequest().execute(email.getText().toString(), password.getText().toString());
     }
 
@@ -74,7 +77,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     public void onValidationFailed(List<ValidationError> errors) {
         dropEditTextColors();
 
-        TextView errorsTextView = (TextView) findViewById(R.id.login_errors);
+
         StringBuilder sb = new StringBuilder();
         for (ValidationError error : errors) {
             View view = error.getView();
@@ -103,6 +106,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
+        errorsTextView = (TextView) findViewById(R.id.login_errors);
         email.setTextColor(Color.BLACK);
         password.setTextColor(Color.BLACK);
     }
@@ -128,7 +132,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
                 throw new RuntimeException("Exception during json parsing", e);
             }
             if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT)
+                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT)
                         .show();
                 return;
             }
