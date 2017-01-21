@@ -58,7 +58,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
 
         holder.textView.setText(title);
         holder.rating.setText(String.valueOf(event.getRating()));
-        String km = event.getDistance() + "km";
+        String km = event.getDistance() + context.getString(R.string.kilometers);
         holder.distance.setText(km);
         Log.d("recycler", holder.distance.getText().toString());
 
