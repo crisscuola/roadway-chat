@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,7 +33,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by konstantin on 07.09.16
@@ -57,7 +57,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initViews();
-
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Validator validator = new Validator(this);
         validator.setValidationListener(this);
 
@@ -74,7 +74,6 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
         register = (Button) findViewById(R.id.submit_register_button);
-
         email.setTextColor(Color.BLACK);
         password1.setTextColor(Color.BLACK);
         password2.setTextColor(Color.BLACK);

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
 
 /**
  * Created by konstantin on 07.09.16
@@ -48,8 +49,9 @@ public class ActivityAuth extends AppCompatActivity  {
         buttonGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(view.getContext(), FeedActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(view.getContext(), FeedActivity.class);
+                intent.putExtra("email", getResources().getString(R.string.guest_menu));
+                startActivity(intent);
             }
         });
     }

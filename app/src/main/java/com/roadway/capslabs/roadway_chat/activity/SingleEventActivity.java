@@ -26,7 +26,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -42,6 +46,7 @@ import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
+import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Code;
 import com.roadway.capslabs.roadway_chat.models.CustomMarker;
@@ -51,6 +56,7 @@ import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.share.ShareFb;
 import com.roadway.capslabs.roadway_chat.share.ShareVk;
 import com.roadway.capslabs.roadway_chat.url.UrlConst;
+import com.roadway.capslabs.roadway_chat.url.UrlType;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 import com.squareup.picasso.Picasso;
 
@@ -60,6 +66,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 
 /**
  * Created by konstantin on 02.10.16
@@ -86,6 +96,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private int id;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
     private Button again;
+    private boolean flag = false;
 
 
     @Override
@@ -127,13 +138,25 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     return;
                 }
 
-                Code code = hasSeenQr();
-                if (code.isCached()) {
-                    Bitmap bitmap = qrGenenartor(code.getCode());
-                    showQrCodeActivity(bitmap);
-                    return;
+
+                if (isLoggedIn()) {
+
+                    Code code = hasSeenQr();
+                    if (code.isCached()) {
+                        Bitmap bitmap = qrGenenartor(code.getCode());
+                        showQrCodeActivity(bitmap);
+                        return;
+                    }
+
+
+                    new Subscriber().execute(id);
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.pls_log, Toast.LENGTH_SHORT)
+                            .show();
+                    Intent intent = new Intent(context, ActivityAuth.class);
+                    startActivity(intent);
                 }
-                new Subscriber().execute(id);
+
             }
         });
 
@@ -154,18 +177,27 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         star.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Log.d("add", "STAR CLICK !!!");
+                Log.d("add", "STAR CLICK !!!");
 
-             if (favor)  {
-                 new UnFavoriter().execute(id);
-                 star.setImageResource(R.drawable.favorite_off);
-                 star.refreshDrawableState();
-             } else {
-                new Favoriter().execute(id);
-                star.setImageResource(R.drawable.favorite_on2);
-                star.refreshDrawableState();
-             }
-                favor = !favor;
+                if (isLoggedIn()) {
+
+
+                    if (favor) {
+                        new UnFavoriter().execute(id);
+                        star.setImageResource(R.drawable.favorite_off);
+                        star.refreshDrawableState();
+                    } else {
+                        new Favoriter().execute(id);
+                        star.setImageResource(R.drawable.favorite_on2);
+                        star.refreshDrawableState();
+                    }
+                    favor = !favor;
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.pls_log, Toast.LENGTH_SHORT)
+                            .show();
+                    Intent intent = new Intent(context, ActivityAuth.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -303,6 +335,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         imageQr = (ImageView) findViewById(R.id.qr_image);
         arrow = (ImageView) findViewById(R.id.arrow);
         star = (ImageView) findViewById(R.id.star);
+        star.setVisibility(View.GONE);
         progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
     }
 
@@ -372,12 +405,15 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         //String distanceToEvent = "Distance to this event: " + distance + " km";
         //distanceView.setText(distanceToEvent);
         String metroStation = "м. " + (event.getMetro());
+//
+//        try {
+//            new ProfileLoader().execute(Integer.valueOf(eventObj.getString("user_id")));
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            new ProfileLoader().execute(Integer.valueOf(eventObj.getString("user_id")));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        creator.setText(event.getOrganization());
+
         this.metro.setText(metroStation);
         metro.setTextColor(Color.parseColor(metroColor(event.getColor())));
         Picasso.with(context).load(getImageUrl(event.getPictureUrl()))
@@ -543,30 +579,48 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_get_event", result);
-            progressBar.setVisibility(View.GONE);
-            JSONObject object = HttpConnectionHandler.parseJSON(result);
-            try {
-                JSONObject eventObj = object.getJSONObject("object");
-                removeCodeIfUsed(eventObj);
-                displayEventContent(eventObj);
-                if (isFavor(eventObj)) {
-                    Log.d("FAVOR", "T");
-                    favor = true;
-                    star.setImageResource(R.drawable.favorite_on2);
-                } else  {
-                    Log.d("FAVOR","F");
-                    favor = false;
-                    star.setImageResource(R.drawable.favorite_off);
+            if (result.equals("Timeout")) Log.d("Time","Timeout EventLoader");
+            else {
+                progressBar.setVisibility(View.GONE);
+                star.setVisibility(View.VISIBLE);
+                JSONObject object = HttpConnectionHandler.parseJSON(result);
+                try {
+                    JSONObject eventObj = object.getJSONObject("object");
+                    removeCodeIfUsed(eventObj);
+                    displayEventContent(eventObj);
+                    if (isFavor(eventObj)) {
+                        Log.d("FAVOR", "T");
+                        favor = true;
+                        star.setImageResource(R.drawable.favorite_on2);
+                    } else {
+                        Log.d("FAVOR", "F");
+                        favor = false;
+                        star.setImageResource(R.drawable.favorite_off);
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException("Error while parsing json", e);
                 }
-
-            } catch (JSONException e) {
-                throw new RuntimeException("Error while parsing json", e);
+                
+                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.map);
+                    mapFragment.getMapAsync(callback);
             }
-
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(callback);
         }
+    }
+
+    private boolean isLoggedIn() {
+        CookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this));
+        HttpUrl url = UrlType.FEED.getUrl().build();
+        List<Cookie> cookies = cookieJar.loadForRequest(url);
+        for (Cookie cookie : cookies) {
+            if ("sessionid".equals(cookie.name())) {
+                Log.d("response_auth_session", cookie.value());
+                return true;
+            }
+        }
+        return false;
     }
 
     private void saveCode(JSONObject event) {
@@ -599,16 +653,19 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             //removeCodeIfUsed(true);
-            Log.d("response_subscribe", s);
-            JSONObject object = HttpConnectionHandler.parseJSON(s);
-            try {
-                JSONObject eventObj = object.getJSONObject("object");
-                codeJson = (String) eventObj.get("activate_link");
-                Bitmap bitmap = qrGenenartor(codeJson);
-                saveCode(eventObj);
-                showQrCodeActivity(bitmap);
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
+            if (s.equals("Timeout")) Log.d("Time","Timeout Subscriber");
+            else {
+                Log.d("response_subscribe", s);
+                JSONObject object = HttpConnectionHandler.parseJSON(s);
+                try {
+                    JSONObject eventObj = object.getJSONObject("object");
+                    codeJson = (String) eventObj.get("activate_link");
+                    Bitmap bitmap = qrGenenartor(codeJson);
+                    saveCode(eventObj);
+                    showQrCodeActivity(bitmap);
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSON parsing error", e);
+                }
             }
         }
     }
@@ -623,18 +680,12 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            //removeCodeIfUsed(true);
-            Log.d("response_favorite", s);
-            JSONObject object = HttpConnectionHandler.parseJSON(s);
-//            try {
-//                JSONObject eventObj = object.getJSONObject("object");
-//                codeJson = (String) eventObj.get("activate_link");
-//                Bitmap bitmap = qrGenenartor(codeJson);
-//                saveCode(eventObj);
-//                showQrCodeActivity(bitmap);
-//            } catch (JSONException e) {
-//                throw new RuntimeException("JSON parsing error", e);
-//            }
+            if (s.equals("Timeout")) Log.d("Time","Timeout Favoriter");
+            else {
+                //removeCodeIfUsed(true);
+                Log.d("response_favorite", s);
+                JSONObject object = HttpConnectionHandler.parseJSON(s);
+            }
         }
     }
 
@@ -648,44 +699,41 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            //removeCodeIfUsed(true);
-            Log.d("response_favorite", s);
-            JSONObject object = HttpConnectionHandler.parseJSON(s);
-//            try {
-//                JSONObject eventObj = object.getJSONObject("object");
-//                codeJson = (String) eventObj.get("activate_link");
-//                Bitmap bitmap = qrGenenartor(codeJson);
-//                saveCode(eventObj);
-//                showQrCodeActivity(bitmap);
-//            } catch (JSONException e) {
-//                throw new RuntimeException("JSON parsing error", e);
-//            }
-        }
-    }
-
-    private final class ProfileLoader extends AsyncTask<Integer, Void, String> {
-        @Override
-        protected String doInBackground(Integer... params) {
-            String id = String.valueOf(params[0]);
-            Log.d("response_profile", id);
-            return new EventRequestHandler().getCreator(context, id);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.d("response_profile", s);
-            JSONObject object = HttpConnectionHandler.parseJSON(s);
-            try {
-                JSONObject obj = object.getJSONObject("object");
-                JSONObject  org = obj.getJSONObject("organization");
-                final String nameOrg = org.getString("name");
-
-                creator.setText(nameOrg);
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
+            if (s.equals("Timeout")) Log.d("Time","Timeout UnFavoriter");
+            else {
+                //removeCodeIfUsed(true);
+                Log.d("response_favorite", s);
+                JSONObject object = HttpConnectionHandler.parseJSON(s);
             }
-            Log.d("response_subscribe", s);
         }
     }
+
+//    private final class ProfileLoader extends AsyncTask<Integer, Void, String> {
+//        @Override
+//        protected String doInBackground(Integer... params) {
+//            String id = String.valueOf(params[0]);
+//            Log.d("response_profile", id);
+//            return new EventRequestHandler().getCreator(context, id);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            Log.d("response_profile", s);
+//            if (s.equals("Timeout")) Log.d("Time","Timeout");
+//            else {
+//                JSONObject object = HttpConnectionHandler.parseJSON(s);
+//                try {
+//                    JSONObject obj = object.getJSONObject("object");
+//                    JSONObject org = obj.getJSONObject("organization");
+//                    final String nameOrg = org.getString("name");
+//
+//                    creator.setText(nameOrg);
+//                } catch (JSONException e) {
+//                    throw new RuntimeException("JSON parsing error", e);
+//                }
+//                Log.d("response_subscribe", s);
+//            }
+//        }
+//    }
 }

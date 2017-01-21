@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -65,6 +66,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         setContentView(R.layout.activity_rank);
         initViews(getString(R.string.rank_title));
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
 

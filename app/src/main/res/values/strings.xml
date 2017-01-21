@@ -91,6 +91,7 @@
     <string name="fav_menu_item">My Favorites</string>
     <string name="rank_menu_item">Rank</string>
     <string name="logout_menu_item">Logout</string>
+    <string name="login_menu_item">Login</string>
     <string name="warning_alert_title">Warning!</string>
     <string name="logout_alert_message">Are you sure you want to logout?</string>
     <string name="logout_alert_btn">Logout</string>
@@ -109,6 +110,10 @@
     <string name="recommended_title">Recommended</string>
     <string name="thank_you_toast">Thank you!</string>
     <string name="guest">Guest</string>
+    <string name="guest_menu">Guest</string>
+    <string name="fogot">Forgot password</string>
+    <string name="pls_log">Please LogIn</string>
+
 
     <string name="login_empty_message"></string>
     <string name="login_wrong_email_format">Invalid email</string>

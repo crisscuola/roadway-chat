@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         initViews();
-
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Validator validator = new Validator(this);
         validator.setValidationListener(this);
         button.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,6 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
-
         email.setTextColor(Color.BLACK);
         password.setTextColor(Color.BLACK);
     }

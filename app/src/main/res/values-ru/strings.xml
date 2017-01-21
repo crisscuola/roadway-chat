@@ -91,6 +91,7 @@
     <string name="recommended_menu_item">Рекомендуемое</string>
     <string name="rank_menu_item">Оценки</string>
     <string name="logout_menu_item">Выход</string>
+    <string name="login_menu_item">Войти</string>
     <string name="warning_alert_title">Внимание!</string>
     <string name="logout_alert_message">Вы уверены, что хотите выйти?</string>
     <string name="logout_alert_btn">Выйти</string>
@@ -110,6 +111,9 @@
     <string name="recommended_title">Рекомендуемое</string>
     <string name="thank_you_toast">Спасибо!</string>
     <string name="guest">Войти как гость</string>
+    <string name="guest_menu">Гость</string>
+    <string name="fogot">Забыл пароль</string>
+    <string name="pls_log">Пожалуйста войдите в аккаунт</string>
 
     <string name="login_empty_message"></string>
     <string name="login_wrong_email_format">Неверный формат почты</string>

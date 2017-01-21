@@ -23,6 +23,7 @@ public class SingleEvent {
     private final String url;
     private final int countUsed;
     private final int color;
+    private final String organization;
 
     public SingleEvent(JSONObject eventObj) {
         try {
@@ -39,6 +40,7 @@ public class SingleEvent {
             phone = eventObj.getString("phone");
             url = eventObj.getString("url");
             countUsed = eventObj.getInt("count_used");
+            organization = eventObj.getString("organization_name");
             String line = eventObj.getString("line_number");
             if (line.equals("null")) {
                 color = 0;
@@ -101,6 +103,8 @@ public class SingleEvent {
     public int getCountUsed() {return countUsed;}
 
     public int getColor() {return  color;}
+
+    public String getOrganization() {return  organization;}
 
 
 }

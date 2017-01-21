@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -55,11 +53,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, CustomClusterItemAdapter.ItemListener, RoutingListener,ClusterManager.OnClusterItemInfoWindowClickListener<CustomClusterItem> {
@@ -292,37 +288,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }  else {
 
-        new EventsLoader().execute(new EventRequestHandler());
+            new EventsLoader().execute(new EventRequestHandler());
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLngl)
-                .zoom(15)
-                .bearing(0)
-                .tilt(0)
-                .build();
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLngl)
+                    .zoom(15)
+                    .bearing(0)
+                    .tilt(0)
+                    .build();
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-    }
+        }
 
-//        final int finalId = id;
-//
-//        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-//            @Override
-//            public void onInfoWindowClick(Marker marker) {
-//
-//                Intent intent = new Intent(context, SingleEventActivity.class);
-//                if (getIntent().hasExtra("selected_event")) {
-//                    intent.putExtra("id", finalId);
-//                    //intent.putExtra("distance", distance);
-//                    startActivity(intent);
-//                } else {
-//                    intent.putExtra("id", markersMap.get(marker));
-//                    startActivity(intent);
-//                }
-//                Log.d("marker", "CLICK!!");
-//            }
-//        });
     }
 
     @Override
@@ -493,30 +471,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         public void onLocationChanged(Location loc) {
-            String longitude = "Longitude: " + loc.getLongitude();
-//            Log.d(TAG, longitude);
-            String latitude = "Latitude: " + loc.getLatitude();
-//            Log.d(TAG, latitude);
 
-        /*------- To get city name from coordinates -------- */
-            String cityName = null;
-            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-            List<Address> addresses;
-            try {
-                addresses = gcd.getFromLocation(loc.getLatitude(),
-                        loc.getLongitude(), 1);
-                if (addresses.size() > 0) {
-//                    System.out.println(addresses.get(0).getLocality());
-                    cityName = addresses.get(0).getLocality();
-                }
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                    + cityName;
-           // editLocation.setText(s);
-            Log.d("check", s);
         }
 
         @Override
@@ -541,49 +496,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_marker_event", result);
-            JSONObject object = HttpConnectionHandler.parseJSON(result);
-            try {
-                JSONArray array = object.getJSONArray("object_list");
+            if (result.equals("Timeout")) Log.d("Time","Timeout EventsMapsLoader");
+            else {
+                JSONObject object = HttpConnectionHandler.parseJSON(result);
+                try {
+                    JSONArray array = object.getJSONArray("object_list");
 
-                int identy;
+                    int identy;
 
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject json = (JSONObject) array.get(i);
-                    MapsMarker mapsMarker = new MapsMarker(json);
-                  //  Event event = new Event(json);
-                    identy = mapsMarker.getId();
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject json = (JSONObject) array.get(i);
+                        MapsMarker mapsMarker = new MapsMarker(json);
+                        //  Event event = new Event(json);
+                        identy = mapsMarker.getId();
 
 
+                        Log.d("FU_", String.valueOf(identy));
+                        markers.add(mapsMarker);
 
-                    Log.d("FU_", String.valueOf(identy));
-                    markers.add(mapsMarker);
+                        List<Event> eventes = new ArrayList<>();
 
-                    List<Event> eventes = new ArrayList<>();
+                        try {
+                            JSONArray eve = json.getJSONArray("events");
 
-                    try {
-                        JSONArray eve = json.getJSONArray("events");
+                            for (int j = 0; j < eve.length(); j++) {
 
-                        for (int j = 0; j < eve.length(); j++) {
+                                JSONObject jsonE = (JSONObject) eve.get(j);
+                                Event event = new Event(jsonE);
 
-                            JSONObject jsonE = (JSONObject) eve.get(j);
-                            Event event = new Event(jsonE);
+                                eventes.add(event);
+                            }
+                            eventMap.put(identy, eventes);
 
-                            eventes.add(event);
+
+                        } catch (JSONException e) {
+                            throw new RuntimeException("JSON parsing error", e);
                         }
-                        eventMap.put(identy,eventes);
 
-
-                    } catch (JSONException e) {
-                        throw new RuntimeException("JSON parsing error", e);
+                        //events.add(event);
                     }
 
-                    //events.add(event);
+                    showEvents();
+
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSON parsing error", e);
                 }
-
-                showEvents();
-
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
             }
         }
     }

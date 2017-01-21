@@ -10,8 +10,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -28,6 +32,7 @@ import com.roadway.capslabs.roadway_chat.activity.RateListActivity;
 import com.roadway.capslabs.roadway_chat.activity.RecommendedListActivity;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.network.LoginHelper;
+import com.roadway.capslabs.roadway_chat.url.UrlType;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONException;
@@ -37,25 +42,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
+
 /**
  * Created by kirill on 12.09.16
  */
 public class DrawerFactory {
     public Activity drawerContext;
+    private IDrawerItem[] drawerItems;
 
     public DrawerBuilder getDrawerBuilder(final Activity activity, Toolbar toolbar) {
         drawerContext = activity;
+
+
+        if (isLoggedIn()){
+            drawerItems = getDrawerItems();
+        } else drawerItems = getDrawerItemsNotLogedIn();
+
         final DrawerBuilder drawer = new DrawerBuilder()
                 .withActivity(activity)
                 .withToolbar(toolbar)
                 .withActionBarDrawerToggle(true)
                 .withAccountHeader(getAccountHeader(activity))
                 .addDrawerItems(
-                        getDrawerItems()
-                ).withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        drawerItems)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Class<? extends Activity> toActivity = getActivity(position);
+                        Class<? extends Activity> toActivity;
+                        if (isLoggedIn()) {
+                         toActivity = getActivity(position);}
+                        else toActivity = getActivityNotLoggedIn(position);
+
                         Intent intent = new Intent(activity, toActivity);
 
                         if (position == 6) {
@@ -155,6 +175,24 @@ public class DrawerFactory {
     }
 
 
+    private IDrawerItem[] getDrawerItemsNotLogedIn() {
+        List<IDrawerItem> items = new ArrayList<>();
+        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.feed_menu_item)
+                .withIcon(R.drawable.ic_format_list_bulleted_grey600_48dp).withSelectedTextColorRes(R.color.md_black_1000);
+        SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.map_menu_item)
+                .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
+
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.login_menu_item).withIcon(R.drawable.ic_login_grey600_48dp)
+                .withTextColorRes(R.color.red);
+        items.add(events);
+        items.add(map);
+        items.add(logout);
+        IDrawerItem[] array = new IDrawerItem[items.size()];
+
+        return items.toArray(array);
+    }
+
+
     private Class<? extends Activity> getActivity(int i) {
         switch (i) {
             case 1:
@@ -172,6 +210,33 @@ public class DrawerFactory {
             default:
                 return FeedActivity.class;
         }
+    }
+
+    private Class<? extends Activity> getActivityNotLoggedIn(int i) {
+        switch (i) {
+            case 1:
+                return FeedActivity.class;
+            case 2:
+                return MapsActivity.class;
+            case 3:
+                return ActivityAuth.class;
+            default:
+                return FeedActivity.class;
+        }
+    }
+
+    private boolean isLoggedIn() {
+        CookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(drawerContext));
+        HttpUrl url = UrlType.FEED.getUrl().build();
+        List<Cookie> cookies = cookieJar.loadForRequest(url);
+        for (Cookie cookie : cookies) {
+            if ("sessionid".equals(cookie.name())) {
+                Log.d("response_auth_session", cookie.value());
+                return true;
+            }
+        }
+        return false;
     }
 
     private JSONObject getProfile() {

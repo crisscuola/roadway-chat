@@ -8,8 +8,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -41,10 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -90,10 +86,6 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
             return;
         }
 
-        setContentView(R.layout.activity_feed);
-        initToolbar(getString(R.string.feed_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("email")) {
@@ -105,6 +97,11 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                 editor.commit();
             }
         }
+
+        setContentView(R.layout.activity_feed);
+        initToolbar(getString(R.string.feed_activity_title));
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
 
         initAdapter();
 
@@ -231,29 +228,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
-            String longitude = "Longitude: " + loc.getLongitude();
-//            Log.d(TAG, longitude);
-            String latitude = "Latitude: " + loc.getLatitude();
-//            Log.d(TAG, latitude);
 
-        /*------- To get city name from coordinates -------- */
-            String cityName = null;
-            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-            List<Address> addresses;
-            try {
-                addresses = gcd.getFromLocation(loc.getLatitude(),
-                        loc.getLongitude(), 1);
-                if (addresses.size() > 0) {
-                    System.out.println(addresses.get(0).getLocality());
-                    cityName = addresses.get(0).getLocality();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                    + cityName;
-            // editLocation.setText(s);
-            Log.d("check", s);
         }
 
         @Override
@@ -281,20 +256,23 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
             Log.d("response_crete_event", result);
-            JSONObject object = HttpConnectionHandler.parseJSON(result);
-            try {
-                JSONArray array = object.getJSONArray("object_list");
-                List<Event> events = new ArrayList<>();
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject json = (JSONObject) array.get(i);
-                    Event event = new Event(json);
-                    events.add(event);
-                }
+            if (result.equals("Timeout")) Log.d("Time","Timeout EventsFeeDLoader");
+            else {
+                JSONObject object = HttpConnectionHandler.parseJSON(result);
+                try {
+                    JSONArray array = object.getJSONArray("object_list");
+                    List<Event> events = new ArrayList<>();
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject json = (JSONObject) array.get(i);
+                        Event event = new Event(json);
+                        events.add(event);
+                    }
 
-                recyclerAdapter.addEvents(events);
-                recyclerAdapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
+                    recyclerAdapter.addEvents(events);
+                    recyclerAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSON parsing error", e);
+                }
             }
         }
     }
@@ -317,21 +295,24 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_crete_event", result);
-            JSONObject object = HttpConnectionHandler.parseJSON(result);
-            try {
-                JSONArray array = object.getJSONArray("object_list");
-                List<Event> events = new ArrayList<>();
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject json = (JSONObject) array.get(i);
-                    Event event = new Event(json);
-                    events.add(event);
-                }
+            if (result.equals("Timeout")) Log.d("Time","Timeout NextEventSFeeDLoader");
+            else {
+                JSONObject object = HttpConnectionHandler.parseJSON(result);
+                try {
+                    JSONArray array = object.getJSONArray("object_list");
+                    List<Event> events = new ArrayList<>();
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject json = (JSONObject) array.get(i);
+                        Event event = new Event(json);
+                        events.add(event);
+                    }
 
-                recyclerAdapter.addEvents(events);
-                recyclerAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
+                    recyclerAdapter.addEvents(events);
+                    recyclerAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSON parsing error", e);
+                }
             }
         }
     }
