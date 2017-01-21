@@ -579,7 +579,20 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_get_event", result);
-            if (result.equals("Timeout")) Log.d("Time","Timeout EventLoader");
+            if (result.equals("Timeout")) {
+                Log.d("Time", "Timeout EventLoader");
+//                setContentView(R.layout.no_internet);
+//                again = (Button) findViewById(R.id.button_again);
+//
+//                again.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent intent = new Intent(context, SingleEventActivity.class);
+//                        intent.putExtra("id", id);
+//                        startActivity(intent);
+//                    }
+//                });
+            }
             else {
                 progressBar.setVisibility(View.GONE);
                 star.setVisibility(View.VISIBLE);
@@ -601,7 +614,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 } catch (JSONException e) {
                     throw new RuntimeException("Error while parsing json", e);
                 }
-                
+
                     SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.map);
                     mapFragment.getMapAsync(callback);

@@ -222,7 +222,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        new EventsLoader().execute(new EventRequestHandler());
+        //new EventsLoader().execute(new EventRequestHandler());
 
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
@@ -268,7 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             LatLng latlng = new LatLng(lat, lng);
 
-            //setMarker(latlng, mMap, title, id);
+            setMarker(latlng, mMap, "", id);
 
             setRoute(latlng);
 
