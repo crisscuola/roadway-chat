@@ -2,12 +2,12 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.Manifest;
 import android.content.Intent;
-import android.location.Location;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
@@ -27,8 +27,6 @@ public class ActivityAuth extends LocationActivityTemplate {
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
-        buildGoogleApiClient();
-        createLocationRequest();
 
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
@@ -57,11 +55,6 @@ public class ActivityAuth extends LocationActivityTemplate {
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FeedActivity.class);
                 intent.putExtra("email", getResources().getString(R.string.guest_menu));
-                getLocation();
-                Location location = getmLastLocation();
-                intent.putExtra("lat", location.getLatitude());
-                intent.putExtra("lng", location.getLongitude());
-                //stopLocationUpdates();
                 startActivity(intent);
             }
         });
@@ -73,6 +66,32 @@ public class ActivityAuth extends LocationActivityTemplate {
         finish();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(ActivityAuth.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
 
 }

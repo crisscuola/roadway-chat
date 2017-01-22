@@ -57,6 +57,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, RankActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });

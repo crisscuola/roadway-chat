@@ -73,6 +73,7 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, SplashActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });

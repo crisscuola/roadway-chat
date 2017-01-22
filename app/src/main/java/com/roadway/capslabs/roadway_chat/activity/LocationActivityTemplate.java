@@ -217,8 +217,8 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
         // Assign the new location
         mLastLocation = location;
 
-        Toast.makeText(getApplicationContext(), "Location changed!",
-                Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "Location changed!",
+//                Toast.LENGTH_SHORT).show();
 
         // Displaying the new location on UI
         getLocation();

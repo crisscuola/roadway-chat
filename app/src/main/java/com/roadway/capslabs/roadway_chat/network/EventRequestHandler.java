@@ -31,6 +31,7 @@ import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.MAP;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.PROFILE;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.RECOMMENDED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBSCRIBE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.UNFAVORITE;
@@ -115,7 +116,7 @@ public class EventRequestHandler {
     public String getRecommendedEvents(Activity context, double lat, double lng) {
         String latParam = String.valueOf(lat);
         String lngParam = String.valueOf(lng);
-        HttpUrl url = UrlFactory.getUrl(FAVOR).newBuilder().addQueryParameter("lat", latParam)
+        HttpUrl url = UrlFactory.getUrl(RECOMMENDED).newBuilder().addQueryParameter("lat", latParam)
                 .addQueryParameter("lng",lngParam).build();
         Request request = buildRequest(url);
         Log.d("Location_Subs", String.valueOf(url));

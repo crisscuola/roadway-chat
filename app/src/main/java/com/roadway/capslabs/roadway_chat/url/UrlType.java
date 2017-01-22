@@ -169,8 +169,8 @@ public enum UrlType {
                     .scheme(HTTP)
                     .host(URL)
                     .addPathSegment(PATH_EVENT)
-                    .addPathSegment(PATH_FAVOR)
                     .addPathSegment(PATH_GET)
+                    .addPathSegment(PATH_RECOMMENDED)
                     .addPathSegment("");
 
         }

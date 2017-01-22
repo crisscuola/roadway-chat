@@ -84,6 +84,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FavoriteEventsActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });

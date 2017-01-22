@@ -78,7 +78,13 @@ public class CustomClusterItemAdapter extends RecyclerView.Adapter<CustomCluster
         public void setData(Item item) {
             this.item = item;
             //imageView.setImageResource(item.getDrawableResource());
-            textView.setText(item.getTitle());
+            String title = item.getTitle();
+            if (title.length() > 20 )
+            {
+                title = title.substring(0,17);
+                title = title + " ...";
+            }
+            textView.setText(title);
             rating.setText(String.valueOf(item.getmRating()));
         }
 

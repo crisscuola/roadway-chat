@@ -81,6 +81,7 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, RateListActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });

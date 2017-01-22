@@ -82,6 +82,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, RecommendedListActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });
@@ -238,7 +239,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getFavoritesEvents(context, lat,lng);
+            return handler.getRecommendedEvents(context, lat,lng);
         }
 
         @Override

@@ -116,6 +116,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, SingleEventActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });

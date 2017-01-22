@@ -82,6 +82,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, FeedActivity.class);
+                    finish();
                     startActivity(intent);
                 }
             });
@@ -183,8 +184,8 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         Location location = getmLastLocation();
 
         if (location == null) {
-            lat = 55.797332;
-            lng = 37.537236;
+            lat = 55.765842;
+            lng = 37.685190;
         } else {
             lat = location.getLatitude();
             lng = location.getLongitude();
