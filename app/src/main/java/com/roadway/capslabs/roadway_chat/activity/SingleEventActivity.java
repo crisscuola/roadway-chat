@@ -96,12 +96,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     private int id;
     private String codeJson = "https://ru.wikipedia.org/wiki/QR";
     private Button again;
-    private boolean flag = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActivityCompat.requestPermissions(SingleEventActivity.this,
+                new String[]{android.Manifest.permission.CALL_PHONE}, 1);
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
@@ -438,7 +439,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
 
     private String metroColor(int colorNum) {
-
         colors.put(0,"#000000");
         colors.put(1,"#ef1e25");
         colors.put(2,"#029a55");
@@ -461,7 +461,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private String adressParse(String adress) {
-
         String[] array = adress.split(",");
         for (int i = 0; i < array.length; i++){
             Log.d("add", array[i]);
@@ -720,33 +719,4 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             }
         }
     }
-
-//    private final class ProfileLoader extends AsyncTask<Integer, Void, String> {
-//        @Override
-//        protected String doInBackground(Integer... params) {
-//            String id = String.valueOf(params[0]);
-//            Log.d("response_profile", id);
-//            return new EventRequestHandler().getCreator(context, id);
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//            Log.d("response_profile", s);
-//            if (s.equals("Timeout")) Log.d("Time","Timeout");
-//            else {
-//                JSONObject object = HttpConnectionHandler.parseJSON(s);
-//                try {
-//                    JSONObject obj = object.getJSONObject("object");
-//                    JSONObject org = obj.getJSONObject("organization");
-//                    final String nameOrg = org.getString("name");
-//
-//                    creator.setText(nameOrg);
-//                } catch (JSONException e) {
-//                    throw new RuntimeException("JSON parsing error", e);
-//                }
-//                Log.d("response_subscribe", s);
-//            }
-//        }
-//    }
 }
