@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
@@ -34,6 +35,7 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
+import com.roadway.capslabs.roadway_chat.utils.LocationChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +71,8 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //LocationChecker.isLocationEnabled(this.context);
+
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
@@ -85,6 +89,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
             });
             return;
         }
+
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -119,12 +124,19 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
 
             return;
         }
+
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         Location location = getLastKnownLocation();
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+
+        if (location == null) {
+            lat = 55.687454;
+            lng = 37.891410;
+        } else {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+        }
 
         new EventsLoader().execute(new EventRequestHandler());
     }
@@ -228,7 +240,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
-
+            Toast.makeText(context, "Location found", Toast.LENGTH_LONG).show();
         }
 
         @Override

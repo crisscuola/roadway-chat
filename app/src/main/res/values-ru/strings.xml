@@ -129,4 +129,7 @@
     <string name="check_email_title">Проверьте почту</string>
     <string name="check_email_message">Пожалуйста, проверьте свою почту, чтобы подтвердить регистрацию</string>
     <string name="email_already_exists">Пользователь с такой почтой уже существует</string>
+    <string name="gps_network_not_enabled">Please enable gps network</string>
+    <string name="open_location_settings">Enable</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.gcm.QuickstartPreferences;
