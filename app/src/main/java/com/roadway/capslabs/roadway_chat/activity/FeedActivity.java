@@ -128,7 +128,10 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
+        //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         Location location = getLastKnownLocation();
+
+        Log.d("SHIT", String.valueOf(extras.getDouble("lat")));
 
         if (location == null) {
             lat = 55.687454;
