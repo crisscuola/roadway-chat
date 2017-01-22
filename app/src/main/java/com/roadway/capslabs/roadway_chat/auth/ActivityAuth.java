@@ -2,6 +2,7 @@ package com.roadway.capslabs.roadway_chat.auth;
 
 import android.Manifest;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,19 +11,24 @@ import android.widget.Button;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
+import com.roadway.capslabs.roadway_chat.activity.LocationActivityTemplate;
 
 /**
  * Created by konstantin on 07.09.16
  */
-public class ActivityAuth extends AppCompatActivity  {
+public class ActivityAuth extends LocationActivityTemplate {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
+
         ActivityCompat.requestPermissions(ActivityAuth.this,
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        buildGoogleApiClient();
+        createLocationRequest();
 
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
@@ -46,12 +52,16 @@ public class ActivityAuth extends AppCompatActivity  {
 
         Button buttonGuest = (Button) findViewById(R.id.btn_guest);
 
-
         buttonGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), FeedActivity.class);
                 intent.putExtra("email", getResources().getString(R.string.guest_menu));
+                getLocation();
+                Location location = getmLastLocation();
+                intent.putExtra("lat", location.getLatitude());
+                intent.putExtra("lng", location.getLongitude());
+                //stopLocationUpdates();
                 startActivity(intent);
             }
         });
