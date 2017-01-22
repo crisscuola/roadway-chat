@@ -183,7 +183,7 @@ public class DrawerFactory {
                 .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
 
         SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.login_menu_item).withIcon(R.drawable.ic_login_grey600_48dp)
-                .withTextColorRes(R.color.red);
+                .withTextColorRes(R.color.l_2);
         items.add(events);
         items.add(map);
         items.add(logout);

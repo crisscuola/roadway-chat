@@ -144,7 +144,7 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
         protected void onPostExecute(String result) {
             Toast.makeText(getApplicationContext(), R.string.thank_you_toast, Toast.LENGTH_SHORT)
                     .show();
-            Intent feedActivity = new Intent(context, FeedActivity.class);
+            Intent feedActivity = new Intent(context, RateListActivity.class);
             startActivity(feedActivity);
         }
     }

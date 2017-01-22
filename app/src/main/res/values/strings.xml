@@ -123,4 +123,14 @@
     <string name="reg_empty_second_pass_message">Confirm password</string>
     <string name="recommended_menu_item">Recommended</string>
     <string name="no_internet_connection">No internet connection</string>
+    <string name="try_again">Try again</string>
+    <string name="kilometers">km</string>
+    <string name="login_failed">Login failed</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="check_email_title">Check your email</string>
+    <string name="check_email_message">Please check your email to complete registration</string>
+    <string name="email_already_exists">User with this email already exists</string>
+    <string name="gps_network_not_enabled">Please enable gps network</string>
+    <string name="open_location_settings">Enable</string>
+    <string name="cancel">Cancel</string>
 </resources>

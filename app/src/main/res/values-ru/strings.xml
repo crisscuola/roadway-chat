@@ -122,4 +122,14 @@
     <string name="reg_second_pass_message">Пароли должны совпадать</string>
     <string name="reg_empty_second_pass_message">Подтвердите пароль</string>
     <string name="no_internet_connection">Отсутствует интернет соединение</string>
+    <string name="try_again">Попробуйте снова</string>
+    <string name="kilometers">км</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="registration_failed">Ошибка регистрации</string>
+    <string name="check_email_title">Проверьте почту</string>
+    <string name="check_email_message">Пожалуйста, проверьте свою почту, чтобы подтвердить регистрацию</string>
+    <string name="email_already_exists">Пользователь с такой почтой уже существует</string>
+    <string name="gps_network_not_enabled">Please enable gps network</string>
+    <string name="open_location_settings">Enable</string>
+    <string name="cancel">Cancel</string>
 </resources>

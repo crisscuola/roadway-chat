@@ -29,6 +29,7 @@ import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
 import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -94,6 +95,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
             return;
         }
 
+        dropEditTextColors();
         Registrator registrator = new RegistratorByEmail(readRegisterForm());
         new RegisterRequest().execute(registrator);
     }
@@ -130,8 +132,8 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     }
 
     private AlertDialog.Builder getAlert(final Activity context) {
-        String title = "Check your email";
-        String message = "Please check your email to complete registration";
+        String title = getString(R.string.check_email_title);
+        String message = getString(R.string.check_email_message);
         String okString = "OK";
 
         AlertDialog.Builder ad = new AlertDialog.Builder(context);
@@ -159,7 +161,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         @Override
         protected String doInBackground(Object... params) {
             Registrator registrator = (RegistratorByEmail) params[0];
-            //TODO: save user to sharedPrefs
+
             return registrator.register();
         }
 
@@ -169,18 +171,27 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
             JSONObject object;
             try {
                 object = new JSONObject(result);
+
+                if (object.has("errors")) {
+                        JSONArray array = object.getJSONArray("errors");
+                        for (int i = 0; i < array.length(); i++) {
+                            int item = array.getInt(i);
+                            if (item == 8) {
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.email_already_exists, Toast.LENGTH_SHORT).show();
+
+                                return;
+                            }
+                        }
+
+                    Toast.makeText(getApplicationContext(),
+                            R.string.registration_failed, Toast.LENGTH_SHORT).show();
+                    return;
+                }
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
-            if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(),
-                        "Registration failed", Toast.LENGTH_SHORT).show();
-                return;
-            }
             getAlert(context).show();
-//            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
-//            intent.putExtra("email", email.getText().toString());
-//            startActivity(intent);
         }
     }
 }
