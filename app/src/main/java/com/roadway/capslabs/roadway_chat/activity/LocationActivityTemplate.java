@@ -198,7 +198,7 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
     public void onConnected(Bundle arg0) {
 
         // Once connected with google api, get the location
-        Toast.makeText(this, "!!!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "!!!", Toast.LENGTH_LONG).show();
         Log.d("SHIT", "!!!");
         getLocation();
 

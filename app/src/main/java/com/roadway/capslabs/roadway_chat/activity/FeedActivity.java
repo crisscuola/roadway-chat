@@ -23,8 +23,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EndlessRecyclerViewScrollListener;
@@ -42,7 +42,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedActivity extends LocationActivityTemplate implements SwipeRefreshLayout.OnRefreshListener {
+public class FeedActivity extends LocationActivityTemplate implements SwipeRefreshLayout.OnRefreshListener, GoogleApiClient.ConnectionCallbacks {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private final int step = 20;
     private Drawer drawer;
@@ -131,22 +131,22 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         //Location location = getLastKnownLocation();
 
-        getLocation();
-        Location location = getmLastLocation();
-
-//        Log.d("SHIT", String.valueOf(extras.getDouble("lat")));
-
-        if (location == null) {
-            lat = 55.797332;
-            lng = 37.537236;
-        } else {
-            lat = location.getLatitude();
-            lng = location.getLongitude();
-        }
-
-        Log.d("SHIT", String.valueOf(lat));
-
-        new EventsLoader().execute(new EventRequestHandler());
+//        getLocation();
+//        Location location = getmLastLocation();
+//
+////        Log.d("SHIT", String.valueOf(extras.getDouble("lat")));
+//
+//        if (location == null) {
+//            lat = 55.797332;
+//            lng = 37.537236;
+//        } else {
+//            lat = location.getLatitude();
+//            lng = location.getLongitude();
+//        }
+//
+//        Log.d("SHIT", String.valueOf(lat));
+//
+//        new EventsLoader().execute(new EventRequestHandler());
     }
 
     private Location getLastKnownLocation() {
@@ -175,6 +175,25 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         drawer.closeDrawer();
     }
 
+    @Override
+    public void onConnected(Bundle arg0) {
+        super.onConnected(arg0);
+
+        getLocation();
+        Location location = getmLastLocation();
+
+        if (location == null) {
+            lat = 55.797332;
+            lng = 37.537236;
+        } else {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+        }
+
+        Log.d("SHIT", String.valueOf(lat));
+
+        new EventsLoader().execute(new EventRequestHandler());
+    }
 
 
     private void initTool(String title) {
@@ -249,7 +268,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
     private class MyLocationListener implements LocationListener {
         @Override
         public void onLocationChanged(Location loc) {
-            Toast.makeText(context, "Location found", Toast.LENGTH_LONG).show();
+
         }
 
         @Override
