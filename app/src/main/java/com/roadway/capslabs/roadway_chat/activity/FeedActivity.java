@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +34,6 @@ import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
-import com.roadway.capslabs.roadway_chat.utils.LocationChecker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,7 +42,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class FeedActivity extends LocationActivityTemplate implements SwipeRefreshLayout.OnRefreshListener {
     private final DrawerFactory drawerFactory = new DrawerFactory();
     private final int step = 20;
     private Drawer drawer;
@@ -107,6 +105,8 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         initToolbar(getString(R.string.feed_activity_title));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
+        buildGoogleApiClient();
+        createLocationRequest();
 
         initAdapter();
 
@@ -129,17 +129,22 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
                 LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        Location location = getLastKnownLocation();
+        //Location location = getLastKnownLocation();
 
-        Log.d("SHIT", String.valueOf(extras.getDouble("lat")));
+        getLocation();
+        Location location = getmLastLocation();
+
+//        Log.d("SHIT", String.valueOf(extras.getDouble("lat")));
 
         if (location == null) {
-            lat = 55.687454;
-            lng = 37.891410;
+            lat = 55.797332;
+            lng = 37.537236;
         } else {
             lat = location.getLatitude();
             lng = location.getLongitude();
         }
+
+        Log.d("SHIT", String.valueOf(lat));
 
         new EventsLoader().execute(new EventRequestHandler());
     }
@@ -169,6 +174,7 @@ public class FeedActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onStop();
         drawer.closeDrawer();
     }
+
 
 
     private void initTool(String title) {

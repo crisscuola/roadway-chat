@@ -1,6 +1,5 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,14 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +25,7 @@ import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.auth.ActivityAuth;
 import com.roadway.capslabs.roadway_chat.gcm.QuickstartPreferences;
@@ -43,7 +41,7 @@ import okhttp3.HttpUrl;
 /**
  * Created by kirill on 23.11.16
  */
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends LocationActivityTemplate implements GoogleApiClient.ConnectionCallbacks{
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int DELAY = 2000;
     private static final String TAG = "SplashActivity";
@@ -58,10 +56,14 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.splash);
 
         mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
         mInformationTextView = (TextView) findViewById(R.id.informationTextView);
+
+
 
         if (!isOnline()) {
             showNoInternetMessage();
@@ -83,22 +85,25 @@ public class SplashActivity extends AppCompatActivity {
             return;
         }
 
+        buildGoogleApiClient();
+        createLocationRequest();
+
 //        String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, token);
         initReceiver();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                if (isLoggedIn()) {
-                    startFeedActivity();
-                    finish();
-                } else {
-                    Intent authActivity = new Intent(SplashActivity.this, ActivityAuth.class);
-                    startActivity(authActivity);
-                }
-            }
-        }, DELAY);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                if (isLoggedIn()) {
+//                    startFeedActivity();
+//                    finish();
+//                } else {
+//                    Intent authActivity = new Intent(SplashActivity.this, ActivityAuth.class);
+//                    startActivity(authActivity);
+//                }
+//            }
+//        }, DELAY);
     }
 
     private void startFeedActivity() {
@@ -182,6 +187,32 @@ public class SplashActivity extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+        super.onConnected(arg0);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                getLocation();
+                Location location = getmLastLocation();
+
+                Log.d("SHIT", String.valueOf(location.getLatitude()));
+
+                if (isLoggedIn()) {
+                    startFeedActivity();
+                    finish();
+                } else {
+                    Intent authActivity = new Intent(SplashActivity.this, ActivityAuth.class);
+                    startActivity(authActivity);
+                }
+            }
+        }, DELAY);
+
+
     }
 
     private boolean isOnline() {

@@ -1,11 +1,14 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -69,7 +72,7 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
     @Override
     protected void onPause() {
         super.onPause();
-        //stopLocationUpdates();
+        stopLocationUpdates();
     }
 
     /**
@@ -77,28 +80,52 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
      * */
     protected Location getLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            return mLastLocation;
-        }
-        mLastLocation = LocationServices.FusedLocationApi
-                .getLastLocation(mGoogleApiClient);
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//
+//            return mLastLocation;
+//        }
+//        mLastLocation = LocationServices.FusedLocationApi
+//                .getLastLocation(mGoogleApiClient);
+//
+//        if (mLastLocation != null) {
+//            double latitude = mLastLocation.getLatitude();
+//            double longitude = mLastLocation.getLongitude();
+//
+//
+//        } else {
+//        }
+//        return mLastLocation;
 
-        if (mLastLocation != null) {
-            double latitude = mLastLocation.getLatitude();
-            double longitude = mLastLocation.getLongitude();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
 
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
+                return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+            }
+
+            return mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         } else {
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager != null) {
+                Location lastKnownLocationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                if (lastKnownLocationGPS != null) {
+                    return lastKnownLocationGPS;
+                } else {
+                    return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                }
+            } else {
+                return null;
+            }
         }
-        return mLastLocation;
+
     }
 
 
     /**
      * Creating google api client object
      * */
-    protected synchronized void buildGoogleApiClient() {
+    protected  void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -171,6 +198,8 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
     public void onConnected(Bundle arg0) {
 
         // Once connected with google api, get the location
+        Toast.makeText(this, "!!!", Toast.LENGTH_LONG).show();
+        Log.d("SHIT", "!!!");
         getLocation();
 
         if (mRequestingLocationUpdates) {
