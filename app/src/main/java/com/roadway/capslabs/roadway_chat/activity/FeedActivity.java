@@ -297,7 +297,21 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
             Log.d("response_crete_event", result);
-            if (result.equals("Timeout")) Log.d("Time","Timeout EventsFeeDLoader");
+            if (result.equals("Timeout")) {
+                Log.d("Time","Timeout EventsFeeDLoader");
+                initTool(getString(R.string.feed_activity_title));
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, FeedActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
                 try {
@@ -336,7 +350,21 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_crete_event", result);
-            if (result.equals("Timeout")) Log.d("Time","Timeout NextEventSFeeDLoader");
+            if (result.equals("Timeout")) {
+                Log.d("Time","Timeout NextEventSFeeDLoader");
+                initTool(getString(R.string.feed_activity_title));
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, FeedActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
                 try {

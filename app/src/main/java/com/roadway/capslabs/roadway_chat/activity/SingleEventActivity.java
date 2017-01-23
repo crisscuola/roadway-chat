@@ -581,17 +581,18 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             Log.d("response_get_event", result);
             if (result.equals("Timeout")) {
                 Log.d("Time", "Timeout EventLoader");
-//                setContentView(R.layout.no_internet);
-//                again = (Button) findViewById(R.id.button_again);
-//
-//                again.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent intent = new Intent(context, SingleEventActivity.class);
-//                        intent.putExtra("id", id);
-//                        startActivity(intent);
-//                    }
-//                });
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
             }
             else {
                 progressBar.setVisibility(View.GONE);

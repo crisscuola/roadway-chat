@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -54,6 +57,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
 
     private Drawer drawer;
     private Toolbar toolbar;
+    private ProgressBar progressBar;
     private double lat, lng;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private final Activity context = this;
@@ -147,6 +151,9 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private LatLng getLocation() {
@@ -245,7 +252,22 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_farovtite", result);
-            if (result.equals("Timeout")) Log.d("Time","Timeout RecomendedList");
+            if (result.equals("Timeout")) {
+                Log.d("Time","Timeout RecomendedList");
+                setContentView(R.layout.no_internet);
+                initTool(getString(R.string.recommended_title));
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, RecommendedListActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
 
@@ -267,6 +289,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
                     }
                     recyclerAdapter.addEvents(events);
                     recyclerAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     throw new RuntimeException("JSON parsing error", e);
                 }

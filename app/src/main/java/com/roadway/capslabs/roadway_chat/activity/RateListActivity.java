@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -56,6 +59,7 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
     private android.widget.SearchView searchView;
     private double lat, lng;
     private String email;
+    private ProgressBar progressBar;
 
     private final Activity context = this;
     private LocationManager locationManager;
@@ -149,6 +153,9 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
         toolbar = (Toolbar) findViewById(R.id.toolbar_rate);
         toolbar.setTitle(title);
         searchView = (android.widget.SearchView) findViewById(R.id.search_bar);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.VISIBLE);
         // searchView.setVisibility(View.VISIBLE);
     }
 
@@ -246,7 +253,23 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
         protected void onPostExecute(String result) {
             Log.d("response_rate_list", result);
 
-            if (result.equals("Timeout")) Log.d("Time","Timeout RateList");
+            if (result.equals("Timeout")) {
+                Log.d("Time","Timeout RateList");
+                setContentView(R.layout.no_internet);
+                initTool(getString(R.string.rate_activity_title));
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, RateListActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
 
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
@@ -256,6 +279,7 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
                     if (array.length() == 0) {
                         TextView noItemsTextView = (TextView) findViewById(R.id.no_rate_textview);
                         noItemsTextView.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
 
                         return;
                     }
@@ -271,6 +295,7 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
                     }
                     recyclerAdapter.addEvents(events);
                     recyclerAdapter.notifyDataSetChanged();
+                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     throw new RuntimeException("JSON parsing error", e);
                 }

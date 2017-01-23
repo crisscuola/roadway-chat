@@ -497,7 +497,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_marker_event", result);
-            if (result.equals("Timeout")) Log.d("Time","Timeout EventsMapsLoader");
+            if (result.equals("Timeout")) {
+                Log.d("Time","Timeout EventsMapsLoader");
+                setContentView(R.layout.no_internet);
+                initTool(getString(R.string.title_activity_maps));
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, MapsActivity.class);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
                 try {

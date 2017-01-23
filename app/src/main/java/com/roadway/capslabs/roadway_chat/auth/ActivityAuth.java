@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.activity.LocationActivityTemplate;
 
 /**
  * Created by konstantin on 07.09.16
  */
-public class ActivityAuth extends LocationActivityTemplate {
+public class ActivityAuth extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +82,7 @@ public class ActivityAuth extends LocationActivityTemplate {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(ActivityAuth.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ActivityAuth.this, "Разрешения не получены", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 return;
