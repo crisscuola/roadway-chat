@@ -42,7 +42,7 @@ import okhttp3.HttpUrl;
  */
 public class SplashActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final int DELAY = 2000;
+    private static final int DELAY = 2500;
     private static final String TAG = "SplashActivity";
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
