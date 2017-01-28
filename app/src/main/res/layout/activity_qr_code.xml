@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorSliderBackground">
+    android:background="@color/vk_share_gray_line">
 
     <include
         android:id="@+id/toolbar_qr_code"

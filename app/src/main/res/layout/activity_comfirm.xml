@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#65c3ba"
+    android:background="#fff"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="@string/app_title"
             android:textSize="30sp"
-            android:textColor="#fff"/>
+            android:textColor="#000"/>
 
     </RelativeLayout>
 
@@ -39,13 +39,13 @@
             android:layout_gravity="center"
             android:text="@string/description_confirm"
             android:textSize="12sp"
-            android:textColor="#fff" />
+            android:textColor="#000" />
         <EditText
             android:id="@+id/confirm"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:theme="@style/WhiteEditTextTheme"
+            android:theme="@style/BlackEditTextTheme"
             android:layout_gravity="center" />
 
         <Button
@@ -53,8 +53,8 @@
             android:layout_marginTop="10dp"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="#009688"
-            android:textColor="#fff"
+            android:background="@color/vk_share_gray_line"
+            android:textColor="#000"
             android:text="@string/ok"
             android:layout_gravity="center" />
 

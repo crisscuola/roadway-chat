@@ -34,17 +34,18 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_marginTop="50dp"
             android:id="@+id/review"
+            android:theme="@style/BlackEditTextTheme"
             android:layout_gravity="center_horizontal" />
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorDarkBackground"
+            android:layout_height="50dp"
+            android:background="@color/vk_share_gray_line"
             android:textColor="@color/colorTextColor"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:text="@string/rank"
             android:id="@+id/rankButton"
             android:layout_gravity="center_horizontal" />

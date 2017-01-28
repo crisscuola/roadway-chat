@@ -1,35 +1,32 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.activity.FeedActivity;
-import com.roadway.capslabs.roadway_chat.url.UrlType;
-
-import java.util.List;
-
-import okhttp3.Cookie;
-import okhttp3.CookieJar;
-import okhttp3.HttpUrl;
 
 /**
  * Created by konstantin on 07.09.16
  */
-public class ActivityAuth extends AppCompatActivity  {
+public class ActivityAuth extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        //FacebookSdk.sdkInitialize(getApplicationContext());
+
+        ActivityCompat.requestPermissions(ActivityAuth.this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
 
         Button buttonSignUp = (Button) findViewById(R.id.submit_register_button);
 
@@ -51,19 +48,50 @@ public class ActivityAuth extends AppCompatActivity  {
             }
         });
 
-        Button buttonVk = (Button) findViewById(R.id.btn_vk);
+        Button buttonGuest = (Button) findViewById(R.id.btn_guest);
 
-        buttonVk.setOnClickListener(new View.OnClickListener() {
+        buttonGuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), ActivityVk.class);
+                Intent intent = new Intent(view.getContext(), FeedActivity.class);
+                intent.putExtra("email", getResources().getString(R.string.guest_menu));
                 startActivity(intent);
             }
         });
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(ActivityAuth.this, "Разрешения не получены", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+
 }

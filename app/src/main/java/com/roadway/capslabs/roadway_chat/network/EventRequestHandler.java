@@ -11,6 +11,8 @@ import com.roadway.capslabs.roadway_chat.url.UrlFactory;
 import com.roadway.capslabs.roadway_chat.url.UrlType;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.CookieJar;
 import okhttp3.FormBody;
@@ -23,11 +25,16 @@ import okhttp3.Response;
 
 import static com.roadway.capslabs.roadway_chat.url.UrlType.CREATE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.EVENT;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.FAVOR;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.FAVORITE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.FEED;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.MAP;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.OWN;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.PROFILE;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.RECOMMENDED;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBS;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.SUBSCRIBE;
+import static com.roadway.capslabs.roadway_chat.url.UrlType.UNFAVORITE;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.UNSUBSCRIBE;
 
 /**
@@ -43,6 +50,32 @@ public class EventRequestHandler {
         Log.d("Location", String.valueOf(url));
         return getResponse(context, request);
      }
+
+    public <T extends Activity> String getNextEvents(T context, double lat, double lng, int offset, int step) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        String offsetString = String.valueOf(offset);
+        String stepString = String.valueOf(step);
+        HttpUrl url = UrlFactory.getUrl(FEED).newBuilder()
+                .addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam)
+                .addQueryParameter("offset", offsetString)
+                .addQueryParameter("limit", stepString)
+                .build();
+        Request request = buildRequest(url);
+        Log.d("Location", String.valueOf(url));
+        return getResponse(context, request);
+    }
+
+    public <T extends Activity> String getMapEvents(T context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(MAP).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location", String.valueOf(url));
+        return getResponse(context, request);
+    }
 
     public <T extends Activity> String getAllEvents(T context, double lat, double lng, UrlType urlType) {
         String latParam = String.valueOf(lat);
@@ -70,6 +103,26 @@ public class EventRequestHandler {
         return getResponse(context, request);
     }
 
+    public String getFavoritesEvents(Activity context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(FAVOR).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location_Subs", String.valueOf(url));
+        return getResponse(context, request);
+    }
+
+    public String getRecommendedEvents(Activity context, double lat, double lng) {
+        String latParam = String.valueOf(lat);
+        String lngParam = String.valueOf(lng);
+        HttpUrl url = UrlFactory.getUrl(RECOMMENDED).newBuilder().addQueryParameter("lat", latParam)
+                .addQueryParameter("lng",lngParam).build();
+        Request request = buildRequest(url);
+        Log.d("Location_Subs", String.valueOf(url));
+        return getResponse(context, request);
+    }
+
     public String getEvent(Activity context, String id) {
         HttpUrl url = UrlFactory.getUrl(EVENT).newBuilder()
                 .addQueryParameter("id", id).build();
@@ -90,6 +143,22 @@ public class EventRequestHandler {
         Request request = buildRequest(url, formBody);
         return getResponse(context, request);
     }
+
+    public String favoriteEvent(Activity context, String id){
+        HttpUrl url = UrlFactory.getUrl(FAVORITE);
+        RequestBody formBody = formSubscribeBody(id);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+    public String unfavotiteEvent(Activity context, String id){
+        HttpUrl url = UrlFactory.getUrl(UNFAVORITE);
+        RequestBody formBody = formSubscribeBody(id);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
+
 
     public String unsubscribeEvent(Activity context, String id){
         HttpUrl url = UrlFactory.getUrl(UNSUBSCRIBE);
@@ -140,6 +209,9 @@ public class EventRequestHandler {
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -147,6 +219,9 @@ public class EventRequestHandler {
 
             Log.d("response_create_handler", resp);
             return resp;
+        } catch (SocketTimeoutException e) {
+            return "Timeout";
+            //throw new RuntimeException("Could not load event due to timeout exception" + request.url(), e);
         } catch (IOException e) {
             throw new RuntimeException("Connectivity problem happened during request to " + request.url(), e);
         }
