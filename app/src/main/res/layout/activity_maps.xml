@@ -30,33 +30,38 @@
         android:orientation="vertical"
         android:paddingTop="8dp"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="32dp"
+        app:behavior_peekHeight="130dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:id="@+id/textView_1"-->
-            <!--android:text="Line 1" />-->
+        <ImageView
+            android:id="@+id/imageDrag"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/minus"
+            android:layout_gravity="center_horizontal" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/bottom_adress"
+            android:textColor="#000"
+            android:textSize="15sp"
+            android:text="Adress" />
 
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginBottom="8dp"-->
-            <!--android:id="@+id/textView_2"-->
-            <!--android:text="Line 2" />-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
 
-        <!--<ListView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/listView" />-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="0dp"
+            android:dividerHeight="3dp"
             android:background="#fff" />
 
     </LinearLayout>

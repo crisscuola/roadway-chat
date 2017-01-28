@@ -1,5 +1,7 @@
 package com.roadway.capslabs.roadway_chat.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +21,9 @@ public class SingleEvent {
     private final double lng;
     private final String phone;
     private final String url;
+    private final int countUsed;
+    private final int color;
+    private final String organization;
 
     public SingleEvent(JSONObject eventObj) {
         try {
@@ -34,7 +39,14 @@ public class SingleEvent {
             lng = eventObj.getDouble("longitude");
             phone = eventObj.getString("phone");
             url = eventObj.getString("url");
+            countUsed = eventObj.getInt("count_used");
+            organization = eventObj.getString("organization_name");
+            String line = eventObj.getString("line_number");
+            if (line.equals("null")) {
+                color = 0;
+            } else color = eventObj.getInt("line_number");
 
+            Log.d("color", String.valueOf(color));
         } catch (JSONException e) {
             throw new RuntimeException("Error while parsing json", e);
         }
@@ -87,4 +99,12 @@ public class SingleEvent {
     public String getPhone() { return phone;}
 
     public String getUrl() { return url;}
+
+    public int getCountUsed() {return countUsed;}
+
+    public int getColor() {return  color;}
+
+    public String getOrganization() {return  organization;}
+
+
 }

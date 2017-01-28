@@ -90,6 +90,16 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+
+    MAP {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return EVENT.getUrl()
+                    .addPathSegment("map")
+                    .addPathSegment("");
+        }
+    },
+
     OWN {
         @Override
         public HttpUrl.Builder getUrl() {
@@ -137,6 +147,59 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+
+    FAVOR {
+        @Override
+        public  HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_FAVOR)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment("");
+
+        }
+    },
+
+    RECOMMENDED {
+        @Override
+        public  HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_GET)
+                    .addPathSegment(PATH_RECOMMENDED)
+                    .addPathSegment("");
+
+        }
+    },
+
+    FAVORITE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_FAVORITE)
+                    .addPathSegment("");
+        }
+    },
+
+    UNFAVORITE {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_EVENT)
+                    .addPathSegment(PATH_UNFAVORITE)
+                    .addPathSegment("");
+        }
+    },
+
     API {
         @Override
         public HttpUrl.Builder getUrl() {

@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -19,11 +22,12 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.RatingVote;
 import com.roadway.capslabs.roadway_chat.network.RatingVoteHandler;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 /**
  * Created by konstantin on 25.11.16
  */
-public class RankActivity extends AppCompatActivity {
+public class RankActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
     private Activity context = this;
     private Toolbar toolbar;
     private final DrawerFactory drawerFactory = new DrawerFactory();
@@ -31,16 +35,50 @@ public class RankActivity extends AppCompatActivity {
     private RatingBar ratingBar;
     private Button buttonRank;
     private EditText review;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar progressBar;
+    private String subscription_id;
+    private Button again;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+
+            setContentView(R.layout.no_internet);
+            initTool(getString(R.string.rank_title));
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, RankActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+            });
+
+            return;
+        }
+
         setContentView(R.layout.activity_rank);
-        initViews("Rank");
+        initViews(getString(R.string.rank_title));
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
+
         Bundle data = getIntent().getExtras();
-        final String subscription_id =  data.getString("subscription_id");
+        subscription_id =  data.getString("subscription_id");
+
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+
+//        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh);
+//        mSwipeRefreshLayout.setOnRefreshListener(this);
+//        mSwipeRefreshLayout.setColorScheme(new int[]{R.color.black});
 
         buttonRank.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,8 +87,6 @@ public class RankActivity extends AppCompatActivity {
                     Toast.makeText(context, "Please vote your visit", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
-
                 RatingVote ratingVote = getRatingVote();
                 new RateRequest().execute(ratingVote, subscription_id);
                 Log.d("Rank", "Rank: " + String.valueOf(ratingVote.getStars()) + "  " + ratingVote.getText() + ", id=" + subscription_id);
@@ -65,6 +101,11 @@ public class RankActivity extends AppCompatActivity {
         drawer.closeDrawer();
     }
 
+    private void initTool(String title) {
+        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
+        toolbar.setTitle(title);
+    }
+
     private void initViews(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_restore);
         toolbar.setTitle(title);
@@ -77,6 +118,21 @@ public class RankActivity extends AppCompatActivity {
         return new RatingVote((int) ratingBar.getRating(), review.getText().toString());
     }
 
+    @Override
+    public void onRefresh() {
+//        progressBar.setVisibility(View.VISIBLE);
+//        mSwipeRefreshLayout.setRefreshing(true);
+//        mSwipeRefreshLayout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                initViews("Rank");
+//                RatingVote ratingVote = getRatingVote();
+//                new RateRequest().execute(ratingVote, subscription_id);
+//                mSwipeRefreshLayout.setRefreshing(false);
+//            }
+//        }, 300);
+    }
+
     private final class RateRequest extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
@@ -87,9 +143,9 @@ public class RankActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(), "Thank you!", Toast.LENGTH_SHORT)
+            Toast.makeText(getApplicationContext(), R.string.thank_you_toast, Toast.LENGTH_SHORT)
                     .show();
-            Intent feedActivity = new Intent(context, FeedActivity.class);
+            Intent feedActivity = new Intent(context, RateListActivity.class);
             startActivity(feedActivity);
         }
     }

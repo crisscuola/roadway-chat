@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorLightBackground"
+    android:background="@color/md_white_1000"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context=".activity.Splash"
+    tools:context=".activity.SplashActivity"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -14,7 +14,7 @@
         android:layout_weight="0.5"
         android:orientation="vertical">
 
-        <ImageView android:src="@drawable/logo2"
+        <ImageView android:src="@drawable/logo_m"
             android:layout_width="wrap_content"
             android:id="@+id/logo"
             android:layout_height="82dp"
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:text="@string/app_title"
             android:textSize="30sp"
-            android:textColor="@color/colorTextColor"/>
+            android:textColor="@color/black"/>
 
     </RelativeLayout>
 
@@ -45,6 +45,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/registrationProgressBar"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/black"/>
 
 </LinearLayout>

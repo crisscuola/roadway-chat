@@ -1,16 +1,20 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -23,7 +27,9 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.models.RegisterForm;
 import com.roadway.capslabs.roadway_chat.network.registrator.Registrator;
 import com.roadway.capslabs.roadway_chat.network.registrator.RegistratorByEmail;
+import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,14 +39,14 @@ import java.util.List;
  * Created by konstantin on 07.09.16
  */
 public class ActivitySignUp extends AppCompatActivity implements Validator.ValidationListener {
-    @NotEmpty
-    @Email
+    @NotEmpty(messageResId = R.string.login_empty_message)
+    @Email(messageResId = R.string.login_wrong_email_format)
     private EditText email;
-    @NotEmpty
-    @Password(min = 8, message = "Password must contain numbers and letters, minimum length is 8")
+    @NotEmpty(messageResId = R.string.login_empty_pass_message)
+    @Password(min = 8, messageResId = R.string.login_wrong_pass_format)
     private EditText password1;
-    @NotEmpty
-    @ConfirmPassword
+    @NotEmpty(messageResId = R.string.reg_empty_second_pass_message)
+    @ConfirmPassword(messageResId = R.string.reg_second_pass_message)
     private EditText password2;
 
     private Button register;
@@ -52,7 +58,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initViews();
-
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         final Validator validator = new Validator(this);
         validator.setValidationListener(this);
 
@@ -69,10 +75,9 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
         register = (Button) findViewById(R.id.submit_register_button);
-
-        email.setTextColor(Color.WHITE);
-        password1.setTextColor(Color.WHITE);
-        password2.setTextColor(Color.WHITE);
+        email.setTextColor(Color.BLACK);
+        password1.setTextColor(Color.BLACK);
+        password2.setTextColor(Color.BLACK);
     }
 
     @NonNull
@@ -85,29 +90,78 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
+        if (!ConnectionChecker.isOnline(this)) {
+            ConnectionChecker.showNoInternetMessage(this);
+            return;
+        }
+
+        dropEditTextColors();
         Registrator registrator = new RegistratorByEmail(readRegisterForm());
         new RegisterRequest().execute(registrator);
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        dropEditTextColors();
+
+        TextView errorsTextView = (TextView) findViewById(R.id.reg_errors);
+        StringBuilder sb = new StringBuilder();
         for (ValidationError error : errors) {
             View view = error.getView();
             String message = error.getCollatedErrorMessage(this);
 
+            sb.append(message).append("\n");
             if (view instanceof EditText) {
-                ((EditText) view).setError(message);
+                EditText editText = (EditText) view;
+                editText.setTextColor(getResources().getColor(R.color.red));
+                editText.setHintTextColor(getResources().getColor(R.color.red));
             } else {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
+        errorsTextView.setText(sb.toString());
+    }
+
+    private void dropEditTextColors() {
+        email.setTextColor(getResources().getColor(R.color.black));
+        email.setHintTextColor(getResources().getColor(R.color.black));
+        password1.setTextColor(getResources().getColor(R.color.black));
+        password1.setHintTextColor(getResources().getColor(R.color.black));
+        password2.setTextColor(getResources().getColor(R.color.black));
+        password2.setHintTextColor(getResources().getColor(R.color.black));
+    }
+
+    private AlertDialog.Builder getAlert(final Activity context) {
+        String title = getString(R.string.check_email_title);
+        String message = getString(R.string.check_email_message);
+        String okString = "OK";
+
+        AlertDialog.Builder ad = new AlertDialog.Builder(context);
+        ad.setTitle(title);
+        ad.setMessage(message);
+        ad.setPositiveButton(okString, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(context, ActivitySignIn.class);
+                context.startActivity(intent);
+            }
+        });
+
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+
+            }
+        });
+
+        return ad;
     }
 
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
             Registrator registrator = (RegistratorByEmail) params[0];
-            //TODO: save user to sharedPrefs
+
             return registrator.register();
         }
 
@@ -117,17 +171,27 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
             JSONObject object;
             try {
                 object = new JSONObject(result);
+
+                if (object.has("errors")) {
+                        JSONArray array = object.getJSONArray("errors");
+                        for (int i = 0; i < array.length(); i++) {
+                            int item = array.getInt(i);
+                            if (item == 8) {
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.email_already_exists, Toast.LENGTH_SHORT).show();
+
+                                return;
+                            }
+                        }
+
+                    Toast.makeText(getApplicationContext(),
+                            R.string.registration_failed, Toast.LENGTH_SHORT).show();
+                    return;
+                }
             } catch (JSONException e) {
                 throw new RuntimeException("JSON parsing error", e);
             }
-            if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(),
-                        "Registration failed", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Intent intent = new Intent(context, ConfirmRegistrationActivity.class);
-            intent.putExtra("email", email.getText().toString());
-            startActivity(intent);
+            getAlert(context).show();
         }
     }
 }

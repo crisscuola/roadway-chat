@@ -1,5 +1,6 @@
 package com.roadway.capslabs.roadway_chat.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -38,7 +40,7 @@ import okhttp3.HttpUrl;
 /**
  * Created by kirill on 23.11.16
  */
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final int DELAY = 2000;
     private static final String TAG = "SplashActivity";
@@ -47,6 +49,8 @@ public class Splash extends AppCompatActivity {
     private ProgressBar mRegistrationProgressBar;
     private TextView mInformationTextView;
     private boolean isReceiverRegistered;
+    private Button again;
+    private Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +62,25 @@ public class Splash extends AppCompatActivity {
 
         if (!isOnline()) {
             showNoInternetMessage();
-            mRegistrationProgressBar.setVisibility(View.INVISIBLE);
+
+            setContentView(R.layout.no_internet_without_toolbar);
+
+            //mRegistrationProgressBar.setVisibility(View.INVISIBLE);
+
+            again = (Button) findViewById(R.id.button_again);
+
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, SplashActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+            });
+
             return;
         }
-        
+
 //        String token = FirebaseInstanceId.getInstance().getToken();
 //        Log.d(TAG, token);
         initReceiver();
@@ -73,7 +92,7 @@ public class Splash extends AppCompatActivity {
                     startFeedActivity();
                     finish();
                 } else {
-                    Intent authActivity = new Intent(Splash.this, ActivityAuth.class);
+                    Intent authActivity = new Intent(SplashActivity.this, ActivityAuth.class);
                     startActivity(authActivity);
                 }
             }
@@ -90,7 +109,6 @@ public class Splash extends AppCompatActivity {
         registerReceiver();
 
         if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
@@ -129,7 +147,6 @@ public class Splash extends AppCompatActivity {
     private boolean isLoggedIn() {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this));
-
         HttpUrl url = UrlType.FEED.getUrl().build();
         List<Cookie> cookies = cookieJar.loadForRequest(url);
         for (Cookie cookie : cookies) {
@@ -138,7 +155,6 @@ public class Splash extends AppCompatActivity {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -150,11 +166,6 @@ public class Splash extends AppCompatActivity {
         }
     }
 
-    /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
     private boolean checkPlayServices() {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
@@ -188,5 +199,4 @@ public class Splash extends AppCompatActivity {
                     }
                 }).show();
     }
-
 }
