@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -98,7 +100,6 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
         initToolbar(getString(R.string.title_activity_sub));
         drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
-
         initAdapter();
 
 //        location = getLocation();
@@ -153,9 +154,9 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
-//        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
-//        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
-//        progressBar.setVisibility(View.VISIBLE);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private LatLng getLocation() {
@@ -167,7 +168,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
                 != PackageManager.PERMISSION_GRANTED) {
         }
         Location location = service.getLastKnownLocation(provider);
-        LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
         return userLocation;
     }
@@ -234,27 +235,30 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
         }
 
         @Override
-        public void onProviderDisabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+        }
 
         @Override
-        public void onProviderEnabled(String provider) {}
+        public void onProviderEnabled(String provider) {
+        }
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
     }
 
     private final class EventsLoader extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
             EventRequestHandler handler = (EventRequestHandler) params[0];
-            return handler.getFavoritesEvents(context, lat,lng);
+            return handler.getFavoritesEvents(context, lat, lng);
         }
 
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_favorite", result);
             if (result.equals("Timeout")) {
-                Log.d("Time","Timeout FavoriteEventsActivity");
+                Log.d("Time", "Timeout FavoriteEventsActivity");
                 setContentView(R.layout.no_internet);
                 initTool(getString(R.string.title_activity_sub));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
@@ -270,11 +274,8 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
                     }
                 });
 
-            }
-            else {
-
+            } else {
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
-                //progressBar.setVisibility(View.GONE);
 
                 try {
                     JSONArray array = object.getJSONArray("object_list");
@@ -294,7 +295,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
                     }
                     recyclerAdapter.addEvents(events);
                     recyclerAdapter.notifyDataSetChanged();
-
+                    progressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     throw new RuntimeException("JSON parsing error", e);
                 }
