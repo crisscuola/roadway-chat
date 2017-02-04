@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,9 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     private EditText password;
     private Button button;
     TextView errorsTextView;
+    private ScrollView scrollView;
     private final Activity context = this;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             }
         }
         errorsTextView.setText(sb.toString());
+        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
     }
 
     private void dropEditTextColors() {
@@ -103,6 +107,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     }
 
     private void initViews() {
+        scrollView = (ScrollView) findViewById(R.id.scroll);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);

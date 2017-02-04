@@ -243,11 +243,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public boolean onClusterItemClick(CustomClusterItem item) {
                         clickedClusterItem = item;
+                        //showEvents();
                         return false;
                     }
                 });
 
         mClusterManager.getMarkerCollection().setOnInfoWindowAdapter(new MyCustomAdapterForItems());
+
 
         //mMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
         int id = 0;
@@ -439,6 +441,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             myContentsView = getLayoutInflater().inflate(
                     R.layout.custom_bubble, null);
         }
+
         @Override
         public View getInfoWindow(Marker marker) {
 
