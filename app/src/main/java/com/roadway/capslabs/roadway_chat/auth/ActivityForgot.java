@@ -89,12 +89,11 @@ public class ActivityForgot extends AppCompatActivity {
                 throw new RuntimeException("Exception during json parsing", e);
             }
             if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT)
-                        .show();
+
                 return;
-            }
-
-
+            } else
+                Toast.makeText(getApplicationContext(), R.string.forgot_ok, Toast.LENGTH_LONG)
+                    .show();
         }
     }
 }

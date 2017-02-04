@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -21,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.directions.route.Route;
@@ -69,6 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double lat, lng;
     private double distance;
     private View bottomSheet;
+    private ProgressBar progressBar;
     private BottomSheetBehavior behavior;
 
 
@@ -209,6 +212,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_maps);
         toolbar.setTitle(title);
+        progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
+        progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+        progressBar.setVisibility(View.VISIBLE);
         adress =  (TextView) findViewById(R.id.bottom_adress);
     }
 
@@ -500,6 +506,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_marker_event", result);
+            progressBar.setVisibility(View.GONE);
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsMapsLoader");
                 setContentView(R.layout.no_internet);

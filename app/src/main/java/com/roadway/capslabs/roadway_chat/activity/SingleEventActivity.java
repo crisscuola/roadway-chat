@@ -657,6 +657,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private final class Subscriber extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showQr.setEnabled(false);
+            showQr.setTextColor(getResources().getColor(R.color.l_9));
+        }
+
         @Override
         protected String doInBackground(Integer... params) {
             String id = String.valueOf(params[0]);
@@ -667,6 +675,10 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             //removeCodeIfUsed(true);
+
+            showQr.setEnabled(true);
+            showQr.setTextColor(getResources().getColor(R.color.black));
+
             if (s.equals("Timeout")) Log.d("Time","Timeout Subscriber");
             else {
                 Log.d("response_subscribe", s);
@@ -685,6 +697,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private final class Favoriter extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            star.setEnabled(false);
+            //showQr.setTextColor(getResources().getColor(R.color.l_9));
+        }
+
         @Override
         protected String doInBackground(Integer... params) {
             String id = String.valueOf(params[0]);
@@ -694,6 +714,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            star.setEnabled(true);
             if (s.equals("Timeout")) Log.d("Time","Timeout Favoriter");
             else {
                 //removeCodeIfUsed(true);
@@ -704,6 +725,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private final class UnFavoriter extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            star.setEnabled(false);
+        }
+
         @Override
         protected String doInBackground(Integer... params) {
             String id = String.valueOf(params[0]);
@@ -713,6 +741,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            star.setEnabled(true);
             if (s.equals("Timeout")) Log.d("Time","Timeout UnFavoriter");
             else {
                 //removeCodeIfUsed(true);
