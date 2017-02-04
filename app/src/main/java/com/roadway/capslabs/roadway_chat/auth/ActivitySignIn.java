@@ -91,6 +91,8 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
         dropEditTextColors();
 
         StringBuilder sb = new StringBuilder();
@@ -108,7 +110,6 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             }
         }
         errorsTextView.setText(sb.toString());
-        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
     }
 
     private void dropEditTextColors() {
