@@ -117,8 +117,8 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                email.setTextColor(getResources().getColor(R.color.black));
-                email.setHintTextColor(getResources().getColor(R.color.black));
+                password1.setTextColor(getResources().getColor(R.color.black));
+                password1.setHintTextColor(getResources().getColor(R.color.black));
             }
 
             @Override
@@ -135,34 +135,13 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                email.setTextColor(getResources().getColor(R.color.black));
-                email.setHintTextColor(getResources().getColor(R.color.black));
+                password2.setTextColor(getResources().getColor(R.color.black));
+                password2.setHintTextColor(getResources().getColor(R.color.black));
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
-            }
-        });
-
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                dropEditTextColors();
-            }
-        });
-
-        password1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                dropEditTextColors();
-            }
-        });
-
-        password2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                dropEditTextColors();
             }
         });
     }

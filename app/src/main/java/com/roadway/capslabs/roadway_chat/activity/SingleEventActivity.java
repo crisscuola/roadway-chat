@@ -140,17 +140,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     return;
                 }
 
-
                 if (isLoggedIn()) {
-
                     Code code = hasSeenQr();
                     if (code.isCached()) {
                         Bitmap bitmap = qrGenenartor(code.getCode());
                         showQrCodeActivity(bitmap);
                         return;
                     }
-
-
+                    progressBar.setVisibility(View.VISIBLE);
                     new Subscriber().execute(id);
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.pls_log, Toast.LENGTH_SHORT)
@@ -158,7 +155,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     Intent intent = new Intent(context, ActivityAuth.class);
                     startActivity(intent);
                 }
-
             }
         });
 
@@ -237,7 +233,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //                getAlert();
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
+                String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id + "/unauthorized";
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, url);
 
@@ -267,7 +263,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         startActivity(intent);
     }
 
-    public void initTool(String title){
+    public void initTool(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_no);
         toolbar.setTitle(title);
     }
@@ -277,8 +273,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
 
-
-        drawer =  drawerFactory.getDrawerBuilderWithout(this)
+        drawer = drawerFactory.getDrawerBuilderWithout(this)
                 .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
                     @Override
                     public boolean onNavigationClickListener(View view) {
@@ -288,7 +283,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 })
                 .build();
 
-        //drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
         drawer.getDrawerLayout().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -366,7 +360,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private void removeCodeIfUsed(JSONObject event) {
-        if(isSubscribed(event) && isUsed(event)) {
+        if (isSubscribed(event) && isUsed(event)) {
             Code code = hasSeenQr();
             if (code.isCached()) {
                 code.delete();
@@ -440,19 +434,19 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
 
     private String metroColor(int colorNum) {
-        colors.put(0,"#000000");
-        colors.put(1,"#ef1e25");
-        colors.put(2,"#029a55");
-        colors.put(3,"#0252a2");
-        colors.put(4,"#019ee0");
-        colors.put(5,"#745c2f");
-        colors.put(6,"#fbaa33");
-        colors.put(7,"#b61d8e");
-        colors.put(8,"#ffd803");
-        colors.put(9,"#acadaf");
-        colors.put(10,"#b1d332");
-        colors.put(11,"#5091bb");
-        colors.put(12,"#ffa8af");
+        colors.put(0, "#000000");
+        colors.put(1, "#ef1e25");
+        colors.put(2, "#029a55");
+        colors.put(3, "#0252a2");
+        colors.put(4, "#019ee0");
+        colors.put(5, "#745c2f");
+        colors.put(6, "#fbaa33");
+        colors.put(7, "#b61d8e");
+        colors.put(8, "#ffd803");
+        colors.put(9, "#acadaf");
+        colors.put(10, "#b1d332");
+        colors.put(11, "#5091bb");
+        colors.put(12, "#ffa8af");
 
         String color = "#000";
 
@@ -463,9 +457,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
     private String adressParse(String adress) {
         String[] array = adress.split(",");
-        for (int i = 0; i < array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             Log.d("add", array[i]);
-           // array[i] = array[i].replaceAll(" ", "");
+            // array[i] = array[i].replaceAll(" ", "");
         }
 
         adress = "г." + array[2] + ", ул." + array[0] + ", д. " + array[1];
@@ -486,7 +480,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 if (which == 0) {
                     Log.d("add", "vk");
                     Intent intent = new Intent(context, ShareVk.class);
-                    String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
+                    String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id + "/unauthorized";
                     intent.putExtra("url", url);
                     intent.putExtra("title", event.getTitle());
                     startActivity(intent);
@@ -495,7 +489,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                 if (which == 1) {
                     Log.d("add", "fb");
                     Intent intent = new Intent(context, ShareFb.class);
-                    String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id +"/unauthorized";
+                    String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id + "/unauthorized";
                     intent.putExtra("url", url);
                     intent.putExtra("title", event.getTitle());
                     startActivity(intent);
@@ -552,14 +546,14 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
 
-     public Bitmap resizeMarker() {
-         int height = 50;
-         int width = 50;
-         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker);
-         Bitmap b = bitmapdraw.getBitmap();
-         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-         return smallMarker;
-     }
+    public Bitmap resizeMarker() {
+        int height = 50;
+        int width = 50;
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.marker);
+        Bitmap b = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+        return smallMarker;
+    }
 
     public void setMarker(LatLng latLng, GoogleMap googleMap, String title, CustomMarker customMarker) {
         Marker marker;
@@ -593,8 +587,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                         startActivity(intent);
                     }
                 });
-            }
-            else {
+            } else {
                 progressBar.setVisibility(View.GONE);
                 star.setVisibility(View.VISIBLE);
                 JSONObject object = HttpConnectionHandler.parseJSON(result);
@@ -616,9 +609,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
                     throw new RuntimeException("Error while parsing json", e);
                 }
 
-                    SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.map);
-                    mapFragment.getMapAsync(callback);
+                SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+                mapFragment.getMapAsync(callback);
             }
         }
     }
@@ -657,12 +650,12 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     }
 
     private final class Subscriber extends AsyncTask<Integer, Void, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             showQr.setEnabled(false);
             showQr.setTextColor(getResources().getColor(R.color.l_9));
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -676,10 +669,11 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             super.onPostExecute(s);
             //removeCodeIfUsed(true);
 
+            progressBar.setVisibility(View.GONE);
             showQr.setEnabled(true);
             showQr.setTextColor(getResources().getColor(R.color.black));
 
-            if (s.equals("Timeout")) Log.d("Time","Timeout Subscriber");
+            if (s.equals("Timeout")) Log.d("Time", "Timeout Subscriber");
             else {
                 Log.d("response_subscribe", s);
                 JSONObject object = HttpConnectionHandler.parseJSON(s);
@@ -715,7 +709,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             star.setEnabled(true);
-            if (s.equals("Timeout")) Log.d("Time","Timeout Favoriter");
+            if (s.equals("Timeout")) Log.d("Time", "Timeout Favoriter");
             else {
                 //removeCodeIfUsed(true);
                 Log.d("response_favorite", s);
@@ -742,7 +736,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             star.setEnabled(true);
-            if (s.equals("Timeout")) Log.d("Time","Timeout UnFavoriter");
+            if (s.equals("Timeout")) Log.d("Time", "Timeout UnFavoriter");
             else {
                 //removeCodeIfUsed(true);
                 Log.d("response_favorite", s);

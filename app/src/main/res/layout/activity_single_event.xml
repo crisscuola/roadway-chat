@@ -40,14 +40,14 @@
 
                 <ImageView
                     android:id="@+id/star"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="end"
                     android:layout_marginTop="10dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginRight="25dp"
                     android:textColor="#ffffffff"
                     android:src="@drawable/favorite_off"
                     android:contentDescription="@string/favorite_icon"
@@ -68,8 +68,8 @@
 
                     <ImageView
                         android:id="@+id/date_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
@@ -96,8 +96,8 @@
 
                     <ImageView
                         android:id="@+id/price_icon"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:layout_marginLeft="10dp"
@@ -131,6 +131,7 @@
                 android:layout_gravity="start"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:layout_marginBottom="5dp"
                 android:text="@string/title"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textSize="15sp"
@@ -175,6 +176,7 @@
                         android:paddingRight="15dp"
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/description"
                         android:textAppearance="?android:attr/textAppearance"
                         android:textSize="15sp" />
