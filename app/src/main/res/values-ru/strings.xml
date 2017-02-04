@@ -128,6 +128,7 @@
     <string name="kilometers">км</string>
     <string name="login_failed">Ошибка входа</string>
     <string name="registration_failed">Ошибка регистрации</string>
+    <string name="restore_failed">Ошибка восстановления</string>
     <string name="check_email_title">Проверьте почту</string>
     <string name="check_email_message">Пожалуйста, проверьте свою почту, чтобы подтвердить регистрацию</string>
     <string name="email_already_exists">Пользователь с такой почтой уже существует</string>

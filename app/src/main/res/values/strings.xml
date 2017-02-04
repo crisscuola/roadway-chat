@@ -128,6 +128,7 @@
     <string name="try_again">Try again</string>
     <string name="kilometers">km</string>
     <string name="login_failed">Login failed</string>
+    <string name="restore_failed">Restore failed</string>
     <string name="registration_failed">Registration failed</string>
     <string name="check_email_title">Check your email</string>
     <string name="check_email_message">Please check your email to complete registration</string>
