@@ -168,20 +168,6 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
 
             }
         });
-
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                dropEditTextColors();
-            }
-        });
-
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                dropEditTextColors();
-            }
-        });
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {
