@@ -7,7 +7,7 @@ public class UrlConst {
     private UrlConst() {
     }
 
-    public final static String URL = "p30700.lab1.stud.tech-mail.ru";
+    public final static String URL = "178.62.255.248";
     public final static String URL_OLD = "p30710.lab1.stud.tech-mail.ru";
     public final static String URL_CENTRIFUGE = "p30720.lab1.stud.tech-mail.ru";
     public final static String PATH_REGISTER = "register";
@@ -20,6 +20,7 @@ public class UrlConst {
     public final static String PATH_LOGIN = "login";
     public final static String PATH_LOGOUT = "logout";
     public final static String PATH_FORGOT = "forgot";
+    public final static String PATH_PASSWORD = "password";
     public final static String PATH_EVENT = "event";
     public final static String PATH_SUBSCRIBE = "subscribe";
     public final static String PATH_FAVORITE = "favourite/add";

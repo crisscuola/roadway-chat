@@ -88,6 +88,7 @@ public enum UrlType {
             return new HttpUrl.Builder()
                     .scheme(HTTP)
                     .host(URL)
+                    .addPathSegment(PATH_PASSWORD)
                     .addPathSegment(PATH_FORGOT)
                     .addPathSegment("");
         }
