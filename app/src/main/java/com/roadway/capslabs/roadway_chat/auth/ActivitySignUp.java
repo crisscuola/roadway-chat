@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -51,6 +53,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     private Button register;
 
+    TextView errorsTextView;
     private final Activity context = this;
 
     @Override
@@ -75,9 +78,89 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
         register = (Button) findViewById(R.id.submit_register_button);
+        errorsTextView = (TextView) findViewById(R.id.reg_errors);
         email.setTextColor(Color.BLACK);
         password1.setTextColor(Color.BLACK);
         password2.setTextColor(Color.BLACK);
+
+        setListeners();
+    }
+
+    private void setListeners() {
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                email.setTextColor(getResources().getColor(R.color.black));
+                email.setHintTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        password1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                email.setTextColor(getResources().getColor(R.color.black));
+                email.setHintTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        password2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                email.setTextColor(getResources().getColor(R.color.black));
+                email.setHintTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                dropEditTextColors();
+            }
+        });
+
+        password1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                dropEditTextColors();
+            }
+        });
+
+        password2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                dropEditTextColors();
+            }
+        });
     }
 
     @NonNull
@@ -95,6 +178,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
             return;
         }
 
+        errorsTextView.setText("");
         dropEditTextColors();
         Registrator registrator = new RegistratorByEmail(readRegisterForm());
         new RegisterRequest().execute(registrator);
@@ -104,7 +188,6 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     public void onValidationFailed(List<ValidationError> errors) {
         dropEditTextColors();
 
-        TextView errorsTextView = (TextView) findViewById(R.id.reg_errors);
         StringBuilder sb = new StringBuilder();
         for (ValidationError error : errors) {
             View view = error.getView();
@@ -159,6 +242,13 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     private final class RegisterRequest extends AsyncTask<Object, Void, String> {
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            register.setEnabled(false);
+            register.setTextColor(getResources().getColor(R.color.l_9));
+        }
+
+        @Override
         protected String doInBackground(Object... params) {
             Registrator registrator = (RegistratorByEmail) params[0];
 
@@ -168,6 +258,8 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_registration", result);
+            register.setEnabled(true);
+            register.setTextColor(getResources().getColor(R.color.black));
             JSONObject object;
             try {
                 object = new JSONObject(result);

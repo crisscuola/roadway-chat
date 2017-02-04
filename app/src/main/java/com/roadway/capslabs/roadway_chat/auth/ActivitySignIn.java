@@ -7,7 +7,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -68,7 +71,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             ConnectionChecker.showNoInternetMessage(this);
             return;
         }
-
+        errorsTextView.setText("");
         dropEditTextColors();
         new LoginRequest().execute(email.getText().toString(), password.getText().toString());
     }
@@ -76,7 +79,6 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         dropEditTextColors();
-
 
         StringBuilder sb = new StringBuilder();
         for (ValidationError error : errors) {
@@ -109,9 +111,70 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         errorsTextView = (TextView) findViewById(R.id.login_errors);
         email.setTextColor(Color.BLACK);
         password.setTextColor(Color.BLACK);
+
+        setListeners();
+    }
+
+    private void setListeners() {
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                email.setTextColor(getResources().getColor(R.color.black));
+                email.setHintTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                password.setTextColor(getResources().getColor(R.color.black));
+                password.setHintTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                dropEditTextColors();
+            }
+        });
+
+        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                dropEditTextColors();
+            }
+        });
     }
 
     private final class LoginRequest extends AsyncTask<Object, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            button.setEnabled(false);
+            button.setTextColor(getResources().getColor(R.color.l_9));
+        }
+
         @Override
         protected String doInBackground(Object... params) {
             LoginHelper helper = new LoginHelper();
@@ -124,7 +187,8 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         @Override
         protected void onPostExecute(String result) {
             Log.d("response_login", result);
-
+            button.setEnabled(true);
+            button.setTextColor(getResources().getColor(R.color.black));
             JSONObject object;
             try {
                 object = new JSONObject(result);
