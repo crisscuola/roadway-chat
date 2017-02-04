@@ -136,4 +136,5 @@
     <string name="gps_network_not_enabled">Please enable gps network</string>
     <string name="open_location_settings">Enable</string>
     <string name="cancel">Cancel</string>
+    <string name="user_not_exist">User with this email does not exists</string>
 </resources>
