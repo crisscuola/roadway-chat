@@ -9,17 +9,17 @@
     tools:context=".auth.ActivityAuth">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:id="@+id/scroll"
         android:orientation="vertical"
         android:paddingBottom="0dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -41,8 +41,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/logo"
-                    android:maxLines="2"
                     android:gravity="center"
+                    android:maxLines="2"
                     android:text="@string/restore"
                     android:textColor="#000"
                     android:textSize="25sp" />
@@ -64,7 +64,7 @@
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="40dp"
                         android:hint="@string/email_hint"
                         android:inputType="textEmailAddress"
                         android:theme="@style/BlackEditTextTheme" />
@@ -90,12 +90,11 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/login_errors"
+                        android:id="@+id/forgot_errors"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ff0000"
                         android:textSize="15sp" />
-
 
                 </LinearLayout>
 
