@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     TextView errorsTextView;
     private final Activity context = this;
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,8 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
         password2 = (EditText) findViewById(R.id.password2);
         register = (Button) findViewById(R.id.submit_register_button);
         errorsTextView = (TextView) findViewById(R.id.reg_errors);
+        scrollView = (ScrollView) findViewById(R.id.scroll_signup);
+
         email.setTextColor(Color.BLACK);
         password1.setTextColor(Color.BLACK);
         password2.setTextColor(Color.BLACK);
@@ -186,6 +190,9 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
         dropEditTextColors();
 
         StringBuilder sb = new StringBuilder();
