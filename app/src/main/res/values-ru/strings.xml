@@ -114,6 +114,8 @@
     <string name="guest_menu">Гость</string>
     <string name="fogot">Забыл пароль</string>
     <string name="pls_log">Пожалуйста войдите в аккаунт</string>
+    <string name="restore">Восстановление пароля</string>
+    <string name="restore_btn">Восстановить</string>
 
     <string name="login_empty_message"></string>
     <string name="login_wrong_email_format">Неверный формат почты</string>

@@ -113,6 +113,8 @@
     <string name="guest_menu">Guest</string>
     <string name="fogot">Forgot password</string>
     <string name="pls_log">Please LogIn</string>
+    <string name="restore">Restore Password</string>
+    <string name="restore_btn">Restore</string>
 
 
     <string name="login_empty_message"></string>

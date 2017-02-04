@@ -3,7 +3,6 @@ package com.roadway.capslabs.roadway_chat.network;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -27,6 +26,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static com.roadway.capslabs.roadway_chat.url.UrlType.FORGOT;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGIN;
 import static com.roadway.capslabs.roadway_chat.url.UrlType.LOGOUT;
 
@@ -53,6 +53,13 @@ public class LoginHelper {
         return getLogoutResponse(context, request);
     }
 
+    public String forgot(Activity context, String email){
+        HttpUrl url = UrlFactory.getUrl(FORGOT);
+        RequestBody formBody = formForgotBody(email);
+        Request request = buildRequest(url, formBody);
+        return getResponse(context, request);
+    }
+
     private String getLogoutResponse(Activity context, Request request) {
         CookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
@@ -76,6 +83,12 @@ public class LoginHelper {
                 .add("email", email)
                 .add("password", password)
                 .add("registration_id", token)
+                .build();
+    }
+
+    private RequestBody formForgotBody(String email) {
+        return new FormBody.Builder()
+                .add("email", email)
                 .build();
     }
 

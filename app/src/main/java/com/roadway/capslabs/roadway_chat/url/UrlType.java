@@ -82,6 +82,16 @@ public enum UrlType {
                     .addPathSegment("");
         }
     },
+    FORGOT {
+        @Override
+        public HttpUrl.Builder getUrl() {
+            return new HttpUrl.Builder()
+                    .scheme(HTTP)
+                    .host(URL)
+                    .addPathSegment(PATH_FORGOT)
+                    .addPathSegment("");
+        }
+    },
     FEED {
         @Override
         public HttpUrl.Builder getUrl() {

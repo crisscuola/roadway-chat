@@ -19,6 +19,7 @@ public class UrlConst {
     public final static String PATH_GET_TOKEN = "get_token";
     public final static String PATH_LOGIN = "login";
     public final static String PATH_LOGOUT = "logout";
+    public final static String PATH_FORGOT = "forgot";
     public final static String PATH_EVENT = "event";
     public final static String PATH_SUBSCRIBE = "subscribe";
     public final static String PATH_FAVORITE = "favourite/add";
