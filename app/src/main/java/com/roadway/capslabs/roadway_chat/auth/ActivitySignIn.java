@@ -42,7 +42,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     @Password(min = 8, scheme = Password.Scheme.ALPHA_NUMERIC,
             messageResId = R.string.login_wrong_pass_format)
     private EditText password;
-    private Button button;
+    private Button button, forgot;
     TextView errorsTextView;
     private ScrollView scrollView;
     private final Activity context = this;
@@ -60,6 +60,16 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             @Override
             public void onClick(View view) {
                 validator.validate();
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("forgot", "forgot");
+                Intent forgot = new Intent(context, ActivityForgot.class);
+                finish();
+                startActivity(forgot);
             }
         });
     }
@@ -111,6 +121,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         button = (Button) findViewById(R.id.btn_in);
+        forgot = (Button) findViewById(R.id.btn_forgot);
         errorsTextView = (TextView) findViewById(R.id.login_errors);
         email.setTextColor(Color.BLACK);
         password.setTextColor(Color.BLACK);
