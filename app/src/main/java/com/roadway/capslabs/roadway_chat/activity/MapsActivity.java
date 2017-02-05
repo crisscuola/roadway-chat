@@ -64,6 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private final DrawerFactory drawerFactory = new DrawerFactory();
+    private OnMapReadyCallback callback = this;
     private Drawer drawer;
     private Toolbar toolbar;
     private Activity context = this;
@@ -143,7 +144,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         latLngl = new LatLng(lat, lng);
 
 
-        mapFragment.getMapAsync(this);
+        if (mapFragment == null) {
+            Log.d("call", "null");
+        } else
+
+        mapFragment.getMapAsync(callback);
+
 
         bottomSheet = findViewById(R.id.design_bottom_sheet);
         behavior = BottomSheetBehavior.from(bottomSheet);

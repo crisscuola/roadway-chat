@@ -611,7 +611,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
+
+                if (mapFragment == null) {
+                    Log.d("call", "null");
+                } else
+
                 mapFragment.getMapAsync(callback);
+
             }
         }
     }
