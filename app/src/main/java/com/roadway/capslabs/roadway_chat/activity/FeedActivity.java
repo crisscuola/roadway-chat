@@ -33,6 +33,7 @@ import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
+import com.roadway.capslabs.roadway_chat.utils.Cache;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
 
 import org.json.JSONArray;
@@ -193,7 +194,13 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
 
         Log.d("SHIT", String.valueOf(lat));
 
-        new EventsLoader().execute(new EventRequestHandler());
+        if (Cache.isFeedEmpty())
+            new EventsLoader().execute(new EventRequestHandler());
+        else {
+            recyclerAdapter.addEvents(Cache.getFeed());
+            recyclerAdapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
 
@@ -285,7 +292,6 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         }
     }
 
-
     private final class EventsLoader extends AsyncTask<Object, Void, String> {
         @Override
         protected String doInBackground(Object... params) {
@@ -296,6 +302,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         @Override
         protected void onPostExecute(String result) {
             progressBar.setVisibility(View.GONE);
+            Cache.clearFeed();
             Log.d("response_crete_event", result);
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsFeeDLoader");
@@ -325,6 +332,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
 
                     recyclerAdapter.addEvents(events);
                     recyclerAdapter.notifyDataSetChanged();
+                    Cache.saveFeed(events);
                 } catch (JSONException e) {
                     throw new RuntimeException("JSON parsing error", e);
                 }
