@@ -87,7 +87,7 @@
             android:layout_height="17dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:src="@drawable/ic_star_outline_grey600_48dp"
+            android:src="@drawable/rating"
             android:layout_marginLeft="20dp" />
 
         <TextView
