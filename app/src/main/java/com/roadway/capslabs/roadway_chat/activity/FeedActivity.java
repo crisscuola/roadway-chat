@@ -299,6 +299,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             Log.d("response_crete_event", result);
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsFeeDLoader");
+                setContentView(R.layout.no_internet);
                 initTool(getString(R.string.feed_activity_title));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
                 again = (Button) findViewById(R.id.button_again);
@@ -352,6 +353,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             Log.d("response_crete_event", result);
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout NextEventSFeeDLoader");
+                setContentView(R.layout.no_internet);
                 initTool(getString(R.string.feed_activity_title));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
                 again = (Button) findViewById(R.id.button_again);

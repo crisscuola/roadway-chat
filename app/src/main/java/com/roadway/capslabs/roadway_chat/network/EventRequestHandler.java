@@ -209,9 +209,9 @@ public class EventRequestHandler {
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         OkHttpClient client = new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .writeTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
                 .build();
         try {
             Response response = client.newCall(request).execute();

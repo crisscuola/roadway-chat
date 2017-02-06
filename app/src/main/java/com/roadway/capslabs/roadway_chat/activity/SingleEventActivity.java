@@ -679,7 +679,21 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             showQr.setEnabled(true);
             showQr.setTextColor(getResources().getColor(R.color.black));
 
-            if (s.equals("Timeout")) Log.d("Time", "Timeout Subscriber");
+            if (s.equals("Timeout")) {
+                Log.d("Time", "Timeout Subscriber");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 Log.d("response_subscribe", s);
                 JSONObject object = HttpConnectionHandler.parseJSON(s);
@@ -715,7 +729,21 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             star.setEnabled(true);
-            if (s.equals("Timeout")) Log.d("Time", "Timeout Favoriter");
+            if (s.equals("Timeout")) {
+                Log.d("Time", "Timeout Favoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 //removeCodeIfUsed(true);
                 Log.d("response_favorite", s);
@@ -742,7 +770,21 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             star.setEnabled(true);
-            if (s.equals("Timeout")) Log.d("Time", "Timeout UnFavoriter");
+            if (s.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 //removeCodeIfUsed(true);
                 Log.d("response_favorite", s);
