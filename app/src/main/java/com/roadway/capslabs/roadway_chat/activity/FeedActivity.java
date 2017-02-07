@@ -186,6 +186,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         if (location == null) {
             lat = 55.765842;
             lng = 37.685190;
+            Log.d("GEO", "onLocation Changed");
         } else {
             lat = location.getLatitude();
             lng = location.getLongitude();
