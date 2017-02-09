@@ -177,7 +177,7 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/description"
+                        android:text=""
                         android:textAppearance="?android:attr/textAppearance"
                         android:textSize="15sp" />
 
@@ -228,7 +228,7 @@
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:layout_marginBottom="10dp"
-                    android:text="@string/creator"
+                    android:text=""
                     android:textAppearance="?android:attr/textAppearance"
                     android:textSize="15sp" />
             </LinearLayout>

@@ -182,6 +182,8 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
      * Stopping location updates
      */
     protected void stopLocationUpdates() {
+
+       if ( mGoogleApiClient.isConnected() )
         LocationServices.FusedLocationApi.removeLocationUpdates(
                 mGoogleApiClient, this);
     }
@@ -191,7 +193,7 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
      */
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-
+        Log.d("GEO", "onConnection Failed!!!");
     }
 
     @Override
@@ -199,7 +201,7 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
 
         // Once connected with google api, get the location
         //Toast.makeText(this, "!!!", Toast.LENGTH_LONG).show();
-        Log.d("SHIT", "!!!");
+        Log.d("GEO", "onConnected!!!");
         getLocation();
 
         if (mRequestingLocationUpdates) {
@@ -209,14 +211,16 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
 
     @Override
     public void onConnectionSuspended(int arg0) {
+        Log.d("GEO", "onConnection Suspend!!!");
         mGoogleApiClient.connect();
+
     }
 
     @Override
     public void onLocationChanged(Location location) {
         // Assign the new location
         mLastLocation = location;
-
+        Log.d("GEO", "onLocation Changed");
 //        Toast.makeText(getApplicationContext(), "Location changed!",
 //                Toast.LENGTH_SHORT).show();
 
@@ -225,6 +229,7 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
     }
 
     public Location getmLastLocation() {
+        Log.d("GEO", "getLastLocation");
         return mLastLocation;
     }
 }

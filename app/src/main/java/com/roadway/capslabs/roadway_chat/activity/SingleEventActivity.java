@@ -233,7 +233,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //                getAlert();
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                String url = "http://p30700.lab1.stud.tech-mail.ru/event/view/" + id + "/unauthorized";
+                String url = "http://178.62.255.248/event/view/" + id + "/unauthorized";
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, url);
 
@@ -611,7 +611,13 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
                 SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.map);
+
+                if (mapFragment == null) {
+                    Log.d("call", "null");
+                } else
+
                 mapFragment.getMapAsync(callback);
+
             }
         }
     }
@@ -673,7 +679,21 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             showQr.setEnabled(true);
             showQr.setTextColor(getResources().getColor(R.color.black));
 
-            if (s.equals("Timeout")) Log.d("Time", "Timeout Subscriber");
+            if (s.equals("Timeout")) {
+                Log.d("Time", "Timeout Subscriber");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 Log.d("response_subscribe", s);
                 JSONObject object = HttpConnectionHandler.parseJSON(s);
@@ -709,7 +729,21 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             star.setEnabled(true);
-            if (s.equals("Timeout")) Log.d("Time", "Timeout Favoriter");
+            if (s.equals("Timeout")) {
+                Log.d("Time", "Timeout Favoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 //removeCodeIfUsed(true);
                 Log.d("response_favorite", s);
@@ -736,7 +770,21 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             star.setEnabled(true);
-            if (s.equals("Timeout")) Log.d("Time", "Timeout UnFavoriter");
+            if (s.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, SingleEventActivity.class);
+                        intent.putExtra("id", id);
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
             else {
                 //removeCodeIfUsed(true);
                 Log.d("response_favorite", s);
