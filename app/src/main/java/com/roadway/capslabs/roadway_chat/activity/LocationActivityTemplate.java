@@ -130,6 +130,7 @@ public class LocationActivityTemplate extends AppCompatActivity implements Googl
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API).build();
+        Log.d("SHIT", "AAA");
     }
 
     /**

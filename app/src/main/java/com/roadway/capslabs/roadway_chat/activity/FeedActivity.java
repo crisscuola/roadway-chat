@@ -126,8 +126,8 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             return;
         }
 
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//        locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
         //Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         //Location location = getLastKnownLocation();
@@ -270,6 +270,9 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             mSwipeRefreshLayout.setRefreshing(false);
             return;
         }
+
+        buildGoogleApiClient();
+        createLocationRequest();
 
         progressBar.setVisibility(View.VISIBLE);
         mSwipeRefreshLayout.setRefreshing(true);
