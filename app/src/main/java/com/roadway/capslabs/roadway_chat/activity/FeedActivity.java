@@ -170,6 +170,20 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         return bestLocation;
     }
 
+    private void putLocation(double lat, double lng) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        putDouble(editor, "lat", lat);
+        putDouble(editor, "lng", lng);
+        editor.commit();
+    }
+
+    SharedPreferences.Editor putDouble(final SharedPreferences.Editor edit, final String key, final double value) {
+        return edit.putLong(key, Double.doubleToRawLongBits(value));
+    }
+
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -184,15 +198,17 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         Location location = getmLastLocation();
 
         if (location == null) {
-            lat = 55.765842;
-            lng = 37.685190;
-            Log.d("GEO", "onLocation Changed");
+            lat = 55.797010;
+            lng = 37.537910;
+            Log.d("GEO", "location null");
         } else {
             lat = location.getLatitude();
             lng = location.getLongitude();
         }
 
         Log.d("SHIT", String.valueOf(lat));
+
+        putLocation(lat,lng);
 
         new EventsLoader().execute(new EventRequestHandler());
     }

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -12,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
@@ -136,10 +138,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
 
-        Location location = getLastKnownLocation();
+//        Location location = getLastKnownLocation();
+//
+//        lat = location.getLatitude();
+//        lng = location.getLongitude();
 
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        lat = getDouble(prefs, "lat", 55.797010);
+        lng = getDouble(prefs, "lng", 37.537910);
+
+        Log.d("SHIT", String.valueOf(lat) + lng);
 
         latLngl = new LatLng(lat, lng);
 
@@ -181,6 +190,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                .build();
 //        routing.execute();
 
+    }
+
+    double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
+        return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
     }
 
     private Location getLastKnownLocation() {
