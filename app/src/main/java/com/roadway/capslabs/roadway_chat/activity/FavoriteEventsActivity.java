@@ -129,8 +129,8 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
             return;
         }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 60 * 1000, 10, locationListener);
+//        locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER, 60 * 1000, 10, locationListener);
 
 //        Location location = getLastKnownLocation();
 //        lat = location.getLatitude();

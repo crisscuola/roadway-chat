@@ -122,8 +122,8 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
 
             return;
         }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//        locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 //        Location location = getLastKnownLocation();
 //
