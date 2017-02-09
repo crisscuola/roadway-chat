@@ -14,6 +14,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -126,12 +127,19 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
 
             return;
         }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 60 * 1000, 10, locationListener);
+//        locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER, 60 * 1000, 10, locationListener);
 
-        Location location = getLastKnownLocation();
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+//        Location location = getLastKnownLocation();
+//        lat = location.getLatitude();
+//        lng = location.getLongitude();
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        lat = getDouble(prefs, "lat", 55.797010);
+        lng = getDouble(prefs, "lng", 37.537910);
+
+        Log.d("SHIT", String.valueOf(lat) + lng);
 
         new EventsLoader().execute(new EventRequestHandler());
 
@@ -141,6 +149,10 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
+    }
+
+    double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
+        return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
     }
 
     private void initTool(String title) {

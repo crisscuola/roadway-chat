@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -12,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -120,13 +122,18 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
 
             return;
         }
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+//        locationManager.requestLocationUpdates(
+//                LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-        Location location = getLastKnownLocation();
+//        Location location = getLastKnownLocation();
+//
+//        lat = location.getLatitude();
+//        lng = location.getLongitude();
 
-        lat = location.getLatitude();
-        lng = location.getLongitude();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        lat = getDouble(prefs, "lat", 55.797010);
+        lng = getDouble(prefs, "lng", 37.537910);
 
         latLngl = new LatLng(lat, lng);
 
@@ -143,6 +150,10 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
 //    public void onBackPressed() {
 //
 //    }
+
+    double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
+        return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
+    }
 
     private void initTool(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_no);

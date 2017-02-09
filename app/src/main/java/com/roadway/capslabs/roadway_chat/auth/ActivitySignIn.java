@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -193,6 +192,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             button.setEnabled(true);
             button.setTextColor(getResources().getColor(R.color.black));
             JSONObject object;
+
             try {
                 object = new JSONObject(result);
             } catch (JSONException e) {
