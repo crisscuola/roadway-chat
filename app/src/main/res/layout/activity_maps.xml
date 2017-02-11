@@ -9,9 +9,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbar_maps"
-            layout="@layout/toolbar" />
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/toolbar_maps"
+                layout="@layout/toolbar" />
+        </android.support.design.widget.AppBarLayout>
 
         <fragment
             android:id="@+id/map"
@@ -37,18 +42,19 @@
             android:id="@+id/imageDrag"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/minus"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/minus" />
+
         <TextView
+            android:id="@+id/bottom_adress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:id="@+id/bottom_adress"
+            android:text="Adress"
             android:textColor="#000"
-            android:textSize="15sp"
-            android:text="Adress" />
+            android:textSize="15sp" />
 
         <View
             android:layout_width="match_parent"
@@ -61,8 +67,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="0dp"
-            android:dividerHeight="3dp"
-            android:background="#fff" />
+            android:background="#fff"
+            android:dividerHeight="3dp" />
 
     </LinearLayout>
 
