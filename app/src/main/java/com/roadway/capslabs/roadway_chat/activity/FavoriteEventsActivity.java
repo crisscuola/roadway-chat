@@ -80,7 +80,6 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.title_activity_sub));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
             again = (Button) findViewById(R.id.button_again);
@@ -155,11 +154,6 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
 
     double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
         return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
-    }
-
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
     }
 
     private void initToolbar(String title) {
@@ -271,7 +265,6 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
             if (result.equals("Timeout")) {
                 Log.d("Time", "Timeout FavoriteEventsActivity");
                 setContentView(R.layout.no_internet);
-                initTool(getString(R.string.title_activity_sub));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
 
                 again = (Button) findViewById(R.id.button_again);

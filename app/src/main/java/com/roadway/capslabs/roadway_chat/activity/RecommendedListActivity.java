@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by konstantin on 14.01.17.
+ * Created by konstantin on 14.01.17
  */
 public class RecommendedListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -79,7 +79,6 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.recommended_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
             again = (Button) findViewById(R.id.button_again);
 
@@ -153,11 +152,6 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
 
     double getDouble(final SharedPreferences prefs, final String key, final double defaultValue) {
         return Double.longBitsToDouble(prefs.getLong(key, Double.doubleToLongBits(defaultValue)));
-    }
-
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
     }
 
     private void initToolbar(String title) {
@@ -267,7 +261,6 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout RecomendedList");
                 setContentView(R.layout.no_internet);
-                initTool(getString(R.string.recommended_title));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
                 again = (Button) findViewById(R.id.button_again);
 

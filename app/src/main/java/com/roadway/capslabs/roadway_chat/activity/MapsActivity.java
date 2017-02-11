@@ -100,7 +100,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.title_activity_maps));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
             again = (Button) findViewById(R.id.button_again);
@@ -220,12 +219,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
-    }
-
-
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
     }
 
     private void initToolbar(String title) {
@@ -529,7 +522,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsMapsLoader");
                 setContentView(R.layout.no_internet);
-                initTool(getString(R.string.title_activity_maps));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
 
                 again = (Button) findViewById(R.id.button_again);

@@ -48,7 +48,6 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
             ConnectionChecker.showNoInternetMessage(this);
 
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.rank_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
             again = (Button) findViewById(R.id.button_again);
@@ -99,11 +98,6 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
-    }
-
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
     }
 
     private void initViews(String title) {

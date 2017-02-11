@@ -38,7 +38,6 @@ public class QrCodeActivity extends AppCompatActivity {
             ConnectionChecker.showNoInternetMessage(this);
 
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.qr_code_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
             again = (Button) findViewById(R.id.button_again);
@@ -68,11 +67,6 @@ public class QrCodeActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         drawer.closeDrawer();
-    }
-
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
     }
 
     public void initToolbar(String title) {

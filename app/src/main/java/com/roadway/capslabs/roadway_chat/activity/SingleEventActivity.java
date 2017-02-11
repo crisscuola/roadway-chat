@@ -107,7 +107,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.single_event_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
 
             again = (Button) findViewById(R.id.button_again);
@@ -261,11 +260,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         Intent intent = new Intent(context, QrCodeActivity.class);
         intent.putExtra("bitmap", bitmap);
         startActivity(intent);
-    }
-
-    public void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
     }
 
     public void initToolbar(String title) {

@@ -34,11 +34,6 @@ public class EventDescriptionActivity extends AppCompatActivity {
         description.setText(descriptionText);
     }
 
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
-    }
-
     public void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_description);
 

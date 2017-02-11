@@ -75,7 +75,6 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            initTool(getString(R.string.feed_activity_title));
             drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
             again = (Button) findViewById(R.id.button_again);
 
@@ -220,13 +219,6 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         }
     }
 
-
-    private void initTool(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_no);
-        toolbar.setTitle(title);
-
-    }
-
     private void initToolbar(String title) {
         toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
         toolbar.setTitle(title);
@@ -327,7 +319,6 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsFeeDLoader");
                 setContentView(R.layout.no_internet);
-                initTool(getString(R.string.feed_activity_title));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
                 again = (Button) findViewById(R.id.button_again);
 
@@ -382,7 +373,6 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout NextEventSFeeDLoader");
                 setContentView(R.layout.no_internet);
-                initTool(getString(R.string.feed_activity_title));
                 drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
                 again = (Button) findViewById(R.id.button_again);
 
