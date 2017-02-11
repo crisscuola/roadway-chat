@@ -57,6 +57,7 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
     TextView errorsTextView;
     private final Activity context = this;
     private ScrollView scrollView;
+    private Button again;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -247,10 +248,27 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
             register.setEnabled(true);
             register.setTextColor(getResources().getColor(R.color.black));
             JSONObject object;
-            try {
-                object = new JSONObject(result);
 
-                if (object.has("errors")) {
+            if (result.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
+
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ActivitySignUp.class);
+
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            } else {
+
+                try {
+                    object = new JSONObject(result);
+
+                    if (object.has("errors")) {
                         JSONArray array = object.getJSONArray("errors");
                         for (int i = 0; i < array.length(); i++) {
                             int item = array.getInt(i);
@@ -262,14 +280,15 @@ public class ActivitySignUp extends AppCompatActivity implements Validator.Valid
                             }
                         }
 
-                    Toast.makeText(getApplicationContext(),
-                            R.string.registration_failed, Toast.LENGTH_SHORT).show();
-                    return;
+                        Toast.makeText(getApplicationContext(),
+                                R.string.registration_failed, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException("JSON parsing error", e);
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException("JSON parsing error", e);
+                getAlert(context).show();
             }
-            getAlert(context).show();
         }
     }
 }

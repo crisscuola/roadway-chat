@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.auth;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +43,7 @@ public class ActivityForgot extends AppCompatActivity implements Validator.Valid
     private final Activity context = this;
     private String emailSend;
     private TextView errorsTextView;
+    private Button again;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,27 +162,44 @@ public class ActivityForgot extends AppCompatActivity implements Validator.Valid
             button.setTextColor(getResources().getColor(R.color.black));
             JSONObject object;
 
-            try {
-                object = new JSONObject(result);
+            if (result.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
 
-                if (object.has("errors")) {
-                    JSONArray array = object.getJSONArray("errors");
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ActivitySignUp.class);
 
-                    for (int i = 0; i < array.length(); i++) {
-                        int item = array.getInt(i);
-                        if (item == 17) {
-                            Toast.makeText(getApplicationContext(),
-                                    R.string.user_not_exist, Toast.LENGTH_LONG).show();
-
-                            return;
-                        }
+                        finish();
+                        startActivity(intent);
                     }
+                });
+            } else {
 
-                    Toast.makeText(getApplicationContext(),
-                            R.string.restore_failed, Toast.LENGTH_SHORT).show();
+                try {
+                    object = new JSONObject(result);
+
+                    if (object.has("errors")) {
+                        JSONArray array = object.getJSONArray("errors");
+
+                        for (int i = 0; i < array.length(); i++) {
+                            int item = array.getInt(i);
+                            if (item == 17) {
+                                Toast.makeText(getApplicationContext(),
+                                        R.string.user_not_exist, Toast.LENGTH_LONG).show();
+
+                                return;
+                            }
+                        }
+
+                        Toast.makeText(getApplicationContext(),
+                                R.string.restore_failed, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    throw new RuntimeException("Exception during json parsing", e);
                 }
-            } catch (JSONException e) {
-                throw new RuntimeException("Exception during json parsing", e);
             }
         }
     }

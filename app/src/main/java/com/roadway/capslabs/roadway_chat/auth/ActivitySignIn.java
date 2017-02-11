@@ -47,6 +47,7 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
     private Button button, forgot;
     TextView errorsTextView;
     private ScrollView scrollView;
+    private Button again;
     private final Activity context = this;
 
 
@@ -193,21 +194,39 @@ public class ActivitySignIn extends AppCompatActivity implements Validator.Valid
             button.setTextColor(getResources().getColor(R.color.black));
             JSONObject object;
 
-            try {
-                object = new JSONObject(result);
-            } catch (JSONException e) {
-                throw new RuntimeException("Exception during json parsing", e);
-            }
-            if (object.has("errors")) {
-                Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT)
-                        .show();
-                return;
-            }
+            if (result.equals("Timeout")) {
+                Log.d("Time", "Timeout UnFavoriter");
+                setContentView(R.layout.no_internet);
+                again = (Button) findViewById(R.id.button_again);
 
-            Intent feedActivity = new Intent(context, FeedActivity.class);
-            feedActivity.putExtra("email", email.getText().toString());
-            feedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(feedActivity);
+                again.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, ActivitySignIn.class);
+
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+            }
+            else {
+
+                try {
+                    object = new JSONObject(result);
+                } catch (JSONException e) {
+                    throw new RuntimeException("Exception during json parsing", e);
+                }
+                if (object.has("errors")) {
+                    Toast.makeText(getApplicationContext(), R.string.login_failed, Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
+
+                Intent feedActivity = new Intent(context, FeedActivity.class);
+                feedActivity.putExtra("email", email.getText().toString());
+                feedActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(feedActivity);
+            }
         }
     }
 }
