@@ -450,7 +450,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         colors.put(13, "#0069b8");
         colors.put(14, "#ffa8af");
 
-        String color = "#000";
+        String color = "#00000";
 
         color = colors.get(colorNum);
 
