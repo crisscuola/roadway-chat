@@ -53,7 +53,6 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:text="Adress"
-            an
             android:textColor="#000"
             android:textSize="15sp" />
 
