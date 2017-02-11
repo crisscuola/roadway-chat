@@ -5,17 +5,21 @@
     android:background="#fff"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar_map"
-        layout="@layout/toolbar" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbar_map"
+            layout="@layout/toolbar" />
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:paddingBottom="0dp"
         android:orientation="vertical"
-        >
+        android:paddingBottom="0dp">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -24,18 +28,18 @@
 
             <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_height="170dp">
+                android:layout_height="170dp"
+                android:layout_marginBottom="10dp">
 
                 <ImageView
                     android:id="@+id/image"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    android:paddingLeft="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingEnd="15dp"
                     android:contentDescription="@string/event_pic"
+                    android:paddingEnd="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingStart="15dp"
                     android:scaleType="fitXY" />
 
                 <ImageView
@@ -43,41 +47,41 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="end"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="15dp"
                     android:layout_marginEnd="25dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_marginRight="25dp"
-                    android:textColor="#ffffffff"
-                    android:src="@drawable/favorite_off"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:contentDescription="@string/favorite_icon"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/favorite_off"
+                    android:textColor="#ffffffff" />
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginEnd="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_gravity="center_horizontal|bottom"
-                    android:gravity="end"
-                    android:textColor="#ffffffff"
+                    android:layout_marginStart="15dp"
                     android:background="#80000000"
-                    android:orientation="horizontal">
+                    android:gravity="end"
+                    android:orientation="horizontal"
+                    android:textColor="#ffffffff">
 
                     <ImageView
                         android:id="@+id/date_icon"
                         android:layout_width="23dp"
                         android:layout_height="23dp"
                         android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginEnd="3dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="3dp"
-                        android:textColor="#ffffffff"
+                        android:layout_marginStart="10dp"
+                        android:contentDescription="@string/date"
                         android:src="@drawable/time_icon"
-                        android:contentDescription="@string/date" />
+                        android:textColor="#ffffffff" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -90,36 +94,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="#ffffffff"
                         android:padding="4dp"
-                        android:text="@string/three_dots" />
+                        android:text="@string/three_dots"
+                        android:textColor="#ffffffff" />
 
                     <ImageView
                         android:id="@+id/price_icon"
                         android:layout_width="23dp"
                         android:layout_height="23dp"
                         android:layout_gravity="center"
-                        android:layout_marginStart="20dp"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/price_icon_stroked"
-                        android:contentDescription="@string/price_icon" />
+                        android:layout_marginStart="20dp"
+                        android:contentDescription="@string/price_icon"
+                        android:src="@drawable/price_icon_stroked" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="#ffffffff"
-                        android:padding="4dp" />
+                        android:padding="4dp"
+                        android:textColor="#ffffffff" />
 
                     <TextView
                         android:id="@+id/rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="#ffffffff"
                         android:layout_marginEnd="10dp"
                         android:layout_marginRight="10dp"
-                        android:text="@string/three_dots" />
+                        android:text="@string/three_dots"
+                        android:textColor="#ffffffff" />
                 </LinearLayout>
 
             </FrameLayout>
@@ -129,9 +133,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
+                android:layout_marginBottom="5dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:layout_marginBottom="5dp"
                 android:text="@string/title"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textSize="15sp"
@@ -149,7 +153,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -172,25 +176,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="10dp"
                         android:text=""
                         android:textAppearance="?android:attr/textAppearance"
                         android:textSize="15sp" />
 
                     <ImageView
                         android:id="@+id/arrow"
-                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_right"
-                        android:layout_centerVertical="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:contentDescription="@string/arrow_icon" />
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/arrow_icon"
+                        android:src="@drawable/arrow_right"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -225,9 +229,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:layout_marginBottom="10dp"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:layout_marginBottom="10dp"
                     android:text=""
                     android:textAppearance="?android:attr/textAppearance"
                     android:textSize="15sp" />
@@ -242,43 +246,42 @@
                 android:background="@android:color/darker_gray" />
 
             <RelativeLayout
+                android:id="@+id/relative_url"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/relative_url">
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/link_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_edge_grey600_48dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:contentDescription="@string/arrow_icon" />
+                    android:contentDescription="@string/arrow_icon"
+                    android:src="@drawable/ic_edge_grey600_48dp" />
 
                 <TextView
                     android:id="@+id/url"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
                     android:paddingLeft="55dp"
                     android:paddingRight="15dp"
+                    android:paddingTop="15dp"
                     android:text="@string/website_btn"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp"
-                     />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/arrow_link"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/next"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:contentDescription="@string/arrow_icon" />
+                    android:contentDescription="@string/arrow_icon"
+                    android:src="@drawable/next" />
             </RelativeLayout>
 
             <View
@@ -289,43 +292,42 @@
                 android:background="@android:color/darker_gray" />
 
             <RelativeLayout
+                android:id="@+id/relative_call"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/relative_call">
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/call_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_phone_in_talk_grey600_48dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:contentDescription="@string/arrow_icon" />
+                    android:contentDescription="@string/arrow_icon"
+                    android:src="@drawable/ic_phone_in_talk_grey600_48dp" />
 
                 <TextView
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
                     android:paddingLeft="55dp"
                     android:paddingRight="15dp"
+                    android:paddingTop="15dp"
                     android:text="@string/call_organization_btn"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/arrow_tel"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/next"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:contentDescription="@string/arrow_icon" />
+                    android:contentDescription="@string/arrow_icon"
+                    android:src="@drawable/next" />
             </RelativeLayout>
 
             <View
@@ -336,43 +338,42 @@
                 android:background="@android:color/darker_gray" />
 
             <RelativeLayout
+                android:id="@+id/relative_share"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/relative_share">
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/share_icon"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/ic_share_variant_grey600_48dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:contentDescription="@string/arrow_icon" />
+                    android:contentDescription="@string/arrow_icon"
+                    android:src="@drawable/ic_share_variant_grey600_48dp" />
 
                 <TextView
                     android:id="@+id/share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="15dp"
                     android:paddingLeft="55dp"
                     android:paddingRight="15dp"
+                    android:paddingTop="15dp"
                     android:text="@string/share_with_friends"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/arrow_share"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@drawable/next"
-                    android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:contentDescription="@string/arrow_icon" />
+                    android:contentDescription="@string/arrow_icon"
+                    android:src="@drawable/next" />
             </RelativeLayout>
 
             <View
@@ -386,12 +387,12 @@
                 android:id="@+id/addres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/address_single_event"
                 android:layout_marginTop="10dp"
-                android:paddingLeft="15dp"
-                android:paddingStart="15dp"
-                android:paddingRight="15dp"
                 android:paddingEnd="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingStart="15dp"
+                android:text="@string/address_single_event"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="15sp" />
 
@@ -399,40 +400,40 @@
                 android:id="@+id/metro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoLink="map"
-                android:paddingLeft="15dp"
-                android:paddingStart="15dp"
-                android:paddingRight="15dp"
-                android:paddingEnd="15dp"
                 android:layout_marginTop="5dp"
+                android:autoLink="map"
+                android:paddingEnd="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingStart="15dp"
                 android:text="@string/metro_station"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="15sp" />
 
             <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:layout_marginLeft="15dp"-->
-                <!--android:layout_marginRight="15dp"-->
-                <!--android:background="@android:color/darker_gray" />-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginRight="15dp"-->
+            <!--android:background="@android:color/darker_gray" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginBottom="4dp"
-                android:textSize="18sp"
-                android:paddingLeft="15dp"
-                android:paddingStart="15dp"
-                android:paddingRight="15dp"
+                android:paddingBottom="5dp"
                 android:paddingEnd="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingStart="15dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="5dp" >
+                android:textSize="18sp">
 
-                 <ImageView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:src="@drawable/map_location_blue"
-                     android:contentDescription="@string/route_to_discount" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/route_to_discount"
+                    android:src="@drawable/map_location_blue" />
 
                 <TextView
                     android:id="@+id/address"
@@ -441,31 +442,30 @@
                     android:text="@string/route_to_discount"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#2369ff"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
 
             <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="start"-->
-                <!--android:orientation="horizontal">-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="start"-->
+            <!--android:orientation="horizontal">-->
             <!--</LinearLayout>-->
 
 
             <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:paddingTop="10dp"
+                android:layout_marginTop="10dp"
                 android:paddingBottom="10dp"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:id="@+id/map" />
+                android:paddingTop="10dp" />
         </LinearLayout>
     </ScrollView>
 
@@ -480,29 +480,29 @@
         android:id="@+id/btn_show_qr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/qr_icon_gray"
         android:background="@color/colorWhiteBackground"
-        android:textColor="@color/black"
+        android:drawableLeft="@drawable/qr_icon_gray"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:text="@string/show_qr_code" />
+        android:text="@string/show_qr_code"
+        android:textColor="@color/black" />
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:gravity="bottom">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:gravity="bottom">-->
 
-        <!--<Button-->
-            <!--android:id="@+id/btn_show_qr"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:drawableLeft="@drawable/qr_icon"-->
-            <!--android:background="@color/colorDarkBackground"-->
-            <!--android:textColor="@color/colorTextColor"-->
-            <!--android:paddingLeft="25dp"-->
-            <!--android:paddingRight="25dp"-->
-            <!--android:text="Show Qr Code" />-->
+    <!--<Button-->
+    <!--android:id="@+id/btn_show_qr"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:drawableLeft="@drawable/qr_icon"-->
+    <!--android:background="@color/colorDarkBackground"-->
+    <!--android:textColor="@color/colorTextColor"-->
+    <!--android:paddingLeft="25dp"-->
+    <!--android:paddingRight="25dp"-->
+    <!--android:text="Show Qr Code" />-->
     <!--</LinearLayout>-->
 
 </LinearLayout>
