@@ -170,7 +170,7 @@ public class ActivityForgot extends AppCompatActivity implements Validator.Valid
                 again.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(context, ActivitySignUp.class);
+                        Intent intent = new Intent(context, ActivityForgot.class);
 
                         finish();
                         startActivity(intent);
