@@ -22,7 +22,7 @@
             android:paddingBottom="15dp"
             android:gravity="left"
             android:textColor="#000"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
 
         <ImageView
