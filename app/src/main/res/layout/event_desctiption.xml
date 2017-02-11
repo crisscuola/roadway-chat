@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="#fff"
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar_description"
-        layout="@layout/toolbar"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include
+            android:id="@+id/toolbar_description"
+            layout="@layout/toolbar" />
+    </android.support.design.widget.AppBarLayout>
 
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/vk_share_gray_line"
+        android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="7dp"
-        android:paddingBottom="10dp"
         android:text="Address"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/colorTextColor"
-        android:textSize="15sp"
-        android:background="@color/vk_share_gray_line"/>
+        android:textSize="15sp" />
 
 </LinearLayout>
