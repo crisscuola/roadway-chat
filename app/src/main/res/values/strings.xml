@@ -117,7 +117,6 @@
     <string name="restore_btn">Restore</string>
 
 
-    <string name="login_empty_message"></string>
     <string name="login_wrong_email_format">Invalid email</string>
     <string name="login_empty_pass_message">Fill in the field</string>
     <string name="login_wrong_pass_format">Password must contain numbers and letters, minimum length is 8</string>
@@ -138,4 +137,5 @@
     <string name="open_location_settings">Enable</string>
     <string name="cancel">Cancel</string>
     <string name="user_not_exist">User with this email does not exists</string>
+    <string name="login_empty_message">Fill in the email field</string>
 </resources>
