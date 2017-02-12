@@ -237,6 +237,7 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         recyclerAdapter = new FeedRecyclerViewAdapter(this, new FeedRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent = new Intent(FeedActivity.this, SingleEventActivity.class);
                 intent.putExtra("favourite", event.getFavor());
                 intent.putExtra("id", event.getId());
@@ -302,6 +303,12 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
     }
 
     private final class EventsLoader extends AsyncTask<Object, Void, String> {

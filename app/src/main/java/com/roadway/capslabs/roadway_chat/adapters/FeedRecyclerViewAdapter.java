@@ -1,6 +1,10 @@
 package com.roadway.capslabs.roadway_chat.adapters;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.roadway.capslabs.roadway_chat.R;
@@ -37,7 +42,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.feed_cardview_item, parent, false);
 
-        return new ViewHolder(v);
+        return new ViewHolder(context, v);
     }
 
     @Override
@@ -57,7 +62,8 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         }
 
         holder.textView.setText(title);
-        holder.rating.setText(String.valueOf(event.getRating()));
+        //holder.rating.setText(String.valueOf(event.getRating()));
+        holder.rate.setRating((float) event.getRating());
         String km = event.getDistance() + context.getString(R.string.kilometers);
         holder.distance.setText(km);
         Log.d("recycler", holder.distance.getText().toString());
@@ -103,11 +109,16 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         TextView textView, rating, distance;
         ImageView image, star;
         LinearLayout layout;
+        RatingBar rate ;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(Context context, View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.event_short_description);
-            rating = (TextView) itemView.findViewById(R.id.rating);
+            //rating = (TextView) itemView.findViewById(R.id.rating);
+            rate = (RatingBar) itemView.findViewById(R.id.bar_rate);
+            LayerDrawable stars = (LayerDrawable) rate.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.raspberry), PorterDuff.Mode.SRC_ATOP);
+
             image = (ImageView) itemView.findViewById(R.id.image);
             distance = (TextView) itemView.findViewById(R.id.distance);
             star = (ImageView) itemView.findViewById(R.id.star_e);

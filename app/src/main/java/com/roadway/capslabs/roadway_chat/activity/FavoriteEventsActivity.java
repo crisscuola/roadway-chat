@@ -157,7 +157,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     }
 
     private void initToolbar(String title) {
-        toolbar = (Toolbar) findViewById(R.id.toolbar_feed);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_favor);
         toolbar.setTitle(title);
         progressBar = (ProgressBar) findViewById(R.id.toolbar_progress_bar);
         progressBar.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
@@ -287,7 +287,7 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
                     if (array.length() == 0) {
                         TextView noItemsTextView = (TextView) findViewById(R.id.no_favor_textview);
                         noItemsTextView.setVisibility(View.VISIBLE);
-
+                        progressBar.setVisibility(View.GONE);
                         return;
                     }
 

@@ -1,22 +1,21 @@
 <resources>
     <!--
-    TODO: Before you release your application, you need a Google Maps API key.
+    TODO: Before you run your application, you need a Google Maps API key.
 
-    To do this, you can either add your release key credentials to your existing
-    key, or create a new key.
+    To get one, follow this link, follow the directions and press "Create" at the end:
 
-    Note that this file specifies the API key for the release build target.
-    If you have previously set up a key for the debug target with the debug signing certificate,
-    you will also need to set up a key for your release certificate.
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=92:9F:FF:33:86:3B:5D:FA:C0:1E:29:A7:04:DB:A1:73:97:2B:00:63%3Bcom.roadway.capslabs.roadway_chat.activity
 
-    Follow the directions here:
+    You can also add your credentials to an existing key, using this line:
+    92:9F:FF:33:86:3B:5D:FA:C0:1E:29:A7:04:DB:A1:73:97:2B:00:63;com.roadway.capslabs.roadway_chat.activity
 
-    https://developers.google.com/maps/documentation/android/signup
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
 
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        YOUR_KEY_HERE
+        AIzaSyBRlymtbbIWDT0zlu2IbKilWtcE8tKtsbQ
     </string>
 </resources>

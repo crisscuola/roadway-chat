@@ -117,7 +117,6 @@
     <string name="restore">Восстановление пароля</string>
     <string name="restore_btn">Восстановить</string>
 
-    <string name="login_empty_message"></string>
     <string name="login_wrong_email_format">Неверный формат почты</string>
     <string name="login_empty_pass_message">Введите пароль</string>
     <string name="login_wrong_pass_format">Пароль должен содержать цифры и буквы, минимум 8 символов</string>
@@ -137,4 +136,5 @@
     <string name="open_location_settings">Открыть</string>
     <string name="cancel">Отмена</string>
     <string name="user_not_exist">Пользователя с такой почтой не существует</string>
+    <string name="login_empty_message">Введите почту</string>
 </resources>

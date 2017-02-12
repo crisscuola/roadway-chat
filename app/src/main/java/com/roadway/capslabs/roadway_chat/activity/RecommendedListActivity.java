@@ -282,7 +282,7 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
                     if (array.length() == 0) {
                         TextView noItemsTextView = (TextView) findViewById(R.id.no_favor_textview);
                         noItemsTextView.setVisibility(View.VISIBLE);
-
+                        progressBar.setVisibility(View.GONE);
                         return;
                     }
 
