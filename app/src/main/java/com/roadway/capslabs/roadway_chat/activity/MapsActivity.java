@@ -278,6 +278,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         if (getIntent().hasExtra("selected_event")) {
+            progressBar.setVisibility(View.GONE);
             id = (int) getIntent().getExtras().get("selected_event");
             double lat = (double) getIntent().getExtras().get("latitude");
             double lng = (double) getIntent().getExtras().get("longitude");
