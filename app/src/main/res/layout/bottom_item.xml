@@ -25,31 +25,6 @@
             android:textSize="15sp" />
 
 
-        <ImageView
-            android:id="@+id/price_icon"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:paddingTop="2dp"
-            android:src="@drawable/rating"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="55dp"
-            android:layout_marginLeft="10dp"/>
-
-        <TextView
-            android:id="@+id/bottom_rating"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:text="0"
-            android:paddingTop="3dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:textColor="#000"
-            android:textSize="20sp" />
-
     </RelativeLayout>
 
     <View
