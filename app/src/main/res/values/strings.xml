@@ -137,4 +137,5 @@
     <string name="cancel">Отмена</string>
     <string name="user_not_exist">Пользователя с такой почтой не существует</string>
     <string name="login_empty_message">Введите почту</string>
+    <string name="restore_mail">Ссылка для восстановления отправлена на почту</string>
 </resources>

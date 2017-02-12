@@ -196,7 +196,16 @@ public class ActivityForgot extends AppCompatActivity implements Validator.Valid
 
                         Toast.makeText(getApplicationContext(),
                                 R.string.restore_failed, Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        Toast.makeText(context, R.string.restore_mail, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(context, ActivitySignIn.class);
+
+                        finish();
+                        startActivity(intent);
                     }
+
+
                 } catch (JSONException e) {
                     throw new RuntimeException("Exception during json parsing", e);
                 }
