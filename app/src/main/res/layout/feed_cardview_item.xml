@@ -94,34 +94,19 @@
                 android:text="15"
                 android:textColor="@color/colorTextColor" />
 
-            <ImageView
-                android:id="@+id/price_icon"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/rating"
-                android:layout_marginLeft="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorWhiteBackground"
-                android:padding="2dp"
-
-                android:textColor="@color/colorTextColor" />
-
-            <TextView
-                android:id="@id/rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorWhiteBackground"
-                android:layout_marginEnd="10dp"
+            <RatingBar
+                android:id="@+id/bar_rate"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginRight="10dp"
-                android:text="100"
-                android:textColor="@color/colorTextColor" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.1" />
+
+
         </LinearLayout>
 
     </LinearLayout>

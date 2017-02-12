@@ -69,9 +69,9 @@ public class CustomClusterItemAdapter extends RecyclerView.Adapter<CustomCluster
         public ViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            imageView = (ImageView) itemView.findViewById(R.id.imageView);
             textView = (TextView) itemView.findViewById(R.id.textView);
-            rating = (TextView) itemView.findViewById(R.id.bottom_rating);
+//            imageView = (ImageView) itemView.findViewById(R.id.imageView);
+//            rating = (TextView) itemView.findViewById(R.id.bottom_rating);
 
         }
 
@@ -79,13 +79,13 @@ public class CustomClusterItemAdapter extends RecyclerView.Adapter<CustomCluster
             this.item = item;
             //imageView.setImageResource(item.getDrawableResource());
             String title = item.getTitle();
-            if (title.length() > 20 )
+            if (title.length() > 35 )
             {
-                title = title.substring(0,17);
+                title = title.substring(0,32);
                 title = title + " ...";
             }
             textView.setText(title);
-            rating.setText(String.valueOf(item.getmRating()));
+            //rating.setText(String.valueOf(item.getmRating()));
         }
 
         @Override
