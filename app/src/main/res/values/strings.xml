@@ -48,7 +48,7 @@
     <string name="field_last_name">Last name:</string>
     <string name="description_confirm">Enter verification code here (check your email)</string>
     <string name="ok">OK</string>
-    <string name="email_hint">Введите логин</string>
+    <string name="email_hint">Введите почту</string>
     <string name="password_hint">Введите пароль</string>
     <string name="sign_in_btn">Войти</string>
     <string name="sign_in_title">Вход</string>
