@@ -1,6 +1,7 @@
 package com.roadway.capslabs.roadway_chat.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
@@ -41,7 +42,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.feed_cardview_item, parent, false);
 
-        return new ViewHolder(v);
+        return new ViewHolder(context, v);
     }
 
     @Override
@@ -110,13 +111,13 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         LinearLayout layout;
         RatingBar rate ;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(Context context, View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.event_short_description);
             //rating = (TextView) itemView.findViewById(R.id.rating);
             rate = (RatingBar) itemView.findViewById(R.id.bar_rate);
             LayerDrawable stars = (LayerDrawable) rate.getProgressDrawable();
-            stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.raspberry), PorterDuff.Mode.SRC_ATOP);
 
             image = (ImageView) itemView.findViewById(R.id.image);
             distance = (TextView) itemView.findViewById(R.id.distance);
