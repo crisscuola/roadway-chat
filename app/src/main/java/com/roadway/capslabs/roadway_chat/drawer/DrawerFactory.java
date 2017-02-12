@@ -137,7 +137,7 @@ public class DrawerFactory {
                     .addProfiles(new ProfileDrawerItem().withEmail(email_s))
                     .withTextColorRes(R.color.black)
                     .withProfileImagesVisible(false)
-                    //.withHeaderBackground(R.drawable.drawer4)
+                    .withHeaderBackground(R.drawable.drawer_background)
 
                     .withSelectionListEnabledForSingleProfile(false)
                     .build();
