@@ -232,7 +232,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 //                getAlert();
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                String url = "http://178.62.255.248/event/view/" + id + "/unauthorized";
+                String url = "http://акцион.рус/event/view/" + id + "/unauthorized";
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, url);
 
