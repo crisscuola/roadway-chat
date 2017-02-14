@@ -432,10 +432,10 @@
                 android:textSize="18sp">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:contentDescription="@string/route_to_discount"
-                    android:src="@drawable/map_location_blue" />
+                    android:src="@drawable/route2" />
 
                 <TextView
                     android:id="@+id/address"
@@ -443,19 +443,10 @@
                     android:layout_height="25dp"
                     android:text="@string/route_to_discount"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#2369ff"
+                    android:textColor="#326EB2"
                     android:textSize="18sp" />
 
             </LinearLayout>
-
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="start"-->
-            <!--android:orientation="horizontal">-->
-            <!--</LinearLayout>-->
-
 
             <fragment
                 android:id="@+id/map"
