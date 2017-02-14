@@ -150,7 +150,7 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItems() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.feed_menu_item)
+        SecondaryDrawerItem events = new SecondaryDrawerItem().withIdentifier(1).withName(R.string.feed_menu_item)
                 .withIcon(R.drawable.ic_format_list_bulleted_grey600_48dp).withSelectedTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.map_menu_item)
                 .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
@@ -159,9 +159,9 @@ public class DrawerFactory {
 
         SecondaryDrawerItem recommended = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.recommended_menu_item)
                 .withIcon(R.drawable.ic_thumb_up_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem rank = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.rank_menu_item)
+        SecondaryDrawerItem rank = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.rank_menu_item)
                 .withIcon(R.drawable.ic_star_half_grey600_48dp).withTextColorRes(R.color.md_black_1000);
-        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(5).withName(R.string.logout_menu_item).withIcon(R.drawable.ic_logout_grey600_48dp)
+        SecondaryDrawerItem logout = new SecondaryDrawerItem().withIdentifier(6).withName(R.string.logout_menu_item).withIcon(R.drawable.ic_logout_grey600_48dp)
                 .withTextColorRes(R.color.red);
         items.add(events);
         items.add(map);
@@ -177,7 +177,7 @@ public class DrawerFactory {
 
     private IDrawerItem[] getDrawerItemsNotLogedIn() {
         List<IDrawerItem> items = new ArrayList<>();
-        PrimaryDrawerItem events = new PrimaryDrawerItem().withIdentifier(1).withName(R.string.feed_menu_item)
+        SecondaryDrawerItem events = new SecondaryDrawerItem().withIdentifier(1).withName(R.string.feed_menu_item)
                 .withIcon(R.drawable.ic_format_list_bulleted_grey600_48dp).withSelectedTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.map_menu_item)
                 .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);

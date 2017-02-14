@@ -31,6 +31,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerUtils;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -78,7 +79,9 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                    .withSelectedItem(DrawerUtils.RANK_ITEM)
+                    .build();
 
             again = (Button) findViewById(R.id.button_again);
 
@@ -96,7 +99,9 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
 
         setContentView(R.layout.activity_rate_list);
         initToolbar(getString(R.string.rate_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.RANK_ITEM)
+                .build();
 
 
         Bundle extras = getIntent().getExtras();
@@ -261,7 +266,9 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout RateList");
                 setContentView(R.layout.no_internet);
-                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar)
+                        .withSelectedItem(DrawerUtils.RANK_ITEM)
+                        .build();
 
                 again = (Button) findViewById(R.id.button_again);
 

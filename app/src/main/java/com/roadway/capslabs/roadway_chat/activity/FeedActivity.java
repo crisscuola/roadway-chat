@@ -30,6 +30,7 @@ import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.EndlessRecyclerViewScrollListener;
 import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerUtils;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -75,7 +76,9 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                    .withSelectedItem(DrawerUtils.FEED_ITEM)
+                    .build();
             again = (Button) findViewById(R.id.button_again);
 
             again.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +107,9 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
 
         setContentView(R.layout.activity_feed);
         initToolbar(getString(R.string.feed_activity_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.FEED_ITEM)
+                .build();
 
         buildGoogleApiClient();
         createLocationRequest();
@@ -326,7 +331,9 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsFeeDLoader");
                 setContentView(R.layout.no_internet);
-                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar)
+                        .withSelectedItem(DrawerUtils.FEED_ITEM)
+                        .build();
                 again = (Button) findViewById(R.id.button_again);
 
                 again.setOnClickListener(new View.OnClickListener() {
@@ -380,7 +387,9 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout NextEventSFeeDLoader");
                 setContentView(R.layout.no_internet);
-                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar)
+                        .withSelectedItem(DrawerUtils.FEED_ITEM)
+                        .build();
                 again = (Button) findViewById(R.id.button_again);
 
                 again.setOnClickListener(new View.OnClickListener() {

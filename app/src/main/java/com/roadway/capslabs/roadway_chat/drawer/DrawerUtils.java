@@ -11,18 +11,11 @@ import org.json.JSONObject;
  * Created by kirill on 20.09.16
  */
 public class DrawerUtils {
-    private static final long FEED_ITEM_ID = 1L;
+    public static final long FEED_ITEM = 1;
+    public static final long MAP_ITEM = 2;
+    public static final long FAVORITE_ITEM = 3;
+    public static final long RECOMMEND_ITEM = 4;
+    public static final long RANK_ITEM = 5;
+    public static final long ENTER_ITEM = 6;
 
-    public static void updateBadge(Drawer drawer, HttpConnectionHandler handler) {
-        drawer.updateBadge(FEED_ITEM_ID, new StringHolder(getCurrentFeedStatus(handler)));
-    }
-
-    private static String getCurrentFeedStatus(HttpConnectionHandler handler) {
-        JSONObject currentFeedStatus = handler.getFeedStatus();
-        try {
-            return currentFeedStatus.getString("badge");
-        } catch (JSONException e) {
-            throw new RuntimeException("Exception while parsing json", e);
-        }
-    }
 }

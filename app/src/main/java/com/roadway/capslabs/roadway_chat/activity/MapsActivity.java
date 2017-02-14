@@ -45,6 +45,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.CustomClusterItemAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerUtils;
 import com.roadway.capslabs.roadway_chat.models.CustomClusterItem;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.models.Item;
@@ -100,7 +101,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                    .withSelectedItem(DrawerUtils.MAP_ITEM)
+                    .build();
 
             again = (Button) findViewById(R.id.button_again);
 
@@ -118,7 +121,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         setContentView(R.layout.activity_maps);
         initToolbar(getString(R.string.title_activity_maps));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.FEED_ITEM)
+                .build();
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -523,7 +528,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout EventsMapsLoader");
                 setContentView(R.layout.no_internet);
-                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar)
+                        .withSelectedItem(DrawerUtils.MAP_ITEM)
+                        .build();
 
                 again = (Button) findViewById(R.id.button_again);
 

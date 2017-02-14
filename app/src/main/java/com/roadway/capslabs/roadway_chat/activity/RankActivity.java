@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerUtils;
 import com.roadway.capslabs.roadway_chat.models.RatingVote;
 import com.roadway.capslabs.roadway_chat.network.RatingVoteHandler;
 import com.roadway.capslabs.roadway_chat.utils.ConnectionChecker;
@@ -48,7 +49,9 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
             ConnectionChecker.showNoInternetMessage(this);
 
             setContentView(R.layout.no_internet);
-            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                    .withSelectedItem(DrawerUtils.RANK_ITEM)
+                    .build();
 
             again = (Button) findViewById(R.id.button_again);
 
@@ -67,7 +70,9 @@ public class RankActivity extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.activity_rank);
         initViews(getString(R.string.rank_title));
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.RANK_ITEM)
+                .build();
 
 
         Bundle data = getIntent().getExtras();

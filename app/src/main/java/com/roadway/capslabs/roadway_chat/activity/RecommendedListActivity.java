@@ -32,6 +32,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.roadway.capslabs.roadway_chat.R;
 import com.roadway.capslabs.roadway_chat.adapters.FeedRecyclerViewAdapter;
 import com.roadway.capslabs.roadway_chat.drawer.DrawerFactory;
+import com.roadway.capslabs.roadway_chat.drawer.DrawerUtils;
 import com.roadway.capslabs.roadway_chat.models.Event;
 import com.roadway.capslabs.roadway_chat.network.EventRequestHandler;
 import com.roadway.capslabs.roadway_chat.network.HttpConnectionHandler;
@@ -79,7 +80,9 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
             setContentView(R.layout.no_internet);
-            drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+            drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                    .withSelectedItem(DrawerUtils.RECOMMEND_ITEM)
+                    .build();
             again = (Button) findViewById(R.id.button_again);
 
             again.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +98,9 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
 
         setContentView(R.layout.activity_recommended);
         initToolbar(getString(R.string.recommended_title));
-        drawer = drawerFactory.getDrawerBuilder(this, toolbar).build();
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.RECOMMEND_ITEM)
+                .build();
 
 
         initAdapter();
@@ -261,7 +266,9 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
             if (result.equals("Timeout")) {
                 Log.d("Time","Timeout RecomendedList");
                 setContentView(R.layout.no_internet);
-                drawer = drawerFactory.getDrawerBuilder(context, toolbar).build();
+                drawer = drawerFactory.getDrawerBuilder(context, toolbar)
+                        .withSelectedItem(DrawerUtils.RECOMMEND_ITEM)
+                        .build();
                 again = (Button) findViewById(R.id.button_again);
 
                 again.setOnClickListener(new View.OnClickListener() {
