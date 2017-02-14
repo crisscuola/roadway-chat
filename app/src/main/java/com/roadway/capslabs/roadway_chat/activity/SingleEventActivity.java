@@ -101,8 +101,6 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityCompat.requestPermissions(SingleEventActivity.this,
-                new String[]{android.Manifest.permission.CALL_PHONE}, 1);
 
         if (!ConnectionChecker.isOnline(this)) {
             ConnectionChecker.showNoInternetMessage(this);
@@ -213,6 +211,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onClick(View view) {
 
+                ActivityCompat.requestPermissions(SingleEventActivity.this,
+                        new String[]{android.Manifest.permission.CALL_PHONE}, 1);
+
                 String uri = "tel:" + event.getPhone().trim();
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(uri));
@@ -305,21 +306,9 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
         creator = (TextView) findViewById(R.id.creator);
         dateEnd = (TextView) findViewById(R.id.date);
         showQr = (Button) findViewById(R.id.btn_show_qr);
-
-//        url = (TextView) findViewById(R.id.url);
-//        phone = (TextView) findViewById(R.id.phone);
-//        share = (TextView) findViewById(R.id.share);
         url = (RelativeLayout) findViewById(R.id.relative_url);
         phone = (RelativeLayout) findViewById(R.id.relative_call);
         share = (RelativeLayout) findViewById(R.id.relative_share);
-        //distanceView = (TextView) findViewById(R.id.distance_view);
-//        code = (TextView) findViewById(R.id.code);
-//        code.setVisibility(View.INVISIBLE);
-//        vk = (Button) findViewById(R.id.vk);
-//        fb = (Button) findViewById(R.id.fb);
-//        url = (TextView) findViewById(R.id.url);
-//        phone = (TextView) findViewById(R.id.phone);
-
         add = (Button) findViewById(R.id.add);
         address.setPaintFlags(address.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         imageQr = (ImageView) findViewById(R.id.qr_image);
