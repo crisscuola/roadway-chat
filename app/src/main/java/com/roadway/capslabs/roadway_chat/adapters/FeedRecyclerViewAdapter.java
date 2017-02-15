@@ -2,7 +2,6 @@ package com.roadway.capslabs.roadway_chat.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -54,11 +53,13 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         if (favor) {
             Log.d("FAVOR", "T");
             holder.star.setVisibility(View.VISIBLE);
+            holder.linearLayout_favor.setVisibility(View.VISIBLE);
             holder.star.setImageResource(R.drawable.ic_heart_outline_grey600_48dp);
         } else {
             Log.d("FAVOR", "F");
             holder.star.setImageResource(R.drawable.ic_heart_outline_grey600_48dp);
             holder.star.setVisibility(View.GONE);
+            holder.linearLayout_favor.setVisibility(View.GONE);
         }
 
         holder.textView.setText(title);
@@ -110,6 +111,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
         ImageView image, star;
         LinearLayout layout;
         RatingBar rate ;
+        LinearLayout linearLayout_favor;
 
         public ViewHolder(Context context, View itemView) {
             super(itemView);
@@ -118,7 +120,7 @@ public class FeedRecyclerViewAdapter extends RecyclerView.Adapter<FeedRecyclerVi
             rate = (RatingBar) itemView.findViewById(R.id.bar_rate);
             LayerDrawable stars = (LayerDrawable) rate.getProgressDrawable();
             stars.getDrawable(2).setColorFilter(context.getResources().getColor(R.color.raspberry), PorterDuff.Mode.SRC_ATOP);
-
+            linearLayout_favor = (LinearLayout) itemView.findViewById(R.id.linearLayout_favor);
             image = (ImageView) itemView.findViewById(R.id.image);
             distance = (TextView) itemView.findViewById(R.id.distance);
             star = (ImageView) itemView.findViewById(R.id.star_e);

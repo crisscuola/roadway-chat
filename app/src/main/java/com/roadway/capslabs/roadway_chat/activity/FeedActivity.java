@@ -314,6 +314,9 @@ public class FeedActivity extends LocationActivityTemplate implements SwipeRefre
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.FEED_ITEM)
+                .build();
     }
 
     private final class EventsLoader extends AsyncTask<Object, Void, String> {

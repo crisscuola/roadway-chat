@@ -42,20 +42,47 @@
                     android:paddingStart="15dp"
                     android:scaleType="fitXY" />
 
-                <ImageView
-                    android:id="@+id/star"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                <LinearLayout
+                    android:id="@+id/linearLayout1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="end"
                     android:layout_marginEnd="25dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="25dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:contentDescription="@string/favorite_icon"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/favorite_off"
-                    android:textColor="#ffffffff" />
+                    android:background="@drawable/circle"
+                    android:orientation="vertical"
+                    android:padding="5dp" >
+
+                    <ImageView
+                        android:id="@+id/star"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+
+                        android:contentDescription="@string/favorite_icon"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/favorite_off"
+                        android:textColor="#ffffffff" />
+
+                </LinearLayout>
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/star"-->
+                    <!--android:layout_width="50dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:layout_gravity="end"-->
+                    <!--android:layout_marginEnd="25dp"-->
+                    <!--android:layout_marginLeft="15dp"-->
+                    <!--android:layout_marginRight="25dp"-->
+                    <!--android:layout_marginStart="10dp"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:contentDescription="@string/favorite_icon"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:src="@drawable/favorite_off"-->
+                    <!--android:textColor="#ffffffff" />-->
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
@@ -440,6 +467,7 @@
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
                     android:layout_height="25dp"
                     android:text="@string/route_to_discount"
                     android:textAppearance="?android:attr/textAppearanceLarge"

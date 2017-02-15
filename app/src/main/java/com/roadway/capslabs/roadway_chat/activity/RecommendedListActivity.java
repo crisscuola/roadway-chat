@@ -62,6 +62,16 @@ public class RecommendedListActivity extends AppCompatActivity implements SwipeR
     private ProgressBar progressBar;
     private double lat, lng;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.RECOMMEND_ITEM)
+                .build();
+    }
+
     private final Activity context = this;
     private Button again;
 

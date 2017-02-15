@@ -30,21 +30,49 @@
                 android:background="@color/colorSliderBackground"
                 android:contentDescription="content_image"
                 android:scaleType="fitXY" />
-            <ImageView
-                android:id="@+id/star_e"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout_favor"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginRight="20dp"
-                android:textColor="#ffffffff"
-                android:src="@drawable/favorite_off"
-                android:contentDescription="@string/favorite_icon"
-                android:scaleType="fitXY"
-                android:visibility="gone"/>
+                android:background="@drawable/circle"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/star_e"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="end"
+
+                    android:contentDescription="@string/favorite_icon"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/favorite_off"
+                    android:textColor="#ffffffff"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+
+            <!--<ImageView-->
+                <!--android:id="@+id/star_e"-->
+                <!--android:layout_width="40dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:layout_gravity="end"-->
+
+                <!--android:textColor="#ffffffff"-->
+                <!--android:src="@drawable/favorite_off"-->
+                <!--android:contentDescription="@string/favorite_icon"-->
+                <!--android:scaleType="fitXY"-->
+                <!--android:visibility="gone"/>-->
 
             <TextView
                 android:id="@+id/event_short_description"

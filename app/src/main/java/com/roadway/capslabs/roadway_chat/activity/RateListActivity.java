@@ -73,6 +73,15 @@ public class RateListActivity extends AppCompatActivity implements SwipeRefreshL
     private Button again;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.RANK_ITEM)
+                .build();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

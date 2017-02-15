@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +18,6 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -131,7 +128,7 @@ public class DrawerFactory {
             final SharedPreferences mSharedPreference = PreferenceManager.getDefaultSharedPreferences(activity);
             String email_s = (mSharedPreference.getString("email", "Default_Value"));
 
-            Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.drawer);
+//            Drawable drawable = ContextCompat.getDrawable(activity, R.drawable.drawer);
             AccountHeader headerResult = new AccountHeaderBuilder()
                     .withActivity(activity)
                     .addProfiles(new ProfileDrawerItem().withEmail(email_s))
@@ -155,7 +152,7 @@ public class DrawerFactory {
         SecondaryDrawerItem map = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.map_menu_item)
                 .withIcon(R.drawable.ic_map_grey600_48dp).withTextColorRes(R.color.md_black_1000);
         SecondaryDrawerItem myFavorites = new SecondaryDrawerItem().withIdentifier(3).withName(R.string.fav_menu_item)
-                .withIcon(R.drawable.ic_heart_outline_grey600_48dp).withTextColorRes(R.color.md_black_1000);
+                .withIcon(R.drawable.ic_heart_outline_grey600_48dp__).withTextColorRes(R.color.md_black_1000);
 
         SecondaryDrawerItem recommended = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.recommended_menu_item)
                 .withIcon(R.drawable.ic_thumb_up_grey600_48dp).withTextColorRes(R.color.md_black_1000);
@@ -298,6 +295,7 @@ public class DrawerFactory {
         });
         ad.setNegativeButton(button2String, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int arg1) {
+
 
             }
         });

@@ -521,7 +521,7 @@ public class SingleEventActivity extends AppCompatActivity implements OnMapReady
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(latlng)
-                    .zoom(15)
+                    .zoom(10)
                     .bearing(0)
                     .tilt(0)
                     .build();

@@ -365,6 +365,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title(title));
         markersMap.put(marker, id);
+        marker.setTitle(title);
+        marker.showInfoWindow();
     }
 
     private void showEvents() {
@@ -385,6 +387,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.MAP_ITEM)
+                .build();
+    }
+
+    @Override
     public boolean onMarkerClick(Marker marker) {
         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -393,7 +404,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        // marker.getTitle();
         //mAdapter = new CustomClusterItemAdapter(createItems(), this);
         recyclerView.setAdapter(mAdapter);
-//        marker.showInfoWindow();
+        marker.showInfoWindow();
         return true;
     }
 

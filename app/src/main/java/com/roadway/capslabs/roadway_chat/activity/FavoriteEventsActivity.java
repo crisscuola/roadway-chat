@@ -75,6 +75,15 @@ public class FavoriteEventsActivity extends AppCompatActivity implements SwipeRe
     private Button again;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.GONE);
+        drawer = drawerFactory.getDrawerBuilder(this, toolbar)
+                .withSelectedItem(DrawerUtils.FAVORITE_ITEM)
+                .build();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
