@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">АкциоН</string>
+    <string name="app_name">Акцион</string>
     <integer name="com_vk_sdk_AppId">5620732</integer>
     <string name="facebook_app_id">123248598163822</string>
 
